@@ -1,75 +1,1028 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Clad's Cookies - Handcrafted Bliss in North Las Vegas</title>
+    <meta name="description"
+        content="Experience the taste of homemade goodness at Clad's Cookies in North Las Vegas. Freshly baked cookies for every occasion.">
+    <meta property="og:title" content="Clad's Cookies - Fresh-Baked Bliss">
+    <meta property="og:description" content="Handcrafted cookies in North Las Vegas for every occasion.">
+    <meta property="og:image" content="https://picsum.photos/1200/800?blur=5">
+    <link rel="canonical" href="https://cladscookies.example.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/lucide@latest/dist/lucide.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5C4033;
+            --accent-color: #C89F5F;
+            --warm-red: #B22222;
+            --background-color: #F5F0E6;
+            --text-color: #333;
+            --font-family-body: 'Inter', sans-serif;
+            --font-family-heading: 'Pacifico', cursive;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* General Styles */
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: var(--font-family-heading);
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .button-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: #b08a52;
+            transform: scale(1.05);
+        }
+
+        .button-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .button-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-family-heading);
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+        }
+
+        .menu li {
+            margin-left: 2rem;
+        }
+
+        .menu a {
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu .menu {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mobile-menu .menu li {
+            margin: 1rem 0;
+        }
+
+        .mobile-menu .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            overflow: hidden;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        #hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://picsum.photos/1200/800?blur=5');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        #hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-family-heading);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-buttons {
+            margin-top: 2rem;
+        }
+
+        /* Sticky Order Button */
+        .sticky-order-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 999;
+            animation: pulse 2s infinite;
+            display: block;
+            /* Visible on all viewports */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Features Section */
+        #features {
+            background-color: #f9f9f9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Daily Flavors */
+        #daily-flavors {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 1rem;
+        }
+
+        .flavor-card {
+            display: inline-block;
+            width: 200px;
+            margin-right: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .flavor-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .flavor-info {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .flavor-info a {
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        /* Menu Section */
+        #menu {
+            background-color: var(--background-color);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item-info {
+            padding: 1rem;
+        }
+
+        .menu-item-name {
+            font-family: var(--font-family-heading);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .menu-item-description {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item-price {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .menu-section-cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Gallery Section */
+        #gallery {
+            background-color: #f9f9f9;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            font-size: 2rem;
+        }
+
+        /* About Section */
+        #about {
+            background-color: var(--background-color);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-image img {
+            border-radius: 5px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .timeline {
+            margin-top: 2rem;
+        }
+
+        .timeline ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .timeline li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline li::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #f9f9f9;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-info {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: var(--font-family-body);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+
+        .footer-nav li {
+            display: inline;
+            margin: 0 1rem;
+        }
+
+        .footer-nav a {
+            color: var(--background-color);
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .features-grid,
+            .menu-grid,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: -1;
+            }
+
+            .sticky-order-button {
+                left: 20px;
+                right: auto;
+            }
+
+            #instagram-feed {
+                margin-top: 2rem;
+            }
+        }
+
+        /* Crumb Trail Animation */
+        @keyframes crumbTrail {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+        }
+
+        .crumb {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: crumbTrail 0.5s forwards;
+        }
+
+        /* Instagram Feed Styles */
+        #instagram-feed {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: #f9f9f9;
+        }
+
+        #instagram-feed h2 {
+            font-family: var(--font-family-heading);
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .instagram-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .instagram-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .instagram-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .instagram-item:hover .instagram-overlay {
+            opacity: 1;
+        }
+
+        .instagram-overlay i {
+            font-size: 2rem;
+        }
+
+        /* Form Styles */
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: var(--warm-red);
+        }
+
+        .form-group .error-message {
+            color: var(--warm-red);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Daily Flavors JSON-linked styles */
+        .flavor-cards {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .flavor-card {
+            flex: 0 0 auto;
+            width: 200px;
+            margin-right: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .flavor-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .flavor-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .flavor-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .flavor-info a {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .flavor-info a:hover {
+            background-color: #b08a52;
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Bakery",
+      "name": "Clad's Cookies",
+      "description": "Handcrafted, fresh-baked cookies in North Las Vegas for all occasions.",
+      "image": "https://picsum.photos/1200/800?blur=5",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main Street",
+        "addressLocality": "North Las Vegas",
+        "addressRegion": "NV",
+        "postalCode": "89030",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 36.2008,
+        "longitude": -115.1400
+      },
+      "url": "https://cladscookies.example.com",
+      "telephone": "+17025551212",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "10:00",
+          "closes": "16:00"
+        }
+      ],
+      "menu": "https://cladscookies.example.com/#menu"
+    }
+    </script>
 </head>
+
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
+    <header>
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="Main Navigation">
+                <a href="#" class="logo">Clad's Cookies</a>
+                <ul class="menu">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu-button" aria-label="Open Mobile Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+            </nav>
+        </div>
+        <div class="mobile-menu">
+            <button class="close-button" aria-label="Close Mobile Menu">
+                <i data-lucide="x"></i>
+            </button>
+            <ul class="menu">
                 <li><a href="#hero">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
                 <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
             </ul>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
+    <main role="main">
+        <section id="hero" aria-label="Hero Section">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Clad's Cookies</h1>
+                <p>Handcrafted, Fresh-Baked Bliss in North Las Vegas</p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="button button-primary">View Today's Menu</a>
+                    <a href="#contact" class="button button-secondary">Place an Order</a>
+                </div>
             </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
-</html>
+        </section>
+
+        <section id="features" class="section" role="region" aria-labelledby="features-title">
+            <div class="container">
+                <h2 class="section-title" id="features-title">Why Choose Clad's?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i data-lucide="hand-heart" class="feature-icon"></i>
+                        <h3>Handcrafted with Love</h3>
+                        <p>Every cookie is made from scratch using the finest ingredients.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="home" class="feature-icon"></i>
+                        <h3>Community Focused</h3>
+                        <p>We're proud to be a part of the North Las Vegas community.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="package" class="feature-icon"></i>
+                        <h3>Perfect for Any Occasion</h3>
+                        <p>From birthdays to corporate events, we've got you covered.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="daily-flavors" class="section" role="region" aria-labelledby="daily-flavors-title">
+            <div class="container">
+                <h2 class="section-title" id="daily-flavors-title">Today's Special Flavors</h2>
+                <div class="flavor-cards" id="flavor-cards-container">
+                    <!-- Flavors will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="section" role="region" aria-labelledby="menu-title">
+            <div class="container">
+                <h2 class="section-title" id="menu-title">Our Delicious Menu</h2>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="https://picsum.photos/300/200?random=5" alt="Classic Chocolate Chip Cookie"
+                            loading="lazy">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Classic Chocolate Chip</h3>
+                            <p class="menu-item-description">The all-time favorite. Gooey, chocolatey, and utterly
+                                irresistible.</p>
+                            <p class="menu-item-price">$2.50</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://picsum.photos/300/200?random=6" alt="Double Chocolate Fudge Cookie"
+                            loading="lazy">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Double Chocolate Fudge</h3>
+                            <p class="menu-item-description">For the serious chocolate lover. Rich, decadent, and
+                                intensely flavorful.</p>
+                            <p class="menu-item-price">$3.00</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://picsum.photos/300/200?random=7" alt="Peanut Butter Bliss Cookie"
+                            loading="lazy">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Peanut Butter Bliss</h3>
+                            <p class="menu-item-description">Creamy peanut butter swirled into a soft, chewy cookie. A
+                                peanut butter lover's dream.</p>
+                            <p class="menu-item-price">$2.75</p>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://picsum.photos/300/200?random=8" alt="Oatmeal Raisin Spice Cookie"
+                            loading="lazy">
+                        <div class="menu-item-info">
+                            <h3 class="menu-item-name">Oatmeal Raisin Spice</h3>
+                            <p class="menu-item-description">A comforting classic with a hint of spice. Perfect with a
+                                warm cup of coffee.</p>
+                            <p class="menu-item-price">$2.50</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-section-cta">
+                    <a href="#contact" class="button button-primary">Pre-Order Your Favorites</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section" role="region" aria-labelledby="gallery-title">
+            <div class="container">
+                <h2 class="section-title" id="gallery-title">Cookie Gallery</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/250/250?random=9" alt="Freshly Baked Cookies" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i data-lucide="zoom-in"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/250/250?random=10" alt="Close-up Cookie Shot" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i data-lucide="zoom-in"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/250/250?random=11" alt="Custom Designed Cookies"
+                            loading="lazy">
+                        <div class="gallery-overlay">
+                            <i data-lucide="zoom-in"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/250/250?random=12" alt="Happy Customers" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i data-lucide="zoom-in"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/250/250?random=13" alt="Cookie Shop Interior" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i data-lucide="zoom-in"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://picsum.photos/250/250?random=14" alt="More Cookies" loading="lazy">
+                        <div class="gallery-overlay">
+                            <i data-lucide="zoom-in"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="instagram-feed" role="region" aria-labelledby="instagram-feed-title">
+            <div class="container">
+                <h2 id="instagram-feed-title" class="section-title">Follow us on Instagram!</h2>
+                <div class="instagram-grid">
+                    <div class="instagram-item">
+                        <img src="https://picsum.photos/250/250?random=15" alt="Instagram Post 1" loading="lazy">
+                        <div class="instagram-overlay">
+                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                <i data-lucide="instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="instagram-item">
+                        <img src="https://picsum.photos/250/250?random=16" alt="Instagram Post 2" loading="lazy">
+                        <div class="instagram-overlay">
+                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                <i data-lucide="instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="instagram-item">
+                        <img src="https://picsum.photos/250/250?random=17" alt="Instagram Post 3" loading="lazy">
+                        <div class="instagram-overlay">
+                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                <i data-lucide="instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="instagram-item">
+                        <img src="https://picsum.photos/250/250?random=18" alt="Instagram Post 4" loading="lazy">
+                        <div class="instagram-overlay">
+                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                <i data-lucide="instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section" role="region" aria-labelledby="about-title">
+            <div class="container">
+                <h2
