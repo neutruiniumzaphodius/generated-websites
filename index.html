@@ -1,75 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>MedicarebyPandora – Trusted Medicare Guidance in Las Vegas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#0A3D62;
+  --color-secondary:#1E90FF;
+  --color-accent:#F5A623;
+  --color-bg:#FFFFFF;
+  --color-bg-light:#F4FAFF;
+  --color-text:#333333;
+  --color-inverse:#FFFFFF;
+  --color-gray:#CCCCCC;
+  --gap:24px;
+  --radius:6px;
+  --shadow:0 4px 8px rgba(0,0,0,0.12);
+  --shadow-hover:0 6px 12px rgba(0,0,0,0.15);
+  --transition:0.2s ease-out;
+  --font-sans:"Open Sans",sans-serif;
+  --font-head:"Montserrat",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-sans);
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;background:none;border:none;}
+ul{list-style:none;}
+h1,h2,h3{font-family:var(--font-head);text-transform:uppercase;letter-spacing:0.5px;}
+h1{font-size:4.8rem;line-height:1.2;}
+h2{font-size:3.6rem;line-height:1.25;}
+h3{font-size:2.8rem;font-weight:600;line-height:1.3;}
+p{margin-bottom:1rem;}
+.container{max-width:1440px;margin:auto;padding:0 var(--gap);}
+.grid{display:grid;gap:var(--gap);}
+.grid-12{grid-template-columns:repeat(12,1fr);}
+.flex{display:flex;align-items:center;gap:var(--gap);}
+.flex-center{justify-content:center;}
+.hidden{display:none;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--color-accent);color:var(--color-inverse);padding:8px 16px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Header */
+header{background:var(--color-primary);color:var(--color-inverse);}
+nav{display:flex;justify-content:space-between;align-items:center;padding:var(--gap);}
+.nav-links{display:flex;gap:var(--gap);}
+.nav-link{color:var(--color-inverse);font-weight:600;padding:8px;}
+.nav-link.active{border-bottom:2px solid var(--color-accent);}
+.menu-toggle{display:none;background:transparent;color:var(--color-inverse);font-size:1.5rem;}
+/* Hero */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background:linear-gradient(180deg,var(--color-primary),var(--color-secondary));
+  color:var(--color-inverse);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.06);
+}
+.hero .content{
+  position:relative;
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*4) var(--gap);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:var(--gap);
+}
+.hero img{
+  width:100%;
+  max-width:500px;
+  border-radius:12px;
+  object-fit:cover;
+}
+.hero h1{font-size:4.8rem;margin-bottom:1rem;}
+.hero p{font-size:1.8rem;color:#E6F4FF;margin-bottom:1.5rem;}
+.hero .cta-group{display:flex;flex-wrap:wrap;gap:var(--gap);}
+.hero .btn-primary{
+  background:var(--color-accent);
+  color:var(--color-inverse);
+  padding:12px 24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transition:var(--transition);
+}
+.hero .btn-primary:hover{
+  background:#E5941F;
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+}
+.hero .btn-primary:focus{outline:2px solid var(--color-primary);}
+.hero .btn-secondary{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:2px solid var(--color-secondary);
+  color:var(--color-secondary);
+  padding:10px 20px;
+  border-radius:var(--radius);
+  transition:var(--transition);
+}
+.hero .btn-secondary:hover{
+  background:#E6F4FF;
+  transform:translateY(-2px);
+}
+.hero .btn-secondary:focus{outline:2px solid var(--color-primary);}
+/* Sections */
+section{padding:calc(var(--gap)*4) var(--gap);}
+.bg-light{background:var(--color-bg-light);}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.card{
+  background:var(--color-bg);
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  padding:var(--gap);
+  transition:transform 0.25s cubic-bezier(0.4,0,0.2,1),box-shadow 0.25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);}
+.fade-in.visible{opacity:1;transform:none;}
+.step{
+  text-align:center;
+}
+.step .step-number{
+  width:60px;height:60px;background:var(--color-accent);color:var(--color-inverse);
+  border-radius:50%;display:flex;justify-content:center;align-items:center;
+  font-size:1.5rem;margin:auto;margin-bottom:1rem;
+}
+.icon-benefit{font-size:2rem;color:var(--color-primary);}
+/* Testimonial Carousel */
+.carousel{
+  position:relative;
+  overflow:hidden;
+}
+.carousel-track{
+  display:flex;
+  transition:transform 0.5s ease;
+}
+.carousel-item{
+  min-width:100%;
+  padding:var(--gap);
+  text-align:center;
+}
+.carousel-item p{font-size:1.2rem;margin:1rem 0;}
+.carousel-item .author{font-weight:600;color:var(--color-primary);}
+.carousel .dots{
+  display:flex;justify-content:center;gap:8px;margin-top:1rem;
+}
+.dot{
+  width:12px;height:12px;border-radius:50%;background:var(--color-gray);
+  cursor:pointer;
+}
+.dot.active{background:var(--color-primary);}
+.btn-cta-primary{
+  background:var(--color-primary);
+  color:var(--color-inverse);
+  padding:12px 24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transition:var(--transition);
+}
+.btn-cta-primary:hover{
+  background:#084173;
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+}
+.btn-cta-primary:focus{outline:2px solid var(--color-primary);}
+/* Footer */
+footer{background:var(--color-primary);color:var(--color-inverse);text-align:center;}
+footer .cta-band{
+  background:var(--color-accent);
+  padding:calc(var(--gap)*2);
+}
+footer .cta-band h2{font-size:2.8rem;margin-bottom:1rem;}
+footer .cta-band .btn-secondary{border-color:var(--color-inverse);color:var(--color-inverse);}
+@media (max-width:1024px){
+  .hero .content{grid-template-columns:1fr;}
+  .hero .content img{order:2;max-width:400px;}
+  .hero h1{font-size:3.6rem;}
+}
+@media (max-width:768px){
+  .nav-links{flex-direction:column;background:var(--color-primary);position:absolute;top:100%;left:0;right:0;padding:var(--gap);display:none;}
+  .nav-links.open{display:flex;}
+  .menu-toggle{display:block;}
+  .hero .content{grid-template-columns:1fr;}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <nav aria-label="Primary navigation">
+    <a href="index.html" class="logo"><strong>MedicarebyPandora</strong></a>
+    <button class="menu-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu">
+      <i data-lucide="menu"></i>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="plans.html" class="nav-link">Plans</a></li>
+      <li><a href="resources.html" class="nav-link">Resources</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="content grid grid-2">
+        <div>
+          <h1 class="fade-in">Your Medicare. Maximized.</h1>
+          <p class="fade-in">Trusted, local Medicare counseling for Las Vegas seniors.</p>
+          <div class="cta-group fade-in">
+            <a href="#cta-primary" class="btn-primary">Schedule My Free Consultation</a>
+            <a href="tel:702-555-1234" class="btn-secondary"><i data-lucide="phone"></i>Call 702‑555‑1234</a>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <img src="https://picsum.photos/seed/pandora/800/600" alt="Senior couple reviewing Medicare documents" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Brief Value Proposition -->
+  <section class="bg-light">
+    <div class="container grid grid-2">
+      <div class="fade-in">
+        <h2>Why Choose Us?</h2>
+        <ul>
+          <li class="flex"><i data-lucide="check-circle" class="icon-benefit"></i>Local expertise in Nevada’s senior health landscape.</li>
+          <li class="flex"><i data-lucide="check-circle" class="icon-benefit"></i>No‑cost counseling – we don’t sell insurance.</li>
+          <li class="flex"><i data-lucide="check-circle" class="icon-benefit"></i>Personalized plan comparison to maximize benefits.</li>
+        </ul>
+      </div>
+      <div class="fade-in"><img src="https://picsum.photos/seed/value/600/400" alt="Friendly agent speaking with a senior client" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section>
+    <div class="container">
+      <h2 class="fade-in">How It Works</h2>
+      <div class="grid grid-3 gap-3 fade-in" id="steps">
+        <div class="card step">
+          <div class="step-number">1</div>
+          <h3>Schedule Call</h3>
+          <p>Pick a convenient time and we’ll call you.</p>
+        </div>
+        <div class="card step">
+          <div class="step-number">2</div>
+          <h3>Plan Review</h3>
+          <p>We analyze your current coverage and needs.</p>
+        </div>
+        <div class="card step">
+          <div class="step-number">3</div>
+          <h3>Get Recommendations</h3>
+          <p>Receive a clear, personalized Medicare action plan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Benefits Icons -->
+  <section class="bg-light">
+    <div class="container grid grid-3">
+      <div class="flex flex-center fade-in">
+        <i data-lucide="shield" class="icon-benefit" style="width:48px;height:48px;"></i>
+        <span>Local Expertise</span>
+      </div>
+      <div class="flex flex-center fade-in">
+        <i data-lucide="check-circle" class="icon-benefit" style="width:48px;height:48px;"></i>
+        <span>No‑Cost Advice</span>
+      </div>
+      <div class="flex flex-center fade-in">
+        <i data-lucide="clock" class="icon-benefit" style="width:48px;height:48px;"></i>
+        <span>Fast Enrollment</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Plan Overview Cards -->
+  <section>
+    <div class="container grid grid-4">
+      <div class="card fade-in">
+        <i data-lucide="hospital" style="width:32px;height:32px;color:var(--color-primary);"></i>
+        <h3>Part A – Hospital</h3>
+        <p>Zero premium, covers stays, skilled nursing & hospice.</p>
+      </div>
+      <div class="card fade-in">
+        <i data-lucide="stethoscope" style="width:32px;height:32px;color:var(--color-primary);"></i>
+        <h3>Part B – Medical</h3>
+        <p>Doctor visits, outpatient care, preventive services.</p>
+      </div>
+      <div class="card fade-in">
+        <i data-lucide="shield-check" style="width:32px;height:32px;color:var(--color-primary);"></i>
+        <h3>Part C – Advantage</h3>
+        <p>All‑in‑one private plans with extra perks.</p>
+      </div>
+      <div class="card fade-in">
+        <i data-lucide="pill" style="width:32px;height:32px;color:var(--color-primary);"></i>
+        <h3>Part D – Prescription</h3>
+        <p>Control medication costs with tailored drug plans.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Carousel -->
+  <section class="bg-light">
+    <div class="container">
+      <h2 class="fade-in">What Our Clients Say</h2>
+      <div class="carousel fade-in" id="testimonialCarousel" aria-roledescription="carousel">
+        <div class="carousel-track">
+          <div class="carousel-item">
+            <p>“Pandora helped me understand my options and saved me over $500 a year on meds!”</p>
+            <span class="author">– Maria G., Las Vegas</span>
+          </div>
+          <div class="carousel-item">
+            <p>“The local insight was priceless. I felt confident choosing the right plan.”</p>
+            <span class="author">– John L., Henderson</span>
+          </div>
+          <div class="carousel-item">
+            <p>“Friendly, knowledgeable, and truly patient‑focused.”</p>
+            <span class="author">– Elaine S., Summerlin</span>
+          </div>
+        </div>
+        <div class="dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primary CTA -->
+  <section class="bg-light">
+    <div class="container flex flex-center">
+      <a href="#cta-primary" class="btn-primary">Schedule My Free Consultation</a>
+    </div>
+  </section>
+
+  <!-- Secondary CTA (Footer) -->
+  <footer>
+    <div class="cta-band flex flex-center">
+      <h2>Ready to Talk? Let’s Get Started.</h2>
+      <a href="contact.html" class="btn-primary">Schedule My Free Consultation</a>
+    </div>
+    <div class="container flex flex-center" style="padding:var(--gap) 0;">
+      <p>&copy; 2026 MedicarebyPandora. All rights reserved.</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+/* Initialize Lucide icons */
+lucide.createIcons();
+
+/* Mobile navigation toggle */
+const toggleBtn = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    const expanded = toggleBtn.getAttribute('aria-expanded') === 'true' || false;
+    toggleBtn.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('open');
+  });
+}
+
+/* Hero animation on load */
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero .fade-in, .hero h1, .hero p, .hero .cta-group').forEach(el => {
+    el.classList.add('visible');
+  });
+});
+
+/* IntersectionObserver for scroll animations */
+const observerOptions = {
+  threshold: 0.1
+};
+const fadeObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+document.querySelectorAll('.fade-in').forEach(el => {
+  fadeObserver.observe(el);
+});
+
+/* Testimonial Carousel */
+class Carousel {
+  constructor(root){
+    this.root = root;
+    this.track = root.querySelector('.carousel-track');
+    this.items = Array.from(this.track.children);
+    this.current = 0;
+    this.dotsContainer = root.querySelector('.dots');
+    this.setupDots();
+    this.start();
+  }
+  setupDots(){
+    this.items.forEach((_,i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.addEventListener('click',()=>this.goTo(i));
+      this.dotsContainer.appendChild(dot);
+    });
+    this.updateDots();
+  }
+  updateDots(){
+    const dots = this.dotsContainer.querySelectorAll('.dot');
+    dots.forEach((dot,i)=>dot.classList.toggle('active',i===this.current));
+  }
+  goTo(index){
+    this.current = index;
+    this.track.style.transform = `translateX(-${index*100}%)`;
+    this.updateDots();
+  }
+  next(){
+    this.current = (this.current+1)%this.items.length;
+    this.goTo(this.current);
+  }
+  start(){
+    this.interval = setInterval(()=>this.next(),5000);
+    this.root.addEventListener('mouseenter',()=>clearInterval(this.interval));
+    this.root.addEventListener('mouseleave',()=>this.start());
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>new Carousel(document.getElementById('testimonialCarousel')));
+</script>
 </body>
 </html>

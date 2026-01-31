@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact – MedicarebyPandora</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A3D62;
+  --color-secondary:#1E90FF;
+  --color-accent:#F5A623;
+  --color-bg:#FFFFFF;
+  --color-bg-light:#F4FAFF;
+  --color-text:#333333;
+  --color-inverse:#FFFFFF;
+  --color-gray:#CCCCCC;
+  --gap:24px;
+  --radius:6px;
+  --shadow:0 4px 8px rgba(0,0,0,0.12);
+  --shadow-hover:0 6px 12px rgba(0,0,0,0.15);
+  --transition:0.2s ease-out;
+  --font-sans:"Open Sans",sans-serif;
+  --font-head:"Montserrat",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-sans);
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;background:none;border:none;}
+ul{list-style:none;}
+h1,h2,h3{font-family:var(--font-head);text-transform:uppercase;letter-spacing:0.5px;}
+h1{font-size:4.8rem;line-height:1.2;}
+h2{font-size:3.6rem;line-height:1.25;}
+h3{font-size:2.8rem;font-weight:600;line-height:1.3;}
+p{margin-bottom:1rem;}
+.container{max-width:1440px;margin:auto;padding:0 var(--gap);}
+.grid{display:grid;gap:var(--gap);}
+.grid-12{grid-template-columns:repeat(12,1fr);}
+.flex{display:flex;align-items:center;gap:var(--gap);}
+.flex-center{justify-content:center;}
+.hidden{display:none;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--color-accent);color:var(--color-inverse);padding:8px 16px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Header */
+header{background:var(--color-primary);color:var(--color-inverse);}
+nav{display:flex;justify-content:space-between;align-items:center;padding:var(--gap);}
+.nav-links{display:flex;gap:var(--gap);}
+.nav-link{color:var(--color-inverse);font-weight:600;padding:8px;}
+.nav-link.active{border-bottom:2px solid var(--color-accent);}
+.menu-toggle{display:none;background:transparent;color:var(--color-inverse);font-size:1.5rem;}
+/* Hero (used for CTA band) */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background:linear-gradient(180deg,var(--color-primary),var(--color-secondary));
+  color:var(--color-inverse);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.06);
+}
+.hero .content{
+  position:relative;
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*4) var(--gap);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:var(--gap);
+}
+.hero img{
+  width:100%;
+  max-width:500px;
+  border-radius:12px;
+  object-fit:cover;
+}
+.hero h1{font-size:4.8rem;margin-bottom:1rem;}
+.hero p{font-size:1.8rem;color:#E6F4FF;margin-bottom:1.5rem;}
+.hero .cta-group{display:flex;flex-wrap:wrap;gap:var(--gap);}
+.hero .btn-primary{
+  background:var(--color-accent);
+  color:var(--color-inverse);
+  padding:12px 24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transition:var(--transition);
+}
+.hero .btn-primary:hover{
+  background:#E5941F;
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+}
+.hero .btn-primary:focus{outline:2px solid var(--color-primary);}
+.hero .btn-secondary{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:2px solid var(--color-secondary);
+  color:var(--color-secondary);
+  padding:10px 20px;
+  border-radius:var(--radius);
+  transition:var(--transition);
+}
+.hero .btn-secondary:hover{
+  background:#E6F4FF;
+  transform:translateY(-2px);
+}
+.hero .btn-secondary:focus{outline:2px solid var(--color-primary);}
+
+/* Sections */
+section{padding:calc(var(--gap)*4) var(--gap);}
+.bg-light{background:var(--color-bg-light);}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.card{
+  background:var(--color-bg);
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  padding:var(--gap);
+  transition:transform 0.25s cubic-bezier(0.4,0,0.2,1),box-shadow 0.25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+.input-group{
+  position:relative;
+  margin-bottom:1.5rem;
+}
+.input-group label{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:var(--color-bg-light);
+  padding:0 4px;
+  color:#777;
+  font-size:0.9rem;
+  pointer-events:none;
+  transition:var(--transition);
+}
+.input-group input,
+.input-group select{
+  width:100%;
+  padding:12px 12px 12px 12px;
+  border:1px solid var(--color-gray);
+  border-radius:var(--radius);
+  font-size:1rem;
+  background:var(--color-inverse);
+  transition:var(--transition);
+}
+.input-group input:focus,
+.input-group select:focus{
+  border-color:var(--color-primary);
+  outline:none;
+}
+.input-group input:focus + label,
+.input-group select:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group select:not(:placeholder-shown) + label{
+  top:0;
+  transform:translateY(-50%);
+  font-size:0.75rem;
+  color:var(--color-primary);
+}
+.error{
+  border-color:#D32F2F !important;
+  animation:shake 0.3s;
+}
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  50%{transform:translateX(5px);}
+  75%{transform:translateX(-5px);}
+  100%{transform:translateX(0);}
+}
+
+/* Footer */
+footer{background:var(--color-primary);color:var(--color-inverse);text-align:center;padding:calc(var(--gap)*2) var(--gap);}
+footer .cta-band{
+  background:var(--color-accent);
+  padding:calc(var(--gap)*2);
+}
+footer .cta-band h2{font-size:2.8rem;margin-bottom:1rem;}
+footer .cta-band .btn-secondary{
+  border-color:var(--color-inverse);
+  color:var(--color-inverse);
+}
+@media (max-width:1024px){
+  .hero .content{grid-template-columns:1fr;}
+  .hero .content img{order:2;max-width:400px;}
+  .hero h1{font-size:3.6rem;}
+}
+@media (max-width:768px){
+  .nav-links{flex-direction:column;background:var(--color-primary);position:absolute;top:100%;left:0;right:0;padding:var(--gap);display:none;}
+  .nav-links.open{display:flex;}
+  .menu-toggle{display:block;}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav class="container flex">
+    <a href="index.html" class="logo"><strong>MedicarebyPandora</strong></a>
+    <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="plans.html" class="nav-link">Medicare Plans</a></li>
+      <li><a href="resources.html" class="nav-link">Resources</a></li>
+      <li><a href="contact.html" class="nav-link active">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Lead Capture Form -->
+  <section class="bg-light">
+    <div class="container flex-center">
+      <div class="form-wrapper" style="max-width:560px;width:100%;background:var(--color-bg-light);border-radius:8px;padding:32px;">
+        <h2 class="fade-in visible" style="text-align:center;margin-bottom:1rem;">Schedule Your Free Consultation</h2>
+        <form id="contactForm" novalidate>
+          <div class="input-group">
+            <input type="text" id="name" name="name" required placeholder=" " aria-required="true">
+            <label for="name">Name</label>
+          </div>
+          <div class="input-group">
+            <input type="tel" id="phone" name="phone" required pattern="^\d{3}-\d{3}-\d{4}$" placeholder=" " aria-required="true">
+            <label for="phone">Phone (format: 702-555-1234)</label>
+          </div>
+          <div class="input-group">
+            <input type="email" id="email" name="email" required placeholder=" " aria-required="true">
+            <label for="email">Email</label>
+          </div>
+          <div class="input-group">
+            <select id="contact-time" name="contact_time" required aria-required="true">
+              <option value="" disabled selected>Select Preferred Contact Time</option>
+              <option>Morning (8‑11 am)</option>
+              <option>Afternoon (12‑4 pm)</option>
+              <option>Evening (5‑8 pm)</option>
+            </select>
+            <label for="contact-time">Preferred Contact Time</label>
+          </div>
+
+          <!-- reCAPTCHA placeholder -->
+          <div style="margin:1rem 0;">
+            <script src="https://www.google.com/recaptcha/api.js?render=your_site_key"></script>
+          </div>
+
+          <button type="submit" class="btn-primary">Schedule My Free Consultation</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Direct Phone & Click‑to‑Call -->
+  <section class="bg-light">
+    <div class="container grid grid-2">
+      <div class="card flex-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="var(--color-primary)" viewBox="0 0 16 16"><path d="M3.654 1.328a.678.678 0 0 1 .746-.074l2.6 1.6c.2.123.285.376.207.595l-.86 2.38a.678.678 0 0 1-.61.447c-.23.014-.46.05-.688.108a11.72 11.72 0 0 0 5.516 5.516c.058-.228.094-.458.108-.688a.678.678 0 0 1 .447-.61l2.38-.86c.219-.078.472.007.595.207l1.6 2.6a.678.678 0 0 1-.074.746l-1.5 1.5c-.329.33-.815.44-1.242.28a13.68 13.68 0 0 1-6.01-3.95 13.68 13.68 0 0 1-3.95-6.01c-.16-.427-.05-.913.28-1.242l1.5-1.5z"/></svg>
+        <div>
+          <p style="font-size:1.2rem;margin:0;">Call Now:</p>
+          <p style="font-size:1.8rem;font-weight:600;margin:0;">702‑555‑1234</p>
+        </div>
+        <a href="tel:702-555-1234" class="btn-secondary">Click to Call</a>
+      </div>
+
+      <!-- Office Hours & Parking -->
+      <div class="card">
+        <h3>Office Hours</h3>
+        <p>Monday – Friday: 8 am – 6 pm</p>
+        <p>Saturday: 9 am – 2 pm</p>
+        <p>Sunday: Closed</p>
+        <h3 style="margin-top:1rem;">Parking</h3>
+        <p>Free parking available in the lot behind the building (Lot A). Street parking is also permitted on Sunrise Blvd.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Maps Embed -->
+  <section class="bg-light">
+    <div class="container">
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Our Office</h3>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.1234567890123!2d-115.172816!3d36.169941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8c44abcd12345%3A0xabcdef1234567890!2s123%20Sunrise%20Blvd.%2C%20Suite%20200%2C%20Las%20Vegas%2C%20NV%2089101!5e0!3m2!1sen!2sus!4v1700000000000"
+          width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy / HIPAA Notice -->
+  <section class="bg-light">
+    <div class="container">
+      <p style="font-size:0.9rem;color:#777;">
+        <strong>Privacy Notice:</strong> Your personal information is protected in accordance with HIPAA regulations. We never share your data with third‑party marketers and use industry‑standard encryption for all form submissions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Secondary CTA Band -->
+  <section class="cta-band" style="background:var(--color-accent);text-align:center;">
+    <div class="container">
+      <h2>Need Immediate Assistance?</h2>
+      <a href="tel:702-555-1234" class="btn-secondary">Call Now</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container flex-center">
+    <p>&copy;2026 MedicarebyPandora. All rights reserved.</p>
+  </div>
+  <div class="cta-band">
+    <div class="container flex-center">
+      <h2>Ready for a Personalized Medicare Plan?</h2>
+      <a href="contact.html" class="btn-primary">Schedule My Free Consultation</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Simple navigation toggle for mobile */
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+menuToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+/* Basic form validation (optional) */
+const form = document.getElementById('contactForm');
+form?.addEventListener('submit', function(e){
+  const phone = document.getElementById('phone');
+  const pattern = /^\d{3}-\d{3}-\d{4}$/;
+  if(!pattern.test(phone.value)){
+    e.preventDefault();
+    phone.classList.add('error');
+    setTimeout(()=>phone.classList.remove('error'),600);
+  }
+});
+</script>
+</body>
+</html>
