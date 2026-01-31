@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Carrier Partners - Medicare AMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A3D91;
+  --color-secondary:#4A90E2;
+  --color-accent:#F2C94C;
+  --color-bg-gradient:linear-gradient(180deg,#F5FAFF 0%,#E6F0FF 100%);
+  --color-text:#212529;
+  --color-white:rgba(255,255,255,0.85);
+  --radius:12px;
+  --shadow:0 4px 12px rgba(0,0,0,.08);
+  --transition:0.3s ease;
+  --gap:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Sans Pro',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-gradient);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+h1,h2,h3{font-family:'Montserrat',sans-serif;line-height:1.2;margin:0;}
+h1{font-size:clamp(2.5rem,5vw,3rem);font-weight:800;letter-spacing:-0.5px;color:#fff;}
+h2{font-size:clamp(1.25rem,3vw,1.5rem);color:#F5FAFF;margin-top:0.5rem;}
+h3{font-size:1.5rem;font-weight:600;color:var(--color-primary);}
+.container{
+  max-width:1440px;
+  margin:auto;
+  padding:0 24px;
+}
+@media(min-width:640px){.container{padding:0 32px;}}
+@media(min-width:1024px){.container{padding:0 48px;}}
+@media(min-width:1280px){.container{padding:0 80px;}}
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 16px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:10px;}
+header{background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10;}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-links{display:none;gap:var(--gap);}
+.nav-links a{font-family:'Montserrat',sans-serif;font-weight:600;color:var(--color-primary);padding:8px 0;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--color-accent);transition:width .2s;}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:24px;height:2px;background:var(--color-primary);transition:transform .3s;}
+@media(min-width:768px){.nav-links{display:flex;}}
+.mobile-menu{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--color-white);backdrop-filter:blur(12px);transition:right .4s;display:flex;flex-direction:column;padding:80px 24px;z-index:20;}
+.mobile-menu a{margin-bottom:24px;font-size:1.125rem;color:var(--color-primary);}
+.mobile-menu.open{right:0;}
+.carousel{position:relative;overflow:hidden;padding:80px 0;background:transparent;}
+.carousel .slides{display:flex;transition:transform .8s ease-in-out;}
+.carousel .slide{min-width:100%;flex-shrink:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(20px);transition:opacity .5s var(--transition),transform .5s var(--transition);}
+.carousel .slide.active{opacity:1;transform:translateY(0);}
+.carousel .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.7);border:none;padding:8px;cursor:pointer;}
+.carousel .nav.prev{left:16px;}
+.carousel .nav.next{right:16px;}
+.carousel .indicators{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;}
+.carousel .indicators button{width:12px;height:12px;border-radius:50%;border:none;background:rgba(0,0,0,0.3);}
+.carousel .indicators button.active{background:var(--color-accent);}
+.partner-strip{display:flex;gap:32px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;}
+.partner-strip img{height:48px;filter:grayscale(1);transition:filter .3s;}
+.partner-strip img:hover{filter:none;}
+.matrix{padding:80px 0;background:transparent;}
+.matrix table{width:100%;border-collapse:collapse;max-width:1200px;margin:auto;}
+.matrix th, .matrix td{border:1px solid #ddd;padding:12px;text-align:center;position:relative;}
+.matrix th{background:var(--color-primary);color:#fff;}
+.matrix td{background:var(--color-white);}
+.matrix td:hover{background:#f0f8ff;}
+.matrix .tooltip{visibility:hidden;opacity:0;background:#333;color:#fff;padding:6px 8px;border-radius:4px;position:absolute;bottom:125%;left:50%;transform:translateX(-50%);transition:opacity .2s;}
+.matrix .tooltip::after{content:'';position:absolute;top:100%;left:50%;margin-left:-5px;border-width:5px;border-style solid;border-color:#333 transparent transparent transparent;}
+.matrix td:hover .tooltip{visibility:visible;opacity:1;}
+.case-study{padding:80px 0;background:transparent;}
+.case-study-card{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);max-width:1000px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:32px;opacity:0;transform:translateY(20px);transition:opacity .5s var(--transition),transform .5s var(--transition);}
+.case-study-card.visible{opacity:1;transform:translateY(0);}
+.case-study-card img{width:100%;height:auto;border-radius:var(--radius);}
+.metrics{display:flex;flex-direction:column;gap:8px;}
+.metrics span{font-weight:600;color:var(--color-accent);}
+.downloads{padding:40px 0;background:transparent;}
+.downloads .btns{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
+.btn-download{
+  background:var(--color-white);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:8px;
+  font-weight:600;
+  box-shadow:var(--shadow);
+  transition:background .2s;
+}
+.btn-download:hover{background:var(--color-accent);}
+.sticky-cta{position:fixed;bottom:0;left:0;width:100%;background:var(--color-primary);color:#fff;padding:16px;display:flex;justify-content:center;align-items:center;z-index:100;}
+.sticky-cta h3{margin:0 16px 0 0;font-size:1.25rem;}
+@media(min-width:768px){.sticky-cta{justify-content:center;}}
+.btn-cta{
+  background:var(--color-accent);
+  color:#212529;
+  padding:10px 20px;
+  border-radius:8px;
+  font-weight:600;
+  transition:transform .15s ease,background .2s ease;
+}
+.btn-cta:hover{transform:translateY(-2px);background:#E5B83F;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <nav class="container">
+    <div class="logo"><a href="index.html"><strong>Medicare AMA</strong></a></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="resources.html">Resources</a>
+      <a href="partners.html" class="active">Carrier Partners</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="resources.html">Resources</a>
+  <a href="partners.html" class="active">Carrier Partners</a>
+  <a href="services.html">Services</a>
+  <a href="blog.html">Blog</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main id="main">
+  <!-- Partner Carousel -->
+  <section class="carousel">
+    <div class="slides">
+      <div class="slide active"><img src="https://picsum.photos/seed/carrier1/800/300" alt="Carrier 1"></div>
+      <div class="slide"><img src="https://picsum.photos/seed/carrier2/800/300" alt="Carrier 2"></div>
+      <div class="slide"><img src="https://picsum.photos/seed/carrier3/800/300" alt="Carrier 3"></div>
+    </div>
+    <button class="nav prev" aria-label="Previous slide">&#9664;</button>
+    <button class="nav next" aria-label="Next slide">&#9654;</button>
+    <div class="indicators">
+      <button class="active" aria-label="Slide 1"></button>
+      <button aria-label="Slide 2"></button>
+      <button aria-label="Slide 3"></button>
+    </div>
+  </section>
+
+  <!-- Carrier Benefit Matrix -->
+  <section class="matrix container mt-2">
+    <h2 class="mt-2">Carrier Benefit Matrix</h2>
+    <div class="matrix-table" style="overflow-x:auto;">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Benefit</th>
+            <th>Carrier A</th>
+            <th>Carrier B</th>
+            <th>Carrier C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Co‑op Funding</td>
+            <td>
+              <span class="tooltip">Up to $5k per quarter</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+            <td>
+              <span class="tooltip">Up to $7k per quarter</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+            <td>
+              <span class="tooltip">Up to $6k per quarter</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+          </tr>
+          <tr>
+            <td>Lead Quality</td>
+            <td>
+              <span class="tooltip">AI‑verified, pre‑qualified</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+            <td>
+              <span class="tooltip">Manual underwriting</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+            <td>
+              <span class="tooltip">Hybrid AI + manual</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+          </tr>
+          <tr>
+            <td>Compliance Support</td>
+            <td>
+              <span class="tooltip">24/7 audit assistance</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+            <td>
+              <span class="tooltip">Standard quarterly reviews</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+            <td>
+              <span class="tooltip">On‑demand support</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="lucide-info" width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Case Study Spotlight -->
+  <section class="case-study container mt-2">
+    <h2>Case Study Spotlight</h2>
+    <div class="case-study-card" style="background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;padding:24px;opacity:0;transform:translateY(20px);transition:opacity .5s var(--transition),transform .5s var(--transition);">
+      <img src="https://picsum.photos/seed/casestudy/800/400" alt="Case Study Image">
+      <div class="case-study-content">
+        <h3>How Carrier B Boosted Agent Revenue by 35%</h3>
+        <p>Partnering with Medicare AMA, Carrier B provided enhanced co‑op funding and premium‑grade leads, enabling agents to close more policies faster.</p>
+        <div class="metrics">
+          <span>Result: +35% Revenue</span>
+          <span>Co‑op Funding: $7,500 per quarter</span>
+          <span>Lead Conversion: 48% increase</span>
+        </div>
+        <a href="https://example.com/casestudy.pdf" class="btn-cta">Read Full Study</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Agreements -->
+  <section class="downloads container mt-2">
+    <h2>Download Carrier Agreements</h2>
+    <div class="btns">
+      <a href="https://example.com/agreementA.pdf" class="btn-download">Carrier A Agreement</a>
+      <a href="https://example.com/agreementB.pdf" class="btn-download">Carrier B Agreement</a>
+      <a href="https://example.com/agreementC.pdf" class="btn-download">Carrier C Agreement</a>
+    </div>
+  </section>
+
+  <!-- Sticky CTA -->
+  <div class="sticky-cta" id="stickyCta">
+    <h3>Ready to Partner?</h3>
+    <button class="btn-cta">Contact Our Team</button>
+  </div>
+</main>
+
+<footer class="cta-footer container mt-2">
+  <h2>Join Our Network of Top Carriers</h2>
+  <p>Experience unmatched support, premium leads, and co‑op funding tailored to each carrier.</p>
+  <a href="contact.html" class="btn-cta">Get Started Today</a>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.262.0/dist/lucide.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function() {
+    mobileMenu.classList.toggle('open');
+  });
+
+  // Carousel functionality
+  const carousel = document.querySelector('.carousel');
+  const slides = carousel.querySelectorAll('.slide');
+  const prevBtn = carousel.querySelector('.nav.prev');
+  const nextBtn = carousel.querySelector('.nav.next');
+  const indicators = carousel.querySelectorAll('.indicators button');
+  let currentIndex = 0;
+  const total = slides.length;
+
+  function goToSlide(index) {
+    slides[currentIndex].classList.remove('active');
+    indicators[currentIndex].classList.remove('active');
+    currentIndex = (index + total) % total;
+    slides[currentIndex].classList.add('active');
+    indicators[currentIndex].classList.add('active');
+  }
+
+  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+  // Auto rotate every 5 seconds
+  setInterval(() => goToSlide(currentIndex + 1), 5000);
+
+  // IntersectionObserver for fade‑up elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.case-study-card, .matrix table').forEach(el => observer.observe(el));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us - Medicare AMA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A3D91;
+  --color-secondary:#4A90E2;
+  --color-accent:#F2C94C;
+  --color-bg-gradient:linear-gradient(180deg,#F5FAFF 0%,#E6F0FF 100%);
+  --color-text:#212529;
+  --color-white:rgba(255,255,255,0.85);
+  --radius:12px;
+  --shadow:0 4px 12px rgba(0,0,0,.08);
+  --transition:0.3s ease;
+  --gap:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Sans Pro',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-gradient);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+h1,h2,h3{font-family:'Montserrat',sans-serif;line-height:1.2;margin:0;}
+h1{font-size:clamp(2.5rem,5vw,3rem);font-weight:800;letter-spacing:-0.5px;color:#fff;}
+h2{font-size:clamp(1.25rem,3vw,1.5rem);color:#F5FAFF;margin-top:0.5rem;}
+h3{font-size:1.5rem;font-weight:600;color:var(--color-primary);}
+.container{
+  max-width:1440px;
+  margin:auto;
+  padding:0 24px;
+}
+@media(min-width:640px){.container{padding:0 32px;}}
+@media(min-width:1024px){.container{padding:0 48px;}}
+@media(min-width:1280px){.container{padding:0 80px;}}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 16px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:10px;}
+/* Header */
+header{background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:10;}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--color-primary);font-size:1.5rem;}
+.nav-links{display:none;gap:var(--gap);}
+.nav-links a{font-family:'Montserrat',sans-serif;font-weight:600;color:var(--color-primary);padding:8px 0;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--color-accent);transition:width .2s;}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:24px;height:2px;background:var(--color-primary);transition:transform .3s;}
+@media(min-width:768px){.nav-links{display:flex;}}
+/* Mobile menu */
+.mobile-menu{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--color-white);backdrop-filter:blur(12px);transition:right .4s;display:flex;flex-direction:column;padding:80px 24px;z-index:20;}
+.mobile-menu a{margin-bottom:24px;font-size:1.125rem;color:var(--color-primary);}
+.mobile-menu.open{right:0;}
+/* Hero */
+.hero{position:relative;padding:120px 0;background:var(--color-bg-gradient);text-align:center;}
+.hero h1{color:var(--color-primary);font-size:clamp(2rem,5vw,2.5rem);margin-bottom:1rem;}
+.form-card{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px;max-width:600px;margin:auto;opacity:0;transform:translateY(20px);transition:opacity .5s var(--transition),transform .5s var(--transition);}
+.form-card.visible{opacity:1;transform:translateY(0);}
+.form-step{display:none;}
+.form-step.active{display:block;}
+input, textarea, select{width:100%;padding:10px;margin-top:4px;border:1px solid #ced4da;border-radius:4px;font-size:1rem;}
+input:focus, textarea:focus, select:focus{outline:none;border-color:var(--color-primary);}
+.error{color:#dc3545;font-size:0.875rem;margin-top:4px;}
+/* Map */
+.map-section{padding:80px 0;background:transparent;}
+.map-section iframe{width:100%;height:400px;border:0;border-radius:var(--radius);box-shadow:var(--shadow);}
+/* Contact blocks */
+.contact-blocks{display:grid;gap:var(--gap);padding:80px 0;background:transparent;}
+@media(min-width:768px){.contact-blocks{grid-template-columns:1fr 1fr;}}
+.block{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px;text-align:center;}
+.block svg{stroke:var(--color-primary);width:48px;height:48px;margin-bottom:12px;}
+.block h3{margin-bottom:12px;}
+/* Badges */
+.badges{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:40px 0;background:transparent;}
+.badge{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;transition:box-shadow .3s;}
+.badge:hover{box-shadow:0 0 12px var(--color-accent);}
+.badge img{max-width:120px;}
+/* Secondary CTA */
+.secondary-cta{background:var(--color-secondary);color:#fff;padding:40px 0;text-align:center;}
+.secondary-cta h2{margin-bottom:1rem;}
+/* Footer CTA */
+.cta-footer{background:var(--color-primary);color:#fff;padding:40px 0;text-align:center;}
+.cta-footer h3{font-size:1.75rem;margin-bottom:16px;}
+.mt-2{margin-top:0.5rem;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <div class="logo">Medicare AMA</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+      <div class="hamburger" aria-label="Open menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div class="mobile-menu" aria-hidden="true">
+  <a href="index.html">Home</a>
+  <a href="about.html">About Us</a>
+  <a href="services.html">Services</a>
+  <a href="blog.html">Blog</a>
+  <a href="contact.html" class="active">Contact</a>
+</div>
+
+<main id="main">
+  <section class="hero">
+    <div class="container">
+      <h1>Let’s Build Your Medicare Success Together</h1>
+      <div class="form-card" id="contactFormCard">
+        <form id="contactForm" novalidate>
+          <div class="form-step" id="step1">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required aria-required="true">
+            <div class="error" id="errFullName"></div>
+
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" required aria-required="true">
+            <div class="error" id="errCompany"></div>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required aria-required="true">
+            <div class="error" id="errEmail"></div>
+
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" required aria-required="true">
+            <div class="error" id="errPhone"></div>
+
+            <button type="button" class="btn-primary mt-2" id="nextBtn">Next – Schedule Call</button>
+          </div>
+
+          <div class="form-step" id="step2">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" required aria-required="true">
+            <div class="error" id="errDate"></div>
+
+            <label for="time">Preferred Time</label>
+            <select id="time" name="time" required aria-required="true">
+              <option value="">Select a time</option>
+              <option>09:00 AM</option>
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>01:00 PM</option>
+              <option>02:00 PM</option>
+            </select>
+            <div class="error" id="errTime"></div>
+
+            <label for="message">Message (optional)</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+
+            <button type="submit" class="btn-primary mt-2">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="map-section">
+    <div class="container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019123456789!2d-122.401!3d37.785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c12345678%3A0xabcdef1234567890!2sMedicare%20AMA%20HQ!5e0!3m2!1sen!2sus!4v1600000000000!5m2!1sen!2sus"
+        allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section class="contact-blocks">
+    <div class="container">
+      <div class="block">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M22 2L11 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2v6h-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Phone</h3>
+        <p><a href="tel:8005550199">(800) 555‑0199</a></p>
+      </div>
+      <div class="block">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M4 4h16v16H4z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 4l-10 7L2 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Email</h3>
+        <p><a href="mailto:partners@medicareama.com">partners@medicareama.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="badges">
+    <div class="container">
+      <div class="badge-grid" style="display:flex;gap:var(--gap);flex-wrap:wrap;justify-content:center;">
+        <div class="badge">
+          <img src="https://picsum.photos/seed/badge1/200/120" alt="HIPAA‑Compliant certification">
+        </div>
+        <div class="badge">
+          <img src="https://picsum.photos/seed/badge2/200/120" alt="CMS Certified Partner">
+        </div>
+        <div class="badge">
+          <img src="https://picsum.photos/seed/badge3/200/120" alt="Better Business Bureau A+">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secondary-cta">
+    <div class="container">
+      <h2>Prefer to talk now? Call our dedicated line.</h2>
+      <a href="tel:8005550199" class="btn-secondary">Call Now</a>
+    </div>
+  </section>
+</main>
+
+<footer class="cta-footer">
+  <div class="container">
+    <h3>Ready to start your journey?</h3>
+    <a href="services.html" class="btn-primary">Start Your Application</a>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.259.0"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Mobile menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  // Form steps
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const nextBtn = document.getElementById('nextBtn');
+  const form = document.getElementById('contactForm');
+  const fields = ['fullName','company','email','phone'];
+  nextBtn.addEventListener('click', () => {
+    let valid = true;
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      const err = document.getElementById('err' + el.id.charAt(0).toUpperCase() + el.id.slice(1));
+      if (!el.value.trim()) {
+        err.textContent = 'This field is required';
+        valid = false;
+      } else {
+        err.textContent = '';
+      }
+    });
+    if (valid) {
+      step1.classList.remove('active');
+      step2.classList.add('active');
+    }
+  });
+  // Simple validation on submit
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    // Here you would normally send the data
+    alert('Form submitted!'); 
+    form.reset();
+    step2.classList.remove('active');
+    step1.classList.add('active');
+  });
+  // Intersection observer for fade-up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.2});
+  document.querySelectorAll('.pillar, .testimonial-card, .cta-footer, .form-card, .badge, .block').forEach(el => observer.observe(el));
+});
+</script>
+</body>
+</html>
