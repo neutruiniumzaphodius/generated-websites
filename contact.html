@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us – Chicago Car Insurance</title>
+  <meta name="description" content="Get in touch with Chicago Car Insurance. Call, email, visit our downtown office or send us a message via our quick inquiry form.">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Contact Us – Chicago Car Insurance">
+  <meta property="og:description" content="Get in touch with Chicago Car Insurance. Call, email, visit our downtown office or send us a message via our quick inquiry form.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.chicago.com/contact.html">
+  <meta property="og:image" content="https://picsum.photos/id/1015/1200/800">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+  <!-- Icons (placeholder line icons) -->
+  <style>
+:root{
+  --color-primary:#0A2F5B;
+  --color-accent:#C41E3A;
+  --color-amber:#FFB400;
+  --color-bg-grad:linear-gradient(135deg,#F5F8FA 0%,#E2E8F0 100%);
+  --color-text:#212529;
+  --color-white-glass:rgba(255,255,255,0.85);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-card-hover:0 8px 20px rgba(0,0,0,0.12);
+  --radius-card:8px;
+  --radius-input:4px;
+  --radius-modal:12px;
+  --transition-fast:.25s ease;
+  --transition-ease:.4s cubic-bezier(0.4,0,0.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-grad);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:3px solid var(--color-amber);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#fff;
+  color:#000;
+  padding:8px 16px;
+  z-index:100;
+  transition:top .3s;
+}
+.skip-link:focus{top:0;}
+
+/* Navigation */
+header{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 2rem;
+  background:rgba(10,47,91,0.95);
+  backdrop-filter:blur(6px);
+  z-index:1000;
+  transition:var(--transition-ease);
+}
+header.shrink{height:56px;}
+.logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  font-weight:900;
+  color:#fff;
+}
+nav{
+  display:flex;
+  gap:1.5rem;
+}
+nav a{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:1rem;
+  position:relative;
+}
+nav a:hover,nav a:focus{color:var(--color-amber);}
+nav a.active::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-4px;height:2px;background:var(--color-amber);
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  color:#fff;
+  font-size:1.5rem;
+}
+@media (max-width:768px){
+  .menu-toggle{display:block;}
+  nav{
+    position:fixed;
+    top:0;
+    right:-100%;
+    height:100vh;
+    width:250px;
+    background:var(--color-primary);
+    flex-direction:column;
+    padding-top:4rem;
+    gap:2rem;
+    transition:transform .3s;
+    transform:translateX(0);
+  }
+  nav.open{transform:translateX(-100%);}
+  nav a{font-size:1.2rem;}
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:600px;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  inset:0;
+  background:var(--color-bg-grad);
+  opacity:.4;
+  position:absolute;
+  z-index:-1;
+}
+.hero-contact{
+  background:url('https://picsum.photos/seed/map/1600/900') center/cover no-repeat;
+}
+.hero-content{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  max-width:90%;
+  color:#fff;
+}
+.hero-content h1{
+  font-family:'Playfair Display',serif;
+  font-size:4rem;
+  font-weight:900;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  text-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+@media (min-width:768px){
+  .hero-content h1{font-size:5rem;}
+}
+.hero-content p{
+  margin:1rem 0 2rem;
+  font-size:1.25rem;
+  color:#F8F9FA;
+}
+
+/* Sections */
+.container{max-width:1200px;margin:auto;padding:0 1rem;}
+.section{opacity:0;transform:translateY(40px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.section.visible{opacity:1;transform:none;}
+
+/* Office Map */
+.map-wrapper{
+  background:#fff;
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  margin:2rem 0;
+}
+.map-wrapper iframe{
+  width:100%;
+  height:350px;
+  border:0;
+}
+
+/* Contact Details */
+.details{
+  display:grid;
+  gap:1.5rem;
+  margin:2rem 0;
+}
+.details a{
+  color:var(--color-amber);
+  font-size:1.25rem;
+  font-weight:600;
+}
+.details a:hover,.details a:focus{
+  text-decoration:underline;
+}
+
+/* Inquiry Form */
+.form-card{
+  background:var(--color-white-glass);
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+  padding:2rem;
+  max-width:800px;
+  margin:auto;
+}
+.form-card h2{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;
+  margin-bottom:1rem;
+  text-align:center;
+}
+.form-group{
+  margin-bottom:1rem;
+}
+.form-group label{
+  display:block;
+  margin-bottom:.5rem;
+  font-weight:600;
+}
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:.5rem 1rem;
+  border:1px solid #ccc;
+  border-radius:var(--radius-input);
+  transition:var(--transition-fast);
+}
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:var(--color-amber);
+  box-shadow:0 0 0 3px rgba(255,180,0,.2);
+  outline:none;
+}
+textarea{resize:vertical;height:120px;}
+.toast{
+  position:fixed;
+  top:1rem;
+  right:1rem;
+  background:#333;
+  color:#fff;
+  padding:.75rem 1.5rem;
+  border-radius:var(--radius-input);
+  opacity:0;
+  transform:translateX(100%);
+  transition:var(--transition-fast);
+  z-index:2000;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(0);
+}
+
+/* Social Links */
+.social{
+  display:flex;
+  justify-content:center;
+  gap:1.5rem;
+  margin:2rem 0;
+}
+.social a{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  color:var(--color-primary);
+  transition:var(--transition-fast);
+}
+.social a:hover,.social a:focus{
+  color:var(--color-amber);
+}
+
+/* Footer CTA */
+.cta-footer{
+  background:var(--color-amber);
+  padding:3rem 1rem;
+  text-align:center;
+  color:#fff;
+}
+.cta-footer h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  margin-bottom:1rem;
+}
+@media (min-width:768px){
+  .cta-footer h2{font-size:3rem;}
+}
+
+/* Buttons (reuse from home) */
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  padding:.75rem 2rem;
+  border-radius:var(--radius-input);
+  font-weight:600;
+  animation: pulse 2s ease-in-out infinite;
+  transition:var(--transition-fast);
+}
+.btn-primary:hover,.btn-primary:focus{background:#a31d30;}
+.btn-secondary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:.75rem 2rem;
+  border-radius:var(--radius-input);
+  font-weight:600;
+  transition:var(--transition-fast);
+}
+.btn-secondary:hover,.btn-secondary:focus{background:var(--color-amber);}
+
+/* Animations */
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.06);}
+}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header id="site-header">
+    <div class="logo">Chicago</div>
+    <button class="menu-toggle" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">&#9776;</button>
+    <nav id="primary-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About</a>
+      <a href="quote.html">Quote</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Hero Contact -->
+    <section class="hero hero-contact">
+      <div class="hero-content">
+        <h1>We’re Here When You Need Us.</h1>
+        <p>Call, email, or drop by – our downtown office is open 24/7 for emergencies.</p>
+        <a href="quote.html" class="btn-primary">Schedule a Call</a>
+      </div>
+    </section>
+
+    <!-- Office Map -->
+    <section class="section container" id="office-map">
+      <h2 class="visually-hidden">Our Office Location</h2>
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=123+W.+Madison+St.,+Chicago+IL+60602"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Chicago Insurance Office"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- Contact Details -->
+    <section class="section container" id="contact-details">
+      <h2 class="visually-hidden">Contact Details</h2>
+      <div class="details">
+        <p><strong>Phone:</strong> <a href="tel:3125550198">📞 (312) 555‑0198</a></p>
+        <p><strong>Email:</strong> <a href="mailto:support@chicago.com">support@chicago.com</a></p>
+        <p><strong>Address:</strong> 123 W. Madison St., Suite 400, Chicago, IL 60602</p>
+        <p><strong>Hours:</strong> 24 Hours · 7 Days · 365 Days</p>
+      </div>
+    </section>
+
+    <!-- Inquiry Form -->
+    <section class="section container" id="inquiry-form">
+      <h2 class="visually-hidden">Send Us a Message</h2>
+      <div class="form-card">
+        <form id="contactForm" novalidate>
+          <h2>Send us a quick message</h2>
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Social Links -->
+    <section class="section container" id="social-links">
+      <h2 class="visually-hidden">Follow Us</h2>
+      <div class="social">
+        <a href="https://www.linkedin.com/company/chicago" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 4h4v16H4zM12 8h4v12h-4zM12 8c0-2 2-2 2-2s2 0 2 2v2h-4zM12 12h4v8h-4z"/>
+          </svg>
+        </a>
+        <a href="https://twitter.com/chicago" target="_blank" aria-label="Twitter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43 1l-4.1 2.1A4.48 4.48 0 0 0 12 5c0 .35.04.7.12 1.03C8 6 5.07 4.38 3 1.96a4.48 4.48 0 0 0-.61 2.25c0 1.55.78 2.92 1.96 3.73A4.44 4.44 0 0 1 .96 7v.06a4.48 4.48 0 0 0 3.58 4.4c-.6.16-1.23.19-1.89.07a4.48 4.48 0 0 0 4.19 3.12A9 9 0 0 1 1 19.54a12.81 12.81 0 0 0 6.92 2"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com/chicago" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="cta-footer">
+      <h2>Ready for a quote? Let’s talk.</h2>
+      <a href="quote.html" class="btn-primary">Schedule a Call</a>
+    </section>
+  </main>
+
+  <!-- Toast (hidden by default) -->
+  <div class="toast" id="toast">Thanks! Our team will get back to you within 2 hours.</div>
+
+  <!-- Scripts -->
+  <script>
+    /* Mobile navigation */
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    toggle?.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+      toggle.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    /* Section reveal on scroll */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {threshold:0.1});
+    document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+
+    /* Simple form toast */
+    const form = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
+    form?.addEventListener('submit', e => {
+      e.preventDefault();
+      // Here you would normally send the data via fetch/AJAX.
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+      form.reset();
+    });
+  </script>
+</body>
+</html>

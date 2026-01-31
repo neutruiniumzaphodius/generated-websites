@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insurance Products – Chicago Car Insurance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@900;700;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A2F5B;
+  --color-accent:#C41E3A;
+  --color-amber:#FFB400;
+  --color-bg-grad:linear-gradient(135deg,#F5F8FA 0%,#E2E8F0 100%);
+  --color-text:#212529;
+  --color-white-glass:rgba(255,255,255,0.85);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-card-hover:0 8px 20px rgba(0,0,0,0.12);
+  --radius-card:8px;
+  --radius-input:4px;
+  --radius-modal:12px;
+  --transition-fast:.25s ease;
+  --transition-ease:.4s cubic-bezier(0.4,0,0.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-grad);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:3px solid var(--color-amber);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+.skip-link{position:absolute;top:-40px;left:0;background:#fff;color:#000;padding:8px 16px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Navigation */
+header{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(10,47,91,0.95);backdrop-filter:blur(6px);z-index:1000;transition:var(--transition-ease);}
+header.shrink{height:56px;}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:#fff;}
+nav{display:flex;gap:1.5rem;}
+nav a{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:1rem;
+  position:relative;
+}
+nav a:hover,nav a:focus{color:var(--color-amber);}
+nav a.active::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-4px;height:2px;background:var(--color-amber);
+}
+.menu-toggle{display:none;background:none;color:#fff;font-size:1.5rem;}
+@media (max-width:768px){
+  .menu-toggle{display:block;}
+  nav{position:fixed;top:0;right:-100%;height:100vh;width:250px;background:var(--color-primary);flex-direction:column;padding-top:4rem;gap:2rem;transition:transform .3s;}
+  nav.open{transform:translateX(-100%);}
+  nav a{color:#fff;font-size:1.2rem;}
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  height:70vh;
+  min-height:400px;
+  overflow:hidden;
+  background-attachment:fixed;
+  background-size:cover;
+  background-position:center;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;background:var(--color-bg-grad);opacity:.4;z-index:-1;
+}
+.hero-content{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;max-width:90%;color:#fff;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;
+  font-weight:900;
+  letter-spacing:-.5px;
+  line-height:1.1;
+  text-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+@media (min-width:768px){
+  .hero h1{font-size:4.5rem;}
+}
+.hero p{
+  margin:1rem 0 2rem;
+  font-size:1.25rem;color:#F8F9FA;
+}
+
+/* Buttons */
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  padding:.75rem 2rem;
+  border-radius:var(--radius-input);
+  font-weight:600;
+  transition:var(--transition-fast);
+}
+.btn-primary:hover,.btn-primary:focus{background:#a31d30;}
+.btn-secondary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:.75rem .75rem;
+  border-radius:var(--radius-input);
+  font-weight:600;
+  transition:var(--transition-fast);
+}
+.btn-secondary:hover,.btn-secondary:focus{background:var(--color-amber);}
+
+/* Product Grid */
+.product-grid{
+  display:grid;
+  gap:2rem;
+  max-width:1200px;
+  margin:4rem auto;
+  padding:0 1rem;
+}
+.flip-card{
+  perspective:1000px;
+}
+.flip-card-inner{
+  position:relative;
+  width:100%;
+  min-height:300px;
+  text-align:center;
+  transition:transform .6s var(--transition-ease);
+  transform-style:preserve-3d;
+}
+.flip-card:hover .flip-card-inner,
+.flip-card:focus-within .flip-card-inner{
+  transform:rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back{
+  position:absolute;
+  width:100%;
+  backface-visibility:hidden;
+  background:var(--color-white-glass);
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.flip-card-back{
+  background:var(--color-primary);
+  color:#fff;
+  transform:rotateY(180deg);
+}
+.flip-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.75rem;
+  margin:1rem 0 .5rem;
+}
+.flip-card p{
+  font-size:1rem;
+}
+.flip-card .btn-primary{
+  animation:none;
+}
+
+/* Coverage Breakdowns */
+.coverage{
+  background:var(--color-white-glass);
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+  padding:2rem;
+  max-width:1200px;
+  margin:4rem auto;
+  display:grid;
+  gap:2rem;
+}
+@media (min-width:768px){
+  .coverage{grid-template-columns:repeat(3,1fr);}
+}
+.coverage-item{
+  text-align:center;
+}
+.coverage-item h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  margin:0.75rem 0 0.5rem;
+}
+.coverage-item p{
+  font-size:1rem;
+}
+
+/* Comparison Table */
+.table-wrapper{
+  overflow-x:auto;
+  max-width:1200px;
+  margin:4rem auto;
+  padding:0 1rem;
+}
+.comp-table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  border-radius:var(--radius-card);
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+}
+.comp-table th,
+.comp-table td{
+  padding:1rem;
+  border:1px solid #e0e0e0;
+  text-align:center;
+}
+.comp-table th{
+  background:var(--color-primary);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+.comp-table tr:nth-child(even){background:#f9f9f9;}
+.comp-table .tooltip{
+  position:relative;
+  cursor:help;
+}
+.comp-table .tooltip::after{
+  content:attr(data-tip);
+  position:absolute;
+  bottom:125%; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,.75);
+  color:#fff;
+  padding:.5rem 0.75rem;
+  border-radius:4px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+  font-size:.875rem;
+}
+.comp-table .tooltip:hover::after{
+  opacity:1;
+}
+
+/* FAQ Accordion */
+.faq{
+  max-width:1200px;
+  margin:4rem auto;
+  padding:0 1rem;
+}
+.faq-item{
+  background:var(--color-white-glass);
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);
+  margin-bottom:1rem;
+  overflow:hidden;
+}
+.faq-header{
+  background:var(--color-primary);
+  color:#fff;
+  padding:1rem;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.faq-header:hover,.faq-header:focus{background:var(--color-amber);}
+.faq-header h3{
+  margin:0;
+  font-size:1.25rem;
+}
+.faq-header .icon{
+  transition:var(--transition-fast);
+}
+.faq-item.open .icon{
+  transform:rotate(180deg);
+}
+.faq-content{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+  background:#fff;
+  padding:0 1rem;
+}
+.faq-item.open .faq-content{
+  max-height:500px;
+  padding:1rem;
+}
+
+/* Secondary CTA */
+.secondary-cta{
+  background:linear-gradient(135deg,#FFB400 0%,#FFB400 100%);
+  padding:3rem 1rem;
+  text-align:center;
+  color:#fff;
+}
+.secondary-cta h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  margin-bottom:1rem;
+}
+@media (min-width:768px){
+  .secondary-cta h2{font-size:3rem;}
+}
+
+/* Footer CTA (same as home) */
+.cta-footer{
+  background:var(--color-accent);
+  padding:3rem 1rem;
+  text-align:center;
+  color:#fff;
+}
+.cta-footer h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  margin-bottom:1rem;
+}
+@media (min-width:768px){
+  .cta-footer h2{font-size:3rem;}
+}
+
+/* General utilities */
+.container{max-width:1200px;margin:auto;padding:0 1rem;}
+.section{opacity:0;transform:translateY(40px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.section.visible{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header id="site-header">
+  <div class="logo">Chicago</div>
+  <button class="menu-toggle" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">&#9776;</button>
+  <nav id="primary-nav" aria-label="Primary navigation">
+    <a href="index.html">Home</a>
+    <a href="products.html" class="active">Products</a>
+    <a href="about.html">About</a>
+    <a href="quote.html">Quote</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Hero Banner -->
+  <section class="hero section" id="hero_banner" style="background:url('https://picsum.photos/id/1018/1600/900') center/cover no-repeat;">
+    <div class="hero-content">
+      <h1>Our Coverage Options</h1>
+      <p>Choose the protection that fits your lifestyle and budget.</p>
+      <a href="#product_grid" class="btn-primary">Explore Products</a>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="container section" id="product_grid">
+    <h2 class="section-title" style="font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin:2rem 0;">Coverage Options</h2>
+    <div class="product-grid">
+      <div class="flip-card service-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h3>Liability</h3>
+            <p>Protects you against third‑party claims.</p>
+            <button class="btn-primary">Learn More</button>
+          </div>
+          <div class="flip-card-back">
+            <h3>Benefits</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li>✔️ Up to $100k per accident</li>
+              <li>✔️ Nationwide coverage</li>
+              <li>✔️ Affordable premiums</li>
+            </ul>
+            <button class="btn-secondary">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card service-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h3>Collision</h3>
+            <p>Covers damage to your vehicle in an accident.</p>
+            <button class="btn-primary">Learn More</button>
+          </div>
+          <div class="flip-card-back">
+            <h3>Benefits</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li>✔️ Repair costs covered</li>
+              <li>✔️ New car replacement</li>
+              <li>✔️ Optional deductible</li>
+            </ul>
+            <button class="btn-secondary">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card service-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h3>Comprehensive</h3>
+            <p>Protects against non‑collision events.</p>
+            <button class="btn-primary">Learn More</button>
+          </div>
+          <div class="flip-card-back">
+            <h3>Benefits</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li>✔️ Theft & vandalism</li>
+              <li>✔️ Natural disasters</li>
+              <li>✔️ Glass breakage</li>
+            </ul>
+            <button class="btn-secondary">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card service-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h3>Ride‑Share</h3>
+            <p>Extra protection while driving for Uber, Lyft, etc.</p>
+            <button class="btn-primary">Learn More</button>
+          </div>
+          <div class="flip-card-back">
+            <h3>Benefits</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li>✔️ Coverage while on‑app</li>
+              <li>✔️ No gaps in liability</li>
+              <li>✔️ Affordable add‑on</li>
+            </ul>
+            <button class="btn-secondary">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Breakdowns -->
+  <section class="container section" id="coverage_breakdowns">
+    <h2 class="section-title" style="font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin:2rem 0;">What Each Coverage Includes</h2>
+    <div class="coverage">
+      <div class="coverage-item">
+        <h3>Liability</h3>
+        <p>Up to $100k for bodily injury and property damage per accident.</p>
+      </div>
+      <div class="coverage-item">
+        <h3>Collision</h3>
+        <p>Covers repair or replacement of your vehicle after a crash, regardless of fault.</p>
+      </div>
+      <div class="coverage-item">
+        <h3>Comprehensive</h3>
+        <p>Protects against theft, fire, natural disasters, and other non‑collision risks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="container section" id="comparison_table">
+    <h2 class="section-title" style="font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin:2rem 0;">Compare Coverage Options</h2>
+    <div class="table-wrapper">
+      <table class="comp-table" aria-label="Coverage comparison table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Liability</th>
+            <th>Collision</th>
+            <th>Comprehensive</th>
+            <th>Ride‑Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tooltip" data-tip="Covers bodily injury and property damage to others">Bodily Injury / Property Damage</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td class="tooltip" data-tip="Covers repair of your own vehicle after a crash">Collision Damage</td>
+            <td>✖️</td>
+            <td>✔️</td>
+            <td>✖️</td>
+            <td>✖️</td>
+          </tr>
+          <tr>
+            <td class="tooltip" data-tip="Covers theft, fire, natural disasters, and more">Comprehensive Risks</td>
+            <td>✖️</td>
+            <td>✖️</td>
+            <td>✔️</td>
+            <td>✖️</td>
+          </tr>
+          <tr>
+            <td class="tooltip" data-tip="Adds protection while driving for ride‑share platforms">Ride‑Share Protection</td>
+            <td>✖️</td>
+            <td>✖️</td>
+            <td>✖️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td class="tooltip" data-tip="Monthly cost estimate based on selected limits">Estimated Premium</td>
+            <td>$45</td>
+            <td>$65</td>
+            <td>$70</td>
+            <td>$55</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="container section" id="faq_section">
+    <h2 class="section-title" style="font-family:'Playfair Display',serif; font-size:2rem; text-align:center; margin:2rem 0;">Frequently Asked Questions</h2>
+    <div class="faq">
+      <div class="faq-item" tabindex="0">
+        <div class="faq-header">
+          <h3>Do I need both collision and comprehensive?</h3>
+          <span class="icon">▼</span>
+        </div>
+        <div class="faq-content">
+          <p>Collision covers crash damage, while comprehensive protects against non‑collision events. Many drivers choose both for full protection.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-header">
+          <h3>Can I adjust my deductible?</h3>
+          <span class="icon">▼</span>
+        </div>
+        <div class="faq-content">
+          <p>Yes, higher deductibles lower your premium. We recommend a deductible that fits your budget.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" tabindex="0">
+        <div class="faq-header">
+          <h3>Is ride‑share coverage mandatory?</h3>
+          <span class="icon">▼</span>
+        </div>
+        <div class="faq-content">
+          <p>Most ride‑share platforms require drivers to carry additional liability coverage. Our Ride‑Share add‑on fulfills that requirement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary CTA -->
+  <section class="secondary-cta section" id="secondary_cta">
+    <h2>Ready to Protect Your Drive?</h2>
+    <a href="quote.html" class="btn-primary">Get a Quote Today</a>
+  </section>
+
+</main>
+
+<!-- Footer CTA -->
+<footer class="cta-footer">
+  <h2>Need More Help?</h2>
+  <a href="contact.html" class="btn-primary">Contact Us</a>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+  toggleBtn.addEventListener('click', () => {
+    const expanded = toggleBtn.getAttribute('aria-expanded') === 'true' || false;
+    toggleBtn.setAttribute('aria-expanded', !expanded);
+    nav.classList.toggle('open');
+  });
+
+  // Header shrink on scroll
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) header.classList.add('shrink');
+    else header.classList.remove('shrink');
+  });
+
+  // Reveal sections on scroll
+  const sections = document.querySelectorAll('.section');
+  const revealOnScroll = () => {
+    const triggerBottom = window.innerHeight * 0.85;
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+      if (sectionTop < triggerBottom) {
+        section.classList.add('visible');
+      }
+    });
+  };
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+
+  // FAQ accordion functionality
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const header = item.querySelector('.faq-header');
+    header.addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+    header.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.classList.toggle('open');
+      }
+    });
+  });
+
+  // Flip card back button
+  const backButtons = document.querySelectorAll('.flip-card .btn-secondary');
+  backButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const card = e.target.closest('.flip-card');
+      card.querySelector('.flip-card-inner').style.transform = 'rotateY(0deg)';
+    });
+  });
+</script>
+
+</body>
+</html>
+</main>
+</body>
+</html>
+</main>
+</body>
+</html>
