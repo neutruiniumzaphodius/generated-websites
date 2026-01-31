@@ -1,75 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>MarioCare – Medicare Made Simple</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Nevada‑licensed Medicare broker helping seniors simplify their Medicare choices since 2009. Schedule a free consultation today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary-blue:#0066CC;
+  --color-secondary-blue:#004B99;
+  --color-accent-red:#D7263D;
+  --color-bg-white:#FFFFFF;
+  --color-text-charcoal:#333333;
+  --color-light-gray:#F2F2F2;
+  --radius:4px;
+  --focus-ring:#D7263D;
+  --font-heading:"Montserrat",sans-serif;
+  --font-body:"Open Sans",sans-serif;
+  --transition:200ms ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text-charcoal);
+  background:var(--color-bg-white);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:3px solid var(--focus-ring);}
+button:focus{outline:3px solid var(--focus-ring);}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:var(--font-heading);font-weight:700;line-height:1.2;color:var(--color-text-charcoal);}
+h1{font-size:clamp(32px,5vw,48px);letter-spacing:.5px; text-transform:uppercase;}
+h2{font-size:clamp(24px,4vw,36px);}
+h3{font-size:clamp(20px,3vw,28px);}
+.container{max-width:1240px;margin:auto;padding:0 16px;}
+/* Skip link */
+#skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;}
+#skip:focus{left:1rem;top:1rem;width:auto;height:auto;background:#fff;padding:.5rem 1rem;z-index:1000;}
+/* Header */
+header{position:sticky;top:0;z-index:1000;background:transparent;transition:background var(--transition);}
+header.scrolled{background:var(--color-secondary-blue);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
+.logo{font-family:var(--font-heading);font-size:1.5rem;color:#fff;}
+.nav-links{display:none;}
+.nav-links a{color:#fff;font-family:var(--font-heading);font-size:1rem;letter-spacing:.3px;text-transform:uppercase;margin-left:1.5rem;transition:color var(--transition);}
+.nav-links a.active{border-bottom:2px solid var(--color-accent-red);}
+.nav-links a:hover{color:var(--color-primary-blue);}
+.burger{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;}
+.burger:focus{outline:3px solid var(--focus-ring);}
+@media(min-width:768px){
+  .nav-links{display:flex;}
+  .burger{display:none;}
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  min-height:80vh;
+  display:flex;
+  align-items:center;
+  color:#fff;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1600/900') center/cover no-repeat;
+  z-index:-2;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,76,153,0.85),transparent);
+  z-index:-1;
+}
+.hero-content{max-width:700px;padding:2rem;}
+.hero h1{margin-bottom:.5rem;}
+.hero h2{font-weight:400;font-size:1.75rem;color:#E0E0E0;margin-bottom:1.5rem;}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  background:var(--color-accent-red);
+  color:#fff;
+  border:none;
+  border-radius:var(--radius);
+  padding:0 1.5rem;
+  height:48px;
+  font-family:var(--font-heading);
+  font-size:1rem;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  transition:transform var(--transition),background var(--transition);
+}
+.btn:hover{transform:translateY(-2px);background:#b51a31;}
+.btn:focus{outline:3px solid var(--focus-ring);}
+.btn .icon{stroke:#fff;}
+
+/* Checklist */
+.checklist{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1rem;
+  padding:3rem 0;
+}
+.check-item{
+  text-align:center;
+  transition:color var(--transition);
+}
+.check-item svg{width:48px;height:48px;stroke:var(--color-primary-blue);fill:var(--color-primary-blue);transition:transform var(--transition);}
+.check-item span{display:block;margin-top:.5rem;font-weight:600;font-size:.875rem;letter-spacing:.3px;}
+.check-item:hover svg{transform:scale(1.05);}
+.check-item:hover span{color:var(--color-primary-blue);}
+
+/* Value Props */
+.value-props{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.5rem;
+  padding:2rem 0;
+}
+.card{
+  background:#fff;
+  border:1px solid var(--color-light-gray);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  box-shadow:0 4px 8px rgba(0,0,0,0.08);
+  transition:transform var(--transition),box-shadow var(--transition);
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 12px rgba(0,0,0,0.12);
+}
+.badge{
+  display:inline-block;
+  background:var(--color-accent-red);
+  color:#fff;
+  padding:.2rem .5rem;
+  border-radius:999px;
+  font-weight:600;
+  margin-bottom:.5rem;
+}
+.card:nth-child(2) .badge{background:var(--color-primary-blue);}
+.card:nth-child(3) .badge{background:var(--color-accent-red);}
+
+/* Plan Summaries */
+.plans{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:2rem;
+  padding:3rem 0;
+}
+.plan-card{
+  background:#fff;
+  border:1px solid var(--color-light-gray);
+  border-radius:var(--radius);
+  padding:1rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 2px 4px rgba(0,0,0,0.06);
+  transition:transform var(--transition);
+}
+.plan-card:hover{transform:translateY(-2px);}
+.plan-card svg{width:32px;height:32px;stroke:var(--color-primary-blue);}
+.plan-card h3{margin:0;font-size:1.125rem;}
+.plan-card p{margin:0;font-size:.875rem;color:#555;}
+.plan-card a{margin-left:auto;color:var(--color-accent-red);font-weight:600;}
+/* Zigzag alignment */
+.plans .plan-card:nth-child(odd){justify-self:start;}
+.plans .plan-card:nth-child(even){justify-self:end;}
+
+/* Provider Matching Widget */
+.widget{
+  background:#f9f9f9;
+  padding:2rem;
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  margin:3rem 0;
+}
+.widget h3{margin-bottom:1rem;}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;margin-bottom:.25rem;font-weight:600;}
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:.5rem;
+  border:1px solid var(--color-light-gray);
+  border-radius:var(--radius);
+  transition:border-color var(--transition),box-shadow var(--transition);
+}
+.form-group input:focus,
+.form-group select:focus{
+  border-color:var(--color-primary-blue);
+  box-shadow:0 0 0 3px rgba(0,102,204,.2);
+  outline:none;
+}
+.error{color:#c00;font-size:.875rem;margin-top:.25rem;}
+.results{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;opacity:0;transform:translateX(20px);transition:opacity .4s ease-out,transform .4s ease-out;}
+.results.show{opacity:1;transform:translateX(0);}
+.result-card{
+  background:#fff;
+  border:1px solid var(--color-light-gray);
+  border-radius:var(--radius);
+  padding:1rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  box-shadow:0 2px 4px rgba(0,0,0,0.05);
+}
+.result-card img{width:60px;height:60px;border-radius:4px;object-fit:cover;}
+.result-card .info{flex:1;}
+.result-card .info h4{margin:0;font-size:1rem;}
+.result-card .info p{margin:0;font-size:.875rem;color:#555;}
+.result-card button{
+  background:var(--color-accent-red);
+  color:#fff;
+  border:none;
+  border-radius:var(--radius);
+  padding:0 .75rem;
+  height:36px;
+  cursor:pointer;
+  font-size:.75rem;
+  text-transform:uppercase;
+  transition:background var(--transition);
+}
+.result-card button:hover{background:#b51a31;}
+
+/* Testimonials Carousel */
+.carousel{
+  position:relative;
+  overflow:hidden;
+  height:300px;
+}
+.carousel .slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity .5s ease;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  padding:2rem;
+}
+.carousel .slide.active{opacity:1;}
+.carousel .slide img{width:120px;height:120px;border-radius:999px;object-fit:cover;}
+.carousel .slide .text{max-width:600px;}
+.carousel .nav{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+}
+.carousel button{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:2rem;
+  pointer-events:auto;
+  cursor:pointer;
+  padding:.5rem;
+}
+.carousel button:hover{color:var(--color-primary-blue);}
+
+/* Primary CTA */
+.primary-cta{
+  background:var(--color-primary-blue);
+  color:#fff;
+  text-align:center;
+  padding:2rem 1rem;
+}
+.primary-cta h2{margin-bottom:1rem;}
+.primary-cta .btn{background:var(--color-accent-red);}
+.primary-cta .btn:hover{background:#b51a31;}
+
+/* Footer */
+footer{
+  font-size:14px;
+  color:#777;
+  text-align:center;
+  padding:2rem 0;
+}
+footer a{color:#777;text-decoration:underline;}
+footer a:focus{outline:3px solid var(--focus-ring);}
+
+/* Animations */
+[data-anim]{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+[data-anim].visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Typewriter */
+.typewriter span{visibility:hidden;}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" id="skip">Skip to main content</a>
+<header id="site-header">
+  <div class="container">
+    <nav aria-label="Primary navigation">
+      <a href="#" class="logo">MarioCare</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="medicareadvantage.html">Advantage</a></li>
+        <li><a href="medicareab.html">Original Medicare</a></li>
+        <li><a href="supplemental.html">Medigap</a></li>
+        <li><a href="prescription.html">Part D</a></li>
+        <li><a href="providers.html">Providers</a></li>
+      </ul>
+      <button class="burger" aria-label="Open menu" id="burger"><i data-lucide="menu"></i></button>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Hero">
+    <div class="container hero-content">
+      <h1 class="typewriter" data-text="Medicare Made Simple">Medicare Made Simple</h1>
+      <h2>Trusted Nevada‑licensed broker simplifying your Medicare choices since 2009.</h2>
+      <button class="btn" data-cta="schedule-consultation"><i data-lucide="phone-call" class="icon"></i>Schedule a Consultation</button>
+      <a href="tel:+18005551234" class="btn" rel="nofollow"><i data-lucide="phone" class="icon"></i>Call Us</a>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- Checklist Section -->
+  <section class="container checklist" data-anim="fade-up">
+    <div class="check-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+      <span>Simple Process</span>
+    </div>
+    <div class="check-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+      <span>No Cost Service</span>
+    </div>
+    <div class="check-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+      <span>Licensed Experts</span>
+    </div>
+    <div class="check-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+      <span>Trusted Advice</span>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <!-- Value Propositions -->
+  <section class="container value-props" data-anim="fade-up">
+    <div class="card">
+      <span class="badge">10+</span>
+      <h3>Plan Options</h3>
+      <p>Access a wide range of Medicare plans from top carriers.</p>
+    </div>
+    <div class="card">
+      <span class="badge">24/7</span>
+      <h3>Support</h3>
+      <p>Personalized assistance whenever you need it.</p>
+    </div>
+    <div class="card">
+      <span class="badge">5★</span>
+      <h3>Reviews</h3>
+      <p>Hundreds of satisfied seniors trust MarioCare.</p>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <!-- Plan Summaries -->
+  <section class="container plans" data-anim="fade-up">
+    <div class="plan-card">
+      <svg data-lucide="circle"></svg>
+      <h3>Original Medicare</h3>
+      <p>Part A & B basics.</p>
+      <a href="medicareab.html">Learn More</a>
+    </div>
+    <div class="plan-card">
+      <svg data-lucide="circle"></svg>
+      <h3>Advantage Plans</h3>
+      <p>All‑in‑one coverage.</p>
+      <a href="medicareadvantage.html">Learn More</a>
+    </div>
+    <div class="plan-card">
+      <svg data-lucide="circle"></svg>
+      <h3>Medigap</h3>
+      <p>Supplemental protection.</p>
+      <a href="supplemental.html">Learn More</a>
+    </div>
+    <div class="plan-card">
+      <svg data-lucide="circle"></svg>
+      <h3>Part D</h3>
+      <p>Prescription drug plans.</p>
+      <a href="prescription.html">Learn More</a>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Provider Matching Widget -->
+  <section class="container widget" data-anim="fade-up">
+    <h3>Find In‑Network Providers</h3>
+    <form id="matchForm" novalidate>
+      <div class="form-group">
+        <label for="zip">Zip Code</label>
+        <input type="text" id="zip" name="zip" placeholder="e.g., 89101" pattern="\\d{5}" required aria-describedby="zipError">
+        <div class="error" id="zipError"></div>
+      </div>
+      <div class="form-group">
+        <label for="plan">Select Plan Type</label>
+        <select id="plan" name="plan" required aria-describedby="planError">
+          <option value="">-- Choose --</option>
+          <option>Original Medicare</option>
+          <option>Advantage</option>
+          <option>Medigap</option>
+          <option>Part D</option>
+        </select>
+        <div class="error" id="planError"></div>
+      </div>
+      <button type="submit" class="btn"><i data-lucide="search" class="icon"></i>Find Providers</button>
+    </form>
+    <div class="results" id="results">
+      <div class="result-card">
+        <img src="https://picsum.photos/seed/uhc/80" alt="United Healthcare">
+        <div class="info">
+          <h4>United Healthcare</h4>
+          <p>Large network, local agents.</p>
         </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
+        <button class="btn"><i data-lucide="external-link" class="icon"></i>View</button>
+      </div>
+      <div class="result-card">
+        <img src="https://picsum.photos/seed/alignment/80" alt="Alignment">
+        <div class="info">
+          <h4>Alignment</h4>
+          <p>Tailored Nevada plans.</p>
+        </div>
+        <button class="btn"><i data-lucide="external-link" class="icon"></i>View</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Carousel -->
+  <section class="container" data-anim="fade-up">
+    <h2 class="sr-only">Testimonials</h2>
+    <div class="carousel" aria-roledescription="carousel" aria-live="polite">
+      <div class="slide active">
+        <img src="https://picsum.photos/seed/test1/120/120" alt="Client photo">
+        <div class="text">
+          <p>“MarioCare made my Medicare decision painless and clear. Highly recommend!”</p>
+          <p><strong>- Jane D., Las Vegas</strong></p>
+        </div>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/seed/test2/120/120" alt="Client photo">
+        <div class="text">
+          <p>“Professional, caring, and completely free. They truly care about seniors.”</p>
+          <p><strong>- Robert S., Henderson</strong></p>
+        </div>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/seed/test3/120/120" alt="Client photo">
+        <div class="text">
+          <p>“The best part was the simple explanations. I felt confident choosing my plan.”</p>
+          <p><strong>- Maria L., Reno</strong></p>
+        </div>
+      </div>
+      <div class="nav">
+        <button id="prevSlide" aria-label="Previous testimonial"><i data-lucide="chevron-left"></i></button>
+        <button id="nextSlide" aria-label="Next testimonial"><i data-lucide="chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primary CTA -->
+  <section class="primary-cta" data-anim="fade-up">
+    <h2>Ready to Simplify Your Medicare?</h2>
+    <button class="btn" data-cta="schedule-consultation"><i data-lucide="calendar" class="icon"></i>Schedule Consultation</button>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2025 MarioCare. All rights reserved. MarioCare is a licensed Medicare broker (Nevada License #123456). Not affiliated with Medicare or the U.S. Government. Services are provided at no cost to you; we do not receive commissions from insurers.</p>
+  </div>
+</footer>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Sticky header background change
+  const header = document.querySelector('header');
+  const onScroll = () => {
+    if (window.scrollY > 80) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll);
+
+  // Mobile burger menu
+  const burger = document.querySelector('.burger');
+  const navLinks = document.querySelector('.nav-links');
+  burger.addEventListener('click', () => {
+    const expanded = burger.getAttribute('aria-expanded') === 'true' || false;
+    burger.setAttribute('aria-expanded', !expanded);
+    navLinks.style.display = expanded ? 'none' : 'flex';
+  });
+
+  // Typewriter effect for hero headline
+  const typewriter = document.querySelector('.hero h1.typewriter');
+  const fullText = typewriter.dataset.text;
+  let idx = 0;
+  const type = () => {
+    if (idx < fullText.length) {
+      typewriter.textContent += fullText.charAt(idx);
+      idx++;
+      setTimeout(type, 30);
+    }
+  };
+  typewriter.textContent = '';
+  type();
+
+  // IntersectionObserver for scroll animations
+  const animElements = document.querySelectorAll('[data-anim]');
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.1});
+  animElements.forEach(el => observer.observe(el));
+
+  // Testimonials carousel
+  const slides = document.querySelectorAll('.carousel .slide');
+  let currentSlide = 0;
+  const showSlide = (index) => {
+    slides.forEach((s,i)=>s.classList.toggle('active', i===index));
+  };
+  document.getElementById('nextSlide').addEventListener('click', () => {
+    currentSlide = (currentSlide+1)%slides.length;
+    showSlide(currentSlide);
+  });
+  document.getElementById('prevSlide').addEventListener('click', () => {
+    currentSlide = (currentSlide-1+slides.length)%slides.length;
+    showSlide(currentSlide);
+  });
+  setInterval(()=>{ 
+    currentSlide = (currentSlide+1)%slides.length;
+    showSlide(currentSlide);
+  },5000);
+
+  // Provider matching widget validation & results
+  const form = document.getElementById('matchForm');
+  const zipInput = form.querySelector('#zip');
+  const planSelect = form.querySelector('#plan');
+  const resultsDiv = document.getElementById('results');
+
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    let valid=true;
+    // Zip validation
+    if(!/^\d{5}$/.test(zipInput.value)){
+      zipInput.nextElementSibling.textContent='Enter a valid 5‑digit zip.';
+      valid=false;
+    } else {
+      zipInput.nextElementSibling.textContent='';
+    }
+    // Plan validation
+    if(planSelect.value===""){
+      planSelect.nextElementSibling.textContent='Select a plan type.';
+      valid=false;
+    } else {
+      planSelect.nextElementSibling.textContent='';
+    }
+    if(valid){
+      resultsDiv.classList.add('show');
+    }
+  });
+});
+</script>
 </html>

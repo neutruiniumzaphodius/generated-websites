@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medicare Supplement / Medigap – MarioCare</title>
+  <meta name="description" content="Learn how Medigap plans provide predictable costs and nationwide coverage for your peace of mind.">
+  <meta property="og:title" content="Medicare Supplement / Medigap – MarioCare">
+  <meta property="og:description" content="Learn how Medigap plans provide predictable costs and nationwide coverage for your peace of mind.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/supplemental.html">
+  <meta property="og:image" content="https://picsum.photos/1200/630">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"MarioCare",
+    "url":"https://example.com",
+    "telephone":"+1-702-555-1234",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"123 Main St",
+      "addressLocality":"Las Vegas",
+      "addressRegion":"NV",
+      "postalCode":"89101",
+      "addressCountry":"US"
+    },
+    "logo":"https://picsum.photos/200/200",
+    "sameAs":[
+      "https://www.facebook.com/mariocare",
+      "https://twitter.com/mariocare"
+    ]
+  }
+  </script>
+  <style>
+    :root{
+      --color-primary-blue:#0066CC;
+      --color-secondary-blue:#004B99;
+      --color-accent-red:#D7263D;
+      --color-bg-white:#FFFFFF;
+      --color-text-charcoal:#333333;
+      --color-light-gray:#F2F2F2;
+      --radius:4px;
+      --focus-ring:#D7263D;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Open Sans",sans-serif;
+      --transition:200ms ease-out;
+      --color-green:#2E7D32;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text-charcoal);
+      background:var(--color-bg-white);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:3px solid var(--focus-ring);}
+    button:focus{outline:3px solid var(--focus-ring);}
+    img{max-width:100%;display:block;}
+    h1,h2,h3{font-family:var(--font-heading);font-weight:700;line-height:1.2;color:var(--color-text-charcoal);}
+    h1{font-size:clamp(32px,5vw,48px);letter-spacing:.5px;text-transform:uppercase;}
+    h2{font-size:clamp(24px,4vw,36px);}
+    h3{font-size:clamp(20px,3vw,28px);}
+    .container{max-width:1240px;margin:auto;padding:0 16px;}
+    /* Skip link */
+    #skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    #skip:focus{left:1rem;top:1rem;width:auto;height:auto;background:#fff;padding:.5rem 1rem;z-index:1000;}
+    /* Header */
+    header{position:sticky;top:0;z-index:1000;background:transparent;transition:background var(--transition);}
+    header.scrolled{background:var(--color-secondary-blue);}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
+    .logo{font-family:var(--font-heading);font-size:1.5rem;color:#fff;}
+    .nav-links{display:none;}
+    .nav-links a{color:#fff;font-family:var(--font-heading);font-size:1rem;letter-spacing:.3px;text-transform:uppercase;margin-left:1.5rem;transition:color var(--transition);}
+    .nav-links a.active{border-bottom:2px solid var(--color-accent-red);}
+    .nav-links a:hover{color:var(--color-primary-blue);}
+    .burger{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;}
+    .burger:focus{outline:3px solid var(--focus-ring);}
+    @media(min-width:768px){
+      .nav-links{display:flex;}
+      .burger{display:none;}
+    }
+    /* Hero */
+    .hero-puzzle{
+      position:relative;
+      min-height:70vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero-puzzle::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1600/900') center/cover no-repeat;
+      z-index:-2;
+    }
+    .hero-puzzle::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,rgba(0,76,153,0.85),transparent);
+      z-index:-1;
+    }
+    .hero-content{
+      background:#fff;
+      padding:3rem 2rem;
+      border-radius:var(--radius);
+      text-align:center;
+      max-width:800px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    .hero-content h1{
+      color:var(--color-text-charcoal);
+      margin-bottom:.5rem;
+    }
+    .hero-content h2{
+      color:var(--color-text-charcoal);
+      font-weight:400;
+      font-size:1.5rem;
+      margin-bottom:1rem;
+    }
+    .puzzle-piece{
+      width:120px;
+      height:120px;
+      background:var(--color-green);
+      clip-path: polygon(25% 0%,75% 0%,100% 25%,100% 75%,75% 100%,25% 100%,0% 75%,0% 25%);
+      margin:auto;
+    }
+    /* Sections */
+    .section{
+      padding:4rem 0;
+    }
+    .section h2{
+      text-align:center;
+      margin-bottom:1.5rem;
+    }
+    .list-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:1rem;
+      max-width:800px;
+      margin:auto;
+    }
+    .list-item{
+      background:#fff;
+      border:1px solid var(--color-light-gray);
+      border-radius:var(--radius);
+      padding:1rem;
+      display:flex;
+      align-items:center;
+      gap:.75rem;
+      box-shadow:0 2px 4px rgba(0,0,0,0.06);
+    }
+    .list-item svg{
+      width:24px;
+      height:24px;
+      stroke:var(--color-primary-blue);
+      flex-shrink:0;
+    }
+    .list-item span{
+      font-size:1rem;
+    }
+    /* CTA */
+    .cta-section{
+      background:var(--color-primary-blue);
+      color:#fff;
+      text-align:center;
+      padding:3rem 1rem;
+    }
+    .cta-section .btn{
+      margin-top:1.5rem;
+      background:var(--color-accent-red);
+    }
+    .cta-section .btn:hover{
+      background:#b51a31;
+    }
+    /* Footer */
+    footer{
+      background:var(--color-secondary-blue);
+      color:#fff;
+      padding:2rem 0;
+      font-size:.875rem;
+    }
+    footer .footer-container{
+      max-width:1240px;
+      margin:auto;
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+      text-align:center;
+    }
+    footer a{
+      color:#fff;
+      text-decoration:underline;
+    }
+    footer a:focus{
+      outline:3px solid var(--focus-ring);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" id="skip">Skip to main content</a>
+  <header id="site-header">
+    <nav class="container">
+      <a href="index.html" class="logo">MarioCare</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="medicareadvantage.html">Advantage</a></li>
+        <li><a href="medicareab.html">Original Medicare</a></li>
+        <li><a href="supplemental.html" class="active">Medigap</a></li>
+        <li><a href="prescription.html">Prescription</a></li>
+        <li><a href="providers.html">Providers</a></li>
+      </ul>
+      <button class="burger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+    </nav>
+    <nav id="mobile-menu" class="nav-links mobile" hidden>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="medicareadvantage.html">Advantage</a>
+      <a href="medicareab.html">Original Medicare</a>
+      <a href="supplemental.html" class="active">Medigap</a>
+      <a href="prescription.html">Prescription</a>
+      <a href="providers.html">Providers</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Hero Puzzle Piece -->
+    <section class="hero-puzzle section">
+      <div class="container">
+        <div class="hero-content">
+          <div class="puzzle-piece"></div>
+          <h1>Medigap</h1>
+          <h2>Predictable costs, nationwide coverage.</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Concept -->
+    <section class="key-concept section">
+      <div class="container">
+        <h2>Predictability and Nationwide Coverage</h2>
+        <p>Medigap policies fill the gaps left by Original Medicare, offering a single, predictable monthly premium that covers most out‑of‑pocket expenses, no matter where you travel in the United States.</p>
+      </div>
+    </section>
+
+    <!-- Inclusions -->
+    <section class="inclusions section">
+      <div class="container">
+        <h2>What’s Included</h2>
+        <div class="list-grid">
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Hospital stays</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Skilled nursing care</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Doctor’s fees</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Emergency services</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Prescription drugs (when paired)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Exclusions -->
+    <section class="exclusions section">
+      <div class="container">
+        <h2>What’s Not Covered</h2>
+        <div class="list-grid">
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Dental care</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Vision services</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Hearing aids</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Long‑term care</span>
+          </div>
+          <div class="list-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 9l-6 6M9 9l6 6"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>Cosmetic procedures</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section primary-cta">
+      <div class="container">
+        <h2>Ready to Secure Predictable Coverage?</h2>
+        <button class="btn" data-cta="schedule-consultation">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          Schedule a Free Consultation
+        </button>
+        <p style="margin-top:1rem;font-size:.875rem;">Services are provided at no cost. We do not receive commissions from insurers.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>© <script>document.write(new Date().getFullYear());</script> MarioCare. All rights reserved.</p>
+      <p><a href="https://example.com/privacy.html">Privacy Policy</a> | <a href="https://example.com/terms.html">Terms of Service</a></p>
+      <p>123 Main St, Las Vegas, NV 89101 | <a href="tel:+17025551234">+1 (702) 555‑1234</a></p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.244.0/dist/lucide.min.js"></script>
+  <script>
+    // Initialize lucide icons
+    lucide.createIcons();
+
+    // Mobile menu toggle
+    const burger = document.querySelector('.burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    burger.addEventListener('click', () => {
+      const expanded = burger.getAttribute('aria-expanded') === 'true' || false;
+      burger.setAttribute('aria-expanded', !expanded);
+      mobileMenu.hidden = expanded;
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('site-header');
+    const observer = new IntersectionObserver(
+      ([e]) => e.target.classList.toggle('scrolled', e.intersectionRatio < 1),
+      {threshold: [1]}
+    );
+    observer.observe(header);
+  </script>
+</body>
+</html>
