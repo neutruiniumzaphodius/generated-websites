@@ -1,75 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Medicare by AMA – Empowering Independent Medicare Agents</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Join Medicare by AMA, the leading FMO offering 100% commission, premium leads, and training for California & Nevada agents.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#0066CC;
+  --color-secondary:#0099A1;
+  --color-accent:#FFB400;
+  --color-bg-start:#F9FAFC;
+  --color-bg-end:#E6F0FA;
+  --color-text:#212B36;
+  --color-divider:#E2E8F0;
+  --color-success:#28A745;
+  --color-muted:#666666;
+  --radius:4px;
+  --gap:24px;
+  --max-width:1240px;
+  --content-width:960px;
+  --transition:0.3s ease-out;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'Source Sans Pro',sans-serif;
+  color:var(--color-text);
+  background:linear-gradient(to bottom,var(--color-bg-start),var(--color-bg-end));
+  line-height:1.6;
+}
+h1,h2,h3{font-family:'Montserrat',sans-serif;line-height:1.3;margin-bottom:1rem;color:var(--color-primary);}
+h1{font-size:clamp(32px,6vw,48px);letter-spacing:-0.5px;}
+h2{font-size:clamp(28px,4.5vw,36px);text-align:center;}
+h3{font-size:24px;}
+p{margin-bottom:1rem;}
+a{color:var(--color-primary);text-decoration:none;}
+a:hover{text-decoration:underline;}
+button{font-family:inherit;cursor:pointer;}
+img{max-width:100%;display:block;}
+.container{max-width:var(--max-width);margin:auto;padding:0 1rem;}
+.section{padding:48px 0;}
+@media(min-width:640px){.section{padding:64px 0;}}
+@media(min-width:1024px){.section{padding:96px 0;}}
+/* Skip Link */
+.skip-link{position:absolute;top:-40px;left:0;background:#fff;color:#000;padding:8px 16px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header */
+header{
+  position:fixed;top:0;left:0;width:100%;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;
+  background:transparent;z-index:1000;transition:var(--transition);
+}
+header.shrink{height:56px;background:#fff;border-bottom:1px solid var(--color-divider);}
+header .logo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:24px;color:var(--color-primary);}
+nav{display:flex;gap:1rem;}
+nav a{font-weight:600;padding:8px 12px;border:2px solid transparent;border-radius:var(--radius);}
+nav a:hover,nav a:focus{border-color:var(--color-primary);}
+nav a.active{border-color:var(--color-primary);}
+.menu-toggle{display:none;background:none;border:none;font-size:1.5rem;color:var(--color-primary);}
+@media(max-width:767px){
+  .menu-toggle{display:block;}
+  nav{position:absolute;top:100%;right:0;background:#fff;flex-direction:column;gap:0;width:200px;border:1px solid var(--color-divider);display:none;}
+  nav.open{display:flex;}
+  nav a{border-bottom:1px solid var(--color-divider);}
+}
+/* Hero */
+#hero{display:flex;flex-direction:column;justify-content:center;min-height:100vh;background:linear-gradient(to bottom,var(--color-bg-start),var(--color-bg-end));overflow:hidden;}
+@media(min-width:768px){#hero{flex-direction:row;}}
+.hero-text{flex:1;padding:2rem;max-width:560px;opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(0.4,0,0.2,1),transform .8s cubic-bezier(0.4,0,0.2,1);}
+.hero-img{flex:1;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(0.4,0,0.2,1),transform .8s cubic-bezier(0.4,0,0.2,1);}
+.hero-img img{max-height:80vh;}
+.btn-primary{
+  background:var(--color-accent);color:#fff;border:none;border-radius:var(--radius);padding:12px 24px;font-weight:600;letter-spacing:0.05em;
+  box-shadow:0 2px 4px rgba(0,0,0,.15);animation:pulse 1.5s infinite ease-in-out;
+}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
+.btn-primary:hover{transform:scale(1.03);box-shadow:0 4px 8px rgba(255,180,0,.3);}
+.btn-secondary{
+  background:transparent;border:2px solid var(--color-primary);color:var(--color-primary);border-radius:var(--radius);padding:10px 20px;font-weight:600;
+}
+.btn-secondary:hover{background:var(--color-primary);color:#fff;}
+/* About */
+#about .motto{font-variant:small-caps;font-weight:600;font-size:14px;color:var(--color-secondary);margin-bottom:24px;}
+.about-grid{display:grid;grid-template-columns:1fr;gap:2rem;}
+@media(min-width:768px){.about-grid{grid-template-columns:1fr 1fr;}}
+.card-list{display:flex;flex-direction:column;gap:12px;}
+.card-item{display:flex;align-items:center;background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius);padding:12px 16px;transition:transform .2s,var(--transition);}
+.card-item:hover{transform:translateY(-2px);box-shadow:0 2px 6px rgba(0,0,0,.1);}
+.card-item svg{flex-shrink:0;width:24px;height:24px;margin-right:12px;stroke:var(--color-primary);}
+.divider{height:1px;background:var(--color-divider);margin:64px 0;}
+/* Services */
+#services{background:rgba(0,153,161,.05);padding-bottom:96px;}
+.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--gap);}
+.service-card{background:#fff;border-radius:8px;padding:32px;box-shadow:0 2px 6px rgba(0,0,0,.08);text-align:center;transition:transform .25s cubic-bezier(0.4,0,0.2,1);}
+.service-card:hover{transform:translateY(-6px);}
+.service-card svg{width:48px;height:48px;stroke:var(--color-primary);}
+.service-card h3{margin-top:16px;}
+.service-card a{margin-top:12px;display:inline-block;font-weight:600;}
+/* Carriers */
+.carrier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--gap);}
+.carrier-card{background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius);padding:1rem;transition:transform .25s,var(--transition);}
+.carrier-card:hover{transform:translateY(-6px);box-shadow:0 4px 12px rgba(0,0,0,.12);}
+/* Testimonials */
+#testimonials{position:relative;overflow:hidden;}
+.carousel{display:flex;transition:transform .5s cubic-bezier(0.4,0,0.2,1);}
+.carousel-item{min-width:100%;flex-shrink:0;padding:2rem;}
+.carousel-controls{position:absolute;bottom:1rem;right:1rem;display:flex;gap:.5rem;}
+.carousel-controls button{background:none;border:none;color:#fff;padding:8px;stroke:#fff;}
+/* FAQ Accordion */
+.accordion{max-width:var(--content-width);margin:auto;}
+.accordion-item{border-bottom:1px solid var(--color-divider);}
+.accordion-button{
+  width:100%;text-align:left;background:none;border:none;padding:1rem 0;font-weight:600;display:flex;justify-content:space-between;align-items:center;
+}
+.accordion-button:hover,.accordion-button:focus{color:var(--color-primary);}
+.accordion-content{
+  max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease-out,opacity .35s ease-out;padding:0 0;
+}
+.accordion-content p{padding-bottom:1rem;}
+/* Contact */
+#contact{background:linear-gradient(rgba(0,153,161,.1),transparent),#F9FAFC;}
+.contact-grid{display:grid;grid-template-columns:1fr;gap:2rem;}
+@media(min-width:768px){.contact-grid{grid-template-columns:1fr 1fr;}}
+form{background:#fff;padding:2rem;border-radius:var(--radius);box-shadow:0 2px 6px rgba(0,0,0,.1);}
+form .field{margin-bottom:1rem;}
+form label{display:block;font-weight:600;margin-bottom:.5rem;}
+form input,form textarea{
+  width:100%;padding:10px;border:1px solid #ccc;border-radius:var(--radius);
+}
+form input:focus,form textarea:focus{outline:none;border-color:var(--color-primary);}
+.error{color:#dc3545;font-size:.875rem;margin-top:.25rem;display:none;}
+.success{background:var(--color-success);color:#fff;padding:.75rem;border-radius:var(--radius);margin-top:1rem;display:none;}
+/* Footer */
+footer{background:var(--color-text);color:#fff;padding:1rem 0;text-align:center;font-size:14px;}
+.socials{display:flex;gap:.5rem;justify-content:center;margin-top:.5rem;}
+.socials svg{stroke:#fff;width:24px;height:24px;transition:.2s;}
+.socials a:hover svg{stroke:var(--color-accent);transform:translateY(-2px);}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="logo">Medicare by AMA</div>
+    <button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false"><i data-lucide="menu"></i></button>
+    <nav id="primary-nav">
+      <a href="#hero" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero -->
+  <section id="hero" class="section" aria-labelledby="hero-title" role="region">
+    <div class="container hero-text">
+      <h1 id="hero-title">Empowering Independent Medicare Agents</h1>
+      <p>Join Medicare by AMA, the leading FMO offering 100% commission, premium leads, and training for California & Nevada agents.</p>
+      <button class="btn-primary">Join AMA Today</button>
+      <a href="#contact" class="btn-secondary">Contact Us</a>
+    </div>
+    <div class="hero-img">
+      <img src="https://picsum.photos/id/1015/800/600.webp" alt="Agents collaborating" loading="lazy">
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- About -->
+  <section id="about" class="section" aria-labelledby="about-title" role="region">
+    <div class="container">
+      <h2 id="about-title">Why Choose Medicare by AMA?</h2>
+      <div class="about-grid">
+        <div>
+          <p class="motto">Your success, our mission.</p>
+          <p>Medicare by AMA provides unmatched support, 100% commission, and a community of thriving agents across California and Nevada.</p>
+          <div class="card-list">
+            <div class="card-item"><svg data-lucide="check-circle"></svg><span>100% Commission</span></div>
+            <div class="card-item"><svg data-lucide="check-circle"></svg><span>Premium Leads</span></div>
+            <div class="card-item"><svg data-lucide="check-circle"></svg><span>Comprehensive Training</span></div>
+            <div class="card-item"><svg data-lucide="check-circle"></svg><span>Mobile Portal Access</span></div>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div>
+          <img src="https://picsum.photos/id/1025/600/400.webp" alt="Team meeting" loading="lazy">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <h2>Our Partners</h2>
+      <div class="carrier-grid">
+        <div class="carrier-card"><img src="https://picsum.photos/seed/1/200/120.webp" alt="Carrier logo 1"></div>
+        <div class="carrier-card"><img src="https://picsum.photos/seed/2/200/120.webp" alt="Carrier logo 2"></div>
+        <div class="carrier-card"><img src="https://picsum.photos/seed/3/200/120.webp" alt="Carrier logo 3"></div>
+        <div class="carrier-card"><img src="https://picsum.photos/seed/4/200/120.webp" alt="Carrier logo 4"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section" aria-labelledby="services-title" role="region">
+    <div class="container">
+      <h2 id="services-title">Our Services</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <svg data-lucide="arrow-up-circle"></svg>
+          <h3>100% Commission</h3>
+          <p>Keep every dollar you earn. No hidden fees, no splits.</p>
+        </div>
+        <div class="service-card">
+          <svg data-lucide="users"></svg>
+          <h3>Premium Leads</h3>
+          <p>HIPAA‑compliant, pre‑screened Medicare‑eligible prospects delivered daily.</p>
+        </div>
+        <div class="service-card">
+          <svg data-lucide="book-open"></svg>
+          <h3>Training & Support</h3>
+          <p>Live webinars, on‑demand modules, and one‑on‑one coaching.</p>
+        </div>
+        <div class="service-card">
+          <svg data-lucide="smartphone"></svg>
+          <h3>Mobile Portal</h3>
+          <p>Quote, bind, and manage cases from any device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="section" aria-labelledby="testimonials-title" role="region">
+    <div class="container">
+      <h2 id="testimonials-title">What Our Agents Say</h2>
+      <div class="carousel" aria-live="polite">
+        <div class="carousel-item">
+          <p>“Since joining AMA, my earnings have doubled. The leads are high‑quality and the training is top‑notch.”</p>
+          <p><strong>— Maria Gonzalez, Nevada</strong></p>
+        </div>
+        <div class="carousel-item">
+          <p>“The 100% commission model lets me focus on growing my business without worrying about hidden fees.”</p>
+          <p><strong>— James Lee, California</strong></p>
+        </div>
+        <div class="carousel-item">
+          <p>“Responsive support and a mobile‑friendly portal make managing cases a breeze.”</p>
+          <p><strong>— Samantha Patel, California</strong></p>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button id="prev" aria-label="Previous testimonial"><i data-lucide="chevron-left"></i></button>
+        <button id="next" aria-label="Next testimonial"><i data-lucide="chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section" aria-labelledby="faq-title" role="region">
+    <div class="container">
+      <h2 id="faq-title">Frequently Asked Questions</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-button" aria-expanded="false" aria-controls="answer1" id="question1">What commission structure do you offer?</button>
+          <div class="accordion-content" id="answer1" role="region" aria-labelledby="question1">
+            <p>We provide a 100% commission model. You keep every dollar you earn.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-button" aria-expanded="false" aria-controls="answer2" id="question2">What training resources are available?</button>
+          <div class="accordion-content" id="answer2" role="region" aria-labelledby="question2">
+            <p>Live weekly webinars, a library of on‑demand modules, and one‑on‑one coaching sessions with senior Medicare specialists.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-button" aria-expanded="false" aria-controls="answer3" id="question3">Are the leads pre‑screened for compliance?</button>
+          <div class="accordion-content" id="answer3" role="region" aria-labelledby="question3">
+            <p>Yes. All leads undergo HIPAA‑compliant verification and are filtered for Medicare‑eligible prospects before delivery.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-button" aria-expanded="false" aria-controls="answer4" id="question4">Can I access the carrier portal on mobile?</button>
+          <div class="accordion-content" id="answer4" role="region" aria-labelledby="question4">
+            <p>Our responsive portal works on all devices; agents can quote, bind, and manage cases from any smartphone or tablet.</p>
+          </div>
+        </div>
+      </div>
+      <p class="disclaimer">“Medicare is a federal health insurance program. AMA is not an insurance carrier. All information provided is for educational purposes and does not constitute legal or financial advice. Please consult a licensed professional for personalized guidance.”</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section" aria-labelledby="contact-title" role="region">
+    <div class="container">
+      <h2 id="contact-title">Get in Touch</h2>
+      <div class="contact-grid">
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Your Full Name</label>
+            <input type="text" id="name" name="name" required aria-required="true" placeholder="Your Full Name">
+            <span class="error" id="error-name">Please enter your name.</span>
+          </div>
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required aria-required="true" placeholder="you@example.com">
+            <span class="error" id="error-email">Please enter a valid email.</span>
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required aria-required="true" placeholder="(555) 123‑4567">
+            <span class="error" id="error-phone">Please enter your phone.</span>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required aria-required="true" placeholder="How can we help you?"></textarea>
+            <span class="error" id="error-message">Please enter a message.</span>
+          </div>
+          <button type="submit" class="btn-primary">Join AMA Today</button>
+          <div class="success" id="success-msg">Thank you! Our support team will contact you within 24 hours.</div>
+        </form>
+        <aside>
+          <p>Stay updated on training sessions, lead drops, and industry news.</p>
+          <form id="subscribeForm" novalidate>
+            <div class="field"><label for="sub-name">Name</label><input type="text" id="sub-name" required placeholder="Your Name"></div>
+            <div class="field"><label for="sub-email">Email</label><input type="email" id="sub-email" required placeholder="you@example.com"></div>
+            <button type="submit" class="btn-secondary">Subscribe</button>
+            <p class="small">We’ll send a double‑opt‑in confirmation. No spam, ever.</p>
+          </form>
+        </aside>
+      </div>
+      <div class="additional-info" style="margin-top:2rem;display:flex;flex-direction:column;gap:.5rem;">
+        <p><i data-lucide="phone"></i> Call us: <a href="tel:8005550199">(800) 555‑0199 (Mon‑Fri 9 am‑6 pm PT)</a></p>
+        <p><i data-lucide="mail"></i> <a href="mailto:support@MedicarebyAMA.com">support@MedicarebyAMA.com</a></p>
+        <p><i data-lucide="map-pin"></i> 1000 Sunrise Blvd, Suite 200, Sacramento, CA 95814</p>
+        <p style="text-align:right;">
+          <a href="privacy.html" target="_blank" rel="noopener noreferrer" aria-label="Open Privacy Policy in a new tab">Privacy Policy</a> |
+          <a href="sitemap.html" target="_blank" rel="noopener noreferrer" aria-label="Open Site Map in a new tab">Site Map</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background:#212B36;color:#fff;padding:1rem 0;">
+    <div class="container" style="display:flex;flex-direction:column;align-items:center;">
+      <p>© 2024 Medicare by AMA. All rights reserved.</p>
+      <div class="socials" style="display:flex;gap:.5rem;margin-top:.5rem;">
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script>
+/* Header shrink */
+const header=document.querySelector('header');
+window.addEventListener('scroll',()=>{header.classList.toggle('shrink',window.scrollY>40);});
+
+/* Mobile menu */
+const toggle=document.querySelector('.menu-toggle');
+const nav=document.querySelector('nav');
+toggle.addEventListener('click',()=>{nav.classList.toggle('open');toggle.setAttribute('aria-expanded',nav.classList.contains('open'));});
+
+/* Hero animation on load */
+window.addEventListener('DOMContentLoaded',()=>{document.querySelector('.hero-text').style.opacity='1';document.querySelector('.hero-text').style.transform='translateY(0)';document.querySelector('.hero-img').style.opacity='1';document.querySelector('.hero-img').style.transform='translateX(0)';});
+
+/* IntersectionObserver for sections */
+const fader=document.querySelectorAll('.section, .service-card, .service-card svg, .card-item, .service-card, .service-grid, .service-card, .hero-text, .hero-img');
+const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)';}}),{threshold:0.2});
+fader.forEach(el=>observer.observe(el));
+
+/* Accordion */
+document.querySelectorAll('.accordion-button').forEach(btn=>{
+  btn.addEventListener('click',()=>{const expanded=btn.getAttribute('aria-expanded')==='true';document.querySelectorAll('.accordion-button').forEach(b=>{b.setAttribute('aria-expanded','false');document.getElementById(b.getAttribute('aria-controls')).style.maxHeight=null;});if(!expanded){btn.setAttribute('aria-expanded','true');const content=document.getElementById(btn.getAttribute('aria-controls'));content.style.maxHeight=content.scrollHeight+'px';content.style.opacity='1';}});
+});
+
+/* Carousel */
+let slideIndex=0;
+const carousel=document.querySelector('#testimonials .carousel');
+const slides=document.querySelectorAll('.carousel-item');
+function showSlide(i){carousel.style.transform=`translateX(${-i*100}%)`;}
+function nextSlide(){slideIndex=(slideIndex+1)%slides.length;showSlide(slideIndex);}
+function prevSlide(){slideIndex=(slideIndex-1+slides.length)%slides.length;showSlide(slideIndex);}
+document.getElementById('next').addEventListener('click',nextSlide);
+document.getElementById('prev').addEventListener('click',prevSlide);
+setInterval(nextSlide,5000);
+
+/* Form validation */
+function validateForm(e){e.preventDefault();let valid=true;const fields=[{id:'name',msg:'Please enter your name.'},{id:'email',msg:'Please enter a valid email.',type:'email'},{id:'phone',msg:'Please enter your phone.'},{id:'message',msg:'Please enter a message.'}];fields.forEach(f=>{const input=document.getElementById(f.id);const error=document.getElementById('error-'+f.id);if(!input.value.trim()||(f.type==='email' && !/^\\S+@\\S+\\.\\S+$/.test(input.value))){error.style.display='block';input.classList.add('shake');valid=false;}else{error.style.display='none';input.classList.remove('shake');}});
+if(valid){document.getElementById('success-msg').style.display='block';document.getElementById('contactForm').reset();}
+}
+document.getElementById('contactForm').addEventListener('submit',validateForm);
+
+/* Disable button default focus outline for icons */
+lucide.createIcons();
+</script>
+</body>
+</html>
 </body>
 </html>
