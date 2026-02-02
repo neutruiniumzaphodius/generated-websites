@@ -1,75 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Medicare by AMA – Join the Leading Brokerage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#1E3A8A;
+      --accent:#D4A200;
+      --accent-text:#000;
+      --bg:#F3F4F6;
+      --text:#212B36;
+    }
+    body{font-family:'Roboto',sans-serif;margin:0;color:var(--text);background:var(--bg);}
+    a{color:var(--primary);text-decoration:none;}
+    a:hover{opacity:.8;}
+    .container{max-width:1200px;margin:auto;padding:0 1rem;}
+    .grid{display:grid;gap:2rem;}
+    .flex-center{display:flex;justify-content:center;align-items:center;}
+    header{position:sticky;top:0;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);z-index:1000;transition:height .3s;}
+    header.collapsed{height:60px;}
+    .btn-primary{background:var(--accent);color:var(--accent-text);border:none;padding:.75rem 1.5rem;font-weight:600;cursor:pointer;transition:background .3s;}
+    .btn-primary:hover{background:#c89a00;}
+    .btn-secondary{background:#fff;color:var(--primary);border:2px solid var(--primary);padding:.75rem 1.5rem;font-weight:600;cursor:pointer;transition:background .3s;}
+    .btn-secondary:hover{background:#f0f8ff;}
+    .hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;background:#000 url('https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxNYWRlY2lzJTIwQWdlbnR8ZW58MHx8fHwxNjg5OTI4NzYz&ixlib=rb-4.0.3&q=80&w=1920') center/cover no-repeat;}
+    .hero::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5);}
+    .hero .content{position:relative;max-width:800px;z-index:1;}
+    .hero h1{font-size:2.5rem;margin-bottom:.5rem;}
+    .hero p{font-size:1.2rem;margin-bottom:1.5rem;}
+    .about .about-text{grid-column:1 / -1;}
+    .headshots img{border-radius:50%;width:120px;height:120px;object-fit:cover;}
+    .service-card,.card{background:#fff;padding:1.5rem;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.1);text-align:center;}
+    .service-card i,.card i{color:var(--primary);margin-bottom:.5rem;}
+    .carousel{position:relative;overflow:hidden;}
+    .carousel-track{display:flex;transition:transform .5s ease;}
+    .carousel-item{min-width:100%;padding:2rem;background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.1);display:none;}
+    .carousel-item.show{display:block;}
+    .testimonial-quote{font-style:italic;margin-bottom:1rem;}
+    .testimonial-img{border-radius:50%;float:left;margin-right:1rem;width:80px;height:80px;object-fit:cover;}
+    .testimonial-author{clear:both;margin-top:.5rem;font-weight:600;}
+    .input-group{margin-bottom:1rem;}
+    .input-group label{display:block;margin-bottom:.25rem;}
+    .input-group input{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
+    .input-group.error input{border-color:#c00;}
+    .cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -2px 6px rgba(0,0,0,.2);padding:1rem;display:flex;justify-content:space-between;align-items:center;z-index:1000;}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:1000;}
+    .modal.show{display:flex;}
+    .modal-content{background:#fff;padding:1.5rem;border-radius:8px;max-width:800px;width:90%;position:relative;}
+    .modal-close{position:absolute;top:.5rem;right:.5rem;background:none;border:none;font-size:1.5rem;cursor:pointer;}
+    .mobile-menu{position:fixed;top:0;right:-100%;width:80%;height:100%;background:#fff;box-shadow:-2px 0 6px rgba(0,0,0,.2);display:flex;flex-direction:column;padding:2rem;transition:right .3s;z-index:1000;}
+    .mobile-menu.show{right:0;}
+    .mobile-menu a{margin-bottom:1rem;font-size:1.2rem;}
+    .hide{display:none;}
+    @media(min-width:768px){
+      .hide{display:block;}
+      .mobile-menu{display:none;}
+    }
+  </style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<header>
+  <div class="container grid" style="grid-template-columns:auto 1fr auto;">
+    <a href="#hero" class="btn-primary cta">Join Now</a>
+    <nav aria-label="Primary navigation">
+      <ul class="grid hide" style="grid-auto-flow:column;gap:1rem;">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">Why Choose Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+      <i data-lucide="menu"></i>
+    </button>
+  </div>
+</header>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="#hero">Home</a>
+  <a href="#about">Why Choose Us</a>
+  <a href="#services">Services</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#contact">Contact</a>
+  <button class="btn-primary" id="mobile-cta">Join Now</button>
+</div>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+<a class="skip-link" href="#main" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">Skip to main content</a>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+<main id="main" tabindex="-1">
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+<section class="hero" id="hero" aria-label="Hero image showing agents collaborating">
+  <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxNYWRlY2lzJTIwQWdlbnR8ZW58MHx8fHwxNjg5OTI4NzYz&ixlib=rb-4.0.3&q=80&w=1920" alt="Agents reviewing Medicare plans together" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
+  <div class="content">
+    <h1>JOIN THE LEADING MEDICARE BROKERAGE</h1>
+    <p>24/7 training, instant commissions, qualified leads, and senior‑management support. Empower your career today.</p>
+    <div class="btn-group">
+      <button class="btn-primary" id="open-video">Watch CEO’s 2‑minute Vision Message</button>
+      <a href="#contact" class="btn-secondary">Join Now</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container grid">
+    <h2>WHY AGENTS CHOOSE US</h2>
+    <div class="grid">
+      <div class="about-text animate-on-scroll">
+        <p>Our agents enjoy 24/7 training, instant commissions, qualified leads, and direct senior‑management support. We’re dedicated to your success.</p>
+        <div class="cards">
+          <div class="card">
+            <i data-lucide="book-open"></i>
+            <h3>24/7 Training</h3>
+            <p>Access a library of courses anytime, anywhere.</p>
+          </div>
+          <div class="card">
+            <i data-lucide="credit-card"></i>
+            <h3>Instant Commissions</h3>
+            <p>Get paid the moment a sale closes.</p>
+          </div>
+          <div class="card">
+            <i data-lucide="users"></i>
+            <h3>Qualified Leads</h3>
+            <p>High‑quality, pre‑screened Medicare leads.</p>
+          </div>
+          <div class="card">
+            <i data-lucide="brain"></i>
+            <h3>Senior Support</h3>
+            <p>Direct guidance from industry veterans.</p>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+      <div class="headshots" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=120&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMGhlYWQtc2hvdHR8ZW58MHx8fDE2ODk5Mjg3NjM&ixlib=rb-4.0.3&q=80&w=120" alt="Agent Maria Gomez" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1524503033411-c9566986fc8f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=120&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMGhlYWQtc2hvdHR8ZW58MHx8fDE2ODk5Mjg3NjM&ixlib=rb-4.0.3&q=80&w=120" alt="Agent Derek Lee" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=120&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMGhlYWQtc2hvdHR8ZW58MHx8fDE2ODk5Mjg3NjM&ixlib=rb-4.0.3&q=80&w=120" alt="Agent Aisha Patel" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=120&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMGhlYWQtc2hvdHR8ZW58MHx8fDE2ODk5Mjg3NjM&ixlib=rb-4.0.3&q=80&w=120" alt="Agent Carlos Ramirez" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=120&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMGhlYWQtc2hvdHR8ZW58MHx8fDE2ODk5Mjg3NjM&ixlib=rb-4.0.3&q=80&w=120" alt="Agent Lauren Smith" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=120&ixid=MnwyMDc2MTN8MHwxfHNlYXJjaHwxfHxBZ2VudCUyMGhlYWQtc2hvdHR8ZW58MHx8fDE2ODk5Mjg3NjM&ixlib=rb-4.0.3&q=80&w=120" alt="Agent Michael Brown" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <h2>OUR SERVICES</h2>
+    <div class="grid">
+      <div class="service-card animate-on-scroll">
+        <i data-lucide="book-open"></i>
+        <h3>24/7 Training</h3>
+        <p>Comprehensive courses available anytime.</p>
+      </div>
+      <div class="service-card animate-on-scroll">
+        <i data-lucide="credit-card"></i>
+        <h3>Instant Commissions</h3>
+        <p>Earn money as soon as a sale is confirmed.</p>
+      </div>
+      <div class="service-card animate-on-scroll">
+        <i data-lucide="users"></i>
+        <h3>Qualified Leads</h3>
+        <p>We provide warm, conversion‑ready leads.</p>
+      </div>
+      <div class="service-card animate-on-scroll">
+        <i data-lucide="brain"></i>
+        <h3>Senior Management Support</h3>
+        <p>Direct mentorship from industry experts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <h2>WHAT OUR AGENTS SAY</h2>
+    <div class="carousel" aria-label="Testimonials carousel">
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-item">
+          <p class="testimonial-quote">The training is phenomenal — I could learn at my own pace while still getting real‑world support.</p>
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=80&w=80" alt="John Doe, Agent" class="testimonial-img">
+          <p class="testimonial-author">— John Doe, Agent</p>
+        </div>
+        <div class="carousel-item">
+          <p class="testimonial-quote">Instant commissions changed my life. I get paid the minute a client signs up.</p>
+          <img src="https://images.unsplash.com/photo-1502767089025-6572583495f6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=80&w=80" alt="Maria Silva, Agent" class="testimonial-img">
+          <p class="testimonial-author">— Maria Silva, Agent</p>
+        </div>
+        <div class="carousel-item">
+          <p class="testimonial-quote">The leads are high quality. I close deals faster than ever before.</p>
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=80&w=80" alt="Ahmed Khan, Agent" class="testimonial-img">
+          <p class="testimonial-author">— Ahmed Khan, Agent</p>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="btn-secondary" id="carousel-prev"><i data-lucide="chevron-left"></i></button>
+        <button class="btn-secondary" id="carousel-next"><i data-lucide="chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <h2>Get Started Today</h2>
+    <form id="cta-form" novalidate>
+      <div class="input-group"><label for="name">Full Name</label><input type="text" id="name" required></div>
+      <div class="input-group"><label for="email">Email Address</label><input type="email" id="email" required></div>
+      <button type="submit" class="btn-primary">Submit Application</button>
+    </form>
+  </div>
+</section>
+
+<footer class="bg-white py-4">
+  <div class="container flex-center">
+    <p>&copy; <span id="year"></span> Medicare by AMA. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="cookie-banner" id="cookie-banner-primary">
+  <span>We use cookies to improve your experience.</span>
+  <button class="btn-primary" id="accept-cookies">Accept</button>
+</div>
+
+<div class="modal" id="video-modal-main" role="dialog" aria-modal="true" aria-labelledby="video-modal-title">
+  <div class="modal-content">
+    <h2 id="video-modal-title">CEO Vision Message</h2>
+    <video controls style="width:100%;border-radius:8px;">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <button class="modal-close" data-close>&times;</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Initialize icons
+  lucide.createIcons();
+
+  // Mobile menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!expanded));
+    mobileMenu.setAttribute('aria-hidden', String(expanded));
+    mobileMenu.classList.toggle('show');
+  });
+
+  // Close mobile menu when a link is clicked
+  document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      mobileMenu.classList.remove('show');
+    });
+  });
+
+  // Hero button to open video modal
+  const openVideoBtn = document.getElementById('open-video');
+  const videoModal = document.getElementById('video-modal-main');
+  const acceptCookiesBtn = document.getElementById('accept-cookies');
+  const cookieBanner = document.getElementById('cookie-banner-primary');
+
+  openVideoBtn.addEventListener('click', () => {
+    videoModal.classList.add('show');
+  });
+
+  // Close modal
+  document.querySelectorAll('.modal-close, [data-close]').forEach(el => {
+    el.addEventListener('click', () => {
+      el.closest('.modal').classList.remove('show');
+    });
+  });
+
+  // Accept cookies
+  acceptCookiesBtn.addEventListener('click', () => {
+    cookieBanner.classList.add('hide');
+  });
+
+  // Animate on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1});
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el=>observer.observe(el));
+
+  // Simple carousel navigation
+  const track = document.getElementById('carousel-track');
+  const items = Array.from(track.children);
+  let currentIndex = 0;
+
+  const showItem = (index) => {
+    items.forEach((item,i)=>item.classList.toggle('show', i===index));
+    track.style.transform = `translateX(-${index * 100}%)`;
+  };
+
+  document.getElementById('carousel-prev')?.addEventListener('click',()=> {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    showItem(currentIndex);
+  });
+
+  document.getElementById('carousel-next')?.addEventListener('click',()=> {
+    currentIndex = (currentIndex + 1) % items.length;
+    showItem(currentIndex);
+  });
+
+  // Initialize first testimonial
+  showItem(0);
+
+  // Year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Form validation feedback
+  document.getElementById('cta-form').addEventListener('submit', e => {
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    let valid = true;
+
+    if(!name.value.trim()){
+      name.parentElement.classList.add('error');
+      valid = false;
+    } else {
+      name.parentElement.classList.remove('error');
+    }
+
+    if(!email.value.trim()){
+      email.parentElement.classList.add('error');
+      valid = false;
+    } else {
+      email.parentElement.classList.remove('error');
+    }
+
+    if(!valid) e.preventDefault();
+  });
+</script>
 </body>
 </html>
