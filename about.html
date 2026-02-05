@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About &amp; Contact – Computing Legacy Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Serif:wght@400;500&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --color-primary:#0A0F2C;
+  --color-secondary:#1F7A8C;
+  --color-accent:#E63946;
+  --color-bg-gradient:linear-gradient(135deg,#0A0F2C 0%,#15213D 100%);
+  --color-text:#F1F5F9;
+  --color-surface:rgba(255,255,255,0.06);
+  --gap:24px;
+  --base:8px;
+  --max-width:1440px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-text);
+  line-height:1.6;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+button{
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3{
+  margin:0;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,9vw,96px);
+  letter-spacing:0.08em;
+}
+h2{
+  font-size:24px;
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--base);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base) 0;
+}
+.nav-links{
+  display:flex;
+  gap:var(--base);
+}
+.nav-link{
+  position:relative;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-text);
+}
+.btn{
+  border:none;
+  border-radius:8px;
+  padding:12px 24px;
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:500;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+.btn-primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 12px var(--color-accent);
+}
+.btn-secondary{
+  background:none;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(31,122,140,0.1);
+}
+.cta-group{
+  margin-top:var(--base);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+section{
+  padding:var(--base) 0;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+.mission{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--gap);
+  align-items:center;
+}
+.mission img{
+  width:100%;
+  height:auto;
+}
+.mission .text{
+  max-width:600px;
+}
+.underline{
+  width:0;
+  height:2px;
+  background:var(--color-accent);
+  transition:width .6s ease-out;
+}
+.mission .text h2{
+  position:relative;
+}
+.mission .text h2::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:2px;
+  background:var(--color-accent);
+}
+.carousel{
+  position:relative;
+  overflow:hidden;
+  max-width:1000px;
+  margin:auto;
+}
+.carousel-track{
+  display:flex;
+  transition:transform .6s ease-out;
+}
+.carousel-item{
+  min-width:100%;
+  flex-shrink:0;
+  padding:var(--base);
+}
+.carousel-controls{
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  transform:translateY(-50%);
+}
+.carousel-controls button{
+  background:none;
+  border:none;
+  color:var(--color-accent);
+  font-size:32px;
+}
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:var(--base);
+}
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  cursor:pointer;
+}
+.dot.active{
+  background:var(--color-accent);
+}
+.highlights{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.card{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  backdrop-filter:blur(6px);
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  transition:border .3s ease-out;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+.card:hover::before{
+  border-color:var(--color-accent);
+}
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.team-card{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  backdrop-filter:blur(6px);
+  text-align:center;
+  transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.team-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+.team-card img{
+  width:120px;
+  height:120px;
+  margin:auto;
+  border-radius:50%;
+  background:var(--color-surface);
+  padding:8px;
+}
+.team-card h3{
+  margin-top:var(--base);
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-size:20px;
+  color:var(--color-text);
+}
+.team-card h4{
+  margin-top:4px;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  font-size:16px;
+  color:#C0C9D1;
+}
+.team-card p{
+  margin-top:8px;
+  font-size:14px;
+  color:var(--color-text);
+}
+.social-icons{
+  margin-top:8px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+}
+.social-icons a{
+  color:var(--color-text);
+  font-size:18px;
+  transition:var(--transition);
+}
+.social-icons a:hover{
+  color:var(--color-accent);
+  filter:drop-shadow(0 0 6px var(--color-accent));
+}
+.contact-section{
+  max-width:800px;
+  margin:auto;
+}
+.contact-section form{
+  display:grid;
+  gap:var(--base);
+}
+.contact-section input,
+.contact-section textarea{
+  border:none;
+  background:var(--color-surface);
+  color:var(--color-text);
+  padding:8px 12px;
+  border-radius:8px;
+  font-family:inherit;
+}
+.contact-section input:focus,
+.contact-section textarea:focus{
+  outline:none;
+  box-shadow:0 0 6px var(--color-accent);
+}
+.newsletter{
+  margin-top:var(--base);
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.newsletter input{
+  flex:1;
+  border:none;
+  background:var(--color-surface);
+  color:var(--color-text);
+  padding:8px 12px;
+  border-radius:8px;
+}
+.newsletter input:focus{
+  outline:none;
+  box-shadow:0 0 6px var(--color-accent);
+}
+#map{
+  width:100%;
+  height:300px;
+  border-radius:12px;
+  margin-top:var(--base);
+}
+footer{
+  background:rgba(0,0,0,0.6);
+  padding:var(--base) 0;
+}
+footer .link{
+  margin-top:var(--base);
+  color:var(--color-accent);
+  font-weight:500;
+  text-decoration:underline;
+}
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#000;
+  color:#fff;
+  padding:8px;
+  z-index:1000;
+}
+@media (max-width:768px){
+  .mission{
+    grid-template-columns:1fr;
+  }
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary);
+    flex-direction:column;
+    display:none;
+    padding:var(--base);
+  }
+  .nav-links.show{
+    display:flex;
+  }
+  .nav-toggle{
+    display:block;
+  }
+}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <nav class="container">
+    <a href="index.html" class="logo">Computing Legacy Hub</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      ☰
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="computers.html" class="nav-link">Iconic Computers</a></li>
+      <li><a href="impact.html" class="nav-link">Human Impact</a></li>
+      <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+      <li><a href="about.html" class="nav-link active">About</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <!-- Mission Statement -->
+    <section class="mission reveal visible">
+      <div class="container">
+        <div class="text">
+          <h2>Our Vision</h2>
+          <p>Computing Legacy Hub bridges past, present, and future, offering an authoritative, immersive resource for anyone eager to understand how silicon shaped humanity.</p>
+        </div>
+        <img src="placeholder-mission.svg" alt="Mission illustration">
+      </div>
+    </section>
+
+    <!-- Team Grid -->
+    <section class="team-grid reveal visible">
+      <div class="container">
+        <h2 class="reveal visible">Meet the Team</h2>
+        <div class="team-grid">
+          <div class="team-card card">
+            <img src="portrait-anika.svg" alt="Dr. Anika Patel">
+            <h3>Dr. Anika Patel</h3>
+            <h4>Founder &amp; Chief Historian</h4>
+            <p>A former MIT professor who turned her passion for computing history into a living digital museum.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"><svg width="18" height="18" fill="currentColor"><path d="M5 15c6 0 9-5 9-9 0-.1 0-.2 0-.3A6.4 6.4 0 0016 4.5a6.2 6.2 0 01-1.8.5 3.2 3.2 0 001.4-1.8 6.4 6.4 0 01-2 .8A3.2 3.2 0 007.9 6c0 .3 0 .5.1.8A9 9 0 012 4.2a3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.2 3.3 3.3 0 01-1.5.1 3.2 3.2 0 003 2.2A6.5 6.5 0 010 13.5a9.2 9.2 0 005 1.5"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" fill="currentColor"><path d="M4.5 3C3.1 3 2 4.1 2 5.5S3.1 8 4.5 8 7 6.9 7 5.5 5.9 3 4.5 3zM3 9h3v9H3V9zm6 0h3v1.2h.1c.4-.8 1.5-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V18h-3v-5c0-1.2 0-2.7-1.6-2.7-1.6 0-1.9 1.2-1.9 2.6V18h-3V9z"/></svg></a>
+            </div>
+          </div>
+
+          <div class="team-card card">
+            <img src="portrait-liam.svg" alt="Liam O’Connor">
+            <h3>Liam O’Connor</h3>
+            <h4>Lead Interaction Designer</h4>
+            <p>Specializes in kinetic web experiences for cultural institutions.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"><svg width="18" height="18" fill="currentColor"><path d="M5 15c6 0 9-5 9-9 0-.1 0-.2 0-.3A6.4 6.4 0 0016 4.5a6.2 6.2 0 01-1.8.5 3.2 3.2 0 001.4-1.8 6.4 6.4 0 01-2 .8A3.2 3.2 0 007.9 6c0 .3 0 .5.1.8A9 9 0 012 4.2a3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.2 3.3 3.3 0 01-1.5.1 3.2 3.2 0 003 2.2A6.5 6.5 0 010 13.5a9.2 9.2 0 005 1.5"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" fill="currentColor"><path d="M4.5 3C3.1 3 2 4.1 2 5.5S3.1 8 4.5 8 7 6.9 7 5.5 5.9 3 4.5 3zM3 9h3v9H3V9zm6 0h3v1.2h.1c.4-.8 1.5-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V18h-3v-5c0-1.2 0-2.7-1.6-2.7-1.6 0-1.9 1.2-1.9 2.6V18h-3V9z"/></svg></a>
+            </div>
+          </div>
+
+          <div class="team-card card">
+            <img src="portrait-sofia.svg" alt="Sofia Ramirez">
+            <h3>Sofia Ramirez</h3>
+            <h4>Content Curator</h4>
+            <p>Ensures the historical accuracy and relevance of every exhibit.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"><svg width="18" height="18" fill="currentColor"><path d="M5 15c6 0 9-5 9-9 0-.1 0-.2 0-.3A6.4 6.4 0 0016 4.5a6.2 6.2 0 01-1.8.5 3.2 3.2 0 001.4-1.8 6.4 6.4 0 01-2 .8A3.2 3.2 0 007.9 6c0 .3 0 .5.1.8A9 9 0 012 4.2a3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.2 3.3 3.3 0 01-1.5.1 3.2 3.2 0 003 2.2A6.5 6.5 0 010 13.5a9.2 9.2 0 005 1.5"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" fill="currentColor"><path d="M4.5 3C3.1 3 2 4.1 2 5.5S3.1 8 4.5 8 7 6.9 7 5.5 5.9 3 4.5 3zM3 9h3v9H3V9zm6 0h3v1.2h.1c.4-.8 1.5-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V18h-3v-5c0-1.2 0-2.7-1.6-2.7-1.6 0-1.9 1.2-1.9 2.6V18h-3V9z"/></svg></a>
+            </div>
+          </div>
+
+          <div class="team-card card">
+            <img src="portrait-sofia.svg" alt="Sofia Ramirez">
+            <h3>Sofia Ramirez</h3>
+            <h4>Content Curator</h4>
+            <p>Ensures the historical accuracy and relevance of every exhibit.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"><svg width="18" height="18" fill="currentColor"><path d="M5 15c6 0 9-5 9-9 0-.1 0-.2 0-.3A6.4 6.4 0 0016 4.5a6.2 6.2 0 01-1.8.5 3.2 3.2 0 001.4-1.8 6.4 6.4 0 01-2 .8A3.2 3.2 0 007.9 6c0 .3 0 .5.1.8A9 9 0 012 4.2a3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.2 3.3 3.3 0 01-1.5.1 3.2 3.2 0 003 2.2A6.5 6.5 0 010 13.5a9.2 9.2 0 005 1.5"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" fill="currentColor"><path d="M4.5 3C3.1 3 2 4.1 2 5.5S3.1 8 4.5 8 7 6.9 7 5.5 5.9 3 4.5 3zM3 9h3v9H3V9zm6 0h3v1.2h.1c.4-.8 1.5-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V18h-3v-5c0-1.2 0-2.7-1.6-2.7-1.6 0-1.9 1.2-1.9 2.6V18h-3V9z"/></svg></a>
+            </div>
+          </div>
+
+          <div class="team-card card">
+            <img src="portrait-marc.svg" alt="Marc Liu">
+            <h3>Marc Liu</h3>
+            <h4>Full‑Stack Engineer</h4>
+            <p>Builds the robust backend that powers our interactive experiences.</p>
+            <div class="social-icons">
+              <a href="#" aria-label="Twitter"><svg width="18" height="18" fill="currentColor"><path d="M5 15c6 0 9-5 9-9 0-.1 0-.2 0-.3A6.4 6.4 0 0016 4.5a6.2 6.2 0 01-1.8.5 3.2 3.2 0 001.4-1.8 6.4 6.4 0 01-2 .8A3.2 3.2 0 007.9 6c0 .3 0 .5.1.8A9 9 0 012 4.2a3.2 3.2 0 001 4.3 3.2 3.2 0 01-1.5-.4v.1a3.2 3.2 0 002.6 3.2 3.3 3.3 0 01-1.5.1 3.2 3.2 0 003 2.2A6.5 6.5 0 010 13.5a9.2 9.2 0 005 1.5"/></svg></a>
+              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" fill="currentColor"><path d="M4.5 3C3.1 3 2 4.1 2 5.5S3.1 8 4.5 8 7 6.9 7 5.5 5.9 3 4.5 3zM3 9h3v9H3V9zm6 0h3v1.2h.1c.4-.8 1.5-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V18h-3v-5c0-1.2 0-2.7-1.6-2.7-1.6 0-1.9 1.2-1.9 2.6V18h-3V9z"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Press & Partnerships Carousel -->
+    <section class="press-carousel reveal visible">
+      <div class="container">
+        <h2 class="reveal visible">Press &amp; Partnerships</h2>
+        <div class="carousel">
+          <div class="carousel-track">
+            <div class="carousel-item">
+              <div class="card">
+                <img src="partner-1.svg" alt="Partner 1">
+                <p>Featured in TechCrunch – April 2023</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="card">
+                <img src="partner-2.svg" alt="Partner 2">
+                <p>Collaboration with Smithsonian Institution</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="card">
+                <img src="partner-3.svg" alt="Partner 3">
+                <p>Winner of the 2022 Digital Heritage Award</p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="prev" aria-label="Previous slide">‹</button>
+            <button class="next" aria-label="Next slide">›</button>
+          </div>
+        </div>
+        <div class="dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-section reveal visible">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <form>
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+
+        <div class="newsletter">
+          <input type="email" placeholder="Your email address" aria-label="Newsletter email">
+          <button class="btn btn-secondary">Subscribe</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section reveal visible">
+      <div class="container">
+        <h2>Our Locations</h2>
+        <div id="map"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>&copy; 2024 Computing Legacy Hub. All rights reserved.</p>
+    <a href="#" class="link">Back to top</a>
+  </footer>
+
+  <script>
+    // Simple navigation toggle for mobile
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

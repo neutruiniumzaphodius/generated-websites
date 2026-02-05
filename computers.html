@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Iconic Computers – Computing Legacy Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --color-primary:#0A0F2C;
+  --color-secondary:#1F7A8C;
+  --color-accent:#E63946;
+  --color-bg-gradient:linear-gradient(135deg,#0A0F2C 0%,#15213D 100%);
+  --color-text:#F1F5F9;
+  --color-surface:rgba(255,255,255,0.06);
+  --gap:24px;
+  --base:8px;
+  --max-width:1440px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-text);
+  line-height:1.6;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+button{
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3{
+  margin:0;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,9vw,96px);
+  letter-spacing:0.08em;
+}
+h2{
+  font-size:24px;
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--base);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base) 0;
+}
+.nav-links{
+  display:flex;
+  gap:var(--base);
+}
+.nav-link{
+  position:relative;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-text);
+}
+.hero{
+  min-height:60vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--color-bg-gradient);
+  z-index:-1;
+}
+.btn{
+  border:none;
+  border-radius:8px;
+  padding:12px 24px;
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:500;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+.btn-primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 12px var(--color-accent);
+}
+.btn-secondary{
+  background:none;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(31,122,140,0.1);
+}
+.cta-group{
+  margin-top:var(--base);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+section{
+  padding:var(--base) 0;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+.tabs{
+  display:flex;
+  overflow-x:auto;
+  gap:var(--base);
+  padding-bottom:var(--base);
+}
+.tab{
+  flex:none;
+  padding:8px 16px;
+  cursor:pointer;
+  text-transform:uppercase;
+  font-family:'Space Grotesg',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  letter-spacing:0.04em;
+  border-bottom:2px solid transparent;
+  transition:border-color var(--transition);
+}
+.tab.active{
+  border-color:var(--color-accent);
+}
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.gallery .card{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  backdrop-filter:blur(6px);
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.gallery .card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  transition:border .3s ease-out;
+}
+.gallery .card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+.gallery .card:hover::before{
+  border-color:var(--color-accent);
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .3s ease-out;
+}
+.modal.show{
+  visibility:visible;
+  opacity:1;
+}
+.modal-content{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  max-width:800px;
+  width:90%;
+  backdrop-filter:blur(6px);
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+.timeline-scroll{
+  position:relative;
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:var(--base) 0;
+}
+.marker{
+  display:inline-block;
+  padding:8px 12px;
+  margin:0 8px;
+  background:var(--color-surface);
+  border-radius:8px;
+  cursor:pointer;
+  transition:background var(--transition);
+}
+.marker:hover{
+  background:rgba(255,255,255,0.1);
+}
+footer{
+  background:rgba(0,0,0,0.6);
+  padding:var(--base) 0;
+  text-align:center;
+}
+footer .link{
+  margin-top:var(--base);
+  color:var(--color-accent);
+  font-weight:500;
+  text-decoration:underline;
+}
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#000;
+  color:#fff;
+  padding:8px;
+  z-index:1000;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary);
+    flex-direction:column;
+    display:none;
+    padding:var(--base);
+  }
+  .nav-links.show{
+    display:flex;
+  }
+  .nav-toggle{
+    display:block;
+  }
+}
+</style>
+<title>Iconic Computers – Computing Legacy Hub</title>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="container">
+  <nav>
+    <div class="logo"><strong>Computing Legacy Hub</strong></div>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="computers.html" class="nav-link active">Iconic Computers</a></li>
+      <li><a href="impact.html" class="nav-link">Human Impact</a></li>
+      <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <h1>Iconic Computers Archive</h1>
+    <h2>Explore the most influential machines that shaped our digital world.</h2>
+    <div class="cta-group">
+      <button class="btn btn-primary" id="openAll">View All</button>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="tabs" role="tablist">
+      <div class="tab active" data-era="all">All Eras</div>
+      <div class="tab" data-era="1940s">1940s</div>
+      <div class="tab" data-era="1950s">1950s</div>
+      <div class="tab" data-era="1960s">1960s</div>
+      <div class="tab" data-era="1970s">1970s</div>
+      <div class="tab" data-era="1980s">1980s</div>
+      <div class="tab" data-era="1990s">1990s</div>
+      <div class="tab" data-era="2000s">2000s+</div>
+    </div>
+  </section>
+
+  <section class="container gallery">
+    <!-- Sample Cards -->
+    <div class="card" data-era="1940s">
+      <h3>ENIAC</h3>
+      <p>First general‑purpose electronic computer, 1946.</p>
+      <button class="btn btn-secondary learn-more" data-id="eniac">Learn More</button>
+    </div>
+    <div class="card" data-era="1950s">
+      <h3>UNIVAC I</h3>
+      <p>First commercially produced computer, 1951.</p>
+      <button class="btn btn-secondary learn-more" data-id="univac">Learn More</button>
+    </div>
+    <div class="card" data-era="1960s">
+      <h3>IBM System/360</h3>
+      <p>Family of mainframes that unified hardware and software, 1964.</p>
+      <button class="btn btn-secondary learn-more" data-id="s360">Learn More</button>
+    </div>
+    <div class="card" data-era="1970s">
+      <h3>Altair 8800</h3>
+      <p>Sparked the personal computer revolution, 1975.</p>
+      <button class="btn btn-secondary learn-more" data-id="altair">Learn More</button>
+    </div>
+    <div class="card" data-era="1980s">
+      <h3>Apple Macintosh</h3>
+      <p>Popularized the graphical user interface, 1984.</p>
+      <button class="btn btn-secondary learn-more" data-id="mac">Learn More</button>
+    </div>
+    <div class="card" data-era="1990s">
+      <h3>IBM ThinkPad 700C</h3>
+      <p>Iconic business laptop, 1992.</p>
+      <button class="btn btn-secondary learn-more" data-id="thinkpad">Learn More</button>
+    </div>
+    <div class="card" data-era="2000s">
+      <h3>Raspberry Pi</h3>
+      <p>Low‑cost, credit‑card sized computer, 2012.</p>
+      <button class="btn btn-secondary learn-more" data-id="raspi">Learn More</button>
+    </div>
+  </section>
+
+  <section class="container timeline-scroll">
+    <div class="timeline-scroll-inner">
+      <div class="marker" data-event="ENIAC">ENIAC (1946)</div>
+      <div class="marker" data-event="UNIVAC">UNIVAC I (1951)</div>
+      <div class="marker" data-event="S360">IBM System/360 (1964)</div>
+      <div class="marker" data-event="Altair">Altair 8800 (1975)</div>
+      <div class="marker" data-event="Mac">Apple Macintosh (1984)</div>
+      <div class="marker" data-event="ThinkPad">IBM ThinkPad (1992)</div>
+      <div class="marker" data-event="RasPi">Raspberry Pi (2012)</div>
+    </div>
+  </section>
+</main>
+
+<footer class="container">
+  <p>&copy; 2024 Computing Legacy Hub</p>
+  <a href="index.html" class="link">Back to Home</a>
+</footer>
+
+<!-- Modal Template -->
+<div class="modal" id="modal-template" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" aria-label="Close modal">&times;</button>
+    <h2 id="modal-title"></h2>
+    <p id="modal-body"></p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-toggle').forEach(btn=>{
+  btn.addEventListener('click',()=>document.querySelector('.nav-links').classList.toggle('show'));
+});
+function filterCards(era){
+  document.querySelectorAll('.gallery .card, .card').forEach(c=>{
+    if(era==='all' || c.dataset.era===era) c.style.display='block';
+    else c.style.display='none';
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    filterCards(t.dataset.era);
+  });
+});
+document.querySelectorAll('.learn-more').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const id=btn.dataset.id;
+    const data={
+      eniac:{title:'ENIAC',body:'The Electronic Numerical Integrator and Computer (ENIAC) was completed in 1946 and is considered the first general‑purpose electronic computer.'},
+      univac:{title:'UNIVAC I',body:'The UNIVAC I, delivered in 1951, was the first commercially produced computer in the United States.'},
+      s360:{title:'IBM System/360',body:'Introduced in 1964, the System/360 was a groundbreaking family of mainframe computers that unified software and hardware.'},
+      altair:{title:'Altair 8800',body:'Released in 1975, the Altair 8800 sparked the personal computer revolution and inspired the formation of Microsoft.'},
+      mac:{title:'Apple Macintosh',body:'The Macintosh, launched in 1984, popularized the graphical user interface for the masses.'},
+      thinkpad:{title:'IBM ThinkPad 700C',body:'The ThinkPad series, starting in 1992, became an iconic business laptop known for its durability and keyboard.'},
+      raspi:{title:'Raspberry Pi',body:'Since 2012, the Raspberry Pi has provided an affordable, credit‑card sized computer for education and hobbyists.'}
+    };
+    const info=data[id];
+    if(info){
+      document.getElementById('modal-title').textContent=info.title;
+      document.getElementById('modal-body').textContent=info.body;
+      document.getElementById('modal-template').classList.add('show');
+      document.getElementById('modal-template').classList.add('show');
+      document.getElementById('modal-template').style.display='flex';
+    }
+  });
+});
+document.querySelector('.modal-close').addEventListener('click',()=>{document.getElementById('modal-template').classList.remove('show');document.getElementById('modal-template').style.display='none';});
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Iconic Computers – Computing Legacy Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --color-primary:#0A0F2C;
+  --color-secondary:#1F7A8C;
+  --color-accent:#E63946;
+  --color-bg-gradient:linear-gradient(135deg,#0A0F2C 0%,#15213D 100%);
+  --color-text:#F1F5F9;
+  --color-surface:rgba(255,255,255,0.06);
+  --gap:24px;
+  --base:8px;
+  --max-width:1440px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-text);
+  line-height:1.6;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+button{
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3{
+  margin:0;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,9vw,96px);
+  letter-spacing:0.08em;
+}
+h2{
+  font-size:24px;
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--base);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base) 0;
+}
+.nav-links{
+  display:flex;
+  gap:var(--base);
+}
+.nav-link{
+  position:relative;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-text);
+}
+.hero{
+  min-height:60vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--color-bg-gradient);
+  z-index:-1;
+}
+.btn{
+  border:none;
+  border-radius:8px;
+  padding:12px 24px;
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:500;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+.btn-primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 12px var(--color-accent);
+}
+.btn-secondary{
+  background:none;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(31,122,140,0.1);
+}
+.cta-group{
+  margin-top:var(--base);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+section{
+  padding:var(--base) 0;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+.tabs{
+  display:flex;
+  overflow-x:auto;
+  gap:var(--base);
+  padding-bottom:var(--base);
+}
+.tab{
+  flex:none;
+  padding:8px 16px;
+  cursor:pointer;
+  text-transform:uppercase;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  letter-spacing:0.04em;
+  border-bottom:2px solid transparent;
+  transition:border-color var(--transition);
+}
+.tab.active{
+  border-color:var(--color-accent);
+}
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.gallery .card{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  backdrop-filter:blur(6px);
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.gallery .card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  transition:border .3s ease-out;
+}
+.gallery .card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+.gallery .card:hover::before{
+  border-color:var(--color-accent);
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .3s ease-out;
+}
+.modal.show{
+  visibility:visible;
+  opacity:1;
+}
+.modal-content{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  max-width:800px;
+  width:90%;
+  backdrop-filter:blur(6px);
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+.timeline-scroll{
+  position:relative;
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:var(--base) 0;
+}
+.marker{
+  display:inline-block;
+  padding:8px 12px;
+  margin:0 8px;
+  background:var(--color-surface);
+  border-radius:8px;
+  cursor:pointer;
+  transition:background var(--transition);
+}
+.marker:hover{
+  background:rgba(255,255,255,0.1);
+}
+footer{
+  background:rgba(0,0,0,0.6);
+  padding:var(--base) 0;
+  text-align:center;
+}
+footer .link{
+  margin-top:var(--base);
+  color:var(--color-accent);
+  font-weight:500;
+  text-decoration:underline;
+}
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#000;
+  color:#fff;
+  padding:8px;
+  z-index:1000;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary);
+    flex-direction:column;
+    display:none;
+    padding:var(--base);
+  }
+  .nav-links.show{
+    display:flex;
+  }
+  .nav-toggle{
+    display:block;
+  }
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="container">
+  <nav>
+    <div class="logo"><strong>Computing Legacy Hub</strong></div>
+    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="computers.html" class="nav-link active">Iconic Computers</a></li>
+      <li><a href="impact.html" class="nav-link">Human Impact</a></li>
+      <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <h1>Iconic Computers Archive</h1>
+    <h2>Explore the most influential machines that shaped our digital world.</h2>
+    <div class="cta-group">
+      <button class="btn btn-primary" id="openAll">View All</button>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="tabs" role="tablist">
+      <div class="tab active" data-era="all">All Eras</div>
+      <div class="tab" data-era="1940s">1940s</div>
+      <div class="tab" data-era="1950s">1950s</div>
+      <div class="tab" data-era="1960s">1960s</div>
+      <div class="tab" data-era="1970s">1970s</div>
+      <div class="tab" data-era="1980s">1980s</div>
+      <div class="tab" data-era="1990s">1990s</div>
+      <div class="tab" data-era="2000s">2000s+</div>
+    </div>
+  </section>
+
+  <section class="container gallery">
+    <div class="card" data-era="1940s">
+      <h3>ENIAC</h3>
+      <p>First general‑purpose electronic computer, 1946.</p>
+      <button class="btn btn-secondary learn-more" data-id="eniac">Learn More</button>
+    </div>
+    <div class="card" data-era="1950s">
+      <h3>UNIVAC I</h3>
+      <p>First commercially produced computer, 1951.</p>
+      <button class="btn btn-secondary learn-more" data-id="univac">Learn More</button>
+    </div>
+    <div class="card" data-era="1960s">
+      <h3>IBM System/360</h3>
+      <p>Family of mainframes that unified hardware and software, 1964.</p>
+      <button class="btn btn-secondary learn-more" data-id="s360">Learn More</button>
+    </div>
+    <div class="card" data-era="1970s">
+      <h3>Altair 8800</h3>
+      <p>Sparked the personal computer revolution, 1975.</p>
+      <button class="btn btn-secondary learn-more" data-id="altair">Learn More</button>
+    </div>
+    <div class="card" data-era="1980s">
+      <h3>Apple Macintosh</h3>
+      <p>Popularized the graphical user interface, 1984.</p>
+      <button class="btn btn-secondary learn-more" data-id="mac">Learn More</button>
+    </div>
+    <div class="card" data-era="1990s">
+      <h3>IBM ThinkPad 700C</h3>
+      <p>Iconic business laptop, 1992.</p>
+      <button class="btn btn-secondary learn-more" data-id="thinkpad">Learn More</button>
+    </div>
+    <div class="card" data-era="2000s">
+      <h3>Raspberry Pi</h3>
+      <p>Low‑cost, credit‑card sized computer, 2012.</p>
+      <button class="btn btn-secondary learn-more" data-id="raspi">Learn More</button>
+    </div>
+  </section>
+
+  <section class="container timeline-scroll">
+    <div class="timeline-scroll-inner">
+      <div class="marker" data-event="ENIAC">ENIAC (1946)</div>
+      <div class="marker" data-event="UNIVAC">UNIVAC I (1951)</div>
+      <div class="marker" data-event="S360">IBM System/360 (1964)</div>
+      <div class="marker" data-event="Altair">Altair 8800 (1975)</div>
+      <div class="marker" data-event="Mac">Apple Macintosh (1984)</div>
+      <div class="marker" data-event="ThinkPad">IBM ThinkPad (1992)</div>
+      <div class="marker" data-event="RasPi">Raspberry Pi (2012)</div>
+    </div>
+  </section>
+</main>
+
+<footer class="container">
+  <p>&copy; 2024 Computing Legacy Hub</p>
+  <a href="index.html" class="link">Back to Home</a>
+</footer>
+
+<div class="modal" id="modal-template" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" aria-label="Close modal">&times;</button>
+    <h2 id="modal-title"></h2>
+    <p id="modal-body"></p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-toggle').forEach(btn=>{
+  btn.addEventListener('click',()=>document.querySelector('.nav-links').classList.toggle('show'));
+});
+function filterCards(era){
+  document.querySelectorAll('.card').forEach(c=>{
+    if(era==='all' || c.dataset.era===era) c.style.display='block';
+    else c.style.display='none';
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    filterCards(t.dataset.era);
+  });
+});
+document.querySelectorAll('.learn-more').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const id=btn.dataset.id;
+    const data={
+      eniac:{title:'ENIAC',body:'The Electronic Numerical Integrator and Computer (ENIAC) was completed in 1946 and is considered the first general‑purpose electronic computer.'},
+      univac:{title:'UNIVAC I',body:'The UNIVAC I, delivered in 1951, was the first commercially produced computer in the United States.'},
+      s360:{title:'IBM System/360',body:'Introduced in 1964, the System/360 was a groundbreaking family of mainframe computers that unified software and hardware.'},
+      altair:{title:'Altair 8800',body:'Released in 1975, the Altair 8800 sparked the personal computer revolution and inspired the formation of Microsoft.'},
+      mac:{title:'Apple Macintosh',body:'The Macintosh, launched in 1984, popularized the graphical user interface for the masses.'},
+      thinkpad:{title:'IBM ThinkPad 700C',body:'The ThinkPad series, starting in 1992, became an iconic business laptop known for its durability and keyboard.'},
+      raspi:{title:'Raspberry Pi',body:'Since 2012, the Raspberry Pi has provided an affordable, credit‑card sized computer for education and hobbyists.'}
+    };
+    const info=data[id];
+    if(info){
+      document.getElementById('modal-title').textContent=info.title;
+      document.getElementById('modal-body').textContent=info.body;
+      const modal=document.getElementById('modal-template');
+      modal.classList.add('show');
+      modal.style.display='flex';
+    }
+  });
+});
+document.querySelector('.modal-close').addEventListener('click',()=>{
+  const modal=document.getElementById('modal-template');
+  modal.classList.remove('show');
+  modal.style.display='none';
+});
+</script>
+</body>
+</html>

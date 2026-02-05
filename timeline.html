@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timeline – Computing Legacy Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Orbitron:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --color-primary:#0A0F2C;
+  --color-secondary:#1F7A8C;
+  --color-accent:#E63946;
+  --color-bg-gradient:linear-gradient(135deg,#0A0F2C 0%,#15213D 100%);
+  --color-text:#F1F5F9;
+  --color-surface:rgba(255,255,255,0.06);
+  --gap:24px;
+  --base:8px;
+  --max-width:1440px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-text);
+  line-height:1.6;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+button{
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3{
+  margin:0;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,9vw,96px);
+  letter-spacing:0.08em;
+}
+h2{
+  font-size:24px;
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--base);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base) 0;
+}
+.nav-links{
+  display:flex;
+  gap:var(--base);
+}
+.nav-link{
+  position:relative;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-text);
+}
+section{
+  padding:var(--base) 0;
+}
+.btn{
+  border:none;
+  border-radius:8px;
+  padding:12px 24px;
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:500;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+.btn-primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 12px var(--color-accent);
+}
+.btn-secondary{
+  background:none;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(31,122,140,0.1);
+}
+.cta-group{
+  margin-top:var(--base);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+.timeline{
+  position:relative;
+  padding: var(--base) 0;
+}
+.timeline-wrapper{
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.timeline-track{
+  display:flex;
+  width:6000px;
+  height:120px;
+  align-items:center;
+  position:relative;
+}
+.marker{
+  flex:0 0 40px;
+  height:40px;
+  position:relative;
+  scroll-snap-align:start;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.marker::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.1);
+}
+.marker.decade{
+  flex:0 0 80px;
+}
+.marker .year{
+  font-family:'Orbitron',system-ui,Arial,Helvetica,sans-serif;
+  font-size:48px;
+  color:var(--color-accent);
+  opacity:0;
+  transition:opacity .3s ease-out;
+}
+.marker.decade .year{
+  opacity:1;
+}
+.marker:hover .tooltip{
+  opacity:1;
+  transform:translateY(0);
+}
+.tooltip{
+  position:absolute;
+  bottom:120%;
+  left:50%;
+  transform:translateX(-50%) translateY(10px);
+  background:var(--color-primary);
+  color:#fff;
+  padding:8px 12px;
+  border-radius:4px;
+  white-space:nowrap;
+  font-size:14px;
+  opacity:0;
+  transition:opacity .3s ease-out, transform .3s ease-out;
+  pointer-events:none;
+}
+#milestone-card{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-100%;
+  background:var(--color-surface);
+  backdrop-filter:blur(6px);
+  padding:var(--base);
+  border-top-left-radius:12px;
+  border-top-right-radius:12px;
+  transition:transform .5s ease-out, bottom .5s ease-out;
+  max-height:40vh;
+  overflow-y:auto;
+}
+#milestone-card.show{
+  bottom:0;
+}
+#milestone-card h3{
+  margin-bottom:var(--base);
+}
+.play-pause{
+  position:fixed;
+  bottom:var(--base);
+  right:var(--base);
+  background:none;
+  border:none;
+  color:var(--color-accent);
+  font-size:32px;
+  cursor:pointer;
+}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <nav class="container">
+    <div class="logo"><a href="index.html" class="nav-link">Computing Legacy Hub</a></div>
+    <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="computers.html" class="nav-link">Computers</a></li>
+      <li><a href="impact.html" class="nav-link">Impact</a></li>
+      <li><a href="timeline.html" class="nav-link active">Timeline</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+    </ul>
+  </nav>
+
+  <main id="main" class="container">
+    <section class="timeline">
+      <h2 class="reveal visible">Evolution of Hardware & Society</h2>
+      <div class="timeline-wrapper" id="timelineWrapper">
+        <div class="timeline-track" id="timelineTrack">
+          <!-- Markers generated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <section id="milestone-section">
+      <div id="milestone-card" aria-live="polite">
+        <h3 id="milestone-year"></h3>
+        <p id="milestone-image"><img src="" alt="" id="milestone-img"></p>
+        <p id="milestone-note"></p>
+        <button class="btn btn-secondary" id="closeCard">Close</button>
+      </div>
+    </section>
+
+    <button class="play-pause" id="playPauseBtn" aria-label="Pause timeline autoplay">
+      &#10074;&#10074;
+    </button>
+  </main>
+
+  <footer class="footer-cta">
+    <div class="container">
+      <p>© 2024 Computing Legacy Hub</p>
+      <a href="about.html" class="link">About &amp; Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const timelineData = [
+      {year:1940, img:'', note:'Early mechanical calculators.'},
+      {year:1945, img:'', note:'ENIAC prototype.'},
+      {year:1950, img:'', note:'First commercial computers.'},
+      {year:1955, img:'', note:'Transistor revolution.'},
+      {year:1960, img:'', note:'IBM System/360.'},
+      {year:1965, img:'', note:'Moore\'s Law coined.'},
+      {year:1970, img:'', note:'Microprocessor emerges.'},
+      {year:1975, img:'', note:'Altair 8800 launches.'},
+      {year:1980, img:'', note:'Personal computer boom.'},
+      {year:1985, img:'', note:'Macintosh released.'},
+      {year:1990, img:'', note:'Internet becomes public.'},
+      {year:1995, img:'', note:'Windows 95 popularizes GUI.'},
+      {year:2000, img:'', note:'Dot‑com bubble burst.'},
+      {year:2005, img:'', note:'Rise of mobile computing.'},
+      {year:2010, img:'', note:'Cloud computing mainstream.'},
+      {year:2015, img:'', note:'AI and machine learning surge.'},
+      {year:2020, img:'', note:'Quantum computing research accelerates.'},
+      {year:2025, img:'', note:'Future exhibit placeholder.'}
+    ];
+
+    const track = document.getElementById('timelineTrack');
+
+    function createMarkers() {
+      for (let year = 1940; year <= 2025; year += 5) {
+        const isDecade = year % 10 === 0;
+        const marker = document.createElement('div');
+        marker.className = isDecade ? 'marker decade' : 'marker';
+        marker.dataset.year = year;
+        const yearInfo = timelineData.find(e => e.year === year) || {};
+        marker.dataset.note = yearInfo.note || '';
+        marker.dataset.img = yearInfo.img || '';
+        const label = document.createElement('span');
+        label.className = 'year';
+        label.textContent = isDecade ? year : '';
+        marker.appendChild(label);
+        // tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = yearInfo.note || '';
+        marker.appendChild(tooltip);
+        track.appendChild(marker);
+      }
+    }
+
+    createMarkers();
+
+    // Tooltip handling
+    document.querySelectorAll('.marker').forEach(m => {
+      m.addEventListener('mouseenter', () => {
+        const tt = m.querySelector('.tooltip');
+        if (tt) tt.style.opacity = '1';
+      });
+      m.addEventListener('mouseleave', () => {
+        const tt = m.querySelector('.tooltip');
+        if (tt) tt.style.opacity = '0';
+      });
+      m.addEventListener('click', () => {
+        showMilestone(m.dataset.year, m.dataset.img, m.dataset.note);
+      });
+    });
+
+    const card = document.getElementById('milestone-card');
+    const yearEl = document.getElementById('milestone-year');
+    const imgEl = document.getElementById('milestone-img');
+    const noteEl = document.getElementById('milestone-note');
+
+    function showMilestone(year, img, note){
+      yearEl.textContent = year;
+      if(img){
+        imgEl.src = img;
+        imgEl.alt = `Illustration for ${year}`;
+      } else {
+        imgEl.src = '';
+        imgEl.alt = '';
+      }
+      noteEl.textContent = note || 'No detailed note available.';
+      card.classList.add('show');
+    }
+
+    document.getElementById('closeCard').addEventListener('click', () => {
+      card.classList.remove('show');
+    });
+
+    // Play/Pause autoplay
+    const wrapper = document.getElementById('timelineWrapper');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    let autoPlay = true;
+    let intervalId = null;
+
+    function startAutoPlay(){
+      clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        wrapper.scrollLeft += 1;
+        if (wrapper.scrollLeft + wrapper.clientWidth >= track.scrollWidth) {
+          wrapper.scrollLeft = 0;
+        }
+      },5);
+      playPauseBtn.innerHTML = '&#10074;&#10074;';
+      playPauseBtn.setAttribute('aria-label','Pause timeline autoplay');
+    }
+
+    function stopAutoPlay(){
+      clearInterval(intervalId);
+      playPauseBtn.innerHTML = '&#9658;';
+      playPauseBtn.setAttribute('aria-label','Play timeline autoplay');
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+      autoPlay = !autoPlay;
+      if(autoPlay){
+        startAutoPlay();
+      } else {
+        stopAutoPlay();
+      }
+    });
+
+    // pause on manual scroll
+    let isUserScrolling = false;
+    wrapper.addEventListener('scroll', () => {
+      if (!isUserScrolling) {
+        isUserScrolling = true;
+        stopAutoPlay();
+        autoPlay = false;
+        setTimeout(() => { isUserScrolling = false; }, 2000);
+      }
+    });
+
+    // initial autoplay
+    startAutoPlay();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timeline – Computing Legacy Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=Orbitron:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A0F2C;
+  --color-secondary:#1F7A8C;
+  --color-accent:#E63946;
+  --color-bg-gradient:linear-gradient(135deg,#0A0F2C 0%,#15213D 100%);
+  --color-text:#F1F5F9;
+  --color-surface:rgba(255,255,255,0.06);
+  --gap:24px;
+  --base:8px;
+  --max-width:1440px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-text);
+  line-height:1.6;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+button{
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3{
+  margin:0;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,9vw,96px);
+  letter-spacing:0.08em;
+}
+h2{
+  font-size:24px;
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--base);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base) 0;
+}
+.nav-links{
+  display:flex;
+  gap:var(--base);
+}
+.nav-link{
+  position:relative;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-text);
+}
+section{
+  padding:var(--base) 0;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+.cta-group{
+  margin-top:var(--base);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.btn{
+  border:none;
+  border-radius:8px;
+  padding:12px 24px;
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:500;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+.btn-primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 12px var(--color-accent);
+}
+.btn-secondary{
+  background:none;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(31,122,140,0.1);
+}
+.timeline{
+  position:relative;
+}
+.timeline-wrapper{
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.timeline-track{
+  display:flex;
+  width:6000px;
+  height:120px;
+  align-items:center;
+  position:relative;
+}
+.marker{
+  flex:0 0 40px;
+  height:40px;
+  position:relative;
+  scroll-snap-align:start;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.marker.decade{
+  flex:0 0 80px;
+}
+.marker .year{
+  font-family:'Orbitron',system-ui,Arial,Helvetica,sans-serif;
+  font-size:48px;
+  color:var(--color-accent);
+  opacity:0;
+  transition:opacity .3s ease-out;
+}
+.marker.decade .year{
+  opacity:1;
+}
+.marker:hover .tooltip{
+  opacity:1;
+  transform:translateY(0);
+}
+.tooltip{
+  position:absolute;
+  bottom:120%;
+  left:50%;
+  transform:translateX(-50%) translateY(10px);
+  background:var(--color-primary);
+  color:#fff;
+  padding:8px 12px;
+  border-radius:4px;
+  white-space:nowrap;
+  font-size:14px;
+  opacity:0;
+  transition:opacity .3s ease-out,transform .3s ease-out;
+  pointer-events:none;
+}
+#milestone-card{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-100%;
+  background:var(--color-surface);
+  backdrop-filter:blur(6px);
+  padding:var(--base);
+  border-top-left-radius:12px;
+  border-top-right-radius:12px;
+  transition:transform .5s ease-out,bottom .5s ease-out;
+  max-height:40vh;
+  overflow-y:auto;
+}
+#milestone-card.show{
+  bottom:0;
+}
+#milestone-card h3{
+  margin-bottom:var(--base);
+}
+.play-pause{
+  position:fixed;
+  bottom:var(--base);
+  right:var(--base);
+  background:none;
+  border:none;
+  color:var(--color-accent);
+  font-size:32px;
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav class="container">
+  <div class="logo"><a href="index.html" class="nav-link">Computing Legacy Hub</a></div>
+  <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="computers.html" class="nav-link">Computers</a></li>
+    <li><a href="impact.html" class="nav-link">Impact</a></li>
+    <li><a href="timeline.html" class="nav-link active">Timeline</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+  </ul>
+</nav>
+<main id="main" class="container">
+  <section class="timeline">
+    <h2 class="reveal visible">Evolution of Hardware &amp; Society</h2>
+    <div class="timeline-wrapper" id="timelineWrapper">
+      <div class="timeline-track" id="timelineTrack"></div>
+    </div>
+  </section>
+  <section id="milestone-section">
+    <div id="milestone-card" aria-live="polite">
+      <h3 id="milestone-year"></h3>
+      <p id="milestone-image"><img src="" alt="" id="milestone-img"></p>
+      <p id="milestone-note"></p>
+      <button class="btn btn-secondary" id="closeCard">Close</button>
+    </div>
+  </section>
+  <button class="play-pause" id="playPauseBtn" aria-label="Pause timeline autoplay">&#10074;&#10074;</button>
+</main>
+<footer class="footer-cta">
+  <div class="container">
+    <p>© 2024 Computing Legacy Hub</p>
+    <a href="about.html" class="link">About &amp; Contact</a>
+  </div>
+</footer>
+<script>
+const timelineData = [
+  {year:1940, img:'', note:'Early mechanical calculators.'},
+  {year:1945, img:'', note:'ENIAC prototype.'},
+  {year:1950, img:'', note:'First commercial computers.'},
+  {year:1955, img:'', note:'Transistor revolution.'},
+  {year:1960, img:'', note:'IBM System/360.'},
+  {year:1965, img:'', note:"Moore's Law coined."},
+  {year:1970, img:'', note:'Microprocessor emerges.'},
+  {year:1975, img:'', note:'Altair 8800 launches.'},
+  {year:1980, img:'', note:'Personal computer boom.'},
+  {year:1985, img:'', note:'Macintosh released.'},
+  {year:1990, img:'', note:'Internet becomes public.'},
+  {year:1995, img:'', note:'Windows 95 popularizes GUI.'},
+  {year:2000, img:'', note:'Dot‑com bubble burst.'},
+  {year:2005, img:'', note:'Rise of mobile computing.'},
+  {year:2010, img:'', note:'Cloud computing mainstream.'},
+  {year:2015, img:'', note:'AI and machine learning surge.'},
+  {year:2020, img:'', note:'Quantum computing research accelerates.'},
+  {year:2025, img:'', note:'Future exhibit placeholder.'}
+];
+const track = document.getElementById('timelineTrack');
+function createMarkers(){
+  for(let year=1940;year<=2025;year+=5){
+    const isDecade = year%10===0;
+    const marker = document.createElement('div');
+    marker.className = isDecade?'marker decade':'marker';
+    marker.dataset.year = year;
+    const info = timelineData.find(e=>e.year===year)||{};
+    marker.dataset.note = info.note||'';
+    marker.dataset.img = info.img||'';
+    const label = document.createElement('span');
+    label.className = 'year';
+    label.textContent = isDecade?year:'';
+    marker.appendChild(label);
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = info.note||'';
+    marker.appendChild(tooltip);
+    track.appendChild(marker);
+  }
+}
+createMarkers();
+document.querySelectorAll('.marker').forEach(m=>{
+  m.addEventListener('mouseenter',()=>{ const tt=m.querySelector('.tooltip'); if(tt)tt.style.opacity='1'; });
+  m.addEventListener('mouseleave',()=>{ const tt=m.querySelector('.tooltip'); if(tt)tt.style.opacity='0'; });
+  m.addEventListener('click',()=>{ showMilestone(m.dataset.year,m.dataset.img,m.dataset.note); });
+});
+const card=document.getElementById('milestone-card');
+const yearEl=document.getElementById('milestone-year');
+const imgEl=document.getElementById('milestone-img');
+const noteEl=document.getElementById('milestone-note');
+function showMilestone(year,img,note){
+  yearEl.textContent=year;
+  if(img){ imgEl.src=img; imgEl.alt=`Illustration for ${year}`; }
+  else{ imgEl.src=''; imgEl.alt=''; }
+  noteEl.textContent=note||'No detailed note available.';
+  card.classList.add('show');
+}
+document.getElementById('closeCard').addEventListener('click',()=>{ card.classList.remove('show'); });
+const wrapper=document.getElementById('timelineWrapper');
+const playPauseBtn=document.getElementById('playPauseBtn');
+let autoPlay=true, intervalId=null;
+function startAutoPlay(){
+  clearInterval(intervalId);
+  intervalId=setInterval(()=>{
+    wrapper.scrollLeft+=1;
+    if(wrapper.scrollLeft+wrapper.clientWidth>=track.scrollWidth) wrapper.scrollLeft=0;
+  },5);
+  playPauseBtn.innerHTML='&#10074;&#10074;';
+  playPauseBtn.setAttribute('aria-label','Pause timeline autoplay');
+}
+function stopAutoPlay(){
+  clearInterval(intervalId);
+  playPauseBtn.innerHTML='&#9658;';
+  playPauseBtn.setAttribute('aria-label','Play timeline autoplay');
+}
+playPauseBtn.addEventListener('click',()=>{
+  autoPlay=!autoPlay;
+  if(autoPlay) startAutoPlay(); else stopAutoPlay();
+});
+let userScrolling=false;
+wrapper.addEventListener('scroll',()=>{
+  if(!userScrolling){
+    userScrolling=true;
+    stopAutoPlay();
+    autoPlay=false;
+    setTimeout(()=>{ userScrolling=false; },2000);
+  }
+});
+startAutoPlay();
+</script>
+</body>
+</html>

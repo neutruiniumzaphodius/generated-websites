@@ -1,75 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Computing Legacy Hub – Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Serif:wght@400&family=Orbitron:wght@300&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#0A0F2C;
+  --color-secondary:#1F7A8C;
+  --color-accent:#E63946;
+  --color-bg-gradient:linear-gradient(135deg,#0A0F2C 0%,#15213D 100%);
+  --color-text:#F1F5F9;
+  --color-surface:rgba(255,255,255,0.06);
+  --gap:24px;
+  --base:8px;
+  --max-width:1440px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  font-family:'IBM Plex Serif',system-ui,Arial,Helvetica,sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-text);
+  line-height:1.6;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+button{
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3{
+  margin:0;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,9vw,96px);
+  letter-spacing:0.08em;
+}
+h2{
+  font-size:24px;
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--base);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base) 0;
+}
+.nav-links{
+  display:flex;
+  gap:var(--base);
+}
+.nav-link{
+  position:relative;
+  font-family:'Space Grotesk',system-ui,Arial,Helvetica,sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:0.04em;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-text);
+}
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--color-bg-gradient);
+  z-index:-1;
+}
+.timeline-line{
+  position:absolute;
+  bottom:20%;
+  left:10%;
+  width:80%;
+  height:4px;
+  background:rgba(255,255,255,0.1);
+  overflow:hidden;
+}
+.timeline-line::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:var(--color-accent);
+  transform:translateX(-100%);
+  animation:glow 12s linear infinite;
+}
+@keyframes glow{
+  0%{transform:translateX(-100%);}
+  50%{transform:translateX(0%);}
+  100%{transform:translateX(100%);}
+}
+.hero h1{
+  color:var(--color-text);
+}
+.hero h2{
+  margin-top:var(--base);
+  color:var(--color-text);
+}
+.btn{
+  border:none;
+  border-radius:8px;
+  padding:12px 24px;
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  font-weight:500;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+.btn-primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 12px var(--color-accent);
+}
+.btn-secondary{
+  background:none;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(31,122,140,0.1);
+}
+.cta-group{
+  margin-top:var(--base);
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+section{
+  padding:var(--base) 0;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+.mission{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--gap);
+  align-items:center;
+}
+.mission img{
+  width:100%;
+  height:auto;
+}
+.mission .text{
+  max-width:600px;
+}
+.underline{
+  width:0;
+  height:2px;
+  background:var(--color-accent);
+  transition:width .6s ease-out;
+}
+.mission .text h2{
+  position:relative;
+}
+.mission .text h2::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:2px;
+  background:var(--color-accent);
+}
+.carousel{
+  position:relative;
+  overflow:hidden;
+  max-width:1000px;
+  margin:auto;
+}
+.carousel-track{
+  display:flex;
+  transition:transform .6s ease-out;
+}
+.carousel-item{
+  min-width:100%;
+  flex-shrink:0;
+  padding:var(--base);
+}
+.carousel-controls{
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  transform:translateY(-50%);
+}
+.carousel-controls button{
+  background:none;
+  border:none;
+  color:var(--color-accent);
+  font-size:32px;
+}
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:var(--base);
+}
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  cursor:pointer;
+}
+.dot.active{
+  background:var(--color-accent);
+}
+.highlights{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.card{
+  background:var(--color-surface);
+  border-radius:12px;
+  padding:var(--base);
+  backdrop-filter:blur(6px);
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s ease-out,box-shadow .3s ease-out;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  transition:border .3s ease-out;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+.card:hover::before{
+  border-color:var(--color-accent);
+}
+.search-bar{
+  max-width:800px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--color-surface);
+  padding:var(--base);
+  border-radius:12px;
+}
+.search-bar input{
+  flex:1;
+  border:none;
+  background:none;
+  color:var(--color-text);
+  font-size:16px;
+  padding:8px;
+}
+.search-bar input:focus{
+  outline:none;
+}
+.search-results{
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  background:var(--color-primary);
+  border-radius:0 0 12px 12px;
+  max-height:200px;
+  overflow-y:auto;
+  z-index:10;
+}
+.search-results li{
+  padding:8px;
+  cursor:pointer;
+}
+.search-results li:hover{
+  background:rgba(255,255,255,0.1);
+}
+.footer-cta{
+  text-align:center;
+  padding:var(--base) 0;
+}
+footer{
+  background:rgba(0,0,0,0.6);
+  padding:var(--base) 0;
+}
+footer .link{
+  margin-top:var(--base);
+  color:var(--color-accent);
+  font-weight:500;
+  text-decoration:underline;
+}
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#000;
+  color:#fff;
+  padding:8px;
+  z-index:1000;
+}
+@media (max-width:768px){
+  .mission{
+    grid-template-columns:1fr;
+  }
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary);
+    flex-direction:column;
+    display:none;
+    padding:var(--base);
+  }
+  .nav-links.show{
+    display:flex;
+  }
+  .nav-toggle{
+    display:block;
+  }
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="container">
+  <nav aria-label="Main navigation">
+    <div class="logo"><strong>Computing Legacy Hub</strong></div>
+    <button class="nav-toggle" aria-label="Open menu"><i data-lucide="menu"></i></button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+      <li><a href="computers.html" class="nav-link">Iconic Computers</a></li>
+      <li><a href="impact.html" class="nav-link">Human Impact</a></li>
+      <li><a href="timeline.html" class="nav-link">Timeline</a></li>
+      <li><a href="about.html" class="nav-link">About &amp; Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <section class="hero reveal">
+    <h1>Computing Legacy Hub</h1>
+    <h2>Explore the machines that shaped humanity.</h2>
+    <div class="cta-group">
+      <button class="btn btn-primary" onclick="location.href='computers.html'">Iconic Computers</button>
+      <button class="btn btn-primary" onclick="location.href='impact.html'">Human Impact</button>
+      <button class="btn btn-secondary" onclick="location.href='#search'"><i data-lucide="search"></i> Search</button>
+    </div>
+    <div class="timeline-line"><div class="timeline-line"></div></div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <section class="mission reveal">
+    <div class="text">
+      <h2>Our Mission</h2>
+      <p>Computing Legacy Hub bridges past, present, and future, offering an authoritative, immersive resource for anyone eager to understand how silicon shaped humanity.</p>
+      <div class="underline" style="width:100%;height:2px;background:var(--color-accent);margin-top:8px;"></div>
+    </div>
+    <img src="https://picsum.photos/seed/mission/800/600" alt="Historical computer illustration">
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <section class="featured-carousel reveal">
+    <h2>Featured Iconic Computers</h2>
+    <div class="carousel" aria-label="Featured computers carousel">
+      <div class="carousel-track">
+        <div class="carousel-item"><img src="https://picsum.photos/seed/comp1/1000/600" alt="Computer 1"></div>
+        <div class="carousel-item"><img src="https://picsum.photos/seed/comp2/1000/600" alt="Computer 2"></div>
+        <div class="carousel-item"><img src="https://picsum.photos/seed/comp3/1000/600" alt="Computer 3"></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="prev" aria-label="Previous slide"><i data-lucide="chevron-left"></i></button>
+        <button class="next" aria-label="Next slide"><i data-lucide="chevron-right"></i></button>
+      </div>
+      <div class="dots" role="tablist"></div>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <section class="highlights reveal">
+    <h2>Explore Our Pillars</h2>
+    <div class="highlights-grid">
+      <div class="card">
+        <h3>Iconic Computers</h3>
+        <p>From ENIAC to modern AI super‑computers, discover the machines that changed the world.</p>
+        <button class="btn btn-primary" onclick="location.href='computers.html'">Learn More</button>
+      </div>
+      <div class="card">
+        <h3>Human Impact</h3>
+        <p>See how computing transformed medicine, space, communication, research, and art.</p>
+        <button class="btn btn-primary" onclick="location.href='impact.html'">Learn More</button>
+      </div>
+      <div class="card">
+        <h3>Interactive Timeline</h3>
+        <p>Navigate a kinetic, auto‑playing timeline of breakthroughs from 1940‑2025.</p>
+        <button class="btn btn-primary" onclick="location.href='timeline.html'">Explore Timeline</button>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+  <section id="search" class="search-bar reveal">
+    <h2>Quick Search</h2>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search computers, stories…" autocomplete="off" aria-label="Search">
+      <button class="btn btn-secondary" id="search-btn"><i data-lucide="search"></i></button>
+      <ul class="search-results" id="search-results" role="listbox"></ul>
+    </div>
+  </section>
+
+  <footer class="footer-cta reveal">
+    <h2>Ready to Dive Deeper?</h2>
+    <button class="btn btn-primary" onclick="location.href='computers.html'">Start Exploring</button>
+    <p class="link"><a href="about.html">Learn about us &amp; contact</a></p>
+  </footer>
+</main>
+
+<script>
+/* Navigation toggle */
+document.querySelector('.nav-toggle')?.addEventListener('click',()=>{
+  document.querySelector('.nav-links').classList.toggle('show');
+});
+
+/* Reveal on scroll */
+const revealElems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.2});
+revealElems.forEach(el=>observer.observe(el));
+
+/* Simple Carousel */
+class Carousel{
+  constructor(root){
+    this.root = root;
+    this.track = root.querySelector('.carousel-track');
+    this.items = Array.from(this.track.children);
+    this.prevBtn = root.querySelector('.prev');
+    this.nextBtn = root.querySelector('.next');
+    this.dotsContainer = root.querySelector('.dots');
+    this.current = 0;
+    this.setup();
+    this.startAutoPlay();
+  }
+  setup(){
+    this.dots = this.items.map((_,i)=>{
+      const dot=document.createElement('button');
+      dot.className='dot';
+      dot.setAttribute('aria-label',`Slide ${i+1}`);
+      dot.addEventListener('click',()=>this.goTo(i));
+      this.dotsContainer.appendChild(dot);
+      return dot;
+    });
+    this.update();
+    this.prevBtn.addEventListener('click',()=>this.prev());
+    this.nextBtn.addEventListener('click',()=>this.next());
+  }
+  update(){
+    const offset = -this.current * 100;
+    this.track.style.transform = `translateX(${offset}%)`;
+    this.dots.forEach((dot,i)=>dot.classList.toggle('active',i===this.current));
+  }
+  prev(){
+    this.current = (this.current-1+this.items.length)%this.items.length;
+    this.update();
+  }
+  next(){
+    this.current = (this.current+1)%this.items.length;
+    this.update();
+  }
+  goTo(index){
+    this.current = index;
+    this.update();
+  }
+  startAutoPlay(){
+    this.autoPlay = setInterval(()=>this.next(),4000);
+    this.root.addEventListener('mouseenter',()=>clearInterval(this.autoPlay));
+    this.root.addEventListener('mouseleave',()=>this.startAutoPlay());
+  }
+}
+new Carousel(document.querySelector('.carousel'));
+
+/* Search autocomplete (static demo) */
+const suggestions = [
+  "ENIAC", "UNIVAC", "Apple I", "IBM System/360", "Apollo Guidance Computer",
+  "Deep Blue", "Summit", "AlphaGo", "ChatGPT"
+];
+const input = document.getElementById('search-input');
+const results = document.getElementById('search-results');
+
+input.addEventListener('input',()=>{
+  const val = input.value.trim().toLowerCase();
+  results.innerHTML='';
+  if(!val){return;}
+  const matches = suggestions.filter(s=>s.toLowerCase().includes(val)).slice(0,5);
+  matches.forEach(m=>{
+    const li=document.createElement('li');
+    li.textContent=m;
+    li.addEventListener('click',()=>{input.value=m; results.innerHTML='';});
+    results.appendChild(li);
+  });
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.search-bar')) results.innerHTML='';
+});
+</script>
+<script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
