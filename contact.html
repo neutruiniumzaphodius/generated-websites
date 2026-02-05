@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact & Inquiries – CuraTech Innovations</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A3D62;
+  --color-secondary:#1ABC9C;
+  --color-accent:#F39C12;
+  --color-bg-light:#F5F7FA;
+  --color-text:#2C3E50;
+  --color-white:#FFFFFF;
+  --radius:8px;
+  --gap:24px;
+  --gap-mobile:12px;
+  --font-base:18px;
+  --font-base-desktop:20px;
+  --transition:cubic-bezier(0.22,0.61,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif;
+  font-size:var(--font-base);
+  line-height:1.6;
+  color:var(--color-text);
+  background:var(--color-bg-light);
+}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+h1{font-size:48px;}
+h2{font-size:36px;}
+h3{font-size:28px;letter-spacing:.3em;}
+section{padding:64px var(--gap);}
+@media(max-width:1024px){section{padding:48px var(--gap-mobile);}}
+@media(max-width:768px){section{padding:32px var(--gap-mobile);}}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+a:focus{outline:3px solid var(--color-secondary);}
+button{font-family:inherit;background:none;border:none;cursor:pointer;}
+button:focus{outline:3px solid var(--color-secondary);}
+input, select, textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+  font-size:var(--font-base);
+  transition:border-color .2s var(--transition),box-shadow .2s var(--transition);
+}
+input:focus, select:focus, textarea:focus{
+  border-color:var(--color-secondary);
+  box-shadow:0 0 0 3px rgba(26,188,156,0.2);
+}
+label{
+  display:block;
+  margin-bottom:4px;
+  font-weight:500;
+}
+.btn{
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:500;
+  transition:transform .15s var(--transition),background .15s var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.btn-primary:hover{transform:scale(1.05);}
+.glass-card{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(12px);
+  border-radius:var(--radius);
+  padding:32px;
+  max-width:600px;
+  margin:auto;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+.form-group{margin-bottom:var(--gap);}
+.required::after{content:" *";color:var(--color-accent);}
+.toggle{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.toggle input{width:auto;height:auto;}
+.accordion{
+  border-top:2px solid var(--color-secondary);
+}
+.accordion-item{
+  border-bottom:1px solid #e0e0e0;
+}
+.accordion-button{
+  width:100%;
+  text-align:left;
+  padding:16px;
+  background:var(--color-bg-light);
+  font-weight:500;
+  position:relative;
+}
+.accordion-button::after{
+  content:"▼";
+  position:absolute;
+  right:16px;
+  transition:transform .3s var(--transition);
+}
+.accordion-button[aria-expanded="true"]::after{
+  transform:rotate(180deg);
+}
+.accordion-panel{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s var(--transition);
+  background:var(--color-white);
+  padding:0 16px;
+}
+.accordion-panel.open{
+  padding:16px;
+  max-height:200px; /* will be overridden by JS for actual height */
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:-80px;
+  transform:translateX(-50%);
+  background:var(--color-accent);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  opacity:0;
+  transition:bottom .3s var(--transition),opacity .3s var(--transition);
+}
+.toast.show{
+  bottom:30px;
+  opacity:1;
+}
+.location-card{
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(8px);
+  border-radius:var(--radius);
+  padding:24px;
+  text-align:center;
+}
+.location-card h3{color:var(--color-primary);margin-bottom:12px;}
+.map-thumb{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:var(--radius);
+  margin-top:12px;
+}
+@media(max-width:1024px){section{padding:48px var(--gap-mobile);}}
+@media(max-width:768px){section{padding:32px var(--gap-mobile);}}
+@media(prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo"><strong>CuraTech</strong></a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="technology.html">Technology</a>
+      <a href="features.html">Features</a>
+      <a href="science.html">Science</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Hero Prompt -->
+  <section class="hero-prompt" style="background:var(--color-bg-light);">
+    <div class="hero-content" style="text-align:center;">
+      <h1>Contact &amp; Inquiries</h1>
+      <p class="tagline" style="font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--color-accent);margin:16px 0;">
+        We’re ready to discuss collaborations, demos, and investments.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="contact-form-section">
+    <div class="glass-card">
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="fullName" class="required">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required>
+        </div>
+        <div class="form-group">
+          <label for="organization" class="required">Organization</label>
+          <input type="text" id="organization" name="organization" required>
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" name="role" required>
+            <option value="">Select role</option>
+            <option>Researcher</option>
+            <option>Clinician</option>
+            <option>Investor</option>
+            <option>Business Development</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <span>Inquiry Type</span>
+          <div class="toggle">
+            <label><input type="radio" name="inquiryType" value="Demo Request" required> Demo Request</label>
+            <label><input type="radio" name="inquiryType" value="Technical Question"> Technical Question</label>
+            <label><input type="radio" name="inquiryType" value="Partnership"> Partnership</label>
+            <label><input type="radio" name="inquiryType" value="Press"> Press</label>
+            <label><input type="radio" name="inquiryType" value="Other"> Other</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="required">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="form-group">
+          <label for="message" class="required">Message</label>
+          <textarea id="message" name="message" rows="5" minlength="50" required></textarea>
+        </div>
+        <div class="form-group toggle">
+          <input type="checkbox" id="gdprConsent" name="gdprConsent" required>
+          <label for="gdprConsent">I consent to having CuraTech store my data for the purpose of responding to my inquiry.</label>
+        </div>
+        <!-- Placeholder for reCAPTCHA v3 -->
+        <div style="display:none;">
+          <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Office Locations -->
+  <section class="locations">
+    <h2>Our Offices</h2>
+    <div class="quick-value" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+      <div class="value-card location-card">
+        <h3>United States</h3>
+        <p>123 Innovation Way<br>Boston, MA 02110</p>
+        <p>Phone: +1 (617) 555‑0100</p>
+        <p>Email: <a href="mailto:us@curatech.com">us@curatech.com</a></p>
+        <a href="https://www.google.com/maps?q=123+Innovation+Way+Boston+MA" target="_blank" class="cta-link">View on Google Maps</a>
+      </div>
+      <div class="value-card location-card">
+        <h3>European Union</h3>
+        <p>45 Tech Avenue<br>Berlin, Germany 10115</p>
+        <p>Phone: +49 (30) 555‑0200</p>
+        <p>Email: <a href="mailto:eu@curatech.com">eu@curatech.com</a></p>
+        <a href="https://www.google.com/maps?q=45+Tech+Avenue+Berlin+Germany" target="_blank" class="cta-link">View on Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq1">How is my data protected?</button>
+        <div class="accordion-panel" id="faq1" role="region" aria-labelledby="faq1-button">
+          <p>All data is encrypted in transit (HTTPS) and at rest. We never store personal health information unless you explicitly consent.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq2">What is the typical demo length?</button>
+        <div class="accordion-panel" id="faq2" role="region" aria-labelledby="faq2-button">
+          <p>Standard demos run 30‑45 minutes, with additional time for Q&amp;A tailored to your needs.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq3">What partnership models do you offer?</button>
+        <div class="accordion-panel" id="faq3" role="region" aria-labelledby="faq3-button">
+          <p>We support research collaborations, clinical integration partnerships, and strategic investment opportunities.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq4">How quickly can I get a demo?</button>
+        <div class="accordion-panel" id="faq4" role="region" aria-labelledby="faq4-button">
+          <p>After submitting a demo request, we typically schedule a live session within 48 hours.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq5">Do you offer press kits?</button>
+        <div class="accordion-panel" id="faq5" role="region" aria-labelledby="faq5-button">
+          <p>Yes. Please indicate “Press” in the inquiry type and we will forward the appropriate materials.</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:var(--gap);text-align:center;">
+      <a href="/assets/pdfs/science-brief.pdf" class="btn btn-primary" download>Download the Science Brief</a>
+    </div>
+  </section>
+
+</main>
+
+<footer style="background:var(--color-primary);color:var(--color-white);padding:32px var(--gap);text-align:center;">
+  <p>&copy; 2024 CuraTech Innovations. All rights reserved.</p>
+  <p><a href="/privacy.html" style="color:var(--color-white);text-decoration:underline;">Privacy Policy</a> | <a href="/terms.html" style="color:var(--color-white);text-decoration:underline;">Terms of Service</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Hamburger menu */
+document.getElementById('hamburger')?.addEventListener('click', function(){
+  const nav = document.getElementById('nav-links');
+  const expanded = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', !expanded);
+  nav.classList.toggle('show');
+});
+
+/* Accordion */
+document.querySelectorAll('.accordion-button').forEach(btn=>{
+  btn.addEventListener('click',()=> {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded',!expanded);
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if(!expanded){
+      panel.classList.add('open');
+    }else{
+      panel.classList.remove('open');
+    }
+  });
+});
+
+/* Form submission mock */
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  // Simulate async submission
+  setTimeout(()=>{
+    const toast = document.getElementById('toast');
+    toast.textContent = 'Thank you! We’ll reply within 24 hrs.';
+    toast.classList.add('show');
+    setTimeout(()=>{ toast.classList.remove('show'); }, 4000);
+    this.reset();
+    // Reset toggle & radios
+    document.querySelectorAll('.accordion-button').forEach(b=>b.setAttribute('aria-expanded','false'));
+    document.querySelectorAll('.accordion-panel').forEach(p=>p.classList.remove('open'));
+  },500);
+});
+</script>
+</body>
+</html>

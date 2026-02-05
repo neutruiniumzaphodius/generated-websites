@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Background – CuraTech Innovations</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A3D62;
+  --color-secondary:#1ABC9C;
+  --color-accent:#F39C12;
+  --color-bg-light:#F5F7FA;
+  --color-text:#2C3E50;
+  --color-white:#FFFFFF;
+  --radius:8px;
+  --gap:24px;
+  --gap-mobile:12px;
+  --font-base:18px;
+  --font-base-desktop:20px;
+  --transition:cubic-bezier(0.22,0.61,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif;
+  font-size:var(--font-base);
+  line-height:1.6;
+  color:var(--color-text);
+  background:var(--color-bg-light);
+}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+h1{font-size:48px;}
+h2{font-size:36px;}
+h3{font-size:28px;letter-spacing:.3em;}
+section{padding:64px var(--gap);}
+@media(max-width:1024px){section{padding:48px var(--gap-mobile);}}
+@media(max-width:768px){section{padding:32px var(--gap-mobile);}}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+a:focus{outline:3px solid var(--color-secondary);}
+button{font-family:inherit;background:none;border:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Navigation */
+header{
+  position:sticky;
+  top:0;
+  background:var(--color-primary);
+  color:var(--color-white);
+  z-index:10;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  color:var(--color-white);
+  font-weight:500;
+  position:relative;
+}
+.nav-links a.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-accent);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+}
+.hamburger span{
+  width:24px;height:2px;background:#fff;
+}
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-primary);position:absolute;top:100%;left:0;right:0;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><circle cx="100" cy="100" r="2" fill="%231ABC9C"/></svg>') repeat;
+  animation:starfield 30s linear infinite;
+  opacity:.4;
+}
+@keyframes starfield{
+  from{background-position:0 0;}
+  to{background-position:-2000px -2000px;}
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:800px;
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  text-align:center;
+  color:#fff;
+}
+.hero h1{
+  text-shadow:0 2px 4px rgba(0,0,0,.4);
+}
+.hero .tagline{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;
+  color:var(--color-accent);
+  margin:16px 0;
+}
+.btn{
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:500;
+  transition:transform .15s var(--transition),background .15s var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.btn-primary:hover{
+  transform:scale(1.05);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(26,188,156,.1);
+}
+.cta-link{
+  margin-top:24px;
+  display:inline-block;
+  color:var(--color-secondary);
+  font-weight:500;
+  position:relative;
+}
+.cta-link::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:-2px;
+  height:2px;
+  width:100%;
+  background:var(--color-secondary);
+  transition:transform .2s var(--transition);
+  transform:scaleX(0);
+}
+.cta-link:hover::after{transform:scaleX(1);}
+.carousel{
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  display:flex;
+  gap:var(--gap);
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel .slide{
+  flex:0 0 100%;
+  scroll-snap-align:start;
+  position:relative;
+  perspective:1000px;
+}
+.carousel .slide .card{
+  background:rgba(255,255,255,.9);
+  padding:24px;
+  border-radius:var(--radius);
+  backdrop-filter:blur(8px);
+  transition:transform .4s var(--transition);
+  transform-style:preserve-3d;
+}
+.carousel .slide .card:hover{
+  transform:rotateY(180deg);
+}
+.carousel .slide .card .front,
+.carousel .slide .card .back{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+}
+.carousel .slide .card .back{
+  transform:rotateY(180deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:0.9rem;
+  color:var(--color-text);
+}
+.download-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.download-card{
+  background:rgba(255,255,255,.8);
+  padding:24px;
+  border-radius:var(--radius);
+  text-align:center;
+  backdrop-filter:blur(8px);
+}
+.download-card h3{
+  color:var(--color-primary);
+  margin-bottom:12px;
+}
+.chart-wrapper{
+  background:#fff;
+  padding:24px;
+  border-radius:var(--radius);
+  backdrop-filter:blur(4px);
+  margin-top:var(--gap);
+}
+.endorsements{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:var(--gap);
+}
+.endorsement-card{
+  background:rgba(255,255,255,.8);
+  padding:24px;
+  border-radius:var(--radius);
+  backdrop-filter:blur(8px);
+  text-align:center;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--transition),transform .6s var(--transition);
+}
+.endorsement-card.visible{opacity:1;transform:none;}
+.endorsement-card h3{
+  color:var(--color-primary);
+  margin-bottom:8px;
+}
+.endorsement-card p{
+  font-size:0.9rem;
+  color:var(--color-text);
+}
+footer{
+  background:var(--color-primary);
+  color:var(--color-white);
+  text-align:center;
+  padding:32px var(--gap);
+}
+footer a{color:var(--color-white);}
+@media(prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header>
+  <nav aria-label="Main navigation">
+    <div class="logo"><strong>CuraTech</strong></div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="technology.html">Technology</a>
+      <a href="features.html">Features</a>
+      <a href="science.html" class="active">Science</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Hero Summary -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <h1 id="hero-title">Scientific Background</h1>
+      <p class="tagline">Rigorous data, peer‑reviewed publications, and validation studies.</p>
+      <a href="#research" class="cta-link">Explore Publications</a>
+    </div>
+  </section>
+
+  <!-- Research Carousel -->
+  <section id="research" aria-labelledby="research-heading">
+    <h2 id="research-heading">Selected Publications</h2>
+    <div class="carousel" role="region" aria-label="Research carousel">
+      <div class="slide">
+        <div class="card">
+          <div class="front">
+            <img src="https://via.placeholder.com/800x400?text=Publication+1" alt="Cover of Publication 1">
+          </div>
+          <div class="back">
+            <p>Doe J. et al. (2023). <em>Advances in Bio‑informatics.</em> <strong>Nature Biotechnology</strong></p>
+          </div>
+        </div>
+        <div class="caption">Advances in Bio‑informatics</div>
+      </div>
+      <div class="slide">
+        <div class="card">
+          <div class="front">
+            <img src="https://via.placeholder.com/800x400?text=Publication+2" alt="Cover of Publication 2">
+          </div>
+          <div class="back">
+            <p>Smith A. et al. (2022). <em>Real‑time Genomic Analytics.</em> <strong>Science Translational Medicine</strong></p>
+          </div>
+        </div>
+        <div class="caption">Real‑time Genomic Analytics</div>
+      </div>
+      <div class="slide">
+        <div class="card">
+          <div class="front">
+            <img src="https://via.placeholder.com/800x400?text=Publication+3" alt="Cover of Publication 3">
+          </div>
+          <div class="back">
+            <p>Lee K. et al. (2021). <em>Secure Data Pipelines for Clinical Trials.</em> <strong>J. Med. Internet Res.</strong></p>
+          </div>
+        </div>
+        <div class="caption">Secure Data Pipelines</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Downloadable PDFs -->
+  <section id="downloads" aria-labelledby="downloads-heading">
+    <h2 id="downloads-heading">Downloadable Resources</h2>
+    <div class="download-cards">
+      <div class="download-card">
+        <h3>Science Brief (PDF)</h3>
+        <p>Comprehensive overview of our validation studies and methodology.</p>
+        <a href="/assets/pdfs/science-brief.pdf" class="btn btn-primary" download>Download</a>
+      </div>
+      <div class="download-card">
+        <h3>Feature Sheet (PDF)</h3>
+        <p>Detailed comparison of CuraTech technology against industry benchmarks.</p>
+        <a href="/assets/pdfs/feature-sheet.pdf" class="btn btn-primary" download>Download</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Data Visualizations -->
+  <section id="visualizations" aria-labelledby="visualizations-heading">
+    <h2 id="visualizations-heading">Data Validation</h2>
+
+    <div class="chart-wrapper">
+      <canvas id="chart1" aria-label="Line chart showing assay sensitivity over time" role="img"></canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas id="chart2" aria-label="Bar chart comparing accuracy across platforms" role="img"></canvas>
+    </div>
+  </section>
+
+  <!-- Peer‑Review Endorsements -->
+  <section id="endorsements" aria-labelledby="endorsements-heading">
+    <h2 id="endorsements-heading">Peer‑Review Endorsements</h2>
+    <div class="endorsements">
+      <div class="endorsement-card">
+        <h3>Dr. Maria González</h3>
+        <p>“CuraTech’s platform sets a new standard for data security in clinical research.”</p>
+      </div>
+      <div class="endorsement-card">
+        <h3>Prof. Alan Chen</h3>
+        <p>“The validation studies are thorough and reproducible – a model for the industry.”</p>
+      </div>
+      <div class="endorsement-card">
+        <h3>Dr. Sophie Lévy</h3>
+        <p>“Impressive integration of AI‑driven analytics with rigorous statistical backing.”</p>
+      </div>
+      <div class="endorsement-card">
+        <h3>Prof. James O’Neil</h3>
+        <p>“A transparent, peer‑reviewed approach that inspires confidence among stakeholders.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fallback static PDF -->
+  <section aria-label="Fallback PDF download">
+    <a href="/assets/pdfs/science-brief.pdf" class="btn btn-secondary">Download the Science Brief (fallback)</a>
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; 2024 CuraTech Innovations. All rights reserved.</p>
+  <p><a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Use</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Simple IntersectionObserver to add .visible class for scroll reveals
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.2});
+document.querySelectorAll('section, .stat-card, .endorsement-card').forEach(el=>observer.observe(el));
+
+// Initialize Charts
+const ctx1 = document.getElementById('chart1').getContext('2d');
+new Chart(ctx1,{
+  type:'line',
+  data:{
+    labels:['Q1‑2022','Q2‑2022','Q3‑2022','Q4‑2022','Q1‑2023','Q2‑2023'],
+    datasets:[{
+      label:'Assay Sensitivity (%)',
+      data:[78,82,85,87,90,93],
+      borderColor: 'var(--color-secondary)',
+      backgroundColor:'rgba(26,188,156,.1)',
+      tension:0.4,
+      fill:true
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      legend:{display:false},
+      title:{display:true,text:'Assay Sensitivity Over Time'}
+    },
+    scales:{
+      y:{beginAtZero:true, max:100}
+    }
+  }
+});
+
+const ctx2 = document.getElementById('chart2').getContext('2d');
+new Chart(ctx2,{
+  type:'bar',
+  data:{
+    labels:['CuraTech','Competitor A','Competitor B','Competitor C'],
+    datasets:[{
+      label:'Accuracy (%)',
+      data:[96,89,84,81],
+      backgroundColor:[
+        'var(--color-primary)',
+        '#8e44ad',
+        '#e74c3c',
+        '#f1c40f'
+      ],
+      borderColor:'#fff',
+      borderWidth:1
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      legend:{display:false},
+      title:{display:true,text:'Platform Accuracy Comparison'}
+    },
+    scales:{
+      y:{beginAtZero:true, max:100}
+    }
+  }
+});
+
+// Hamburger menu toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click',()=>{
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded',!expanded);
+  navLinks.classList.toggle('show');
+});
+</script>
+</body>
+</html>

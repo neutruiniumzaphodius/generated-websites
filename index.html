@@ -1,75 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>CuraTech Innovations – Accelerate the Cure. Today.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#0A3D62;
+  --color-secondary:#1ABC9C;
+  --color-accent:#F39C12;
+  --color-bg-light:#F5F7FA;
+  --color-text:#2C3E50;
+  --color-white:#FFFFFF;
+  --radius:8px;
+  --gap:24px;
+  --gap-mobile:12px;
+  --font-base:18px;
+  --font-base-desktop:20px;
+  --transition:cubic-bezier(0.22,0.61,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif;
+  font-size:var(--font-base);
+  line-height:1.6;
+  color:var(--color-text);
+  background:var(--color-bg-light);
+}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+h1{font-size:48px;}
+h2{font-size:36px;}
+h3{font-size:28px;letter-spacing:.3em;}
+section{padding:64px var(--gap);}
+@media(max-width:1024px){section{padding:48px var(--gap-mobile);}}
+@media(max-width:768px){section{padding:32px var(--gap-mobile);}}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+a:focus{outline:3px solid var(--color-secondary);}
+button{font-family:inherit;background:none;border:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Navigation */
+header{
+  position:sticky;
+  top:0;
+  background:var(--color-primary);
+  color:var(--color-white);
+  z-index:10;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  color:var(--color-white);
+  font-weight:500;
+  position:relative;
+}
+.nav-links a.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-accent);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+}
+.hamburger span{
+  width:24px;height:2px;background:#fff;
+}
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-primary);position:absolute;top:100%;left:0;right:0;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+.hero video{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(10,61,98,.6),rgba(26,188,156,.3));
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:800px;
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  text-align:center;
+  color:#fff;
+}
+.hero h1{
+  text-shadow:0 2px 4px rgba(0,0,0,.4);
+}
+.hero .tagline{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;
+  color:var(--color-accent);
+  margin:16px 0;
+}
+.btn{
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:500;
+  transition:transform .15s var(--transition),background .15s var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.btn-primary:hover{
+  transform:scale(1.05);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:rgba(26,188,156,.1);
+}
+.cta-link{
+  margin-top:24px;
+  display:inline-block;
+  color:var(--color-secondary);
+  font-weight:500;
+  position:relative;
+}
+.cta-link::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:-2px;
+  height:2px;
+  width:100%;
+  background:var(--color-secondary);
+  transition:transform .2s var(--transition);
+  transform:scaleX(0);
+}
+.cta-link:hover::after{transform:scaleX(1);}
+.hero .cta-link{font-size:1rem;}
+/* Quick Value */
+.quick-value{
+  background:#fff;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:var(--gap);
+}
+.value-card{
+  background:rgba(255,255,255,.8);
+  padding:24px;
+  border-radius:var(--radius);
+  text-align:center;
+  backdrop-filter:blur(8px);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--transition),transform .6s var(--transition);
+}
+.value-card.visible{opacity:1;transform:none;}
+.value-card h3{
+  color:var(--color-primary);
+  margin-bottom:12px;
+}
+.value-card p{
+  font-size:0.9rem;
+  color:var(--color-text);
+}
+/* Carousel */
+.carousel{
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  display:flex;
+  gap:var(--gap);
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel .slide{
+  flex:0 0 100%;
+  scroll-snap-align:start;
+  position:relative;
+}
+.carousel .slide img{
+  border-radius:var(--radius);
+  object-fit:cover;
+  height:400px;
+}
+.carousel .overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.3);
+  border-radius:var(--radius);
+}
+.carousel .caption{
+  position:absolute;
+  bottom:16px;
+  left:16px;
+  color:#fff;
+  font-weight:500;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+@media(max-width:1024px){.carousel .slide img{height:250px;}}
+/* Key Stats */
+.key-stats{
+  background:#fff;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--gap);
+}
+.stat-card{
+  background:var(--color-white);
+  padding:32px;
+  border-radius:var(--radius);
+  text-align:center;
+  backdrop-filter:blur(4px);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--transition),transform .6s var(--transition);
+}
+.stat-card.visible{opacity:1;transform:none;}
+.stat-number{
+  font-size:2.5rem;
+  font-weight:700;
+  color:var(--color-accent);
+}
+.stat-label{
+  margin-top:8px;
+  font-weight:500;
+  color:var(--color-primary);
+}
+/* Primary CTA band */
+.cta-band{
+  background:var(--color-accent);
+  color:#fff;
+  text-align:center;
+  padding:32px var(--gap);
+}
+.cta-band button{
+  margin-top:12px;
+}
+@media(prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header>
+  <nav aria-label="Main navigation">
+    <div class="logo"><strong>CuraTech</strong></div>
+    <button class="hamburger" aria-label="Open menu" aria-controls="nav-menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="technology.html">Technology</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="science.html">Science</a></li>
+      <li><a href="impact.html">Impact</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main-content">
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <video autoplay muted loop playsinline poster="https://picsum.photos/id/1015/1920/1080.webp">
+      <source src="https://cdn.jsdelivr.net/gh/pexels/video@master/videos/pexels-weed-1265.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Accelerate the Cure. Today.</h1>
+      <p class="tagline">Breakthrough biotech AI platform</p>
+      <a href="#quick-value" class="btn btn-primary">Explore Solutions</a>
+      <a href="#visual-teaser" class="cta-link">Watch the tech demo</a>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- QUICK VALUE -->
+  <section id="quick-value" class="quick-value" aria-label="Why choose CuraTech">
+    <h2 class="visually-hidden">Quick Value</h2>
+    <div class="quick-value">
+      <div class="value-card" tabindex="0">
+        <h3>Speed</h3>
+        <p>Reduce development timelines by up to 30% using AI‑driven target prediction.</p>
+      </div>
+      <div class="value-card" tabindex="0">
+        <h3>Precision</h3>
+        <p>Multi‑omics fusion cuts false‑positive pathways, improving candidate quality.</p>
+      </div>
+      <div class="value-card" tabindex="0">
+        <h3>Security</h3>
+        <p>HIPAA‑compliant data handling ensures patient privacy at every step.</p>
+      </div>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <!-- VISUAL TEASER CAROUSEL -->
+  <section id="visual-teaser" class="visual-teaser" aria-label="Technology highlights">
+    <h2 class="visually-hidden">Visual Teaser</h2>
+    <div class="carousel" id="teaser-carousel">
+      <div class="slide"><img src="https://picsum.photos/id/1011/1200/600.webp" alt="Lab automation" loading="lazy"><div class="overlay"></div><div class="caption">AI‑Driven Prediction</div></div>
+      <div class="slide"><img src="https://picsum.photos/id/1025/1200/600.webp" alt="Data integration" loading="lazy"><div class="overlay"></div><div class="caption">Multi‑Omics Fusion</div></div>
+      <div class="slide"><img src="https://picsum.photos/id/1035/1200/600.webp" alt="Clinical workflow" loading="lazy"><div class="overlay"></div><div class="caption">Rapid Clinical Translation</div></div>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <!-- KEY STATS -->
+  <section id="key-stats" class="key-stats" aria-label="Key statistics">
+    <h2 class="visually-hidden">Key Stats</h2>
+    <div class="key-stats">
+      <div class="stat-card" data-target="30" aria-label="Stat: Timeline reduction">
+        <div class="stat-number">0%</div>
+        <div class="stat-label">Timeline Reduction</div>
+      </div>
+      <div class="stat-card" data-target="22" aria-label="Stat: Hit rate increase">
+        <div class="stat-number">0%</div>
+        <div class="stat-label">Hit‑Rate Increase</div>
+      </div>
+      <div class="stat-card" data-target="95" aria-label="Stat: Success rate">
+        <div class="stat-number">0%</div>
+        <div class="stat-label">Success Rate</div>
+      </div>
+      <div class="stat-card" data-target="5" aria-label="Stat: Partners">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Global Partners</div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+  <!-- PRIMARY CTA -->
+  <section class="cta-band" aria-label="Request a demo">
+    <h2 class="visually-hidden">Primary Call to Action</h2>
+    <p>Ready to see the future of drug discovery?</p>
+    <button class="btn btn-primary" id="primary-cta-button">Request a Demo</button>
+  </section>
+</main>
+
+<footer>
+  <div style="max-width:1200px;margin:auto;padding:32px var(--gap);text-align:center;font-size:0.9rem;color:#666;">
+    © 2024 CuraTech Innovations. All rights reserved.
+  </div>
+</footer>
+
+<script>
+/* Navigation toggle */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  const expanded = navLinks.classList.toggle('show');
+  hamburger.setAttribute('aria-expanded', expanded);
+});
+
+/* Scroll reveal */
+const revealElements = document.querySelectorAll('.value-card, .stat-card, .slide');
+const observer = new IntersectionObserver((entries,obs)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+},{threshold:0.2});
+revealElements.forEach(el=>observer.observe(el));
+
+/* Count‑up animation */
+function animateCount(el, target){
+  let start = 0;
+  const duration = 1200;
+  const startTime = performance.now();
+  const easeOutQuad = t=>t*(2-t);
+  function update(now){
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed/duration,1);
+    const value = Math.floor(easeOutQuad(progress)*target);
+    el.textContent = value + (el.dataset.suffix||'%');
+    if(progress<1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const statObserver = new IntersectionObserver((entries,obs)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const target = +entry.target.dataset.target;
+      animateCount(entry.target.querySelector('.stat-number'),target);
+      obs.unobserve(entry.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-card').forEach(card=>statObserver.observe(card));
+
+/* Simple carousel autoplay */
+const carousel = document.getElementById('teaser-carousel');
+let slideIndex = 0;
+function autoSlide(){
+  const slides = carousel.querySelectorAll('.slide');
+  slideIndex = (slideIndex + 1) % slides.length;
+  carousel.scrollTo({
+    left: slides[slideIndex].offsetLeft,
+    behavior: 'smooth'
+  });
+}
+let autoPlay = setInterval(autoSlide,6000);
+carousel.addEventListener('mouseenter',()=>clearInterval(autoPlay));
+carousel.addEventListener('mouseleave',()=>autoPlay=setInterval(autoSlide,6000));
+
+/* Primary CTA button */
+document.getElementById('primary-cta-button').addEventListener('click',()=>{
+  const targetSection = document.querySelector('#quick-value');
+  targetSection.scrollIntoView({behavior:'smooth'});
+});
+</script>
 </body>
 </html>

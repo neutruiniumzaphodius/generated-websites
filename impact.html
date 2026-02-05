@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CuraTech – User / Patient Impact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#0A3D62;
+  --color-secondary:#1ABC9C;
+  --color-accent:#F39C12;
+  --color-bg-light:#F5F7FA;
+  --color-text:#2C3E50;
+  --color-white:#FFFFFF;
+  --radius:8px;
+  --gap:24px;
+  --gap-mobile:12px;
+  --font-base:18px;
+  --font-base-desktop:20px;
+  --transition:cubic-bezier(0.22,0.61,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif;
+  font-size:var(--font-base);
+  line-height:1.6;
+  color:var(--color-text);
+  background:var(--color-bg-light);
+}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+h1{font-size:48px;}
+h2{font-size:36px;}
+h3{font-size:28px;letter-spacing:.3em;}
+section{padding:64px var(--gap);}
+@media(max-width:1024px){section{padding:48px var(--gap-mobile);}}
+@media(max-width:768px){section{padding:32px var(--gap-mobile);}}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+a:focus{outline:3px solid var(--color-secondary);}
+button{font-family:inherit;background:none;border:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Header / Navigation */
+header{
+  position:sticky;
+  top:0;
+  background:var(--color-primary);
+  color:var(--color-white);
+  z-index:10;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  color:var(--color-white);
+  font-weight:500;
+  position:relative;
+}
+.nav-links a.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-accent);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+}
+.hamburger span{
+  width:24px;height:2px;background:#fff;
+}
+@media(max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-primary);position:absolute;top:100%;left:0;right:0;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+.hero video{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(10,61,98,.6),rgba(26,188,156,.3));
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:800px;
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  text-align:center;
+  color:#fff;
+}
+.hero h1{
+  text-shadow:0 2px 4px rgba(0,0,0,.4);
+}
+.hero .tagline{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;
+  color:var(--color-accent);
+  margin:16px 0;
+}
+
+/* Buttons */
+.btn{
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:500;
+  transition:transform .15s var(--transition),background .15s var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.btn-primary:hover{
+  transform:scale(1.05);
+}
+
+/* Timeline (Patient Journey) */
+.timeline{
+  display:flex;
+  gap:var(--gap);
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:var(--gap);
+}
+.timeline::-webkit-scrollbar{display:none;}
+.timeline .milestone{
+  flex:0 0 20%;
+  min-width:200px;
+  scroll-snap-align:start;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(8px);
+  border-radius:var(--radius);
+  padding:24px;
+  text-align:center;
+  position:relative;
+}
+.timeline .milestone h3{
+  color:var(--color-primary);
+  margin-bottom:8px;
+}
+.timeline .milestone .icon{
+  width:48px;height:48px;background:var(--color-secondary);
+  border-radius:50%;
+  margin:auto;
+  margin-bottom:12px;
+}
+
+/* Global Impact Map */
+.map-wrapper{
+  max-width:1200px;
+  margin:auto;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(8px);
+  border-radius:var(--radius);
+  padding:var(--gap);
+  overflow:hidden;
+}
+.world-map{
+  width:100%;
+  height:auto;
+}
+.world-map path{
+  fill:#ccc;
+  stroke:#fff;
+  transition:fill .3s var(--transition);
+}
+.world-map path:hover{
+  fill:var(--color-secondary);
+}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .3s var(--transition),visibility .3s var(--transition);
+}
+.modal.show{
+  opacity:1;
+  visibility:visible;
+}
+.modal-content{
+  background:#fff;
+  border-radius:var(--radius);
+  max-width:800px;
+  width:90%;
+  padding:var(--gap);
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:var(--color-primary);
+  color:#fff;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  font-size:1.2rem;
+  line-height:32px;
+  text-align:center;
+}
+
+/* Testimonial Carousel */
+.carousel{
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  display:flex;
+  gap:var(--gap);
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel .slide{
+  flex:0 0 100%;
+  scroll-snap-align:start;
+  position:relative;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(8px);
+  border-radius:var(--radius);
+  padding:var(--gap);
+}
+.carousel .slide blockquote{
+  margin:0;
+  font-style:italic;
+  color:var(--color-text);
+}
+.carousel .author{
+  margin-top:12px;
+  font-weight:500;
+  color:var(--color-primary);
+}
+
+/* CTA Band */
+.cta-band{
+  background:var(--color-accent);
+  color:#fff;
+  text-align:center;
+  padding:32px var(--gap);
+}
+
+/* Footer */
+footer{
+  background:var(--color-primary);
+  color:var(--color-white);
+  text-align:center;
+  padding:24px var(--gap);
+}
+footer a{color:var(--color-white);}
+@media(prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav>
+    <a href="index.html"><img src="https://via.placeholder.com/150x40?text=CuraTech" alt="CuraTech logo"></a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="technology.html">Technology</a>
+      <a href="features.html">Features</a>
+      <a href="science.html">Science</a>
+      <a href="impact.html" class="active">Impact</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Hero Story -->
+  <section class="hero">
+    <video autoplay muted loop playsinline poster="https://via.placeholder.com/1920x1080">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Human Stories, Global Impact</h1>
+      <p class="tagline">Real lives transformed by CuraTech’s technology.</p>
+      <a href="#partnership-cta" class="btn btn-primary">Partner with Us</a>
+    </div>
+  </section>
+
+  <!-- Patient Journey Map -->
+  <section>
+    <h2>Patient Journey</h2>
+    <div class="timeline carousel">
+      <div class="milestone slide">
+        <div class="icon"></div>
+        <h3>Awareness</h3>
+        <p>Patient learns about the clinical trial through their physician.</p>
+        <a href="#" class="cta-link" data-video="https://www.w3schools.com/html/mov_bbb.mp4">Watch video</a>
+      </div>
+      <div class="milestone slide">
+        <div class="icon"></div>
+        <h3>Enrollment</h3>
+        <p>Secure, consent‑driven enrollment using CuraTech’s platform.</p>
+        <a href="#" class="cta-link" data-video="https://www.w3schools.com/html/mov_bbb.mp4">Watch video</a>
+      </div>
+      <div class="milestone slide">
+        <div class="icon"></div>
+        <h3>Treatment</h3>
+        <p>Personalised therapy guided by real‑time analytics.</p>
+        <a href="#" class="cta-link" data-video="https://www.w3schools.com/html/mov_bbb.mp4">Watch video</a>
+      </div>
+      <div class="milestone slide">
+        <div class="icon"></div>
+        <h3>Recovery</h3>
+        <p>Continuous monitoring ensures optimal outcomes.</p>
+        <a href="#" class="cta-link" data-video="https://www.w3schools.com/html/mov_bbb.mp4">Watch video</a>
+      </div>
+      <div class="milestone slide">
+        <div class="icon"></div>
+        <h3>Advocacy</h3>
+        <p>Patients share their stories, inspiring others.</p>
+        <a href="#" class="cta-link" data-video="https://www.w3schools.com/html/mov_bbb.mp4">Watch video</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Impact Map -->
+  <section>
+    <h2>Global Impact</h2>
+    <div class="map-wrapper">
+      <svg class="world-map" viewBox="0 0 2000 1001" xmlns="http://www.w3.org/2000/svg" aria-labelledby="mapTitle" role="img">
+        <title id="mapTitle">World map showing CuraTech impact regions</title>
+        <!-- Simplified placeholder map (continents as paths) -->
+        <path d="M300,200 L400,200 L400,300 L300,300 Z" />
+        <path d="M800,400 L950,400 L950,550 L800,550 Z" />
+        <path d="M1200,150 L1350,150 L1350,300 L1200,300 Z" />
+        <path d="M1600,500 L1750,500 L1750,650 L1600,650 Z" />
+        <path d="M500,700 L650,700 L650,850 L500,850 Z" />
+        <!-- Add more paths or use a proper world map SVG in production -->
+      </svg>
+    </div>
+  </section>
+
+  <!-- Testimonial Carousel -->
+  <section>
+    <h2>Patient Stories</h2>
+    <div class="carousel">
+      <div class="slide">
+        <blockquote>
+          “CuraTech gave my son a chance at a normal life. The technology felt invisible, but the impact was monumental.”
+        </blockquote>
+        <p class="author">— Maria G., Mother, Spain</p>
+      </div>
+      <div class="slide">
+        <blockquote>
+          “As a clinician, I’ve never seen data integrated so seamlessly into patient care. It saved lives.”
+        </blockquote>
+        <p class="author">— Dr. Ahmed K., Cardiologist, UAE</p>
+      </div>
+      <div class="slide">
+        <blockquote>
+          “Participating in the trial was easy and reassuring. The team was always there, guided by real‑time insights.”
+        </blockquote>
+        <p class="author">— Luis M., Trial Participant, Brazil</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call‑to‑Action for Partnership -->
+  <section class="cta-band" id="partnership-cta">
+    <h2>Join Our Mission</h2>
+    <p>Partner with CuraTech to bring life‑changing therapies to every corner of the globe.</p>
+    <button class="btn btn-primary">Become a Partner</button>
+  </section>
+
+</main>
+
+<!-- Modal (used for patient journey videos) -->
+<div class="modal" id="video-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close modal">&times;</button>
+    <video id="modal-video" controls style="width:100%;height:auto;"></video>
+  </div>
+</div>
+
+<footer>
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="technology.html">Technology</a>
+      <a href="features.html">Features</a>
+      <a href="science.html">Science</a>
+      <a href="impact.html">Impact</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p style="margin-top:16px;">© 2024 CuraTech. All rights reserved.</p>
+  </nav>
+</footer>
+
+<script>
+/* Hamburger menu */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  const expanded = navLinks.classList.toggle('show');
+  hamburger.setAttribute('aria-expanded', expanded);
+});
+
+/* Journey card video modal */
+const modal = document.getElementById('video-modal');
+const modalVideo = document.getElementById('modal-video');
+const modalClose = document.querySelector('.modal-close');
+
+document.querySelectorAll('.timeline .cta-link, .milestone .cta-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const src = link.getAttribute('data-video');
+    modalVideo.src = src;
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('show');
+  });
+});
+
+modalClose.addEventListener('click', () => {
+  modalVideo.pause();
+  modalVideo.src = '';
+  modal.setAttribute('aria-hidden', 'true');
+  modal.classList.remove('show');
+});
+
+/* Auto‑play carousel (testimonials) */
+let carousel = document.querySelectorAll('.carousel');
+carousel.forEach(c => {
+  let slides = c.querySelectorAll('.slide');
+  let index = 0;
+  const autoplay = setInterval(() => {
+    index = (index + 1) % slides.length;
+    slides[index].scrollIntoView({behavior:'smooth',inline:'start'});
+  }, 6000);
+  c.addEventListener('mouseenter', () => clearInterval(autoplay));
+  c.addEventListener('mouseleave', () => {
+    setInterval(() => {
+      index = (index + 1) % slides.length;
+      slides[index].scrollIntoView({behavior:'smooth',inline:'start'});
+    }, 6000);
+  });
+});
+</script>
+</body>
+</html>
