@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About • AuSites</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat+Alternates:wght@700;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-black:#000000;
+  --color-dark:#1A1A1A;
+  --color-gold:#D4AF37;
+  --gradient-bg:linear-gradient(180deg,#000000 0%,#0A0A0A 100%);
+  --font-heading:'Montserrat Alternates',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --base-gap:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:#FFFFFF;
+  background:var(--gradient-bg);
+  line-height:1.6;
+  min-height:100vh;
+}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+/* Skip link */
+.skip-link{
+  position:absolute;top:-40px;left:0;background:#D4AF37;color:#000;
+  padding:8px 16px;z-index:100;transition:top .3s;
+}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:sticky;top:0;background:rgba(0,0,0,.9);z-index:10;}
+.nav{
+  max-width:1080px;margin:auto;display:flex;align-items:center;
+  justify-content:space-between;padding:var(--base-gap) calc(var(--base-gap)*2);
+}
+.nav-links{
+  display:flex;gap:calc(var(--base-gap)*2);
+}
+.nav-link{
+  font-family:var(--font-heading);font-weight:600;color:#fff;
+  position:relative;padding:4px 0;
+}
+.nav-link::after{
+  content:"";position:absolute;left:0;bottom:0;height:2px;width:0;
+  background:var(--color-gold);transition:width .3s;
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.active::after{width:100%;}
+.nav-toggle{
+  display:none;background:none;color:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:fixed;top:0;right:-100%;height:100vh;width:260px;
+    background:#000;flex-direction:column;padding-top:80px;
+    gap:var(--base-gap);transition:right .3s ease-out;
+  }
+  .nav-links.open{right:0;}
+  .nav-toggle{display:block;}
+}
+/* Hero */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:calc(var(--base-gap)*10) var(--base-gap);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;background:var(--gradient-bg);
+  z-index:-2;
+}
+.hero svg.bg-lines{
+  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.06;
+}
+.hero-content{
+  max-width:720px;z-index:1;
+}
+.hero-headline{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(2.5rem,8vw,4rem);line-height:1.1;
+  text-transform:uppercase;letter-spacing:0.07em;margin-bottom:calc(var(--base-gap)*3);
+}
+.hero-headline .gold{color:var(--color-gold);}
+.hero-sub{
+  font-size:1.25rem;margin-top:calc(var(--base-gap)*3);
+}
+.btn-primary{
+  display:inline-block;margin-top:calc(var(--base-gap)*4);
+  padding:12px 24px;background:linear-gradient(135deg,#D4AF37,#B58E2F);
+  color:#000;font-family:var(--font-heading);font-weight:700;
+  font-size:1.125rem;border-radius:4px;box-shadow:0 4px 12px rgba(212,175,55,0.4);
+  transition:transform .15s ease-out,box-shadow .15s ease-out;
+}
+.btn-primary:hover,.btn-primary:focus-visible{
+  transform:translateY(-2px);box-shadow:0 6px 16px rgba(212,175,55,0.6);
+}
+.btn-primary:focus-visible{outline:2px solid var(--color-gold);}
+.link-secondary{
+  display:inline-block;margin-top:calc(var(--base-gap)*2);
+  font-size:1rem;color:var(--color-gold);position:relative;
+}
+.link-secondary::after{
+  content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;
+  background:var(--color-gold);transition:width .3s;
+}
+.link-secondary:hover::after,.link-secondary:focus-visible::after{width:100%;}
+/* Timeline */
+.timeline{
+  position:relative;padding:80px var(--base-gap);
+  display:flex;flex-direction:column;align-items:center;
+}
+.timeline::before{
+  content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;
+  background:var(--color-gold);transform:translateX(-50%);
+}
+.timeline-item{
+  width:100%;max-width:1080px;display:flex;align-items:flex-start;
+  margin-bottom:calc(var(--base-gap)*6);
+}
+.timeline-item:nth-child(even){flex-direction:row-reverse;}
+.timeline-marker{
+  flex:0 0 24px;display:flex;justify-content:center;position:relative;
+}
+.timeline-marker::before{
+  content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;
+  background:var(--color-gold);transform:translateX(-50%);
+}
+.timeline-marker .dot{
+  width:16px;height:16px;background:var(--color-gold);
+  border-radius:50%;margin-top:calc(var(--base-gap)*2);
+}
+.timeline-content{
+  flex:1;background:#1A1A1A;padding:calc(var(--base-gap)*4);
+  border:2px solid transparent;border-radius:8px;
+  transition:all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.timeline-content:hover{
+  border-color:var(--color-gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.5);
+  transform:translateY(-6px) scale(1.02);
+}
+.timeline-content h4{
+  font-family:var(--font-heading);font-size:1.25rem;
+  text-transform:uppercase;color:var(--color-gold);margin-bottom:calc(var(--base-gap)*2);
+}
+.timeline-content p{
+  font-size:1rem;color:#fff;
+}
+/* Team Snapshot */
+.team{
+  background:var(--color-dark);
+  padding:80px var(--base-gap);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:calc(var(--base-gap)*4);
+  justify-items:center;
+}
+.team-member{
+  background:#1A1A1A;
+  border:2px solid transparent;
+  border-radius:8px;
+  padding:calc(var(--base-gap)*4);
+  text-align:center;
+  transition:all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.team-member:hover{
+  border-color:var(--color-gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.5);
+  transform:translateY(-6px) scale(1.02);
+}
+.team-member img{border-radius:4px;margin-bottom:calc(var(--base-gap)*2);}
+.team-member h4{
+  font-family:var(--font-heading);
+  font-size:1.125rem;
+  color:var(--color-gold);
+  margin-bottom:calc(var(--base-gap)*1);
+}
+.team-member p{
+  font-size:0.95rem;
+}
+/* Values */
+.values{
+  background:var(--color-dark);
+  padding:80px var(--base-gap);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:calc(var(--base-gap)*4);
+}
+.value-item{
+  background:#1A1A1A;
+  border:2px solid transparent;
+  border-radius:8px;
+  padding:calc(var(--base-gap)*4);
+  width:320px;
+  text-align:center;
+  transition:all .25s cubic-bezier(0.4,0,0.2,1);
+}
+.value-item:hover{
+  border-color:var(--color-gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.5);
+  transform:translateY(-6px) scale(1.02);
+}
+.value-item h3{
+  font-family:var(--font-heading);
+  font-size:1.25rem;
+  text-transform:uppercase;
+  color:var(--color-gold);
+  margin-bottom:calc(var(--base-gap)*2);
+}
+.value-item p{
+  font-size:1rem;color:#fff;
+}
+/* Footer */
+footer{
+  background:#000;
+  padding:40px var(--base-gap);
+  text-align:center;
+  font-size:0.875rem;
+}
+footer a{color:var(--color-gold);}
+footer a:focus-visible{outline:2px solid var(--color-gold);}
+
+/* Section fade‑in */
+section{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .3s cubic-bezier(0.4,0,0.2,1),transform .3s cubic-bezier(0.4,0,0.2,1);
+}
+section.visible{opacity:1;transform:translateY(0);}
+
+/* Mobile Nav */
+@media (max-width:768px){
+  .nav-links{
+    position:fixed;top:0;right:-100%;height:100vh;width:260px;
+    background:#000;flex-direction:column;padding-top:80px;gap:var(--base-gap);
+    transition:right .3s ease-out;
+  }
+  .nav-links.open{right:0;}
+  .nav-toggle{display:block;}
+}
+@media (max-width:640px){
+  .hero-headline{font-size:2rem;}
+  .hero-sub{font-size:1rem;}
+}
+</style>
+<script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js"></script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav class="nav" aria-label="Primary navigation">
+    <a href="/" class="logo" aria-label="AuSites Home">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+    </a>
+    <button class="nav-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="nav-links" id="primary-navigation">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link active">About</a></li>
+      <li><a href="mission.html" class="nav-link">Mission</a></li>
+      <li><a href="order.html" class="nav-link">Order</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero">
+    <svg class="bg-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="0" y1="0" x2="100" y2="100" stroke="var(--color-gold)" stroke-width="1"/>
+      <line x1="100" y1="0" x2="0" y2="100" stroke="var(--color-gold)" stroke-width="1"/>
+    </svg>
+    <div class="hero-content">
+      <h1 class="hero-headline">Our Story <span class="gold">AuSites</span></h1>
+      <p class="hero-sub">From a garage idea to a global speed‑first agency, we built AuSites on speed, reliability and a dash of gold.</p>
+      <a href="index.html" class="btn-primary">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- Story Timeline -->
+  <section class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-marker"><div class="dot"></div></div>
+      <div class="timeline-content">
+        <h4>2018 – The Spark</h4>
+        <p>Founders Alex and Maya met at a hackathon and dreamed of a site that loads faster than the eye can blink.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-marker"><div class="dot"></div></div>
+      <div class="timeline-content">
+        <h4>2019 – First Prototype</h4>
+        <p>Using a static‑site generator, the first AuSites prototype served pages in under 50 ms.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-marker"><div class="dot"></div></div>
+      <div class="timeline-content">
+        <h4>2020 – Launch</h4>
+        <p>The official launch attracted 5 000+ developers seeking ultra‑fast hosting solutions.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-marker"><div class="dot"></div></div>
+      <div class="timeline-content">
+        <h4>2022 – Global Expansion</h4>
+        <p>We opened offices in three continents, keeping the same black‑gold aesthetic across cultures.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Snapshot -->
+  <section class="team">
+    <div class="team-member">
+      <img src="https://picsum.photos/seed/alex/400/300" alt="Alex – Co‑founder" loading="lazy">
+      <h4>Alex Rivera</h4>
+      <p>Co‑founder &amp; Chief Engineer – Passionate about performance, Alex writes code that runs faster than light.</p>
+    </div>
+    <div class="team-member">
+      <img src="https://picsum.photos/seed/maya/400/300" alt="Maya – Co‑founder" loading="lazy">
+      <h4>Maya Patel</h4>
+      <p>Co‑founder &amp; Creative Director – Maya blends design and speed, ensuring every pixel shines gold.</p>
+    </div>
+    <div class="team-member">
+      <img src="https://picsum.photos/seed/leo/400/300" alt="Leon – Lead Front‑End Engineer" loading="lazy">
+      <h4>Leon Zhang</h4>
+      <p>Lead Front‑End Engineer – Crafts the buttery‑smooth interactions you see on every page.</p>
+    </div>
+    <div class="team-member">
+      <img src="https://picsum.photos/seed/ava/400/300" alt="Ava – Product Manager" loading="lazy">
+      <h4>Ava Gomez</h4>
+      <p>Product Manager – Keeps the team aligned on speed‑first goals and gold‑standard quality.</p>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="values">
+    <div class="value-item">
+      <h3>Speed</h3>
+      <p>Every millisecond counts. We obsess over performance so you don’t have to.</p>
+    </div>
+    <div class="value-item">
+      <h3>Transparency</h3>
+      <p>Open‑source principles guide our work – you always know what’s under the hood.</p>
+    </div>
+    <div class="value-item">
+      <h3>Human‑Centric</h3>
+      <p>People build great sites. We celebrate the creators behind every pixel.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2024 AuSites. All rights reserved.</p>
+  <p>
+    <a href="https://twitter.com/ausites" aria-label="Twitter">Twitter</a> |
+    <a href="https://linkedin.com/company/ausites" aria-label="LinkedIn">LinkedIn</a> |
+    <a href="mailto:info@ausites.com" aria-label="Email">Contact</a>
+  </p>
+</footer>
+
+<script>
+/* Navigation toggle */
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelector('.nav-links');
+if (navToggle) {
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+    navToggle.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('open');
+  });
+}
+
+/* IntersectionObserver for fade‑in sections */
+const observerOptions = {
+  threshold: 0.15
+};
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('section, .timeline-item, .team-member, .value-item').forEach(el => {
+  revealObserver.observe(el);
+});
+
+/* Timeline slide direction */
+document.querySelectorAll('.timeline-item').forEach((item, i) => {
+  const content = item.querySelector('.timeline-content');
+  if (i % 2 === 0) {
+    content.style.transform = 'translateX(-20px)';
+    content.style.transition = 'transform .5s ease-out, opacity .5s ease-out';
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          content.style.transform = 'translateX(0)';
+          content.style.opacity = '1';
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.5});
+    io.observe(content);
+  } else {
+    content.style.transform = 'translateX(20px)';
+    content.style.transition = 'transform .5s ease-out, opacity .5s ease-out';
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          content.style.transform = 'translateX(0)';
+          content.style.opacity = '1';
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.5});
+    io.observe(content);
+  }
+});
+</script>
+</body>
+</html>
