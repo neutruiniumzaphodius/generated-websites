@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us – PerforU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --color-primary:#0A1F44;
+  --color-gold:#D4AF37;
+  --color-terra:#C8452F;
+  --color-charcoal:#2E2E2E;
+  --color-bg-gradient:linear-gradient(135deg,#F9F5EB 0%,#EDE9E0 100%);
+  --overlay-glass:rgba(255,255,255,0.45);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.15);
+  --shadow-card-hover:0 12px 24px rgba(0,0,0,0.18);
+  --transition:cubic-bezier(0.4,0,0.2,1) 250ms;
+  --radius:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-charcoal);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-gold);outline-offset:2px;}
+img{max-width:100%;display:block;}
+h1,h2,h3,h4{font-family:'Playfair Display',serif; margin:0;}
+h1{font-size:clamp(36px,6vw,72px);letter-spacing:0.05em;line-height:1.2;font-weight:700;}
+h2{font-size:clamp(28px,4vw,48px);letter-spacing:0.04em;}
+h3{font-size:clamp(20px,2.5vw,36px);letter-spacing:0.03em;}
+button{cursor:pointer;font-family:inherit;border:none;background:none;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;background:#fff;color:#000;z-index:1000;}
+header{position:sticky;top:0;background:var(--color-primary);color:#fff;z-index:100;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-links a{
+  font-size:1rem;font-weight:500;letter-spacing:0.03em;color:#fff;position:relative;
+  transition:color .2s;
+}
+.nav-links a::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--color-gold);transition:width .15s;
+}
+.nav-links a:hover,.nav-links a:focus{color:var(--color-gold);}
+.nav-links a:hover::after,.nav-links a:focus::after{width:100%;}
+.nav-links a.active{color:var(--color-gold);}
+.hamburger{display:none;flex-direction:column;gap:4px;width:24px;height:24px;cursor:pointer;}
+.hamburger span{display:block;height:2px;background:#fff;border-radius:2px;}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--color-primary);flex-direction:column;max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .nav-links.open{max-height:400px;}
+  .hamburger{display:flex;}
+}
+.hero{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  overflow:hidden;
+  padding:4rem 0;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--color-bg-gradient);
+  z-index:-1;
+}
+.hero h1{
+  color:var(--color-gold);
+  text-shadow:0 2px 4px rgba(0,0,0,0.6);
+}
+.cta-primary{
+  margin-top:2rem;
+  background:var(--color-gold);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  font-weight:600;
+  transition:var(--transition);
+}
+.cta-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 16px rgba(0,0,0,0.2);
+}
+.cta-secondary{
+  margin-top:1rem;
+  font-size:1rem;
+  color:#fff;
+  position:relative;
+}
+.cta-secondary::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-2px;
+  width:0;
+  height:2px;
+  background:#fff;
+  transition:width .2s;
+}
+.cta-secondary:hover::after{width:100%;}
+.cursor-wave{
+  position:fixed;
+  top:0;left:0;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent);
+  pointer-events:none;mix-blend-mode:screen;filter:blur(8px);transform:translate(-50%,-50%);
+  transition:transform .1s linear;
+  z-index:5;
+}
+.mission{
+  padding:4rem 0;background:#fff;
+  display:grid;gap:2rem;
+}
+.mission .text{display:flex;flex-direction:column;gap:1rem;}
+.mission h2{color:var(--color-primary);}
+.mission ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.mission ul li{display:flex;align-items:center;gap:.5rem;}
+.mission ul li svg{stroke:var(--color-gold);flex-shrink:0;}
+.carousel{position:relative;padding:2rem 0;background:#f5f5f5;}
+.carousel .slides{
+  display:flex;gap:2rem;overflow:hidden;
+}
+.carousel .slide{
+  min-width:calc(100%/3 - 1.5rem);
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  padding:1rem;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .3s,var(--transition);
+}
+.carousel .slide.visible{opacity:1;transform:none;}
+.carousel .nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,0.4);color:#fff;padding:.5rem;border-radius:50%;
+}
+.carousel .nav.prev{left:1rem;}
+.carousel .nav.next{right:1rem;}
+.filter-showcase{
+  padding:3rem 0;background:#fff;
+  display:flex;justify-content:center;gap:1.5rem;
+}
+.filter-card{
+  position:relative;background:var(--color-terra);color:#fff;padding:2rem;flex:1;max-width:200px;
+  text-align:center;border-radius:var(--radius);
+  transition:background var(--transition);
+}
+.filter-card:hover{background:var(--color-gold);}
+.filter-card .icon{font-size:2rem;margin-bottom:.5rem;}
+.trust{
+  padding:2rem 0;background:#fff;display:flex;justify-content:center;gap:2rem;
+}
+.trust .badge{
+  display:flex;align-items:center;gap:.5rem;color:var(--color-primary);
+}
+.trust .badge svg{stroke:var(--color-gold);}
+.trust .badge:hover{color:var(--color-gold);}
+.trust .badge:hover svg{stroke:var(--color-gold);}
+.trust .badge:hover::after{
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.8;}
+  50%{transform:scale(1.1);opacity:1;}
+  100%{transform:scale(1);opacity:.8;}
+}
+.testimonial{
+  padding:4rem 0;background:#fff;text-align:center;
+}
+.testimonial blockquote{
+  font-size:1.25rem;color:var(--color-primary);font-style:italic;max-width:800px;margin:auto;
+}
+.testimonial .author{margin-top:.5rem;font-weight:600;}
+footer{background:var(--color-primary);color:#fff;padding:3rem 0;}
+footer .grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+footer a{color:#fff;transition:color .2s;}
+footer a:hover{color:var(--color-gold);}
+footer .made{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;
+}
+footer .made:hover{animation:pulseBadge 0.5s ease-in-out infinite;}
+@keyframes pulseBadge{
+  0%{filter:drop-shadow(0 0 0 var(--color-gold));}
+  50%{filter:drop-shadow(0 0 8px var(--color-gold));}
+  100%{filter:drop-shadow(0 0 0 var(--color-gold));}
+}
+@media (max-width:768px){
+  .nav-links{padding:1rem;}
+  .mission{grid-template-columns:1fr;}
+  .carousel .slide{min-width:100%;}
+  .carousel .slides{gap:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;}
+}
+/* Additional Styles for About Page */
+.founder{padding:4rem 0;background:#fff;}
+.founder .portrait{flex:1;max-width:300px;}
+.founder .portrait img{border-radius:var(--radius);box-shadow:var(--shadow-card);}
+.founder .story{flex:2;display:flex;flex-direction:column;gap:1rem;}
+.timeline{overflow-x:auto;display:flex;gap:2rem;padding:2rem 0;background:#fff;}
+.timeline-item{
+  background:var(--overlay-glass);
+  border-radius:var(--radius);
+  padding:1rem;
+  min-width:200px;
+  box-shadow:var(--shadow-card);
+}
+.timeline-item h3{color:var(--color-primary);}
+.map{position:relative;padding-top:56.25%;margin:2rem 0;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);}
+.map iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:var(--radius);}
+.workflow{padding:4rem 0;background:#fff;}
+.workflow-steps{display:flex;flex-direction:column;gap:1.5rem;}
+.workflow-step{display:flex;align-items:center;gap:1rem;}
+.workflow-step .step-icon{
+  background:var(--color-gold);
+  color:#fff;
+  width:40px;height:40px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:600;
+}
+.team{padding:4rem 0;background:#fff;}
+.team-grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.team-member{background:var(--overlay-glass);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow-card);text-align:center;}
+.team-member img{border-radius:50%;margin-bottom:1rem;}
+.community{padding:4rem 0;background:#fff;text-align:center;}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header>
+    <nav class="container">
+      <a href="/" aria-label="PerforU Home"><strong>PerforU</strong></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Intro -->
+    <section class="hero">
+      <div class="container">
+        <h1>Our Missouri Roots</h1>
+        <h3>Founded on authenticity, grown in the heart of Kansas City.</h3>
+      </div>
+    </section>
+
+    <!-- Founder Story -->
+    <section class="founder mission">
+      <div class="container">
+        <div class="founder-content" style="display:flex;flex-wrap:wrap;gap:2rem;align-items:center;">
+          <div class="portrait">
+            <img src="placeholder-portrait.jpg" alt="Alexandra Perkins, Founder of PerforU" style="border-radius:var(--radius);box-shadow:var(--shadow-card);">
+          </div>
+          <div class="story">
+            <h2>Founder Story</h2>
+            <p>Alexandra Perkins grew up watching her parents run a small boutique in downtown Kansas City. Inspired by the power of scent to evoke memory, she set out to create a curated space where collectors could find only the most authentic designer fragrances.</p>
+            <p>After studying perfumery in Paris and building relationships with legacy houses, Alexandra returned home, establishing PerforU’s regional warehouse in the heart of Missouri. Today, every bottle is sourced, verified, and packaged with the same meticulous care she learned from her family’s legacy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Milestones Timeline -->
+    <section class="timeline">
+      <div class="container">
+        <h2 style="text-align:center;color:var(--color-primary);margin-bottom:1rem;">Milestones</h2>
+        <div class="timeline-track">
+          <div class="timeline-item">
+            <h3>Launch – 2020</h3>
+            <p>PerforU opened its first storefront and online boutique, offering a curated selection of authentic designer perfumes.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Partnership – 2021</h3>
+            <p>Secured exclusive distribution agreements with Chanel, Tom Ford, and Jo Malone.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Certification – 2022</h3>
+            <p>Achieved ISO 9001 certification for quality management and authenticity verification.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Expansion – 2023</h3>
+            <p>Opened a state‑of‑the‑art regional warehouse in Kansas City, MO, enhancing nationwide shipping.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Community – 2024</h3>
+            <p>Launched monthly fragrance workshops and local art collaborations across Missouri.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Inset -->
+    <section class="map">
+      <div class="container">
+        <h2 style="color:var(--color-primary);text-align:center;margin-bottom:1rem;">Our Shipping Hub</h2>
+        <div class="map" style="margin:auto;max-width:800px;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3105.123456789!2d-94.578567!3d39.099724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87c0b7e6c1234567%3A0x123456789abcdef!2s1234%20Main%20St%2C%20Kansas%20City%2C%20MO%2064106!5e0!3m2!1sen!2sus!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Authenticity Workflow Infographic -->
+    <section class="workflow">
+      <div class="container">
+        <h2 style="color:var(--color-primary);text-align:center;margin-bottom:2rem;">Our Authenticity Workflow</h2>
+        <div class="workflow-steps">
+          <div class="workflow-step">
+            <div class="step-icon">1</div>
+            <div>
+              <h3>Sourcing</h3>
+              <p>Direct procurement from brand owners and authorized distributors.</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-icon">2</div>
+            <div>
+              <h3>Verification</h3>
+              <p>Batch numbers, serial codes, and UV light checks ensure genuine products.</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-icon">3</div>
+            <div>
+              <h3>Packaging</h3>
+              <p>Secure, tamper‑evident packaging with original documentation.</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-icon">4</div>
+            <div>
+              <h3>Delivery</h3>
+              <p>Fast, tracked shipping from our Missouri hub to collectors worldwide.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+      <div class="container">
+        <h2 style="color:var(--color-primary);text-align:center;margin-bottom:2rem;">Meet the Team</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <img src="placeholder-team1.jpg" alt="Emily Rivera – Operations Manager">
+            <h3>Emily Rivera</h3>
+            <p>Operations Manager</p>
+          </div>
+          <div class="team-member">
+            <img src="placeholder-team2.jpg" alt="Michael Liu – Head of Quality Assurance">
+            <h3>Michael Liu</h3>
+            <p>Head of Quality Assurance</p>
+          </div>
+          <div class="team-member">
+            <img src="placeholder-team3.jpg" alt="Sofia Patel – Customer Experience Lead">
+            <h3>Sofia Patel</h3>
+            <p>Customer Experience Lead</p>
+          </div>
+          <div class="team-member">
+            <img src="placeholder-team4.jpg" alt="David Kim – Logistics Coordinator">
+            <h3>David Kim</h3>
+            <p>Logistics Coordinator</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Involvement -->
+    <section class="community">
+      <div class="container">
+        <h2 style="color:var(--color-primary);margin-bottom:1rem;">Giving Back to Missouri</h2>
+        <p>From monthly fragrance workshops to collaborations with local artists, PerforU proudly supports the cultural fabric of our community.</p>
+        <a href="contact.html" class="cta-primary">Join Our Next Event</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container grid">
+      <div>
+        <h3>About PerforU</h3>
+        <p>Authentic designer fragrances curated with care, delivered from the heart of Missouri.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <ul style="list-style:none;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p>1234 Main St.<br>Kansas City, MO 64106<br>Phone: (555) 123‑4567<br>Email: info@perforu.com</p>
+      </div>
+    </div>
+    <div class="made" style="text-align:center;">
+      <span>© 2024 PerforU</span>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

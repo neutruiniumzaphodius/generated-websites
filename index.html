@@ -1,75 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>PerforU – Authentic Designer Perfumes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#0A1F44;
+  --color-gold:#D4AF37;
+  --color-terra:#C8452F;
+  --color-charcoal:#2E2E2E;
+  --color-bg-gradient:linear-gradient(135deg,#F9F5EB 0%,#EDE9E0 100%);
+  --overlay-glass:rgba(255,255,255,0.45);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.15);
+  --shadow-card-hover:0 12px 24px rgba(0,0,0,0.18);
+  --transition:cubic-bezier(0.4,0,0.2,1) 250ms;
+  --radius:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--color-bg-gradient);
+  color:var(--color-charcoal);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-gold);outline-offset:2px;}
+img{max-width:100%;display:block;}
+h1,h2,h3,h4{font-family:'Playfair Display',serif; margin:0;}
+h1{font-size:clamp(36px,6vw,72px);letter-spacing:0.05em;line-height:1.2;font-weight:700;}
+h2{font-size:clamp(28px,4vw,48px);letter-spacing:0.04em;}
+h3{font-size:clamp(20px,2.5vw,36px);letter-spacing:0.03em;}
+button{cursor:pointer;font-family:inherit;border:none;background:none;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.5rem 1rem;background:#fff;color:#000;z-index:1000;}
+/* Header & Nav */
+header{position:sticky;top:0;background:var(--color-primary);color:#fff;z-index:100;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-links a{
+  font-size:1rem;font-weight:500;letter-spacing:0.03em;color:#fff;position:relative;
+  transition:color .2s;
+}
+.nav-links a::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--color-gold);transition:width .15s;
+}
+.nav-links a:hover,.nav-links a:focus{color:var(--color-gold);}
+.nav-links a:hover::after,.nav-links a:focus::after{width:100%;}
+.nav-links a.active{color:var(--color-gold);}
+.hamburger{display:none;flex-direction:column;gap:4px;width:24px;height:24px;cursor:pointer;}
+.hamburger span{display:block;height:2px;background:#fff;border-radius:2px;}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:100%;left:0;width:100%;background:var(--color-primary);flex-direction:column;max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .nav-links.open{max-height:400px;}
+  .hamburger{display:flex;}
+}
+/* Hero */
+.hero{
+  position:relative;height:calc(100vh - 60px);min-height:600px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;
+}
+.hero video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;}
+.hero::before{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:-1;
+}
+.hero h1{
+  color:var(--color-gold);
+  text-shadow:0 2px 4px rgba(0,0,0,0.6);
+}
+.hero h3{
+  margin-top:1rem;font-size:1.5rem;
+}
+.cta-primary{
+  margin-top:2rem;
+  background:var(--color-gold);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  font-weight:600;
+  transition:var(--transition);
+}
+.cta-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 16px rgba(0,0,0,0.2);
+}
+.cta-secondary{
+  margin-top:1rem;
+  font-size:1rem;
+  color:#fff;
+  position:relative;
+}
+.cta-secondary::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-2px;
+  width:0;
+  height:2px;
+  background:#fff;
+  transition:width .2s;
+}
+.cta-secondary:hover::after{width:100%;}
+/* Scent wave cursor */
+.cursor-wave{
+  position:fixed;
+  top:0;left:0;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent);
+  pointer-events:none;mix-blend-mode:screen;filter:blur(8px);transform:translate(-50%,-50%);
+  transition:transform .1s linear;
+  z-index:5;
+}
+/* Mission Snapshot */
+.mission{
+  padding:4rem 0;background:#fff;
+  display:grid;gap:2rem;
+}
+.mission .text{display:flex;flex-direction:column;gap:1rem;}
+.mission h2{color:var(--color-primary);}
+.mission ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.mission ul li{display:flex;align-items:center;gap:.5rem;}
+.mission ul li svg{stroke:var(--color-gold);flex-shrink:0;}
+/* Carousel */
+.carousel{position:relative;padding:2rem 0;background:#f5f5f5;}
+.carousel .slides{
+  display:flex;gap:2rem;overflow:hidden;
+}
+.carousel .slide{
+  min-width:calc(100%/3 - 1.5rem);
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  padding:1rem;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .3s,var(--transition);
+}
+.carousel .slide.visible{opacity:1;transform:none;}
+.carousel .nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,0.4);color:#fff;padding:.5rem;border-radius:50%;
+}
+.carousel .nav.prev{left:1rem;}
+.carousel .nav.next{right:1rem;}
+/* Quick Filter */
+.filter-showcase{
+  padding:3rem 0;background:#fff;
+  display:flex;justify-content:center;gap:1.5rem;
+}
+.filter-card{
+  position:relative;background:var(--color-terra);color:#fff;padding:2rem;flex:1;max-width:200px;
+  text-align:center;border-radius:var(--radius);
+  transition:background var(--transition);
+}
+.filter-card:hover{background:var(--color-gold);}
+.filter-card .icon{font-size:2rem;margin-bottom:.5rem;}
+/* Trust Badges */
+.trust{
+  padding:2rem 0;background:#fff;display:flex;justify-content:center;gap:2rem;
+}
+.trust .badge{
+  display:flex;align-items:center;gap:.5rem;color:var(--color-primary);
+}
+.trust .badge svg{stroke:var(--color-gold);}
+.trust .badge:hover{color:var(--color-gold);}
+.trust .badge:hover svg{stroke:var(--color-gold);}
+.trust .badge:hover::after{
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.8;}
+  50%{transform:scale(1.1);opacity:1;}
+  100%{transform:scale(1);opacity:.8;}
+}
+/* Testimonial */
+.testimonial{
+  padding:4rem 0;background:#fff;text-align:center;
+}
+.testimonial blockquote{
+  font-size:1.25rem;color:var(--color-primary);font-style:italic;max-width:800px;margin:auto;
+}
+.testimonial .author{margin-top:.5rem;font-weight:600;}
+/* Footer */
+footer{background:var(--color-primary);color:#fff;padding:3rem 0;}
+footer .grid{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+footer a{color:#fff;transition:color .2s;}
+footer a:hover{color:var(--color-gold);}
+footer .made{
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;
+}
+footer .made:hover{animation:pulseBadge 0.5s ease-in-out infinite;}
+@keyframes pulseBadge{
+  0%{filter:drop-shadow(0 0 0 var(--color-gold));}
+  50%{filter:drop-shadow(0 0 8px var(--color-gold));}
+  100%{filter:drop-shadow(0 0 0 var(--color-gold));}
+}
+@media (max-width:768px){
+  .nav-links{padding:1rem;}
+  .mission{grid-template-columns:1fr;}
+  .carousel .slide{min-width:100%;}
+  .carousel .slides{gap:0;}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a class="skip-link" href="#main">Skip to content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="/" class="logo" aria-label="PerforU Home"><strong>PerforU</strong></a>
+      <button class="hamburger" aria-label="Menu" aria-controls="primary-navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="primary-navigation">
+        <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Hero">
+    <video autoplay muted loop playsinline loading="lazy" poster="https://picsum.photos/1920/1080?random=1">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>THE ART OF AUTHENTICITY</h1>
+      <h3>Luxury scents, curated for you</h3>
+      <a href="shop.html" class="cta-primary">Shop Now</a>
+      <a href="about.html" class="cta-secondary">Explore Our Story</a>
+    </div>
+    <div class="cursor-wave" id="cursorWave"></div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- Mission Snapshot -->
+  <section class="mission container" data-observe>
+    <picture>
+      <source srcset="https://picsum.photos/800/600.webp?random=2" type="image/webp">
+      <img src="https://picsum.photos/800/600?random=2" alt="PerforU mission snapshot image">
+    </picture>
+    <div class="text">
+      <h2>Our Mission</h2>
+      <p>PerforU brings the world of high‑end designer fragrances to your doorstep, combining rigorous authenticity checks with a boutique‑style curation.</p>
+      <ul>
+        <li><svg width="16" height="16"><use href="#check-circle"/></svg>Verified sourcing from authorized partners</li>
+        <li><svg width="16" height="16"><use href="#map-pin"/></svg>Fast 1‑2 day shipping from Missouri</li>
+        <li><svg width="16" height="16"><use href="#shield"/></svg>Certificate of authenticity with every bottle</li>
+      </ul>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <!-- Featured Collections Carousel -->
+  <section class="carousel container" data-observe>
+    <button class="nav prev" aria-label="Previous slide"><i data-lucide="chevron-left"></i></button>
+    <div class="slides">
+      <div class="slide visible">
+        <img src="https://picsum.photos/400/600?random=3" alt="Chanel No. 5 perfume bottle – floral fragrance family">
+        <h3>Chanel No. 5</h3>
+        <p class="price">$120</p>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/400/600?random=4" alt="Dior Sauvage perfume bottle – fresh aromatic family">
+        <h3>Dior Sauvage</h3>
+        <p class="price">$115</p>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/400/600?random=5" alt="Tom Ford Oud Wood perfume bottle – woody oriental fragrance">
+        <h3>Tom Ford Oud Wood</h3>
+        <p class="price">$130</p>
+      </div>
+    </div>
+    <button class="nav next" aria-label="Next slide"><i data-lucide="chevron-right"></i></button>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <!-- Quick‑Filter Showcase -->
+  <section class="filter-showcase container" data-observe>
+    <div class="filter-card" data-filter="citrus">
+      <div class="icon"><i data-lucide="leaf"></i></div>
+      <h3>Citrus</h3>
+    </div>
+    <div class="filter-card" data-filter="woody">
+      <div class="icon"><i data-lucide="tree"></i></div>
+      <h3>Woody</h3>
+    </div>
+    <div class="filter-card" data-filter="oriental">
+      <div class="icon"><i data-lucide="sparkles"></i></div>
+      <h3>Oriental</h3>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
+  <!-- Trust Badges -->
+  <section class="trust container" data-observe>
+    <div class="badge">
+      <i data-lucide="shield-check"></i>
+      <span>Authenticity Guarantee</span>
+    </div>
+    <div class="badge">
+      <i data-lucide="map-pin"></i>
+      <span>Missouri‑Based</span>
+    </div>
+    <div class="badge">
+      <i data-lucide="award"></i>
+      <span>Industry Awards</span>
+    </div>
+  </section>
+
+  <!-- Testimonial Teaser -->
+  <section class="testimonial container" data-observe>
+    <blockquote>
+      “PerforU transformed my fragrance collection – every bottle feels like a masterpiece, delivered with unrivaled confidence.”
+    </blockquote>
+    <div class="author">— Alex Martinez, Long‑time Customer</div>
+    <a href="shop.html" class="cta-primary">Shop Now</a>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Alcohol Disclosure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul class="social">
+          <li><i data-lucide="instagram"></i></li>
+          <li><i data-lucide="facebook"></i></li>
+          <li><i data-lucide="twitter"></i></li>
+          <li><i data-lucide="pinterest"></i></li>
+        </ul>
+      </div>
+    </div>
+    <div class="made">
+      <i data-lucide="map-pin"></i>
+      <a href="/missouri.html" class="made-link">Made in Missouri</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Navigation toggle */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('open');
+});
+
+/* Cursor scent wave */
+const wave = document.getElementById('cursorWave');
+document.addEventListener('pointermove', e => {
+  wave.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
+
+/* Intersection Observer for fade‑in */
+const options = {threshold:0.1};
+const observer = new IntersectionObserver((entries)=> {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},options);
+document.querySelectorAll('[data-observe]').forEach(section=>observer.observe(section));
+
+/* Simple carousel */
+const slides = document.querySelectorAll('.carousel .slide');
+let current = 0;
+function showSlide(index){
+  slides.forEach((s,i)=>s.classList.toggle('visible', i===index));
+}
+setInterval(()=>{
+  current = (current+1)%slides.length;
+  showSlide(current);
+},4000);
+document.querySelector('.carousel .prev').addEventListener('click',()=>{
+  current = (current-1+slides.length)%slides.length;
+  showSlide(current);
+});
+document.querySelector('.carousel .next').addEventListener('click',()=>{
+  current = (current+1)%slides.length;
+  showSlide(current);
+});
+</script>
 </html>
