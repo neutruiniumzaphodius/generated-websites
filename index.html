@@ -1,75 +1,548 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExoticLabs – Cutting‑Edge AI Supercomputers</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000000;
+  --sec:#1A1A1A;
+  --accent:#00FFE5;
+  --text:#FFFFFF;
+  --glass-bg:rgba(26,26,26,0.78);
+  --gap:8px;
+  --max-w:1440px;
+  --transition:0.25s ease-out;
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+h1,h2,h3{
+  font-family:'Orbitron',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  line-height:1.1;
+}
+h1{
+  font-size:clamp(48px,12vw,120px);
+  font-weight:700;
+}
+h2{
+  font-size:clamp(28px,5vw,48px);
+  font-weight:600;
+}
+h3{
+  font-size:clamp(20px,4vw,36px);
+  font-weight:600;
+}
+p{
+  font-size:clamp(14px,2vw,20px);
+}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:'Inter',sans-serif;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:0.02em;
+}
+.btn-primary{
+  background:var(--accent);
+  color:var(--bg);
+  padding:12px 24px;
+  border-radius:4px;
+  box-shadow:0 0 8px var(--accent);
+  transition:var(--transition),transform 0.2s;
+}
+.btn-primary:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 16px var(--accent);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--accent);
+  border:2px solid var(--accent);
+  padding:12px 24px;
+  border-radius:4px;
+  transition:var(--transition),transform 0.2s;
+}
+.btn-secondary:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 12px var(--accent);
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 4px var(--accent);}
+  50%{box-shadow:0 0 12px var(--accent);}
+  100%{box-shadow:0 0 4px var(--accent);}
+}
+.btn-primary:hover,
+.btn-secondary:hover{
+  animation:pulse 0.8s infinite;
+}
+section{
+  padding:48px var(--gap);
+  max-width:var(--max-w);
+  margin:auto;
+}
+@media(min-width:640px){
+  section{padding:64px var(--gap);}
+}
+@media(min-width:1024px){
+  section{padding:96px var(--gap);}
+}
+.container{
+  display:grid;
+  gap:var(--gap);
+}
+.glass{
+  background:var(--glass-bg);
+  backdrop-filter:blur(8px);
+  border-radius:4px;
+  border:1px solid rgba(255,255,255,0.1);
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+.glass:hover{
+  box-shadow:0 0 12px var(--accent);
+}
+.accent-bar{
+  height:4px;
+  background:var(--accent);
+  width:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  animation:pulse 2s infinite;
+}
+.grid-3{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:var(--gap);
+}
+@media(min-width:768px){
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+}
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:var(--gap);
+}
+@media(min-width:768px){
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+}
+.timeline{
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  display:flex;
+  gap:var(--gap);
+  padding-bottom:24px;
+}
+.timeline::-webkit-scrollbar{height:8px;}
+.timeline::-webkit-scrollbar-thumb{background:var(--accent);border-radius:4px;}
+.milestone{
+  flex:0 0 280px;
+  background:var(--sec);
+  border-radius:4px;
+  scroll-snap-align:start;
+  padding:24px;
+  position:relative;
+  opacity:0;
+  transform:translateX(100px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.milestone.is-visible{
+  opacity:1;
+  transform:translateX(0);
+}
+.milestone .counter{
+  font-size:2rem;
+  color:var(--accent);
+  font-weight:600;
+}
+.toast{
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--accent);
+  color:var(--bg);
+  padding:12px 24px;
+  border-radius:4px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s;
+}
+.toast.show{opacity:1;}
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  position:fixed;
+  width:100%;
+  top:0;
+  left:0;
+  z-index:10;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(6px);
+}
+nav a{
+  color:var(--text);
+  margin:0 12px;
+}
+nav .menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--accent);
+  font-size:1.5rem;
+}
+@media(max-width:768px){
+  nav .menu{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--sec);
+    flex-direction:column;
+    display:none;
+  }
+  nav .menu.show{display:flex;}
+  nav .menu-toggle{display:block;}
+}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+input,button{
+  font-family:inherit;
+}
+input{
+  background:transparent;
+  border:none;
+  border-bottom:2px solid #555555;
+  color:#fff;
+  padding:8px 0;
+  width:100%;
+  margin-bottom:16px;
+}
+input::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+input:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+.invalid{
+  border-color:#FF4D4D !important;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  75%{transform:translateX(5px);}
+}
+.shake{
+  animation:shake .3s;
+}
+footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(26,26,26,0.92);
+  backdrop-filter:blur(8px);
+  padding:16px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:var(--gap);
+  color:var(--text);
+}
+footer .form-group{
+  flex:1 1 250px;
+  display:flex;
+  gap:var(--gap);
+}
+footer button{
+  flex-shrink:0;
+}
+canvas#cursor-canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+  z-index:5;
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header>
+  <nav aria-label="Main navigation">
+    <a href="#" class="logo" aria-label="ExoticLabs Home"><strong>ExoticLabs</strong></a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+    <div class="menu" role="menubar">
+      <a href="#hero" role="menuitem">Home</a>
+      <a href="#about" role="menuitem">About</a>
+      <a href="#timeline" role="menuitem">Journey</a>
+      <a href="#services" role="menuitem">Services</a>
+      <a href="#testimonials" role="menuitem">Testimonials</a>
+    </div>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Section -->
+  <section id="hero" class="container" style="height:100vh; place-items:center; text-align:center;">
+    <div id="particles-js" style="position:absolute; inset:0; z-index:-1;"></div>
+    <canvas id="cursor-canvas"></canvas>
+    <h2 class="hero-tagline" style="font-size:clamp(28px,5vw,48px); color:var(--accent); margin-bottom:16px;">Beyond Human Intelligence</h2>
+    <h1 class="hero-mission" style="color:var(--text); text-shadow:0 0 8px var(--accent); margin-bottom:24px;">mission_statement: Making Humanity more Intelligent</h1>
+    <p style="max-width:800px; margin:auto; font-size:clamp(14px,2vw,20px); opacity:0.9; margin-bottom:32px;">
+      We engineer ultra‑fast learning computers that solve humanity’s hardest problems at exponential speed.
+    </p>
+    <div>
+      <button class="btn-primary" id="cta-primary">Join the Future – Subscribe</button>
+      <button class="btn-secondary" id="cta-secondary">Download the Tech Brief</button>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- About Section -->
+  <section id="about">
+    <h2>About ExoticLabs</h2>
+    <div class="glass" data-observe>
+      <p>
+        Founded in 2028, ExoticLabs emerged from a coalition of AI researchers and quantum physicists who believed that the next leap in intelligence would come from hardware, not software. Our mission is to empower humanity with machines that think faster than the human brain, unlocking breakthroughs in medicine, climate science, and beyond.
+      </p>
+      <div class="grid-3" style="margin-top:24px;">
+        <div data-observe>
+          <i data-lucide="cpu" color="#00FFE5"></i>
+          <h3>AI hardware that outperforms human cognition</h3>
+          <p>Our hybrid quantum‑AI cores deliver petaflop‑scale performance in milliseconds.</p>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div data-observe>
+          <i data-lucide="rocket" color="#00FFE5"></i>
+          <h3>Tools that accelerate scientific breakthroughs</h3>
+          <p>Turn‑key APIs let labs run billions of simulations overnight.</p>
+        </div>
+        <div data-observe>
+          <i data-lucide="globe" color="#00FFE5"></i>
+          <h3>A commitment to exponential progress for all of humanity</h3>
+          <p>Open‑access research partnerships ensure every discovery benefits the global community.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section id="timeline">
+    <h2>From 2028 to Today – A Timeline of Exponential Growth</h2>
+    <div class="timeline" data-observe>
+      <div class="milestone" data-target>
+        <h3>2028 – Genesis</h3>
+        <p>ExoticLabs is incorporated; vision set to build the world’s first quantum‑AI supercomputer.</p>
+      </div>
+      <div class="milestone" data-target>
+        <h3>2029 – First Prototype</h3>
+        <p>Hybrid quantum‑classical engine achieves <span class="counter" data-value="1">0</span> PFLOP in 0.5 s learning cycles.</p>
+      </div>
+      <div class="milestone" data-target>
+        <h3>2030 – Quantum‑AI Breakthrough</h3>
+        <p>Introduced ‘QuantaLearn™’ algorithm, reducing model training time by <span class="counter" data-value="99.9">0</span>%.</p>
+      </div>
+      <div class="milestone" data-target>
+        <h3>2032 – Market Launch</h3>
+        <p>Delivered <span class="counter" data-value="10">0</span> units to early adopters.</p>
+      </div>
+      <div class="milestone" data-target>
+        <h3>2024 – Current Capabilities</h3>
+        <p>Systems now provide <span class="counter" data-value="1000">0</span>+ PFLOP, powering the most demanding AI workloads.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="grid-3">
+      <div class="glass" data-observe>
+        <div class="accent-bar"></div>
+        <h3>Custom AI Supercomputers</h3>
+        <p>Tailored architectures that combine quantum processors with AI accelerators for unmatched speed.</p>
+      </div>
+      <div class="glass" data-observe>
+        <div class="accent-bar"></div>
+        <h3>Turn‑key Simulation APIs</h3>
+        <p>Plug‑and‑play interfaces that let researchers launch massive simulations in minutes.</p>
+      </div>
+      <div class="glass" data-observe>
+        <div class="accent-bar"></div>
+        <h3>Consulting & Integration</h3>
+        <p>End‑to‑end support from hardware design to deployment in data centers worldwide.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <h2>What Our Clients Say</h2>
+    <div class="grid-2">
+      <div class="glass" data-observe>
+        <p>“ExoticLabs’ supercomputers cut our drug discovery timelines from years to weeks. The performance is truly beyond anything we’ve seen.”</p>
+        <p><strong>— Dr. Maya Patel, BioPharma Innovations</strong></p>
+      </div>
+      <div class="glass" data-observe>
+        <p>“The quantum‑AI core allowed us to model climate scenarios at a resolution previously thought impossible. The results are transforming our policy recommendations.”</p>
+        <p><strong>— Prof. Luis Hernández, Global Climate Institute</strong></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Sticky Footer / Newsletter -->
+<footer aria-label="Newsletter signup">
+  <div class="form-group">
+    <input type="email" id="email" placeholder="Enter your email" aria-label="Email address">
+    <button class="btn-primary" id="subscribe-btn">Subscribe</button>
+    <button class="btn-secondary" id="download-btn">Tech Brief</button>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Thank you for subscribing!</div>
+
+<script async defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script async defer src="https://unpkg.com/lucide@latest"></script>
+<script defer>
+/* Navigation toggle */
+document.querySelector('.menu-toggle').addEventListener('click',function(){
+  const menu=document.querySelector('.menu');
+  const expanded=this.getAttribute('aria-expanded')==='true';
+  this.setAttribute('aria-expanded',!expanded);
+  menu.classList.toggle('show');
+});
+
+/* Cursor Trail */
+const canvas=document.getElementById('cursor-canvas');
+const ctx=canvas.getContext('2d');
+let particles=[];
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',resizeCanvas);
+resizeCanvas();
+function addTrail(x,y){
+  particles.push({x, y, alpha:1});
+}
+window.addEventListener('mousemove',e=>addTrail(e.clientX,e.clientY));
+function drawTrail(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,8,0,Math.PI*2);
+    ctx.fillStyle=`rgba(0,255,229,${p.alpha})`;
+    ctx.fill();
+    p.alpha-=0.02;
+  });
+  particles=particles.filter(p=>p.alpha>0);
+  requestAnimationFrame(drawTrail);
+}
+drawTrail();
+
+/* Intersection Observer for reveal */
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');entry.target.dataset.observe&&entry.target.classList.add('is-visible');}})},{threshold:0.1});
+document.querySelectorAll('[data-observe]').forEach(el=>observer.observe(el));
+
+/* Counter animation */
+function animateCounters(){
+  document.querySelectorAll('.counter').forEach(el=>{
+    const target=+el.dataset.value;
+    let current=0;
+    const step=target/120;
+    function update(){
+      current+=step;
+      if(current<target){
+        el.textContent=Number(current).toFixed(target%1===0?0:1);
+        requestAnimationFrame(update);
+      }else{
+        el.textContent=target%1===0?target:target.toFixed(1);
+      }
+    }
+    update();
+  });
+}
+
+/* Timeline Milestone visibility */
+const milestoneObserver=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');}})},{threshold:0.5});
+document.querySelectorAll('.milestone').forEach(m=>milestoneObserver.observe(m));
+
+/* Form validation & toast */
+const emailInput=document.getElementById('email');
+const subscribeBtn=document.getElementById('subscribe-btn');
+subscribeBtn.addEventListener('click',e=>{
+  e.preventDefault();
+  const email=emailInput.value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    emailInput.classList.add('invalid','shake');
+    setTimeout(()=>emailInput.classList.remove('shake'),300);
+    return;
+  }
+  // simulate post
+  fetch('https://example.com/placeholder', {method:'POST',body:JSON.stringify({email})});
+  showToast();
+  emailInput.value='';
+});
+
+function showToast(){
+  const toast=document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),3000);
+}
+
+/* Load particles after a short delay */
+window.addEventListener('load',()=>{setTimeout(()=>{
+  particlesJS('particles-js',{
+    "particles":{ "number":{ "value":80 }, "size":{ "value":3 },"move":{ "speed":0.5 } },
+    "interactivity":{ "events":{ "onhover":{ "enable":true,"mode":"repulse" } } },
+    "retina_detect":true
+  });
+},1000);});
+</script>
+<script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
