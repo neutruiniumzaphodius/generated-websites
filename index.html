@@ -1,75 +1,603 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Teddy's Books – Community Bookstore & Events</title>
+<meta name="description" content="Discover curated books, author talks, and a warm community hub at Teddy's Books. Visit us today or join our newsletter!">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#006064;
+  --color-secondary:#FFB300;
+  --color-accent:#FF6F61;
+  --color-bg:#FAF9F6;
+  --color-text:#212121;
+  --gap:8px;
+  --max-width:1200px;
+  --transition:0.25s cubic-bezier(0.25,0.8,0.25,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  background:var(--color-bg);
+  color:var(--color-text);
+  line-height:1.6;
+}
+h1,h2,h3{font-family:'Merriweather',serif; margin:0;}
+h1{font-size:clamp(48px,6vw,56px);font-weight:700;letter-spacing:-0.5px;color:var(--color-primary);}
+h2{font-size:36px;font-weight:700;}
+h3{font-size:22px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;}
+p{margin-bottom:1rem;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+img{max-width:100%;display:block;}
+.container{max-width:var(--max-width);margin:auto;padding:0 var(--gap);}
+.grid{display:grid;gap:var(--gap);}
+.grid-12{grid-template-columns:repeat(12,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.flex{display:flex;align-items:center;justify-content:space-between;}
+.hidden{position:absolute;left:-9999px;}
+/* Skip link */
+.skip-link{position:absolute;top:0;left:0;background:#000;color:#fff;padding:8px;z-index:1000;}
+/* Header/Nav */
+header{background:var(--color-primary);color:#fff;position:sticky;top:0;z-index:999;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:var(--gap) 0;}
+nav .logo{font-size:1.5rem;font-weight:700;}
+nav ul{list-style:none;display:flex;gap:var(--gap);}
+nav li a{color:#fff;padding:var(--gap);}
+nav .menu-toggle{display:none;background:none;color:#fff;font-size:1.5rem;}
+@media (max-width:768px){
+  nav ul{flex-direction:column;background:var(--color-primary);position:absolute;top:100%;left:0;width:100%;max-height:0;overflow:hidden;transition:var(--transition);}
+  nav ul.open{max-height:400px;}
+  nav .menu-toggle{display:block;}
+}
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:500px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+  background:url('https://picsum.photos/1600/900') center/cover no-repeat;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,96,100,0.45);
+}
+.hero-content{position:relative;z-index:1;max-width:800px;padding:var(--gap);}
+.hero h1{opacity:0;transform:translateY(30px);animation:fadeSlideIn 0.6s ease-out forwards;}
+.hero .tagline{font-size:20px;color:var(--color-secondary);margin-top:1rem;opacity:0;animation:fadeIn 0.6s ease-out forwards 0.2s;}
+.hero .subcopy{font-size:18px;color:#FAF9F6;margin-top:.5rem;opacity:0;animation:fadeIn 0.6s ease-out forwards 0.4s;}
+.hero .buttons{margin-top:2rem;display:flex;gap:var(--gap);flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeIn 0.6s ease-out forwards 0.6s;}
+.btn{
+  padding:12px 24px;
+  border-radius:4px;
+  font-family:'Merriweather',serif;
+  font-weight:700;
+  font-size:18px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  transition:var(--transition);
+}
+.btn-primary{
+  background:var(--color-accent);
+  color:#fff;
+}
+.btn-primary:hover{
+  box-shadow:0 0 8px rgba(255,111,97,0.5);
+  transform:scale(1.03);
+}
+.btn-secondary{
+  border:2px solid #fff;
+  color:#fff;
+  background:transparent;
+}
+.btn-secondary:hover{
+  background:#fff;
+  color:var(--color-primary);
+}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes fadeSlideIn{to{opacity:1;transform:translateY(0)}}
+
+/* About */
+section{padding:4rem var(--gap);}
+.about{background:var(--color-bg);}
+.about .title{font-size:48px;color:var(--color-primary);margin-bottom:.5rem;}
+.about .subtitle{font-size:22px;color:var(--color-secondary);margin-bottom:2rem;}
+.about .grid{align-items:center;}
+.about .illustration{grid-column:span 7;min-height:300px;background:url('https://picsum.photos/800/600') center/cover;border-radius:8px;}
+.about .text{grid-column:span 5;}
+.about .cards{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:2rem;}
+.about .card{
+  background:#fff;
+  padding:24px;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  gap:var(--gap);
+}
+.about .card .icon{
+  background:var(--color-secondary);
+  color:#fff;
+  width:48px;height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+}
+.about .card h3{font-size:22px;color:var(--color-primary);margin:0;}
+/* Services */
+.services{background:var(--color-bg);position:relative;}
+.services::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(45deg,var(--color-secondary) 0, var(--color-secondary) 1px,transparent 1px, transparent 20px);
+  opacity:0.05;
+}
+.services .title{font-size:48px;color:var(--color-primary);margin-bottom:2rem;}
+.services .cards{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.service-card{
+  background:#fff;
+  padding:24px;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  position:relative;
+}
+.service-card .bookmark{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:24px;height:24px;
+  color:var(--color-accent);
+}
+.service-card h3{font-size:36px;color:var(--color-primary);margin-bottom:.5rem;}
+.service-card p{margin-bottom:1rem;}
+.service-card ul{list-style:none;padding-left:0;}
+.service-card li{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;}
+.service-card li::before{
+  content:"✔";
+  color:var(--color-secondary);
+  font-weight:700;
+}
+.service-card a{
+  font-weight:600;
+  color:var(--color-primary);
+  position:relative;
+}
+.service-card a::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:-2px;width:0;height:2px;background:var(--color-primary);
+  transition:width .3s;
+}
+.service-card a:hover::after{width:100%;}
+
+/* Book Carousel */
+.carousel{
+  display:flex;
+  gap:var(--gap);
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding:2rem 0;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.book-card{
+  flex:0 0 260px;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  perspective:800px;
+  scroll-snap-align:start;
+  position:relative;
+  transition:transform .35s cubic-bezier(0.4,0,0.2,1);
+}
+.book-card:hover{
+  transform:rotateY(180deg);
+}
+.book-inner{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  transform-style:preserve-3d;
+}
+.book-front,.book-back{
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.book-back{
+  transform:rotateY(180deg);
+}
+.book-card img{border-radius:4px;margin-bottom:1rem;}
+.book-card h4{font-family:'Merriweather',serif;font-size:22px;margin-bottom:.5rem;color:var(--color-primary);}
+.book-card p{font-size:16px;color:var(--color-text);margin-bottom:1rem;}
+.book-card .add-cart{
+  background:var(--color-accent);
+  color:#fff;
+  border:none;
+  padding:.5rem 1rem;
+  border-radius:4px;
+  font-size:14px;
+  transition:var(--transition);
+}
+.book-card .add-cart:hover{
+  transform:scale(1.03);
+}
+
+/* Testimonials */
+.testimonials{
+  background:#FAF9F6;
+  position:relative;
+}
+.testimonials::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22><text y=%2215%22 font-size=%2214%22 fill=%22rgba(0,0,0,0.05)%22>“</text></svg>') repeat;
+}
+.testimonials .title{font-size:48px;color:var(--color-primary);margin-bottom:2rem;}
+.testimonial-carousel{
+  position:relative;
+  overflow:hidden;
+}
+.testimonial-slide{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .4s ease-out,transform .4s ease-out;
+  position:absolute;
+  inset:0;
+}
+.testimonial-slide.active{opacity:1;transform:translateY(0);}
+.testimonial-slide blockquote{
+  font-style:italic;
+  font-size:20px;
+  color:var(--color-text);
+  margin-bottom:.5rem;
+}
+.testimonial-slide .author{
+  font-weight:600;
+  color:var(--color-primary);
+}
+
+/* Contact */
+.contact{background:#fff;}
+.contact .title{font-size:48px;color:var(--color-primary);margin-bottom:.5rem;}
+.contact .subtitle{font-size:22px;color:var(--color-secondary);margin-bottom:2rem;}
+.contact-grid{
+  display:grid;
+  gap:var(--gap);
+}
+@media(min-width:768px){
+  .contact-grid{grid-template-columns:repeat(2,1fr);}
+}
+.map{width:100%;height:300px;border:0;}
+form{
+  display:flex;
+  flex-direction:column;
+  gap:var(--gap);
+}
+input[type="email"]{
+  border:none;
+  border-bottom:2px solid #ccc;
+  padding:8px 0;
+  font-size:16px;
+  transition:var(--transition);
+}
+input[type="email"]:focus{
+  outline:none;
+  border-bottom-color:var(--color-secondary);
+}
+button.submit{
+  align-self:flex-start;
+  background:var(--color-accent);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:4px;
+  font-size:16px;
+  transition:var(--transition);
+}
+button.submit:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 8px rgba(255,111,97,0.5);
+}
+.success-msg{
+  color:var(--color-secondary);
+  display:none;
+}
+.social{
+  display:flex;
+  gap:var(--gap);
+  margin-top:1rem;
+}
+.social a{
+  width:28px;height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--color-primary);
+  transition:var(--transition);
+}
+.social a:hover{
+  color:var(--color-accent);
+  transform:translateY(-4px);
+}
+
+/* Footer */
+footer{
+  background:var(--color-primary);
+  color:#fff;
+  text-align:center;
+  padding:2rem var(--gap);
+  font-size:14px;
+}
+
+/* Utilities */
+.mt-2{margin-top:var(--gap);}
+.mt-4{margin-top:calc(var(--gap)*2);}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <nav class="container flex">
+    <div class="logo">Teddy's Books</div>
+    <button class="menu-toggle" aria-label="Toggle menu"><i data-lucide="menu"></i></button>
+    <ul>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#services">What We Offer</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Get in Touch</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content container">
+      <h1>store_name: Teddy's Books</h1>
+      <p class="tagline">Where Every Page Finds a Home</p>
+      <p class="subcopy">Discover curated stories, community events, and a friendly place to linger.</p>
+      <div class="buttons">
+        <a href="#contact" class="btn btn-primary">Visit Us Today</a>
+        <a href="#contact" class="btn btn-secondary">Join Our Newsletter</a>
+      </div>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- About -->
+  <section id="about" class="about container grid grid-12">
+    <div class="title">Our Story</div>
+    <div class="subtitle">A Neighborhood Haven</div>
+    <div class="illustration grid-12"></div>
+    <div class="text grid-12">
+      <p>Founded by lifelong readers, Teddy's Books is the neighborhood haven for readers of every age, offering a curated collection of fiction, non‑fiction, children’s classics, and indie gems, plus cozy events that bring stories to life. Our passionate staff hand‑picks each title, curates community gatherings, and crafts personalized reading recommendations that feel like a conversation with a trusted friend.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="icon"><i data-lucide="user"></i></div>
+          <div>
+            <h3>Personalized Recommendations</h3>
+            <p>Our staff knows your taste and will guide you to your next favorite book.</p>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div class="card">
+          <div class="icon"><i data-lucide="users"></i></div>
+          <div>
+            <h3>Community Hub</h3>
+            <p>Author talks, readings, and weekly storytime create a living literary calendar.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="icon"><i data-lucide="search"></i></div>
+          <div>
+            <h3>Hidden Treasures</h3>
+            <p>Explore indie titles you won’t find anywhere else.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="services container">
+    <h2 class="title">What We Offer</h2>
+    <div class="cards">
+      <article class="service-card">
+        <i class="bookmark" data-lucide="bookmark"></i>
+        <h3>Book Sales</h3>
+        <p>A diverse selection of titles across genres, handpicked for quality and curiosity, available for purchase in‑store or reserved online.</p>
+        <ul>
+          <li>Instantly walk out with your chosen book.</li>
+          <li>Reserve online and pick up at your convenience.</li>
+          <li>Special discounts for students and families.</li>
+        </ul>
+        <a href="#">Learn More</a>
+      </article>
+      <article class="service-card">
+        <i class="bookmark" data-lucide="bookmark"></i>
+        <h3>Events &amp; Workshops</h3>
+        <p>From author talks to kid’s storytime, our calendar turns the store into a vibrant literary salon.</p>
+        <ul>
+          <li>Meet your favorite writers.</li>
+          <li>Hands‑on writing workshops.</li>
+          <li>Family‑friendly story sessions.</li>
+        </ul>
+        <a href="#">Learn More</a>
+      </article>
+      <article class="service-card">
+        <i class="bookmark" data-lucide="bookmark"></i>
+        <h3>Co‑Working Nook</h3>
+        <p>Quiet corners and communal tables where creators can write, read, or collaborate.</p>
+        <ul>
+          <li>Free Wi‑Fi and coffee.</li>
+          <li>Book‑themed brainstorming sessions.</li>
+          <li>Monthly reading circles.</li>
+        </ul>
+        <a href="#">Learn More</a>
+      </article>
+    </div>
+
+    <!-- Book Carousel -->
+    <div class="carousel" aria-label="Featured books">
+      <div class="book-card">
+        <div class="book-inner">
+          <div class="book-front">
+            <img src="https://picsum.photos/200/300?random=1" alt="Book cover">
+            <h4>The Quiet Path</h4>
+            <p>By A. Writer</p>
+            <button class="add-cart">Add to Cart</button>
+          </div>
+          <div class="book-back">
+            <p>Back cover description or extra details.</p>
+          </div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-inner">
+          <div class="book-front">
+            <img src="https://picsum.photos/200/300?random=2" alt="Book cover">
+            <h4>Midnight Tales</h4>
+            <p>By B. Storyteller</p>
+            <button class="add-cart">Add to Cart</button>
+          </div>
+          <div class="book-back"><p>Explore the mystery within.</p></div>
+        </div>
+      </div>
+      <div class="book-card">
+        <div class="book-inner">
+          <div class="book-front">
+            <img src="https://picsum.photos/200/300?random=3" alt="Book cover">
+            <h4>Garden of Dreams</h4>
+            <p>By C. Poet</p>
+            <button class="add-cart">Add to Cart</button>
+          </div>
+          <div class="book-back"><p>Poetic journeys await.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials container">
+    <h2 class="title">What Readers Say</h2>
+    <div class="testimonial-carousel">
+      <div class="testimonial-slide active">
+        <blockquote>“Teddy's Books feels like a living room where every book is a conversation.”</blockquote>
+        <div class="author">— Maya L.</div>
+      </div>
+      <div class="testimonial-slide">
+        <blockquote>“The events here are always cozy and inspiring. I love the storytime for my kids.”</blockquote>
+        <div class="author">— Carlos D.</div>
+      </div>
+      <div class="testimonial-slide">
+        <blockquote>“I discovered my favorite indie author here. The staff truly knows their books.”</blockquote>
+        <div class="author">— Priya S.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact container">
+    <h2 class="title">Get in Touch</h2>
+    <p class="subtitle">Connect with our community</p>
+    <div class="contact-grid">
+      <div class="map-container">
+        <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019331657928!2d-122.4013762846811!3d37.78583477975671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858064c5c4e1af%3A0x9b0c9c4e2c2c9b0!2sSan%20Francisco%20Public%20Library!5e0!3m2!1sen!2sus!4v1616179234567!5m2!1sen!2sus" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="form-container">
+        <form id="newsletter-form" novalidate>
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          <button type="submit" class="submit">Subscribe</button>
+          <p class="success-msg">Thank you! You’re on the list.</p>
+        </form>
+        <div class="social">
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        </div>
+        <address class="mt-2">
+          <p>123 Book Lane, San Francisco, CA 94102</p>
+          <p>Phone: (415) 555‑0123</p>
+          <p>Email: <a href="mailto:info@teddysbooks.com">info@teddysbooks.com</a></p>
+        </address>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2024 Teddy's Books. All rights reserved.</p>
+</footer>
+
+<script>
+// Navigation toggle
+const toggleBtn = document.querySelector('.menu-toggle');
+const navList = document.querySelector('nav ul');
+toggleBtn.addEventListener('click',()=>navList.classList.toggle('open'));
+
+// Close menu on link click (mobile)
+document.querySelectorAll('nav a').forEach(link=>{
+  link.addEventListener('click',()=>navList.classList.remove('open'));
+});
+
+// Intersection observer for scroll animations
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('active');
+    }
+  });
+},{threshold:0.3});
+
+document.querySelectorAll('.testimonial-slide').forEach(slide=>observer.observe(slide));
+
+// Testimonial carousel auto cycle
+let currentSlide = 0;
+const slides = document.querySelectorAll('.testimonial-slide');
+function showSlide(index){
+  slides.forEach((s,i)=>s.classList.toggle('active',i===index));
+}
+function nextSlide(){
+  currentSlide = (currentSlide+1)%slides.length;
+  showSlide(currentSlide);
+}
+setInterval(nextSlide,5000);
+showSlide(0);
+
+// Newsletter form (dummy)
+document.getElementById('newsletter-form').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const email = e.target.email.value.trim();
+  if(!email){return;}
+  // Dummy fetch – replace with real endpoint
+  try{
+    await fetch('https://jsonplaceholder.typicode.com/posts',{method:'POST',body:JSON.stringify({email})});
+    e.target.nextElementSibling.style.display='block';
+    e.target.reset();
+  }catch{
+    // ignore errors for demo
+  }
+});
+
+// Initialize icons
+lucide.createIcons();
+</script>
 </body>
 </html>
