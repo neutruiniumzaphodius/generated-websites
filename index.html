@@ -1,75 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Aurumium – Drive with Confidence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/utilities.css">
+<style>
+/* Critical above‑the‑fold CSS (minified) */
+body{margin:0;font-family:system-ui,sans-serif;line-height:1.5;background:#f5f5f5;color:#333}a{color:inherit;text-decoration:none}button{font:inherit}header{position:sticky;top:0;z-index:1000;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1)}.flex-between{display:flex;justify-content:space-between;align-items:center}.container{max-width:1200px;margin:0 auto;padding:0 1rem}nav{display:flex;align-items:center;justify-content:space-between;height:4rem} .nav-brand{font-size:1.5rem;font-weight:700;color:#0A3D62} .nav-toggle{display:none;background:none;border:none} .nav-links{display:flex;gap:1.5rem} .nav-links a{color:#0A3D62;font-weight:500;padding:.5rem} .nav-links a:focus-visible{outline:2px solid #F2C94C;outline-offset:2px} .nav-toggle svg{stroke:#0A3D62} @media(max-width:768px){.nav-toggle{display:block} .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;right:0;width:200px;border:1px solid #ddd;padding:.5rem} .nav-links.open{display:flex}} 
+.hero{position:relative;background:url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;height:80vh;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:2rem} .hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.5)} .hero .container{position:relative;z-index:1} .hero-title{font-size:2.5rem;letter-spacing:.05em;margin:0} .hero-tagline{font-size:1.125rem;margin:1rem 0} .btn{display:inline-flex;align-items:center;justify-content:center;padding:.75rem 1.5rem;border:none;border-radius:4px;font-weight:600;cursor:pointer} .btn-primary{background:#0A3D62;color:#fff;transition:background .2s} .btn-primary:hover{background:#08407a} .btn-primary:focus-visible{outline:2px solid #F2C94C} 
+[data-reveal]{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out} .revealed{opacity:1;transform:none} 
+.section-mission,.section-about{padding:4rem 0;background:#fff} .grid-2col,.section-about .grid{display:grid;gap:2rem} .grid-2col{grid-template-columns:repeat(2,1fr)} @media(max-width:768px){.grid-2col,.section-about .grid{grid-template-columns:1fr}} .icon-wrapper svg{width:80px;height:80px;stroke:#F2C94C;fill:none;stroke-width:2} .text-wrapper ul{margin:.5rem 0 0 1.25rem;padding:0} .text-wrapper li{margin:.25rem 0} 
+.section-services .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem} .service-card{background:#fff;border-radius:8px;padding:1.5rem;box-shadow:0 2px 6px rgba(0,0,0,.1);transition:transform .2s,box-shadow .2s} .service-card:hover{transform:translateY(-4px);box-shadow:0 6px 12px rgba(0,0,0,.08)} .service-card svg{width:48px;height:48px;stroke:#F2C94C;fill:none;stroke-width:2;margin-bottom:.75rem} .service-card a.link-cta{color:#0A3D62;font-weight:600;position:relative;padding-right:1rem} .service-card a.link-cta::after{content:'→';position:absolute;right:0;transition:margin .2s} .service-card a.link-cta:hover::after{margin-left:.25rem} 
+.section-testimonials{background:#F9F9F9;padding:4rem 0} .testimonial-carousel{display:flex;overflow:hidden;position:relative} .testimonial{min-width:100%;background:#fff;padding:1.5rem;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-right:1rem;position:relative} .testimonial::before{content:"";position:absolute;top:1rem;left:1rem;width:24px;height:24px;background:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23F2C94C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><line x1=%2212%22 y1=%225%22 x2=%2212%22 y2=%2219%22/><line x1=%225%22 y1=%2212%22 x2=%2219%22 y2=%2212%22/></svg>') center/contain no-repeat} .testimonial p{font-style:italic;margin-bottom:.5rem} .testimonial cite{display:block;font-weight:600;color:#0A3D62} @media(max-width:768px){.testimonial-carousel{flex-direction:column} .testimonial{margin-right:0;margin-bottom:1rem}} 
+.section-contact{padding:4rem 0;background:#f5f5f5;display:flex;justify-content:center} .form-card{background:#fff;border:2px solid #ddd;border-radius:8px;padding:2rem;max-width:480px;width:100%;box-shadow:0 2px 6px rgba(0,0,0,.1);display:flex;flex-direction:column;gap:1rem} .form-card input,.form-card textarea{background:#F5F5F5;color:#333;border:none;padding:12px 16px;border-radius:4px;font-size:1rem;transition:background .2s,border .2s} .form-card input::placeholder,.form-card textarea::placeholder{color:#666;opacity:1} .form-card input:focus,.form-card textarea:focus{background:#fff;border:2px solid #F2C94C;outline:none} .form-actions{display:flex;gap:.75rem;flex-wrap:wrap} .form-actions .btn{flex:1} 
+.site-footer{background:#0A3D62;color:#fff;padding:1rem 0} .social-icons a{margin-left:.75rem;color:#fff} .social-icons a:hover{color:#F2C94C} 
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#0A3D62;color:#fff;padding:.75rem 1.5rem;border-radius:4px;opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s} .toast.show{opacity:1;transform:translateY(0)} 
+:focus-visible{outline:2px solid #F2C94C;outline-offset:2px}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<header x-data="{open:false}" aria-label="Primary navigation">
+  <nav>
+    <div class="container flex-between">
+      <a href="#" class="nav-brand">Aurumium</a>
+      <button class="nav-toggle" @click="open = !open" :aria-expanded="open.toString()" aria-controls="nav-links">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="sr-only">Toggle menu</span>
+      </button>
+      <div id="nav-links" class="nav-links" :class="{'open':open}" @click.away="open=false">
+        <a href="#mission">Our Promise</a>
+        <a href="#about">Why Choose</a>
+        <a href="#services">Services</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+</header>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+<main id="main">
+  <section class="hero" data-reveal aria-label="Family on a road trip">
+    <div class="container">
+      <h1 class="hero-title">DRIVE WITH CONFIDENCE.<br>INSURE WITH AURUMIUM.</h1>
+      <p class="hero-tagline">Save up to 20% on coverage while enjoying 24/7 claims support.</p>
+      <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <section id="mission" class="section-mission" data-reveal>
+    <div class="container grid-2col">
+      <div class="icon-wrapper">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 L8 20 L8 44 L32 60 L56 44 L56 20 Z" stroke="currentColor" fill="none"/></svg>
+      </div>
+      <div class="text-wrapper">
+        <h2>Our Promise</h2>
+        <p>Aurumium delivers transparent, affordable car insurance backed by a commitment to honesty and rapid support.</p>
+        <ul class="key-messages">
+          <li>Transparent pricing, no hidden fees</li>
+          <li>24/7 claims assistance</li>
+          <li>Tailored coverage for every driver</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <section id="about" class="section-about" data-reveal>
+    <div class="container grid-2col">
+      <div>
+        <h2>Why Choose Aurumium?</h2>
+        <p>We combine cutting‑edge analytics with a personal touch, ensuring you receive coverage that fits your lifestyle and budget.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1520975916095-4b3c9f8a5c1a?auto=format&fit=crop&w=800&q=80" alt="Family enjoying a car ride" loading="lazy">
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <section id="services" class="section-services" data-reveal>
+    <div class="container">
+      <h2 class="text-center">Our Services</h2>
+      <div class="cards-grid">
+        <article class="service-card" data-reveal>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>
+          <h3>Driver Coverage</h3>
+          <p>Comprehensive protection for everyday drivers, offering peace of mind on every journey.</p>
+          <a href="#contact" class="link-cta">Learn More</a>
+        </article>
+        <article class="service-card" data-reveal>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/></svg>
+          <h3>Family Plans</h3>
+          <p>Designed for families, our plans cover multiple vehicles with discounts and flexible payment options.</p>
+          <a href="#contact" class="link-cta">Learn More</a>
+        </article>
+        <article class="service-card" data-reveal>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h18"/></svg>
+          <h3>Business & Fleet</h3>
+          <p>Tailored solutions for businesses and fleets, ensuring comprehensive coverage and streamlined claims.</p>
+          <a href="#contact" class="link-cta">Learn More</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section-testimonials" data-reveal>
+    <div class="container">
+      <h2 class="text-center">What Our Clients Say</h2>
+      <div class="testimonial-carousel" x-data="testimonialCarousel()" x-init="start()">
+        <template x-for="(item, index) in testimonials" :key="index">
+          <article class="testimonial" x-show="current === index" x-transition:enter.opacity x-transition:leave.opacity>
+            <p x-text="item.text"></p>
+            <cite x-text="item.author"></cite>
+          </article>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section-contact" data-reveal>
+    <div class="form-card">
+      <h2>Get Your Free Quote</h2>
+      <form @submit.prevent="submitForm">
+        <input type="text" name="name" placeholder="Your Name" required aria-label="Name">
+        <input type="email" name="email" placeholder="Your Email" required aria-label="Email">
+        <textarea name="message" rows="4" placeholder="Your Message" required aria-label="Message"></textarea>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Send Message</button>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container flex-between">
+    <p>&copy; <span x-text="new Date().getFullYear()"></span> Aurumium. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M9 8h-2v4h2v12h5v-12h3.642l.358-4h-4v-2c0-1.084.916-2 2-2h2v-5h-3c-3.313 0-6 2.687-6 6v3z" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="Twitter"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M22 4.01c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.38c-.84.5-1.77.86-2.76 1.05a4.28 4.28 0 0 0-7.3 3.9c-3.56-.18-6.71-1.88-8.82-4.48a4.28 4.28 0 0 0 .66 5.71c-.71-.02-1.38-.22-1.96-.55v.06c0 2.2 1.57 4.04 3.66 4.45-.38.1-.78.15-1.2.15-.3 0-.58-.03-.86-.09.58 1.81 2.28 3.13 4.3 3.17a8.6 8.6 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06a12.15 12.15 0 0 0 6.58 1.94c7.88 0 12.2-6.53 12.2-12.2 0-.19-.01-.37-.02-.56.84-.6 1.56-1.36 2.13-2.22z" fill="currentColor"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" x-show="toastVisible" x-transition.opacity class="toast" role="alert" aria-live="assertive"></div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script defer>
+document.documentElement.classList.remove('no-js');
+Alpine.data('testimonialCarousel', () => ({
+  testimonials: [
+    {text: "Aurumium saved me a fortune and handled my claim instantly!", author: "Jenna R."},
+    {text: "Excellent service, fast payouts and great rates.", author: "Mark T."},
+    {text: "I love the transparency and the 24/7 support.", author: "Sofia L."}
+  ],
+  current: 0,
+  start() {
+    this.cycle = setInterval(() => {
+      this.current = (this.current + 1) % this.testimonials.length;
+    }, 7000);
+  },
+  stop() {
+    clearInterval(this.cycle);
+  }
+}));
+function testimonialCarousel() {
+  return {
+    testimonials: [
+      {text: "Aurumium saved me a fortune and handled my claim instantly!", author: "Jenna R."},
+      {text: "Excellent service, fast payouts and great rates.", author: "Mark T."},
+      {text: "I love the transparency and the 24/7 support.", author: "Sofia L."}
+    ],
+    current: 0,
+    start() {
+      this.cycle = setInterval(() => {
+        this.current = (this.current + 1) % this.testimonials.length;
+      }, 7000);
+    },
+    stop() {
+      clearInterval(this.cycle);
+    }
+  };
+}
+function submitForm(event) {
+  const toast = document.querySelector('.toast');
+  toast.textContent = 'Your message has been sent!';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+document.addEventListener('alpine:init', () => {
+  Alpine.magic('toast', () => ({
+    show(message) {
+      const toast = document.querySelector('.toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  }));
+});
+</script>
 </body>
 </html>
