@@ -1,75 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniTask Robotics – Home</title>
+  <meta name="description" content="OmniTask Robotics delivers AI‑driven, modular robots for logistics, healthcare, hospitality, manufacturing, education, and residential environments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --color-primary:#0A1F44;
+      --color-secondary:#2E86FF;
+      --color-accent:#00E5C4;
+      --color-bg-gradient:linear-gradient(180deg,#F7F9FC 0%,#E5E9F2 100%);
+      --color-text:#1A1A1A;
+      --color-white:#FFFFFF;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Inter",sans-serif;
+      --radius-card:8px;
+      --radius-btn:4px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg-gradient);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    /* Skip link */
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+      transition:top .3s;
+    }
+    .skip-link:focus{top:0;}
+    /* Header / Nav */
+    header{
+      position:sticky;
+      top:0;
+      left:0;
+      width:100%;
+      background:rgba(10,31,68,.95);
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 24px;
+      transition:height .3s ease;
+      z-index:1000;
+    }
+    header.shrink{height:56px;}
+    .logo{font-family:var(--font-heading);font-weight:700;color:#fff;font-size:1.2rem;}
+    nav{
+      display:flex;
+      gap:24px;
+      align-items:center;
+    }
+    .nav-link{
+      color:#fff;
+      font-size:0.95rem;
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      height:2px;
+      width:100%;
+      background:var(--color-accent);
+      transform:scaleX(0);
+      transition:transform .2s;
+    }
+    .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+    .nav-cta{
+      background:var(--color-secondary);
+      color:#fff;
+      padding:8px 16px;
+      border-radius:var(--radius-btn);
+      transition:background .2s;
+    }
+    .nav-cta:hover{background:var(--color-accent);}
+    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;}
+    .hamburger span{display:block;width:24px;height:2px;background:#fff;}
+    @media (max-width:768px){
+      .hamburger{display:flex;}
+      nav{position:absolute;top:100%;left:0;right:0;background:rgba(10,31,68,.95);flex-direction:column;gap:0;overflow:hidden;max-height:0;transition:max-height .3s ease;}
+      nav.open{max-height:300px;}
+      .nav-link{padding:12px 24px;}
+      .nav-cta{margin:12px 24px;}
+    }
+    /* Buttons */
+    .btn{
+      display:inline-block;
+      font-family:var(--font-heading);
+      font-weight:700;
+      border-radius:var(--radius-btn);
+      padding:12px 24px;
+      transition:background .3s ease,transform .2s;
+      min-width:120px;
+      text-align:center;
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-primary:hover{background:var(--color-accent);}
+    .btn-primary:active{transform:translateY(2px);}
+    .btn-secondary{
+      border:2px solid var(--color-secondary);
+      color:var(--color-secondary);
+      background:transparent;
+    }
+    .btn-secondary:hover{background:rgba(46,134,255,.1);}
+    .btn-secondary:active{transform:translateY(2px);}
+    /* Hero */
+    .hero{
+      position:relative;
+      height:100vh;
+      min-height:560px;
+      overflow:hidden;
+    }
+    .hero video{
+      position:absolute;
+      top:0;left:0;width:100%;height:100%;object-fit:cover;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(10,31,68,.4);
+    }
+    .hero-content{
+      position:relative;
+      z-index:1;
+      max-width:960px;
+      margin:0 auto;
+      top:50%;
+      transform:translateY(-50%);
+      text-align:center;
+      color:#fff;
+      padding:0 24px;
+    }
+    .hero h1{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(32px,5vw,48px);
+      text-transform:uppercase;
+      letter-spacing:0.05em;
+      margin-bottom:16px;
+    }
+    .hero p{
+      font-size:clamp(16px,2.5vw,20px);
+      margin-bottom:32px;
+      line-height:1.4;
+      color:#F0F0F0;
+    }
+    .hero .cta-group{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      justify-content:center;
+    }
+    /* Sections */
+    section{padding:64px 24px;max-width:1200px;margin:0 auto;}
+    @media (max-width:640px){section{padding:40px 16px;}}
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(28px,4vw,36px);
+      color:var(--color-primary);
+      text-align:center;
+      margin-bottom:48px;
+    }
+    /* Value Proposition Grid */
+    .value-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;
+    }
+    .value-item{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .6s cubic-bezier(0.4,0,0.2,1),transform .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .value-item .icon{margin-bottom:12px;color:var(--color-primary);}
+    .value-item h3{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.1rem;
+      margin-bottom:8px;
+    }
+    .value-item p{
+      font-size:.95rem;
+    }
+    /* Featured Robots */
+    .robot-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+    }
+    .robot-card{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      transition:transform .3s ease,box-shadow .3s ease;
+      opacity:0;
+      transform:translateY(20px);
+    }
+    .robot-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+    }
+    .robot-image{
+      width:100%;
+      height:200px;
+      background:url('https://picsum.photos/seed/robot/400/200') center/cover no-repeat;
+      border-radius:var(--radius-card);
+      margin-bottom:16px;
+      transition:transform .4s ease-out;
+    }
+    .robot-card:hover .robot-image{transform:rotateY(20deg);}
+    .robot-card h3{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.3rem;
+      color:var(--color-secondary);
+      margin-bottom:8px;
+    }
+    .robot-card p{
+      font-size:.9rem;
+      margin-bottom:16px;
+    }
+    /* Industry Solutions */
+    .industry-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;
+    }
+    .industry-card{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      transition:transform .3s ease,box-shadow .3s ease;
+      opacity:0;
+      transform:translateY(20px);
+    }
+    .industry-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 6px 18px rgba(0,0,0,.12);
+    }
+    .industry-card .icon{margin-bottom:12px;color:var(--color-primary);}
+    .industry-card h4{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1rem;
+      color:var(--color-primary);
+      margin-bottom:8px;
+    }
+    .industry-card p{
+      font-size:.9rem;
+      margin-bottom:12px;
+    }
+    .industry-card .btn{margin-top:8px;}
+    /* Testimonials */
+    .testimonials{
+      position:relative;
+      max-width:800px;
+    }
+    .testimonial-item{
+      display:none;
+      text-align:center;
+      opacity:0;
+      transition:opacity .5s;
+    }
+    .testimonial-item.active{display:block;opacity:1;}
+    .testimonial-content{
+      font-style:italic;
+      margin-bottom:16px;
+    }
+    .testimonial-author{
+      font-weight:700;
+    }
+    .testimonial-nav{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      margin-top:24px;
+    }
+    .dot{
+      width:12px;height:12px;border-radius:50%;background:#ccc;cursor:pointer;
+    }
+    .dot.active{background:var(--color-accent);}
+    /* Statistics */
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:24px;
+      text-align:center;
+    }
+    .stat-item{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      opacity:0;
+      transform:translateY(20px);
+    }
+    .stat-number{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:2rem;
+      color:var(--color-accent);
+      margin-bottom:8px;
+    }
+    .stat-label{
+      font-size:.95rem;
+      color:var(--color-primary);
+    }
+    /* Final CTA */
+    .final-cta{
+      background:var(--color-accent);
+      color:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .final-cta .btn-primary{background:var(--color-primary);}
+    .final-cta .btn-primary:hover{background:var(--color-secondary);}
+    /* Footer */
+    footer{
+      background:var(--color-primary);
+      color:#fff;
+      padding:40px 24px;
+      text-align:center;
+    }
+    .footer-nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify:center;
+      gap:16px;
+      margin-bottom:16px;
+    }
+    .social-icons{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+    }
+    .social-icons svg{color:var(--color-accent);width:24px;height:24px;}
+    /* Fade-up animation */
+    .fade-up{opacity:1;transform:translateY(0);}
+    /* Carousel */
+    .carousel{position:relative;overflow:hidden;}
+    .carousel-inner{display:flex;transition:transform .5s ease;}
+    /* Toast */
+    .toast{
+      position:fixed;
+      bottom:24px;
+      right:24px;
+      background:var(--color-primary);
+      color:#fff;
+      padding:12px 24px;
+      border-radius:var(--radius-btn);
+      opacity:0;
+      transition:opacity .3s;
+    }
+    .toast.show{opacity:1;}
+  </style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+  <header id="site-header">
+    <div class="logo">OmniTask</div>
+    <button class="hamburger" aria-label="Open navigation menu" aria-controls="primary-nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="primary-nav" class="header__nav">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="products.html" class="nav-link">Products</a>
+      <a href="industries.html" class="nav-link">Industries</a>
+      <a href="case-studies.html" class="nav-link">Case Studies</a>
+      <a href="resources.html" class="nav-link">Resources</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="#contact-form" class="nav-cta btn-primary">[cta_schedule_demo: Schedule Demo]</a>
+    </nav>
+  </header>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" aria-label="Hero">
+      <video autoplay muted loop playsinline poster="https://picsum.photos/seed/hero/1200/800">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+      </video>
+      <div class="hero-content">
+        <h1>[hero_headline: Robotics for Every Environment]</h1>
+        <p>Adaptive, intelligent, and ready to scale—our robots transform any workspace.</p>
+        <div class="cta-group">
+          <button class="btn btn-primary">[primary_cta: Request Demo]</button>
+          <button class="btn btn-secondary">[secondary_cta: Learn More]</button>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value_proposition" id="value_proposition">
+      <h2 class="section-title">Why Choose OmniTask?</h2>
+      <div class="value-grid">
+        <div class="value-item">
+          <div class="icon" data-lucide="cpu"></div>
+          <h3>AI‑Enhanced Performance</h3>
+          <p>Our robots learn from data, continuously improving efficiency and throughput.</p>
+        </div>
+        <div class="value-item">
+          <div class="icon" data-lucide="shield"></div>
+          <h3>Safety First</h3>
+          <p>Built with ISO‑10218 compliance, our systems prioritize human safety at every step.</p>
+        </div>
+        <div class="value-item">
+          <div class="icon" data-lucide="layers"></div>
+          <h3>Modular Flexibility</h3>
+          <p>Easily reconfigure hardware and software to fit changing workflow demands.</p>
+        </div>
+        <div class="value-item">
+          <div class="icon" data-lucide="globe"></div>
+          <h3>Global Support</h3>
+          <p>24/7 technical assistance and a worldwide network of certified partners.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Robots -->
+    <section class="featured_robots" id="featured_robots">
+      <h2 class="section-title">Featured Robots</h2>
+      <div class="robot-grid">
+        <div class="robot-card">
+          <div class="robot-image"></div>
+          <h3>[example_robot_name: OmniTask XR-7]</h3>
+          <p>High‑payload, AI‑driven robot ideal for heavy‑lifting logistics and warehouse automation.</p>
+          <button class="btn btn-primary">[primary_cta: Request Demo]</button>
+        </div>
+        <div class="robot-card">
+          <div class="robot-image" style="background-image:url('https://picsum.photos/seed/robot2/400/200');"></div>
+          <h3>OmniTask Alpha‑3</h3>
+          <p>Compact collaborative robot perfect for assembly lines and lab environments.</p>
+          <button class="btn btn-primary">[primary_cta: Request Demo]</button>
+        </div>
+        <div class="robot-card">
+          <div class="robot-image" style="background-image:url('https://picsum.photos/seed/robot3/400/200');"></div>
+          <h3>OmniTask Home‑Bot</h3>
+          <p>Smart, safe, and friendly robot for residential assistance and home automation.</p>
+          <button class="btn btn-primary">[primary_cta: Request Demo]</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industry Solutions -->
+    <section class="industry_solutions" id="industry_solutions">
+      <h2 class="section-title">Robots Across Industries</h2>
+      <div class="industry-grid">
+        <div class="industry-card">
+          <div class="icon" data-lucide="truck"></div>
+          <h4>Logistics</h4>
+          <p>Streamline sorting, picking, and palletizing with adaptive AI.</p>
+          <button class="btn btn-secondary">Explore</button>
+        </div>
+        <div class="industry-card">
+          <div class="icon" data-lucide="heart-pulse"></div>
+          <h4>Healthcare</h4>
+          <p>Assistive robots for patient transport, sterilization, and inventory.</p>
+          <button class="btn btn-secondary">Explore</button>
+        </div>
+        <div class="industry-card">
+          <div class="icon" data-lucide="coffee"></div>
+          <h4>Hospitality</h4>
+          <p>Automate room service, cleaning, and inventory management.</p>
+          <button class="btn btn-secondary">Explore</button>
+        </div>
+        <div class="industry-card">
+          <div class="icon" data-lucide="factory"></div>
+          <h4>Manufacturing</h4>
+          <p>Modular arms for flexible production lines and rapid re‑tooling.</p>
+          <button class="btn btn-secondary">Explore</button>
+        </div>
+        <div class="industry-card">
+          <div class="icon" data-lucide="school"></div>
+          <h4>Education</h4>
+          <p>Hands‑on learning platforms for STEM curricula and research.</p>
+          <button class="btn btn-secondary">Explore</button>
+        </div>
+        <div class="industry-card">
+          <div class="icon" data-lucide="home"></div>
+          <h4>Residential</h4>
+          <p>Smart home assistants for chores, security, and elder care.</p>
+          <button class="btn btn-secondary">Explore</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="carousel" aria-roledescription="carousel">
+        <div class="carousel-inner" id="testimonial-inner">
+          <article class="testimonial-item active">
+            <p class="testimonial-content">“OmniTask transformed our warehouse efficiency by 45% within three months.”</p>
+            <p class="testimonial-author">— Alex Rivera, Operations Manager</p>
+          </article>
+          <article class="testimonial-item">
+            <p class="testimonial-content">“The safety features gave us confidence to deploy robots on the shop floor.”</p>
+            <p class="testimonial-author">— Dr. Samir Patel, CTO</p>
+          </article>
+          <article class="testimonial-item">
+            <p class="testimonial-content">“Customer support was proactive and helped us integrate the robot seamlessly.”</p>
+            <p class="testimonial-author">— Maya Liu, Procurement Lead</p>
+          </article>
+        </div>
+        <div class="testimonial-nav" id="testimonial-dots"></div>
+      </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="statistics" id="statistics">
+      <h2 class="section-title">Our Impact in Numbers</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-target="99.9">0</div>
+          <div class="stat-label">Uptime %</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="1200">0</div>
+          <div class="stat-label">Robots Deployed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="250">0</div>
+          <div class="stat-label">Patents Granted</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-label">Clients Worldwide</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final_cta" id="final_cta">
+      <div class="final-cta">
+        <h2 class="section-title">Ready to Transform Your Operations?</h2>
+        <button class="btn btn-primary">[primary_cta: Request Demo]</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <nav class="footer-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link">Products</a>
+      <a href="industries.html" class="nav-link">Industries</a>
+      <a href="case-studies.html" class="nav-link">Case Studies</a>
+      <a href="resources.html" class="nav-link">Resources</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <div class="social-icons" aria-label="Social links">
+      <a href="#" title="LinkedIn"><svg><use href="#linkedin"/></svg></a>
+      <a href="#" title="Twitter"><svg><use href="#twitter"/></svg></a>
+      <a href="#" title="YouTube"><svg><use href="#youtube"/></svg></a>
+    </div>
+    <p style="margin-top:16px;font-size:0.85rem;">© 2024 OmniTask Robotics. All rights reserved.</p>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Initialize lucide icons
+    lucide.createIcons();
+
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('nav');
+    hamburger?.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Sticky header shrink on scroll
+    const header = document.querySelector('header');
+    const shrinkOn = 80;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > shrinkOn) header.classList.add('shrink');
+      else header.classList.remove('shrink');
+    });
+
+    // Fade-up on scroll with IntersectionObserver
+    const faders = document.querySelectorAll('.value-item, .robot-card, .industry-card');
+    const appearOptions = {threshold:0.15, rootMargin:"0px 0px -50px 0px"};
+    const appearOnScroll = new IntersectionObserver((entries, observer)=>{
+      entries.forEach(entry=>{
+        if (!entry.isIntersecting) return;
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = "translateY(0)";
+        observer.unobserve(entry.target);
+      });
+    },appearOptions);
+    faders.forEach(fader=>appearOnScroll.observe(fader));
+
+    // Counter animation
+    const counters = document.querySelectorAll('.stat-number');
+    const countOptions = {duration:2, useEasing:true, separator:','};
+    const startCounters = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseFloat(el.dataset.target);
+          const start = 0;
+          const step = target/60;
+          let current = start;
+          const inc = () => {
+            current += step;
+            if (current >= target) {
+              el.textContent = target + (Number.isInteger(target) ? '' : '%');
+            } else {
+              el.textContent = Math.floor(current);
+              requestAnimationFrame(inc);
+            }
+          };
+          inc();
+          observer.unobserve(el);
+        }
+      });
+    };
+    const counterObserver = new IntersectionObserver(startCounters,{threshold:0.5});
+    counters.forEach(counter=>counterObserver.observe(counter));
+
+    // Testimonials carousel
+    const testimonials = document.querySelectorAll('.testimonial-item');
+    const dotsContainer = document.getElementById('testimonial-dots');
+    let currentTesti = 0;
+    const createDots = () => {
+      testimonials.forEach((_,i)=>{
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if(i===0) dot.classList.add('active');
+        dot.dataset.idx = i;
+        dot.addEventListener('click',()=>showTestimonial(i));
+        dotsContainer.appendChild(dot);
+      });
+    };
+    const showTestimonial = idx => {
+      testimonials[currentTesti].classList.remove('active');
+      dotsContainer.children[currentTesti].classList.remove('active');
+      currentTesti = idx;
+      testimonials[currentTesti].classList.add('active');
+      dotsContainer.children[currentTesti].classList.add('active');
+    };
+    const nextTestimonial = ()=> {
+      const nextIdx = (currentTesti + 1) % testimonials.length;
+      showTestimonial(nextIdx);
+    };
+    createDots();
+    const carouselInterval = setInterval(nextTestimonial,7000);
+    const carousel = document.querySelector('.carousel');
+    carousel.addEventListener('mouseenter',()=>clearInterval(carouselInterval));
+    carousel.addEventListener('mouseleave',()=>setInterval(nextTestimonial,7000));
+
+    // Toast helper
+    const toast = document.getElementById('toast');
+    const showToast = msg => {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'),3000);
+    };
+  </script>
 </body>
 </html>

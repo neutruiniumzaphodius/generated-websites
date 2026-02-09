@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - OmniTask</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --color-primary:#0A1F44;
+      --color-secondary:#2E86FF;
+      --color-accent:#00E5C4;
+      --color-bg-gradient:linear-gradient(180deg,#F7F9FC 0%,#E5E9F2 100%);
+      --color-text:#1A1A1A;
+      --color-white:#FFFFFF;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Inter",sans-serif;
+      --radius-card:8px;
+      --radius-btn:4px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg-gradient);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    /* Skip link */
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+      transition:top .3s;
+    }
+    .skip-link:focus{top:0;}
+    /* Header / Nav */
+    header{
+      position:sticky;
+      top:0;
+      left:0;
+      width:100%;
+      background:rgba(10,31,68,.95);
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 24px;
+      transition:height .3s ease;
+      z-index:1000;
+    }
+    header.shrink{height:56px;}
+    .logo{font-family:var(--font-heading);font-weight:700;color:#fff;font-size:1.2rem;}
+    nav{
+      display:flex;
+      gap:24px;
+      align-items:center;
+    }
+    .nav-link{
+      color:#fff;
+      font-size:0.95rem;
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      height:2px;
+      width:100%;
+      background:var(--color-accent);
+      transform:scaleX(0);
+      transition:transform .2s;
+    }
+    .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+    .nav-cta{
+      background:var(--color-secondary);
+      color:#fff;
+      padding:8px 16px;
+      border-radius:var(--radius-btn);
+      transition:background .2s;
+    }
+    .nav-cta:hover{background:var(--color-accent);}
+    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;}
+    .hamburger span{display:block;width:24px;height:2px;background:#fff;}
+    @media (max-width:768px){
+      .hamburger{display:flex;}
+      nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:rgba(10,31,68,.95);
+        flex-direction:column;
+        gap:0;
+        overflow:hidden;
+        max-height:0;
+        transition:max-height .3s ease;
+      }
+      nav.open{max-height:300px;}
+      .nav-link{padding:12px 24px;}
+      .nav-cta{margin:12px 24px;}
+    }
+    /* Buttons */
+    .btn{
+      display:inline-block;
+      font-family:var(--font-heading);
+      font-weight:700;
+      border-radius:var(--radius-btn);
+      padding:12px 24px;
+      transition:background .3s ease,transform .2s;
+      min-width:120px;
+      text-align:center;
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-primary:hover{background:var(--color-accent);}
+    .btn-primary:active{transform:translateY(2px);}
+    .btn-secondary{
+      border:2px solid var(--color-secondary);
+      color:var(--color-secondary);
+      background:transparent;
+    }
+    .btn-secondary:hover{background:rgba(46,134,255,.1);}
+    .btn-secondary:active{transform:translateY(2px);}
+    /* Sections */
+    section{padding:64px 24px;max-width:1200px;margin:0 auto;}
+    @media (max-width:640px){section{padding:40px 16px;}}
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(28px,4vw,36px);
+      color:var(--color-primary);
+      text-align:center;
+      margin-bottom:48px;
+    }
+    .fade-up{
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .6s cubic-bezier(0.4,0,0.2,1),transform .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .fade-up.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    /* Company Story */
+    .company-story{
+      background:url('https://picsum.photos/seed/garage/1200/600') center/cover no-repeat;
+      color:#fff;
+      position:relative;
+      padding:120px 24px;
+    }
+    .company-story::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(10,31,68,.5);
+    }
+    .company-story .content{
+      position:relative;
+      max-width:960px;
+      margin:0 auto;
+      text-align:center;
+      font-size:1.1rem;
+      line-height:1.6;
+    }
+    /* Leadership */
+    .leadership-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;
+    }
+    .leader-card{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      transition:transform .3s ease,box-shadow .3s ease;
+    }
+    .leader-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+    }
+    .leader-photo{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      margin:0 auto 16px;
+      background:center/cover no-repeat;
+    }
+    .leader-name{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.1rem;
+      color:var(--color-primary);
+      margin-bottom:4px;
+    }
+    .leader-title{
+      font-size:0.95rem;
+      color:var(--color-secondary);
+      margin-bottom:8px;
+    }
+    .leader-bio{
+      font-size:0.9rem;
+    }
+    /* Core Values */
+    .values-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:24px;
+    }
+    .value-tile{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      text-align:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    .value-tile .icon{
+      width:48px;
+      height:48px;
+      margin-bottom:12px;
+      color:var(--color-accent);
+    }
+    .value-tile h3{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.1rem;
+      margin-bottom:8px;
+      color:var(--color-primary);
+    }
+    .value-tile p{
+      font-size:.95rem;
+    }
+    /* Certifications */
+    .certifications{
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      justify-content:center;
+    }
+    .certifications img{
+      width:120px;
+      transition:transform .3s;
+    }
+    .certifications img:hover{
+      transform:scale(1.1);
+    }
+    /* Partners Carousel */
+    .partners-carousel{
+      overflow:hidden;
+      position:relative;
+    }
+    .partners-track{
+      display:flex;
+      gap:32px;
+      animation:scroll 20s linear infinite;
+    }
+    @keyframes scroll{
+      0%{transform:translateX(0);}
+      100%{transform:translateX(-50%);}
+    }
+    .partner-item img{
+      width:150px;
+      filter:grayscale(100%);
+      transition:filter .3s,transform .3s;
+    }
+    .partner-item img:hover{
+      filter:none;
+      transform:scale(1.05);
+    }
+    /* Mission CTA */
+    .mission-cta{
+      background:var(--color-accent);
+      color:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .mission-cta .btn-primary{
+      background:var(--color-secondary);
+    }
+    .mission-cta .btn-primary:hover{
+      background:var(--color-accent);
+    }
+    /* Footer */
+    footer{
+      background:#0A1F44;
+      color:#fff;
+      padding:40px 24px;
+      text-align:center;
+    }
+    .social-icons{
+      display:flex;
+      justify-content:center;
+      gap:16px;
+      margin-top:12px;
+    }
+    .social-icons svg{
+      width:24px;
+      height:24px;
+      fill:#00E5C4;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header id="site-header">
+    <div class="logo">OmniTask</div>
+    <div class="hamburger" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="primary-navigation" aria-label="Primary">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link">Products</a>
+      <a href="industries.html" class="nav-link">Industries</a>
+      <a href="case-studies.html" class="nav-link">Case Studies</a>
+      <a href="resources.html" class="nav-link">Resources</a>
+      <a href="about.html" class="nav-link active">About Us</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="#" class="nav-cta btn-primary">Request Demo</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Company Story -->
+    <section class="company-story fade-up">
+      <div class="content">
+        <h2 class="section-title">Our Story</h2>
+        <p>From a garage prototype to a global automation leader, OmniTask has always been about turning bold ideas into reliable robots. Our journey began in a small workshop where a handful of engineers assembled the first functional unit that would later evolve into the modular platforms you see today.</p>
+      </div>
+    </section>
+
+    <!-- Leadership Profiles -->
+    <section class="leadership fade-up">
+      <h2 class="section-title">Leadership</h2>
+      <div class="leadership-grid">
+        <div class="leader-card">
+          <div class="leader-photo" style="background-image:url('https://picsum.photos/seed/leader1/200/200');"></div>
+          <div class="leader-name">Dr. Elena García</div>
+          <div class="leader-title">Co‑Founder &amp; CTO</div>
+          <div class="leader-bio">Former robotics researcher at MIT, leads AI strategy. Passionate about merging cutting‑edge algorithms with robust hardware.</div>
+        </div>
+        <div class="leader-card">
+          <div class="leader-photo" style="background-image:url('https://picsum.photos/seed/leader2/200/200');"></div>
+          <div class="leader-name">Marco Liu</div>
+          <div class="leader-title">Chief Operations Officer</div>
+          <div class="leader-bio">Over 15 years in manufacturing scaling. Ensures every robot leaves the factory floor ready for real‑world deployment.</div>
+        </div>
+        <div class="leader-card">
+          <div class="leader-photo" style="background-image:url('https://picsum.photos/seed/leader3/200/200');"></div>
+          <div class="leader-name">Aisha Khan</div>
+          <div class="leader-title">Head of Customer Success</div>
+          <div class="leader-bio">Champion of client partnerships, turning feedback into product enhancements. Believes every customer’s success drives innovation.</div>
+        </div>
+        <div class="leader-card">
+          <div class="leader-photo" style="background-image:url('https://picsum.photos/seed/leader4/200/200');"></div>
+          <div class="leader-name">Liam O'Connor</div>
+          <div class="leader-title">Chief Sustainability Officer</div>
+          <div class="leader-bio">Leads eco‑friendly initiatives, ensuring our robots reduce carbon footprints while maximizing efficiency.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Values Grid -->
+    <section class="core-values fade-up">
+      <h2 class="section-title">Core Values</h2>
+      <div class="values-grid">
+        <div class="value-tile">
+          <svg class="icon" data-lucide="lightbulb" width="48" height="48"></svg>
+          <h3>Innovation</h3>
+          <p>We constantly push the boundaries of robotics, turning visionary concepts into dependable solutions for a smarter world.</p>
+        </div>
+        <div class="value-tile">
+          <svg class="icon" data-lucide="shield" width="48" height="48"></svg>
+          <h3>Safety</h3>
+          <p>Every robot is built with rigorous safety standards, ensuring secure operation in any environment.</p>
+        </div>
+        <div class="value-tile">
+          <svg class="icon" data-lucide="users" width="48" height="48"></svg>
+          <h3>Customer Success</h3>
+          <p>Our customers’ achievements are our benchmark; we provide unwavering support from prototype to production.</p>
+        </div>
+        <div class="value-tile">
+          <svg class="icon" data-lucide="leaf" width="48" height="48"></svg>
+          <h3>Sustainability</h3>
+          <p>Designing energy‑efficient robots that help reduce waste and promote a greener industrial future.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications Badges -->
+    <section class="certifications fade-up">
+      <h2 class="section-title">Certifications</h2>
+      <div class="certifications">
+        <img src="https://picsum.photos/seed/iso10218/120/80" alt="ISO 10218" title="ISO 10218">
+        <img src="https://picsum.photos/seed/iso27001/120/80" alt="ISO 27001" title="ISO 27001">
+        <img src="https://picsum.photos/seed/ce/120/80" alt="CE Mark" title="CE Mark">
+        <img src="https://picsum.photos/seed/rohs/120/80" alt="RoHS" title="RoHS">
+      </div>
+    </section>
+
+    <!-- Partner Logos Carousel -->
+    <section class="partners fade-up">
+      <h2 class="section-title">Our Partners</h2>
+      <div class="partners-carousel">
+        <div class="partners-track">
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner1/200/80" alt="Partner 1"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner2/200/80" alt="Partner 2"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner3/200/80" alt="Partner 3"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner4/200/80" alt="Partner 4"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner5/200/80" alt="Partner 5"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner6/200/80" alt="Partner 6"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner7/200/80" alt="Partner 7"></div>
+          <div class="partner-item"><img src="https://picsum.photos/seed/partner8/200/80" alt="Partner 8"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission CTA -->
+    <section class="mission-cta fade-up">
+      <h2 class="section-title">Join Our Mission</h2>
+      <p>Ready to shape the future of automation together? Let’s build the next generation of intelligent, safe, and sustainable robots.</p>
+      <a href="#" class="btn-primary">[Request Demo]</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 OmniTask. All rights reserved.</p>
+    <div class="social-icons">
+      <svg data-lucide="facebook"></svg>
+      <svg data-lucide="twitter"></svg>
+      <svg data-lucide="linkedin"></svg>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest/dist/lucide.min.js"></script>
+  <script>
+    // Header shrink on scroll
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.classList.add('shrink');
+      } else {
+        header.classList.remove('shrink');
+      }
+    });
+
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('nav');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Fade‑up observer
+    const faders = document.querySelectorAll('.fade-up');
+    const appearOptions = {
+      threshold: 0.2,
+      rootMargin: "0px 0px -100px 0px"
+    };
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll){
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Initialize lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OmniTask Robotics – Products</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore OmniTask robot models, technical specs, media, and get a quote or demo.">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --color-primary:#0A1F44;
+        --color-secondary:#2E86FF;
+        --color-accent:#00E5C4;
+        --color-bg-gradient:linear-gradient(180deg,#F7F9FC 0%,#E5E9F2 100%);
+        --color-text:#1A1A1A;
+        --color-white:#FFFFFF;
+        --font-heading:"Montserrat",sans-serif;
+        --font-body:"Inter",sans-serif;
+        --radius-card:8px;
+        --radius-btn:4px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+        font-family:var(--font-body);
+        color:var(--color-text);
+        background:var(--color-bg-gradient);
+        line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+        position:absolute;
+        top:-40px;
+        left:0;
+        background:var(--color-primary);
+        color:#fff;
+        padding:8px 16px;
+        z-index:100;
+        transition:top .3s;
+    }
+    .skip-link:focus{top:0;}
+    header{
+        position:sticky;
+        top:0;
+        left:0;
+        width:100%;
+        background:rgba(10,31,68,.95);
+        height:72px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 24px;
+        transition:height .3s ease;
+        z-index:1000;
+    }
+    header.shrink{height:56px;}
+    .logo{
+        font-family:var(--font-heading);
+        font-weight:700;
+        color:#fff;
+        font-size:1.2rem;
+    }
+    nav{
+        display:flex;
+        gap:24px;
+        align-items:center;
+    }
+    .nav-link{
+        color:#fff;
+        font-size:0.95rem;
+        position:relative;
+    }
+    .nav-link::after{
+        content:"";
+        position:absolute;
+        left:0;
+        bottom:-4px;
+        height:2px;
+        width:100%;
+        background:var(--color-accent);
+        transform:scaleX(0);
+        transition:transform .2s;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{transform:scaleX(1);}
+    .nav-cta{
+        background:var(--color-secondary);
+        color:#fff;
+        padding:8px 16px;
+        border-radius:var(--radius-btn);
+        transition:background .2s;
+    }
+    .nav-cta:hover{background:var(--color-accent);}
+    .hamburger{
+        display:none;
+        flex-direction:column;
+        gap:4px;
+        cursor:pointer;
+    }
+    .hamburger span{
+        display:block;
+        width:24px;
+        height:2px;
+        background:#fff;
+    }
+    @media (max-width:768px){
+        .hamburger{display:flex;}
+        nav{
+            position:absolute;
+            top:100%;
+            left:0;
+            right:0;
+            background:rgba(10,31,68,.95);
+            flex-direction:column;
+            gap:0;
+            overflow:hidden;
+            max-height:0;
+            transition:max-height .3s ease;
+        }
+        nav.open{max-height:300px;}
+        .nav-link{padding:12px 24px;}
+        .nav-cta{margin:12px 24px;}
+    }
+    .btn{
+        display:inline-block;
+        font-family:var(--font-heading);
+        font-weight:700;
+        border-radius:var(--radius-btn);
+        padding:12px 24px;
+        transition:background .3s ease,transform .2s;
+        min-width:120px;
+        text-align:center;
+    }
+    .btn-primary{
+        background:var(--color-secondary);
+        color:#fff;
+    }
+    .btn-primary:hover{background:var(--color-accent);}
+    .btn-primary:active{transform:translateY(2px);}
+    .btn-secondary{
+        border:2px solid var(--color-secondary);
+        color:var(--color-secondary);
+        background:transparent;
+    }
+    .btn-secondary:hover{background:rgba(46,134,255,.1);}
+    .btn-secondary:active{transform:translateY(2px);}
+    section{
+        padding:64px 24px;
+        max-width:1200px;
+        margin:0 auto;
+    }
+    @media (max-width:640px){section{padding:40px 16px;}}
+    .section-title{
+        font-family:var(--font-heading);
+        font-weight:700;
+        font-size:clamp(28px,4vw,36px);
+        color:var(--color-primary);
+        text-align:center;
+        margin-bottom:48px;
+    }
+    /* Overview */
+    .overview{
+        text-align:center;
+        max-width:960px;
+    }
+    .overview h1{
+        font-family:var(--font-heading);
+        font-weight:700;
+        font-size:clamp(32px,5vw,48px);
+        margin-bottom:16px;
+    }
+    .overview p{
+        font-size:clamp(16px,2.5vw,20px);
+        line-height:1.4;
+        margin-bottom:32px;
+    }
+    /* Robot Showcase Grid */
+    .showcase-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        gap:24px;
+    }
+    .showcase-card{
+        background:rgba(255,255,255,.6);
+        backdrop-filter:blur(8px);
+        border-radius:var(--radius-card);
+        padding:24px;
+        text-align:center;
+        box-shadow:0 4px 12px rgba(0,0,0,.08);
+        transition:transform .3s ease,box-shadow .3s ease;
+        opacity:0;
+        transform:translateY(20px);
+    }
+    .showcase-card:hover{
+        transform:translateY(-8px);
+        box-shadow:0 8px 24px rgba(0,0,0,.12);
+    }
+    .showcase-card img{
+        width:100%;
+        height:180px;
+        object-fit:cover;
+        border-radius:var(--radius-card);
+        margin-bottom:12px;
+    }
+    .showcase-card h3{
+        font-family:var(--font-heading);
+        font-weight:700;
+        font-size:1.2rem;
+        color:var(--color-secondary);
+        margin-bottom:8px;
+    }
+    .showcase-card p{
+        font-size:.9rem;
+        margin-bottom:12px;
+    }
+    .showcase-card .btn{margin-top:8px;}
+    /* Modal */
+    .modal{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.5);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        opacity:0;
+        pointer-events:none;
+        transition:opacity .3s ease;
+    }
+    .modal.open{
+        opacity:1;
+        pointer-events:auto;
+    }
+    .modal-content{
+        background:#fff;
+        border-radius:var(--radius-card);
+        max-width:900px;
+        width:90%;
+        max-height:90vh;
+        overflow-y:auto;
+        position:relative;
+        padding:24px;
+        animation:slideUp .3s ease-out;
+    }
+    @keyframes slideUp{
+        from{transform:translateY(20px);opacity:0;}
+        to{transform:translateY(0);opacity:1;}
+    }
+    .modal-close{
+        position:absolute;
+        top:12px;
+        right:12px;
+        background:var(--color-primary);
+        color:#fff;
+        width:32px;
+        height:32px;
+        border-radius:50%;
+        font-size:1.2rem;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+    .spec-table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:16px;
+    }
+    .spec-table th,
+    .spec-table td{
+        border:1px solid #e0e0e0;
+        padding:8px;
+        text-align:left;
+        font-size:.9rem;
+    }
+    .spec-table th{
+        background:var(--color-secondary);
+        color:#fff;
+    }
+    /* Media Gallery */
+    .gallery{
+        position:relative;
+        max-width:960px;
+        margin:0 auto;
+        overflow:hidden;
+    }
+    .gallery-track{
+        display:flex;
+        transition:transform .4s ease;
+    }
+    .gallery-item{
+        min-width:100%;
+        flex-shrink:0;
+        padding:0 12px;
+    }
+    .gallery-item img{
+        border-radius:var(--radius-card);
+    }
+    .gallery-nav{
+        position:absolute;
+        top:50%;
+        left:0;
+        right:0;
+        display:flex;
+        justify-content:space-between;
+        transform:translateY(-50%);
+        pointer-events:none;
+    }
+    .gallery-nav button{
+        pointer-events:auto;
+        background:rgba(10,31,68,.6);
+        color:#fff;
+        border-radius:50%;
+        width:36px;
+        height:36px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:1.2rem;
+    }
+    /* Feature Highlights */
+    .features{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        gap:24px;
+    }
+    .feature-item{
+        background:rgba(255,255,255,.6);
+        backdrop-filter:blur(8px);
+        border-radius:var(--radius-card);
+        padding:24px;
+        text-align:center;
+        box-shadow:0 4px 12px rgba(0,0,0,.08);
+        opacity:0;
+        transform:translateY(20px);
+        transition:opacity .6s cubic-bezier(0.4,0,0.2,1),transform .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .feature-item .icon{
+        margin-bottom:12px;
+        color:var(--color-accent);
+        width:32px;
+        height:32px;
+    }
+    .feature-item h3{
+        font-family:var(--font-heading);
+        font-weight:700;
+        font-size:1.1rem;
+        margin-bottom:8px;
+        color:var(--color-primary);
+    }
+    .feature-item p{
+        font-size:.95rem;
+    }
+    /* CTA Block */
+    .cta-block{
+        background:linear-gradient(135deg,var(--color-secondary),var(--color-accent));
+        color:#fff;
+        text-align:center;
+        padding:48px 24px;
+        border-radius:var(--radius-card);
+    }
+    .cta-block h2{
+        font-family:var(--font-heading);
+        font-weight:700;
+        font-size:clamp(28px,4vw,36px);
+        margin-bottom:16px;
+    }
+    .cta-block .btn-primary{background:var(--color-white);color:var(--color-primary);}
+    .cta-block .btn-primary:hover{background:var(--color-accent);color:#fff;}
+    /* Footer */
+    footer{
+        background:var(--color-primary);
+        color:#fff;
+        padding:40px 24px;
+    }
+    .footer-links{
+        display:flex;
+        flex-wrap:wrap;
+        gap:24px;
+        justify-content:center;
+        margin-bottom:24px;
+    }
+    .footer-links a{color:#fff;}
+    .social-icons{
+        display:flex;
+        gap:16px;
+        justify-content:center;
+    }
+    .social-icons button{
+        background:none;
+        color:#fff;
+        font-size:1.4rem;
+    }
+    .copy{font-size:.85rem; text-align:center;}
+    /* Utility */
+    .fade-up{
+        opacity:0;
+        transform:translateY(20px);
+        transition:opacity .6s cubic-bezier(0.4,0,0.2,1),transform .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .fade-up.visible{
+        opacity:1;
+        transform:none;
+    }
+    @media (prefers-reduced-motion:reduce){
+        *{transition:none !important;animation:none !important;}
+    }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header id="site-header">
+    <div class="logo">OmniTask</div>
+    <div class="hamburger" aria-label="Menu" aria-controls="primary-navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </div>
+    <nav id="primary-navigation" aria-label="Primary navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="products.html" class="nav-link active">Products</a>
+        <a href="industries.html" class="nav-link">Industries</a>
+        <a href="case-studies.html" class="nav-link">Case Studies</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="#" class="nav-cta">Request Demo</a>
+    </nav>
+</header>
+
+<main id="main-content">
+    <!-- Overview Introduction -->
+    <section class="overview_introduction fade-up">
+        <h2 class="section-title">Our Product Line</h2>
+        <div class="overview">
+            <h1>OmniTask Robots</h1>
+            <p>Explore our modular, AI‑driven robot models designed for flexibility, safety, and performance across industries.</p>
+            <div class="hero-content cta-group">
+                <a href="#" class="btn btn-primary"><span data-lucide="file-text"></span> Request Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robot Showcase Grid -->
+    <section class="robot_showcase_grid fade-up">
+        <h2 class="section-title">Robot Showcase</h2>
+        <div class="showcase-grid">
+            <!-- Repeat for each robot -->
+            <div class="showcase-card btn btn-secondary" data-robot-id="1" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot1/400/200" alt="Robot Model Alpha">
+                <h3>Model Alpha</h3>
+                <p>Compact collaborative robot for light‑assembly tasks.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="2" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot2/400/200" alt="Robot Model Beta">
+                <h3>Model Beta</h3>
+                <p>Mid‑size robot with integrated vision system.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="3" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot3/400/200" alt="Robot Model Gamma">
+                <h3>Model Gamma</h3>
+                <p>Heavy‑duty robot for material handling.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="4" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot4/400/200" alt="Robot Model Delta">
+                <h3>Model Delta</h3>
+                <p>High‑precision robot for inspection tasks.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="5" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot5/400/200" alt="Robot Model Epsilon">
+                <h3>Model Epsilon</h3>
+                <p>Modular robot with interchangeable end‑effectors.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="6" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot6/400/200" alt="Robot Model Zeta">
+                <h3>Model Zeta</h3>
+                <p>Fast‑moving robot for sorting applications.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="7" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot7/400/200" alt="Robot Model Eta">
+                <h3>Model Eta</h3>
+                <p>Robust robot for harsh industrial environments.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+            <div class="showcase-card btn btn-secondary" data-robot-id="8" tabindex="0" role="button" aria-haspopup="dialog">
+                <img src="https://picsum.photos/seed/robot8/400/200" alt="Robot Model Theta">
+                <h3>Model Theta</h3>
+                <p>AI‑driven robot for predictive maintenance.</p>
+                <button class="btn btn-primary" data-open-modal>View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Gallery -->
+    <section class="media_gallery fade-up">
+        <h2 class="section-title">Media Gallery</h2>
+        <div class="gallery" aria-roledescription="carousel">
+            <div class="gallery-track">
+                <div class="gallery-item"><img src="https://picsum.photos/seed/gallery1/800/450" alt="Gallery Image 1"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/gallery2/800/450" alt="Gallery Image 2"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/gallery3/800/450" alt="Gallery Image 3"></div>
+                <div class="gallery-item"><img src="https://picsum.photos/seed/gallery4/800/450" alt="Gallery Image 4"></div>
+            </div>
+            <div class="gallery-nav">
+                <button class="prev" aria-label="Previous slide" data-prev>&lt;</button>
+                <button class="next" aria-label="Next slide" data-next>&gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Highlights -->
+    <section class="feature_highlights fade-up">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features">
+            <div class="feature-item fade-up">
+                <div data-lucide="cpu" class="icon"></div>
+                <h3>AI Integration</h3>
+                <p>Real‑time decision making powered by on‑board AI.</p>
+            </div>
+            <div class="feature-item fade-up">
+                <div data-lucide="shield" class="icon"></div>
+                <h3>Safety Certified</h3>
+                <p>Compliant with ISO 10218 and collaborative standards.</p>
+            </div>
+            <div class="feature-item fade-up">
+                <div data-lucide="layers" class="icon"></div>
+                <h3>Modular Design</h3>
+                <p>Easily reconfigure for different tasks.</p>
+            </div>
+            <div class="feature-item fade-up">
+                <div data-lucide="eye" class="icon"></div>
+                <h3>Vision Systems</h3>
+                <p>Integrated cameras for object detection.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Block -->
+    <section class="cta_block fade-up">
+        <div class="cta-block">
+            <h2>Ready to Transform Your Operations?</h2>
+            <a href="#" class="btn btn-primary">Request a Quote</a>
+        </div>
+    </section>
+</main>
+
+<!-- Modal Structure -->
+<div class="modal" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h2 id="modal-title" class="section-title"></h2>
+        <p id="modal-description"></p>
+        <h3>Technical Specifications</h3>
+        <table class="spec-table">
+            <thead>
+                <tr><th>Parameter</th><th>Value</th></tr>
+            </thead>
+            <tbody id="spec-body"></tbody>
+        </table>
+        <div class="cta-group" style="margin-top:24px;">
+            <button class="btn btn-primary" id="request-quote">Request Quote</button>
+            <button class="btn btn-secondary" id="schedule-demo">Schedule Demo</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="industries.html">Industries</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="social-icons">
+        <button aria-label="Twitter"><span data-lucide="twitter"></span></button>
+        <button aria-label="LinkedIn"><span data-lucide="linkedin"></span></button>
+        <button aria-label="GitHub"><span data-lucide="github"></span></button>
+    </div>
+    <p class="copy">© 2023 OmniTask Robotics. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.100.0"></script>
+<script>
+    // Initialize icons
+    lucide.createIcons();
+
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.getElementById('primary-navigation');
+    hamburger.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+        hamburger.setAttribute('aria-expanded', !expanded);
+        nav.classList.toggle('open');
+    });
+
+    // Fade-up on scroll
+    const faders = document.querySelectorAll('.fade-up');
+    const appearOptions = {
+        threshold: 0.2,
+        rootMargin: "0px 0px -100px 0px"
+    };
+    const appearOnScroll = new IntersectionObserver(function(
+        entries,
+        appearOnScroll
+    ){
+        entries.forEach(entry => {
+            if (!entry.isIntersecting){return;}
+            entry.target.classList.add('visible');
+            appearOnScroll.unobserve(entry.target);
+        });
+    }, appearOptions);
+    faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+    });
+
+    // Modal logic
+    const modal = document.getElementById('product-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-description');
+    const specBody = document.getElementById('spec-body');
+
+    const robotData = {
+        1:{name:'Model Alpha',desc:'Compact collaborative robot for light‑assembly tasks.',specs:{'Payload':'5 kg','Reach':'800 mm','Speed':'1 m/s'}},
+        2:{name:'Model Beta',desc:'Mid‑size robot with integrated vision system.',specs:{'Payload':'15 kg','Reach':'1200 mm','Vision':'2 MP'}},
+        3:{name:'Model Gamma',desc:'Heavy‑duty robot for material handling.',specs:{'Payload':'50 kg','Reach':'1500 mm','Speed':'0.8 m/s'}},
+        4:{name:'Model Delta',desc:'High‑precision robot for inspection tasks.',specs:{'Payload':'10 kg','Reach':'1000 mm','Resolution':'0.01 mm'}},
+        5:{name:'Model Epsilon',desc:'Modular robot with interchangeable end‑effectors.',specs:{'Payload':'20 kg','Reach':'1300 mm','Modules':'3'}},
+        6:{name:'Model Zeta',desc:'Fast‑moving robot for sorting applications.',specs:{'Payload':'8 kg','Reach':'900 mm','Speed':'2 m/s'}},
+        7:{name:'Model Eta',desc:'Robust robot for harsh industrial environments.',specs:{'Payload':'30 kg','Reach':'1400 mm','IP Rating':'IP67'}},
+        8:{name:'Model Theta',desc:'AI‑driven robot for predictive maintenance.',specs:{'Payload':'12 kg','Reach':'1100 mm','AI':'On‑board'}},
+    };
+
+    document.querySelectorAll('[data-open-modal]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.showcase-card');
+            const robotId = card.getAttribute('data-robot-id');
+            const data = robotData[robotId];
+            if (!data) return;
+            modalTitle.textContent = data.name;
+            modalDesc.textContent = data.desc;
+            // Populate specs
+            specBody.innerHTML = '';
+            for (let key in data.specs){
+                const tr = document.createElement('tr');
+                const th = document.createElement('th');
+                th.textContent = key;
+                const td = document.createElement('td');
+                td.textContent = data.specs[key];
+                tr.appendChild(th);
+                tr.appendChild(td);
+                specBody.appendChild(tr);
+            }
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden','false');
+            // Focus lock
+            const focusable = modal.querySelectorAll('button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])');
+            if (focusable.length) focusable[0].focus();
+        });
+    });
+
+    modal.addEventListener('click', e => {
+        if (e.target.classList.contains('modal-close') || e.target === modal){
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden','true');
+        }
+    });
+    document.querySelector('.modal-close').addEventListener('click',()=>{modal.classList.remove('open');});
+
+    // Gallery carousel
+    const track = document.querySelector('.gallery-track');
+    const items = document.querySelectorAll('.gallery-item');
+    let index = 0;
+    const updateCarousel = () => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+    };
+    document.querySelector('.gallery-nav .prev').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        index = (index === 0) ? items.length -1 : index -1;
+        updateCarousel();
+    });
+    document.querySelector('.gallery-nav .next').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        index = (index +1) % items.length;
+        updateCarousel();
+    });
+</script>
+
+<script src="https://unpkg.com/lucide@0.100.0"></script>
+<script>
+    // Activate lucide icons after DOM load
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+    });
+</script>
+</body>
+</html>
+</body>
+</html>
+</html>

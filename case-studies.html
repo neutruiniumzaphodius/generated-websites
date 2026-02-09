@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Studies - OmniTask</title>
+  <meta name="description" content="Success stories from OmniTask customers across industries.">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --color-primary:#0A1F44;
+      --color-secondary:#2E86FF;
+      --color-accent:#00E5C4;
+      --color-bg-gradient:linear-gradient(180deg,#F7F9FC 0%,#E5E9F2 100%);
+      --color-text:#1A1A1A;
+      --color-white:#FFFFFF;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Inter",sans-serif;
+      --radius-card:8px;
+      --radius-btn:4px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg-gradient);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+      transition:top .3s;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      position:sticky;
+      top:0;
+      width:100%;
+      background:rgba(10,31,68,.95);
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 24px;
+      transition:height .3s ease;
+      z-index:1000;
+    }
+    header.shrink{height:56px;}
+    .logo{font-family:var(--font-heading);font-weight:700;color:#fff;font-size:1.2rem;}
+    nav{
+      display:flex;
+      gap:24px;
+      align-items:center;
+    }
+    .nav-link{
+      color:#fff;
+      font-size:0.95rem;
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      height:2px;
+      width:100%;
+      background:var(--color-accent);
+      transform:scaleX(0);
+      transition:transform .2s;
+    }
+    .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+    .nav-cta{
+      background:var(--color-secondary);
+      color:#fff;
+      padding:8px 16px;
+      border-radius:var(--radius-btn);
+      transition:background .2s;
+    }
+    .nav-cta:hover{background:var(--color-accent);}
+    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;}
+    .hamburger span{display:block;width:24px;height:2px;background:#fff;}
+    @media (max-width:768px){
+      .hamburger{display:flex;}
+      nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:rgba(10,31,68,.95);
+        flex-direction:column;
+        gap:0;
+        overflow:hidden;
+        max-height:0;
+        transition:max-height .3s ease;
+      }
+      nav.open{max-height:300px;}
+      .nav-link{padding:12px 24px;}
+      .nav-cta{margin:12px 24px;}
+    }
+    .btn{
+      display:inline-block;
+      font-family:var(--font-heading);
+      font-weight:700;
+      border-radius:var(--radius-btn);
+      padding:12px 24px;
+      transition:background .3s ease,transform .2s;
+      min-width:120px;
+      text-align:center;
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-primary:hover{background:var(--color-accent);}
+    .btn-primary:active{transform:translateY(2px);}
+    .btn-secondary{
+      border:2px solid var(--color-secondary);
+      color:var(--color-secondary);
+      background:transparent;
+    }
+    .btn-secondary:hover{background:rgba(46,134,255,.1);}
+    .btn-secondary:active{transform:translateY(2px);}
+    section{padding:64px 24px;max-width:1200px;margin:0 auto;}
+    @media (max-width:640px){section{padding:40px 16px;}}
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(28px,4vw,36px);
+      color:var(--color-primary);
+      text-align:center;
+      margin-bottom:48px;
+    }
+    .case-list{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+    }
+    .case-card{
+      background:rgba(255,255,255,.6);
+      backdrop-filter:blur(8px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .6s cubic-bezier(0.4,0,0.2,1),transform .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .case-card.visible{opacity:1;transform:translateY(0);}
+    .case-card h3{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.3rem;
+      color:var(--color-secondary);
+      margin-bottom:8px;
+    }
+    .case-card p{font-size:.95rem;margin-bottom:12px;}
+    .case-card .btn{margin-top:12px;}
+    .detail{
+      background:rgba(255,255,255,.4);
+      backdrop-filter:blur(6px);
+      border-radius:var(--radius-card);
+      padding:24px;
+      margin-top:24px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
+    .detail h4{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.2rem;
+      margin-bottom:8px;
+    }
+    .detail p{font-size:.95rem;margin-bottom:8px;}
+    .testimonial-carousel{
+      position:relative;
+      max-width:800px;
+      margin:0 auto;
+    }
+    .testimonial-item{
+      display:none;
+      text-align:center;
+      opacity:0;
+      transition:opacity .5s;
+    }
+    .testimonial-item.active{
+      display:block;
+      opacity:1;
+    }
+    .testimonial-quote{
+      font-style:italic;
+      margin-bottom:16px;
+    }
+    .metrics-scroll{
+      display:flex;
+      overflow-x:auto;
+      gap:24px;
+      padding-bottom:16px;
+    }
+    .metric-snippet{
+      flex:0 0 auto;
+      background:var(--color-accent);
+      color:#fff;
+      padding:12px 24px;
+      border-radius:var(--radius-btn);
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .banner-cta{
+      background:var(--color-accent);
+      color:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .banner-cta h2{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(24px,4vw,32px);
+      margin-bottom:24px;
+    }
+    footer{
+      background:var(--color-primary);
+      color:#fff;
+      padding:40px 24px;
+    }
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      justify-content:center;
+      margin-bottom:24px;
+    }
+    .footer-links a{color:#fff;}
+    .social-icons{display:flex;gap:12px;justify-content:center;}
+    .social-icons svg{width:24px;height:24px;stroke:#00E5C4;}
+    .copy{font-size:0.85rem;text-align:center;}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header id="header">
+    <div class="logo">OmniTask</div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="products.html" class="nav-link">Products</a>
+      <a href="industries.html" class="nav-link">Industries</a>
+      <a href="case-studies.html" class="nav-link active">Case Studies</a>
+      <a href="resources.html" class="nav-link">Resources</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="contact.html" class="nav-cta btn-primary">Request Demo</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Case Study List -->
+    <section class="case_study_list">
+      <h2 class="section-title">Success Stories</h2>
+      <div class="case-list">
+        <div class="case-card" data-index="0">
+          <h3>Automated Warehouse – Retail</h3>
+          <p>Global retail chain reduced order‑processing time by 45% using OmniTask XR‑200.</p>
+          <a href="#case-0" class="btn btn-primary">Read More</a>
+        </div>
+        <div class="case-card" data-index="1">
+          <h3>Modular Assembly Line – Automotive</h3>
+          <p>Manufacturing plant increased flexibility, cutting change‑over time by 60%.</p>
+          <a href="#case-1" class="btn btn-primary">Read More</a>
+        </div>
+        <div class="case-card" data-index="2">
+          <h3>Smart Logistics Hub – E‑Commerce</h3>
+          <p>Logistics provider achieved ROI in 6 months with AI‑driven robot fleet.</p>
+          <a href="#case-2" class="btn btn-primary">Read More</a>
+        </div>
+        <div class="case-card" data-index="3">
+          <h3>Precision Lab Automation – Pharma</h3>
+          <p>Pharmaceutical lab improved sample throughput by 70% while maintaining compliance.</p>
+          <a href="#case-3" class="btn btn-primary">Read More</a>
+        </div>
+        <div class="case-card" data-index="4">
+          <h3>Energy Infrastructure Inspection – Utilities</h3>
+          <p>Utility company cut inspection costs by 40% using autonomous inspection robots.</p>
+          <a href="#case-4" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Individual Case Details -->
+    <section class="individual_case_detail">
+      <h2 class="section-title">Case Details</h2>
+
+      <article id="case-0" class="detail">
+        <h4>Global Retail – Automated Warehouse</h4>
+        <p><strong>Client:</strong> Maria Lopez, Operations Director</p>
+        <p><strong>Challenge:</strong> Manual picking caused delays and high labor costs.</p>
+        <p><strong>Solution:</strong> Deployment of 12 OmniTask XR‑200 robots with AI‑routing.</p>
+        <p><strong>Results:</strong> Order‑processing time down 45%, labor cost reduced 30%, error rate dropped to 0.5%.</p>
+        <a href="#" class="btn btn-primary" data-cta="schedule-demo">Schedule Demo</a>
+      </article>
+
+      <article id="case-1" class="detail">
+        <h4>Automotive Manufacturer – Modular Assembly Line</h4>
+        <p><strong>Client:</strong> Carlos Méndez, Plant Manager</p>
+        <p><strong>Challenge:</strong> Frequent model changes required costly retooling.</p>
+        <p><strong>Solution:</strong> Flexible robot modules reconfigured in under 2 hours.</p>
+        <p><strong>Results:</strong> Change‑over time cut 60%, production capacity up 25%, downtime reduced to 1.2%.</p>
+        <a href="#" class="btn btn-primary" data-cta="schedule-demo">Schedule Demo</a>
+      </article>
+
+      <article id="case-2" class="detail">
+        <h4>E‑Commerce Logistics – Smart Hub</h4>
+        <p><strong>Client:</strong> Priya Shah, Head of Logistics</p>
+        <p><strong>Challenge:</strong> Seasonal spikes overwhelmed existing processes.</p>
+        <p><strong>Solution:</strong> Scalable robot fleet with AI‑enabled inventory forecasting.</p>
+        <p><strong>Results:</strong> 99.9% system uptime, ROI achieved in 6 months, order accuracy 99.7%.</p>
+        <a href="#" class="btn btn-primary" data-cta="schedule-demo">Schedule Demo</a>
+      </article>
+
+      <article id="case-3" class="detail">
+        <h4>Pharma Lab – Precision Automation</h4>
+        <p><strong>Client:</strong> Dr. Elena Ruiz, Lab Director</p>
+        <p><strong>Challenge:</strong> Need for repeatable, contamination‑free sample handling.</p>
+        <p><strong>Solution:</strong> Deploying sterile‑grade robots with AI quality checks.</p>
+        <p><strong>Results:</strong> Throughput increased 70%, contamination incidents zero, compliance audit passed.</p>
+        <a href="#" class="btn btn-primary" data-cta="schedule-demo">Schedule Demo</a>
+      </article>
+
+      <article id="case-4" class="detail">
+        <h4>Utility Co. – Infrastructure Inspection</h4>
+        <p><strong>Client:</strong> Ahmed Khan, Operations Lead</p>
+        <p><strong>Challenge:</strong> Manual inspections costly and risky.</p>
+        <p><strong>Solution:</strong> Autonomous inspection robots with real‑time data analytics.</p>
+        <p><strong>Results:</strong> Inspection costs reduced 40%, safety incidents down 80%, data capture 3× faster.</p>
+        <a href="#" class="btn btn-primary" data-cta="schedule-demo">Schedule Demo</a>
+      </article>
+    </section>
+
+    <!-- Testimonial Quote -->
+    <section class="testimonial_quote">
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="testimonials">
+        <div class="testimonial-item active">
+          <p class="testimonial-quote">“Our operations are now fully automated, and we’ve cut costs dramatically.”</p>
+          <p class="testimonial-author">— Maria Lopez, Operations Director, Global Retail</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="testimonial-quote">“The flexibility of OmniTask robots lets us adapt to new models in days, not months.”</p>
+          <p class="testimonial-author">— Carlos Méndez, Plant Manager, Automotive Co.</p>
+        </div>
+        <div class="testimonial-item">
+          <p class="testimonial-quote">“From a compliance standpoint, the robots exceed all safety standards.”</p>
+          <p class="testimonial-author">— Dr. Elena Ruiz, Lab Director, Pharma Labs</p>
+        </div>
+      </div>
+      <div class="testimonial-controls" style="text-align:center;margin-top:16px;">
+        <button class="btn btn-secondary" id="prevTestimonial">Previous</button>
+        <button class="btn btn-secondary" id="nextTestimonial">Next</button>
+      </div>
+    </section>
+
+    <!-- Metrics Highlight -->
+    <section class="metrics_highlight">
+      <h2 class="section-title">Key Metrics</h2>
+      <div class="metrics-scroll">
+        <div class="metric-snippet">ROI in <span class="count" data-target="6">0</span> months</div>
+        <div class="metric-snippet">99.9% Uptime</div>
+        <div class="metric-snippet">Labor Cost ↓ <span class="count" data-target="30">0</span>%</div>
+        <div class="metric-snippet">Processing Time ↓ <span class="count" data-target="45">0</span>%</div>
+        <div class="metric-snippet">Inspection Costs ↓ <span class="count" data-target="40">0</span>%</div>
+      </div>
+    </section>
+
+    <!-- CTA to Schedule Demo -->
+    <section class="cta_to_schedule_demo">
+      <div class="banner-cta">
+        <h2>Ready to see results like these?</h2>
+        <a href="#" class="btn btn-primary" id="scheduleDemoBtn">Schedule Demo</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="industries.html">Industries</a>
+      <a href="case-studies.html">Case Studies</a>
+      <a href="resources.html">Resources</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="social-icons">
+      <svg id="icon-facebook" class="feather feather-facebook"><use xlink:href="#facebook"/></svg>
+      <svg id="icon-twitter" class="feather feather-twitter"><use xlink:href="#twitter"/></svg>
+      <svg id="icon-linkedin" class="feather feather-linkedin"><use xlink:href="#linkedin"/></svg>
+    </div>
+    <p class="copy">© 2024 OmniTask. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('nav');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Scroll reveal for case cards
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.2});
+    document.querySelectorAll('.case-card').forEach(card => observer.observe(card));
+
+    // Testimonial carousel
+    const testimonials = document.querySelectorAll('.testimonial-item');
+    let currentTestimonial = 0;
+    const showTestimonial = index => {
+      testimonials[currentTestimonial].classList.remove('active');
+      currentTestimonial = (index + testimonials.length) % testimonials.length;
+      testimonials[currentTestimonial].classList.add('active');
+    };
+    document.getElementById('prevTestimonial').addEventListener('click', () => showTestimonial(currentTestimonial - 1));
+    document.getElementById('nextTestimonial').addEventListener('click', () => showTestimonial(currentTestimonial + 1));
+
+    // Count up animation for metrics
+    const counts = document.querySelectorAll('.count');
+    const animateCounts = () => {
+      counts.forEach(span => {
+        const target = +span.getAttribute('data-target');
+        const duration = 2000;
+        const start = performance.now();
+        const step = now => {
+          const progress = Math.min((now - start) / duration, 1);
+          span.textContent = Math.floor(progress * target);
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    };
+    // Trigger count up when metrics section enters viewport
+    const metricsSection = document.querySelector('.metrics_highlight');
+    const metricsObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        animateCounts();
+        metricsObserver.unobserve(metricsSection);
+      }
+    }, {threshold: 0.3});
+    metricsObserver.observe(metricsSection);
+  </script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
