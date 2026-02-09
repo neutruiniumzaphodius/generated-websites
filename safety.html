@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Safety &amp; Compliance – NeuroVanta Systems</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-bg-primary:#050608;
+  --color-bg-surface:#0E1116;
+  --color-bg-alt:#07090C;
+  --color-bg-card:#0E1116;
+  --color-border:#1B2230;
+  --color-primary:#4DA3FF;
+  --color-secondary:#00E5C4;
+  --color-text-primary:#F2F4F8;
+  --color-text-secondary:#B8C0CC;
+  --color-error:#FF5A6A;
+  --color-shadow:rgba(0,0,0,0.4);
+  --font-heading:"Inter",sans-serif;
+  --font-body:"Inter",sans-serif;
+}
+*,
+*::before,
+*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-bg-primary);
+  color:var(--color-text-secondary);
+  font-family:var(--font-body);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:var(--font-heading);color:var(--color-text-primary);margin-bottom:0.5em;letter-spacing:-0.5px;}
+h1{font-size:clamp(48px,5vw,56px);margin-bottom:24px;}
+h2{font-size:clamp(36px,4vw,42px);margin-bottom:20px;}
+h3{font-size:32px;margin-bottom:16px;}
+p{margin-bottom:12px;font-size:clamp(16px,1.2vw,18px);}
+button{font-family:inherit;cursor:pointer;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:sticky;top:0;z-index:10;background:var(--color-bg-primary);border-bottom:1px solid var(--color-border);transition:box-shadow .3s;}
+nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{color:var(--color-text-secondary);font-weight:600;padding:8px;transition:color .2s;}
+.nav-link:hover,
+.nav-link:focus-visible{color:var(--color-primary);}
+.nav-link.active{color:var(--color-primary);}
+.menu-btn{display:none;background:none;border:none;color:var(--color-text-secondary);}
+.menu-btn:focus-visible{outline:2px solid var(--color-primary);}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:72px;right:0;background:var(--color-bg-primary);flex-direction:column;width:200px;transform:translateX(100%);transition:transform .3s;}
+  .nav-links.open{transform:translateX(0);}
+  .menu-btn{display:block;}
+}
+
+/* Hero */
+.hero{position:relative;display:grid;grid-template-columns:1fr 55%;min-height:60vh;align-items:center;padding-top:120px;padding-bottom:120px;overflow:hidden;}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(77,163,255,0.15),rgba(0,229,196,0.1));
+  animation:gradientShift 8s infinite alternate;
+}
+@keyframes gradientShift{
+  from{background-position:0% 0%;}
+  to{background-position:100% 100%;}
+}
+.hero-content{z-index:2;padding-right:24px;}
+.hero-buttons{display:flex;gap:16px;margin-top:24px;}
+.btn-primary{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  border:none;
+  padding:12px 24px;
+  font-weight:600;
+  border-radius:4px;
+  transition:background .2s;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible{background:var(--color-secondary);}
+.btn-outline{
+  background:transparent;
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s,color .2s;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible{background:var(--color-primary);color:var(--color-bg-primary);}
+
+/* Sections */
+.section{
+  padding:80px 0;
+  background:var(--color-bg-surface);
+}
+.section:nth-of-type(even){background:var(--color-bg-primary);}
+.section .container{max-width:1200px;margin:auto;padding:0 24px;}
+.section h2{margin-top:0;}
+.section p{margin-bottom:12px;}
+
+/* Download button */
+.download-wrap{text-align:center;padding:40px 0;background:var(--color-bg-surface);}
+.download-wrap .btn-outline{border:2px solid var(--color-primary);color:var(--color-primary);}
+.download-wrap .btn-outline:hover,
+.download-wrap .btn-outline:focus-visible{background:var(--color-primary);color:var(--color-bg-primary);}
+
+/* Footer */
+footer{
+  background:var(--color-bg-alt);
+  color:var(--color-text-primary);
+  text-align:center;
+  padding:40px 0;
+  font-size:14px;
+}
+footer a{color:var(--color-primary);}
+footer a:hover,footer a:focus-visible{color:var(--color-secondary);}
+
+/* Reveal animation */
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Utility */
+.mt-24{margin-top:24px;}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav class="container">
+    <a href="index.html" class="logo"><strong>NeuroVanta</strong></a>
+    <button class="menu-btn" aria-label="Toggle navigation" aria-controls="nav-links" aria-expanded="false">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="safety.html" class="nav-link active">Safety &amp; Compliance</a></li>
+      <li><a href="clinical.html" class="nav-link">Clinical &amp; Research</a></li>
+      <li><a href="resources.html" class="nav-link">Resources</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Hero / Intro -->
+  <section class="hero">
+    <div class="hero-content container">
+      <h1>Safety &amp; Compliance</h1>
+      <p class="mt-24">NeuroVanta’s commitment to patient safety, data integrity, and regulatory excellence is built on a rigorously engineered quality system and a transparent risk‑based approach.</p>
+      <div class="hero-buttons">
+        <a href="#download" class="btn-outline">Download Full Compliance Package</a>
+        <a href="index.html#safety-preview" class="btn-outline">Back to Overview</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quality & Risk Philosophy -->
+  <section id="quality_risk_philosophy" class="section">
+    <div class="container reveal">
+      <h2>Quality &amp; Risk Philosophy</h2>
+      <p>Our Quality Management System (QMS) follows ISO 13485 and FDA 21 CFR 820 requirements. All processes are defined, documented, and continuously improved through internal audits and external assessments.</p>
+      <p>Risk management is performed per IEC 60601‑1‑2, using a systematic Hazard Identification, Risk Evaluation, and Mitigation workflow that is revisited at each product lifecycle stage.</p>
+    </div>
+  </section>
+
+  <!-- Verification & Validation -->
+  <section id="verification_validation" class="section">
+    <div class="container reveal">
+      <h2>Verification &amp; Validation</h2>
+      <p>Every hardware component undergoes design‑verification (DV) testing for electrical safety, biocompatibility, and reliability. Software modules are validated against predefined acceptance criteria and documented in traceable test reports.</p>
+      <p>System‑level validation includes chronic‑implant studies that demonstrate stable signal fidelity (SNR > 15 dB) and stimulation safety over 12 months of continuous use.</p>
+    </div>
+  </section>
+
+  <!-- Security Posture -->
+  <section id="security_posture" class="section">
+    <div class="container reveal">
+      <h2>Security Posture</h2>
+      <p>Data are encrypted at source using AES‑256 and transmitted over TLS 1.3. The closed‑loop controller enforces safety envelopes defined in the device master file, preventing out‑of‑range stimulation.</p>
+      <p>Regular penetration testing, firmware signing, and secure boot processes protect against unauthorized code execution.</p>
+    </div>
+  </section>
+
+  <!-- Privacy Statement -->
+  <section id="privacy_statement" class="section">
+    <div class="container reveal">
+      <h2>Privacy Statement</h2>
+      <p>All participant data are anonymized before storage. Access to raw data is restricted to authorized personnel through role‑based permissions in isolated cloud workspaces.</p>
+      <p>We comply with GDPR, HIPAA, and the latest ICH‑GCP privacy guidelines, providing audit logs for every data access event.</p>
+    </div>
+  </section>
+
+  <!-- Clinical Ethics -->
+  <section id="clinical_ethics" class="section">
+    <div class="container reveal">
+      <h2>Clinical Ethics</h2>
+      <p>Our ethics framework follows the Declaration of Helsinki and the Belmont Report. An independent Institutional Review Board (IRB) reviews every study protocol, and a Data Safety Monitoring Board (DSMB) oversees patient safety throughout the trial.</p>
+      <p>Adverse event reporting is performed in real time, with predefined escalation pathways to ensure rapid response.</p>
+    </div>
+  </section>
+
+  <!-- Regulatory Posture -->
+  <section id="regulatory_posture" class="section">
+    <div class="container reveal">
+      <h2>Regulatory Posture</h2>
+      <p>NeuroVanta maintains an FDA‑registered establishment (Q‑001) and a CE‑marked device class II (MDR 2017/745). All submissions are supported by a complete Device Master File, risk analysis (ISO 14971), and validation documentation.</p>
+      <p>We provide regulators with traceability matrices, design history files, and post‑market surveillance plans to satisfy both FDA and EMA expectations.</p>
+    </div>
+  </section>
+
+  <!-- Download Button -->
+  <section id="download_button" class="download-wrap">
+    <div class="container">
+      <h2>Download Full Compliance Package</h2>
+      <a href="downloads/compliance-package.zip" class="btn-outline" download>Download ZIP</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 NeuroVanta Systems. All rights reserved.</p>
+    <p>
+      <a href="mailto:info@neurovanta.com">info@neurovanta.com</a> |
+      <a href="tel:+15551234567">+1 (555) 123‑4567</a> |
+      123 Innovation Way, Suite 400, Boston, MA 02115, USA
+    </p>
+  </div>
+</footer>
+
+<script>
+/* Simple scroll‑reveal */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, {threshold:0.1});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

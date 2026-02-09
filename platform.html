@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroVanta Systems – Platform</title>
+  <style>
+:root{
+  --color-bg-primary:#050608;
+  --color-bg-surface:#0E1116;
+  --color-bg-alt:#07090C;
+  --color-bg-card:#0E1116;
+  --color-border:#1B2230;
+  --color-primary:#4DA3FF;
+  --color-secondary:#00E5C4;
+  --color-text-primary:#F2F4F8;
+  --color-text-secondary:#B8C0CC;
+  --color-error:#FF5A6A;
+  --color-shadow:rgba(0,0,0,0.4);
+  --font-heading:"Inter",sans-serif;
+  --font-body:"Inter",sans-serif;
+}
+*,
+*::before,
+*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-bg-primary);
+  color:var(--color-text-secondary);
+  font-family:var(--font-body);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:var(--font-heading);color:var(--color-text-primary);margin-bottom:0.5em;letter-spacing:-0.5px;}
+h1{font-size:clamp(48px,5vw,56px);margin-bottom:24px;}
+h2{font-size:clamp(36px,4vw,42px);margin-bottom:20px;}
+h3{font-size:32px;margin-bottom:16px;}
+p{margin-bottom:12px;font-size:clamp(16px,1.2vw,18px);}
+button{font-family:inherit;cursor:pointer;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:sticky;top:0;z-index:10;background:var(--color-bg-primary);border-bottom:1px solid var(--color-border);transition:box-shadow .3s;}
+nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{color:var(--color-text-secondary);font-weight:600;padding:8px;transition:color .2s;}
+.nav-link:hover,
+.nav-link:focus-visible{color:var(--color-primary);}
+.nav-link.active{color:var(--color-primary);}
+.menu-btn{display:none;background:none;border:none;color:var(--color-text-secondary);}
+.menu-btn:focus-visible{outline:2px solid var(--color-primary);}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:72px;right:0;background:var(--color-bg-primary);flex-direction:column;width:200px;transform:translateX(100%);transition:transform .3s;}
+  .nav-links.open{transform:translateX(0);}
+  .menu-btn{display:block;}
+}
+
+/* Section common */
+.section{
+  padding:80px 0;
+}
+.bg-surface{background:var(--color-bg-surface);}
+.bg-primary{background:var(--color-bg-primary);}
+.bg-alt{background:var(--color-bg-alt);color:var(--color-text-primary);}
+
+/* Card */
+.card{
+  background:var(--color-bg-card);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:32px;
+  text-align:center;
+  box-shadow:0 4px 12px var(--color-shadow);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.card.reveal{opacity:1;transform:none;}
+.card svg{stroke:var(--color-primary);width:48px;height:48px;margin-bottom:16px;}
+
+/* Buttons */
+.btn-primary{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  border:none;
+  padding:12px 24px;
+  font-weight:600;
+  border-radius:4px;
+  transition:background .2s;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible{background:var(--color-secondary);}
+.btn-outline{
+  background:transparent;
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s,color .2s;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible{background:var(--color-primary);color:var(--color-bg-primary);}
+
+/* Partner workflow SVG */
+.workflow-step svg{stroke:var(--color-primary);width:48px;height:48px;margin-bottom:12px;}
+
+/* Final CTA */
+.final-cta{
+  background:var(--color-bg-alt);
+  color:var(--color-text-primary);
+  text-align:center;
+  padding:80px 0;
+}
+.final-cta .btn-primary{margin-top:16px;}
+
+/* Reveal */
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Utility */
+.mt-24{margin-top:24px;}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header>
+    <nav class="container">
+      <a href="index.html" class="logo" aria-label="NeuroVanta Home">
+        <strong style="color:var(--color-primary);font-size:1.2rem;">NeuroVanta</strong>
+      </a>
+      <button class="menu-btn" aria-controls="nav-links" aria-expanded="false" aria-label="Menu">
+        &#9776;
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="platform.html" class="nav-link active" aria-current="page">Platform</a></li>
+        <li><a href="safety.html" class="nav-link">Safety &amp; Compliance</a></li>
+        <li><a href="clinical.html" class="nav-link">Clinical &amp; Research</a></li>
+        <li><a href="resources.html" class="nav-link">Resources</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Platform Summary -->
+  <section id="platform_summary" class="section bg-surface">
+    <div class="container">
+      <h1>Platform Overview</h1>
+      <p>NeuroVanta’s modular stack delivers clinically‑ready neurotechnology that integrates seamlessly into multi‑site studies while maintaining the highest safety standards.</p>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+        <h3>Modular Architecture</h3>
+        <p>Each hardware and software block can be configured or upgraded independently to meet specific trial requirements.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Implant System -->
+  <section id="implant_system" class="section bg-primary">
+    <div class="container">
+      <h2>Implant System</h2>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+        <h3>Biocompatible Enclosure</h3>
+        <p>Medical‑grade titanium housing with hermetic sealing guarantees long‑term stability and ISO 10993 compliance.</p>
+        <p>Pre‑certified for 12‑month chronic implantation with automated leak detection.</p>
+        <a href="contact.html#inquiry-form" class="btn-primary mt-24">Request Technical Briefing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neural Interface -->
+  <section id="neural_interface" class="section bg-surface">
+    <div class="container">
+      <h2>Neural Interface</h2>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        <h3>High‑Fidelity ASIC</h3>
+        <p>Custom 65 nm neural ASIC provides 32 channels of low‑noise amplification (≤2 µV RMS) and on‑chip digitisation.</p>
+        <p>Dynamic range up to 120 dB enables chronic recordings with <10 µV noise floor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stimulation Module -->
+  <section id="stimulation_module" class="section bg-primary">
+    <div class="container">
+      <h2>Stimulation Module</h2>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12,2 22,22 2,22"/></svg>
+        <h3>Adaptive Closed‑Loop Controller</h3>
+        <p>Updates pulse parameters every 10 ms based on neural biomarkers, all within pre‑defined safety envelopes.</p>
+        <p>Supports up to 500 µA amplitude, 500 µs pulse width, with real‑time impedance monitoring.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- External Components -->
+  <section id="external_components" class="section bg-surface">
+    <div class="container">
+      <h2>External Components</h2>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+        <h3>Wireless Telemetry Unit</h3>
+        <p>BLE‑5.0 compliant module streams data at 1 kHz with AES‑128 encryption, powered by a rechargeable Li‑ion cell lasting 48 h.</p>
+        <p>Optional wired Ethernet for high‑throughput sites.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Software & Data -->
+  <section id="software_data" class="section bg-primary">
+    <div class="container">
+      <h2>Software &amp; Data Services</h2>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10v10H7z"/></svg>
+        <h3>Secure Cloud API</h3>
+        <p>RESTful endpoints with OAuth 2.0 + PKCE, delivering per‑site workspaces isolated by VPC.</p>
+        <p>Data schemas follow BIDS‑Neuro format for easy integration into analytics pipelines.</p>
+        <a href="resources.html#technical-briefs" class="btn-outline mt-24">View API Spec</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Workflow -->
+  <section id="partner_workflow" class="section bg-surface">
+    <div class="container">
+      <h2>Partner Workflow</h2>
+      <div class="card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12h16M12 4v16"/></svg>
+        <h3>End‑to‑End Integration Path</h3>
+        <ol style="text-align:left; margin-left:1.5rem;">
+          <li><strong>Device Shipment</strong> – Pre‑validated kits delivered to the site.</li>
+          <li><strong>Site Training</strong> – On‑site workshops covering implantation, software setup, and safety checks.</li>
+          <li><strong>IRB Alignment</strong> – Full regulatory documentation provided for rapid approval.</li>
+          <li><strong>Data Onboarding</strong> – Encrypted data pipelines activated within 48 h of first patient recording.</li>
+          <li><strong>Ongoing Support</strong> – 24/7 engineering hotline and quarterly performance reviews.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Ready for a Technical Deep‑Dive?</h2>
+      <p>Contact our engineering team to schedule a detailed briefing and explore custom solutions.</p>
+      <a href="contact.html#inquiry-form" class="btn-primary">Request Technical Briefing</a>
+    </div>
+  </section>
+
+  <footer class="section bg-surface" style="text-align:center; padding:40px 0;">
+    <div class="container">
+      <p style="color:var(--color-text-secondary);">© 2025 NeuroVanta Systems. All rights reserved.</p>
+      <p style="color:var(--color-text-secondary);">
+        <a href="mailto:info@neurovanta.com">info@neurovanta.com</a> |
+        <a href="tel:+15551234567">+1 (555) 123‑4567</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple scroll‑reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    const onScroll = () => {
+      const viewportHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < viewportHeight - 100) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll);
+    window.addEventListener('load', onScroll);
+
+    // Mobile menu toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+        menuBtn.setAttribute('aria-expanded', !expanded);
+        navLinks.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

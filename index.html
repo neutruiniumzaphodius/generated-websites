@@ -1,75 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>NeuroVanta Systems – Implantable Brain‑Computer Interfaces</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-bg-primary:#050608;
+  --color-bg-surface:#0E1116;
+  --color-bg-alt:#07090C;
+  --color-bg-card:#0E1116;
+  --color-border:#1B2230;
+  --color-primary:#4DA3FF;
+  --color-secondary:#00E5C4;
+  --color-text-primary:#F2F4F8;
+  --color-text-secondary:#B8C0CC;
+  --color-error:#FF5A6A;
+  --color-shadow:rgba(0,0,0,0.4);
+  --font-heading:"Inter",sans-serif;
+  --font-body:"Inter",sans-serif;
+}
+*,
+*::before,
+*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-bg-primary);
+  color:var(--color-text-secondary);
+  font-family:var(--font-body);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:var(--font-heading);color:var(--color-text-primary);margin-bottom:0.5em;letter-spacing:-0.5px;}
+h1{font-size:clamp(48px,5vw,56px);margin-bottom:24px;}
+h2{font-size:clamp(36px,4vw,42px);margin-bottom:20px;}
+h3{font-size:32px;margin-bottom:16px;}
+p{margin-bottom:12px;font-size:clamp(16px,1.2vw,18px);}
+button{font-family:inherit;cursor:pointer;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:sticky;top:0;z-index:10;background:var(--color-bg-primary);border-bottom:1px solid var(--color-border);transition:box-shadow .3s;}
+nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{color:var(--color-text-secondary);font-weight:600;padding:8px;transition:color .2s;}
+.nav-link:hover,
+.nav-link:focus-visible{color:var(--color-primary);}
+.nav-link.active{color:var(--color-primary);}
+.menu-btn{display:none;background:none;border:none;color:var(--color-text-secondary);}
+.menu-btn:focus-visible{outline:2px solid var(--color-primary);}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:72px;right:0;background:var(--color-bg-primary);flex-direction:column;width:200px;transform:translateX(100%);transition:transform .3s;}
+  .nav-links.open{transform:translateX(0);}
+  .menu-btn{display:block;}
+}
+
+/* Hero */
+.hero{position:relative;display:grid;grid-template-columns:1fr 55%;min-height:80vh;align-items:center;padding-top:120px;padding-bottom:120px;overflow:hidden;}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(77,163,255,0.15),rgba(0,229,196,0.1));
+  animation:gradientShift 8s infinite alternate;
+}
+@keyframes gradientShift{
+  from{background-position:0% 0%;}
+  to{background-position:100% 100%;}
+}
+.hero-content{z-index:2;padding-right:24px;}
+.hero-buttons{display:flex;gap:16px;margin-top:24px;}
+.btn-primary{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  border:none;
+  padding:12px 24px;
+  font-weight:600;
+  border-radius:4px;
+  transition:background .2s;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible{background:var(--color-secondary);}
+.btn-outline{
+  background:transparent;
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s,color .2s;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible{background:var(--color-primary);color:var(--color-bg-primary);}
+
+/* Trust Bar */
+.trust-bar{display:grid;gap:24px;padding:80px 0;background:var(--color-bg-surface);}
+.trust-card{
+  background:var(--color-bg-card);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 4px 12px var(--color-shadow);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.trust-card.reveal{opacity:1;transform:none;}
+/* Platform Overview */
+.platform-overview{padding:80px 0;background:var(--color-bg-surface);}
+.platform-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:32px;
+}
+.platform-card{
+  background:var(--color-bg-card);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:32px;
+  text-align:center;
+  box-shadow:0 4px 12px var(--color-shadow);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.platform-card.reveal{opacity:1;transform:none;}
+.platform-card svg{stroke:var(--color-primary);width:48px;height:48px;margin-bottom:16px;}
+/* Use Cases Preview */
+.use-cases{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:80px 0;}
+.use-cases img{border-radius:8px;}
+.use-cases .text{max-width:560px;}
+/* Safety & Compliance Preview */
+.safety-preview{background:var(--color-bg-surface);padding:80px 0;text-align:center;}
+.safety-preview .btn-outline{
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s,color .2s;
+}
+.safety-preview .btn-outline:hover,
+.safety-preview .btn-outline:focus-visible{background:var(--color-primary);color:var(--color-bg-primary);}
+
+/* Publications Preview */
+.publications{padding:80px 0;background:var(--color-bg-primary);}
+.pub-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+.pub-card{
+  background:var(--color-bg-card);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:24px;
+  box-shadow:0 4px 12px var(--color-shadow);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.pub-card.reveal{opacity:1;transform:none;}
+.badge{
+  display:inline-block;background:var(--color-primary);color:var(--color-bg-primary);
+  padding:4px 8px;border-radius:4px;font-size:14px;font-weight:600;margin-bottom:8px;
+}
+.pub-card button{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  border:none;
+  padding:8px 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s;
+}
+.pub-card button:hover,
+.pub-card button:focus-visible{background:var(--color-secondary);}
+
+/* Final CTA */
+.final-cta{
+  background:var(--color-bg-alt);
+  color:var(--color-text-primary);
+  text-align:center;
+  padding:80px 0;
+}
+.final-cta .btn-primary{margin-top:16px;}
+/* Reveal animation */
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Utility */
+.mt-24{margin-top:24px;}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<header>
+  <nav class="container">
+    <a href="/" class="logo" aria-label="NeuroVanta Home">
+      <svg width="32" height="32" stroke="var(--color-primary)" stroke-width="2" fill="none"><circle cx="16" cy="16" r="14"/></svg>
+    </a>
+    <button class="menu-btn" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <i data-lucide="menu"></i>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="safety.html" class="nav-link">Safety &amp; Compliance</a></li>
+      <li><a href="clinical.html" class="nav-link">Clinical &amp; Research</a></li>
+      <li><a href="resources.html" class="nav-link">Resources</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero container" id="hero">
+    <div class="hero-content">
+      <h1>Implantable Brain‑Computer Interfaces for Clinical Innovation</h1>
+      <p>NeuroVanta Systems delivers FDA‑qualified, chronically stable BCI platforms that enable safe, high‑fidelity neural recording and adaptive stimulation.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary"> <i data-lucide="mail"></i> Request Partnership</button>
+        <button class="btn-outline"> <i data-lucide="file-text"></i> View Publications</button>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true"></div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Trust Bar -->
+  <section class="trust_bar" id="trust_bar">
+    <div class="container">
+      <div class="trust-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;">
+        <div class="trust-card reveal">
+          <h3>Regulatory Ready</h3>
+          <p>ISO‑13485, FDA IND, CE‑Mark pathways built‑in.</p>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div class="trust-card reveal">
+          <h3>Data Integrity</h3>
+          <p>AES‑256 encrypted, traceable data pipelines.</p>
+        </div>
+        <div class="trust-card reveal">
+          <h3>Clinical Support</h3>
+          <p>24/7 technical help‑desk, on‑site training.</p>
+        </div>
+        <div class="trust-card reveal">
+          <h3>Global Partnerships</h3>
+          <p>Collaborations with FDA, EMA, leading academic centers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platform Overview -->
+  <section class="platform_overview" id="platform_overview">
+    <div class="container">
+      <h2>Platform Pillars</h2>
+      <div class="platform-grid">
+        <div class="platform-card reveal">
+          <i data-lucide="activity" stroke-width="2" color="var(--color-primary)"></i>
+          <h3>Neural Recording</h3>
+          <p>High‑resolution ASICs capture chronic neural activity with <strong>SNR > 12 dB</strong> across 12 months.</p>
+        </div>
+        <div class="platform-card reveal">
+          <i data-lucide="zap" stroke-width="2" color="var(--color-primary)"></i>
+          <h3>Adaptive Stimulation</h3>
+          <p>Closed‑loop controller updates pulse parameters every 10 ms based on real‑time biomarkers.</p>
+        </div>
+        <div class="platform-card reveal">
+          <i data-lucide="database" stroke-width="2" color="var(--color-primary)"></i>
+          <h3>Secure Data Services</h3>
+          <p>API‑first, AES‑256 encrypted streams stored on ISO‑27001‑certified cloud.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Preview -->
+  <section class="use_cases_preview" id="use_cases_preview">
+    <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+      <img src="https://picsum.photos/seed/usecase/800/600" alt="Neurotechnology use case illustration">
+      <div class="text">
+        <h2>Precision Neuro‑Therapeutics</h2>
+        <p>Our platform powers adaptive deep brain stimulation trials, chronic Parkinson’s disease studies, and next‑generation neuro‑rehabilitation protocols.</p>
+        <a href="clinical.html" class="btn-primary">Explore Use Cases</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety & Compliance Preview -->
+  <section class="safety_compliance_preview" id="safety_compliance_preview">
+    <div class="container" style="text-align:center;padding:80px 0;">
+      <h2>Built‑In Safety &amp; Compliance</h2>
+      <p>Every device undergoes IEC‑60601‑1 electrical safety testing, ISO‑13485 quality management, and end‑to‑end AES‑256 encryption.</p>
+      <a href="safety.html" class="btn-primary">Learn More</a>
+    </div>
+  </section>
+
+  <!-- Publications Preview -->
+  <section class="publications_preview" id="publications_preview">
+    <div class="container">
+      <h2>Featured Publications</h2>
+      <div class="pub-grid">
+        <div class="pub-card reveal">
+          <span class="badge">Publication</span>
+          <h3>High‑Fidelity Neural Recording in Chronic Implants – 2024 IEEE EMBS</h3>
+          <p><em>March 2024</em></p>
+          <p>Quantitative analysis of signal‑to‑noise ratios across 12‑month in‑vivo trials.</p>
+          <button>Download PDF</button>
+        </div>
+        <div class="pub-card reveal">
+          <span class="badge">Poster</span>
+          <h3>Closed‑Loop Therapy for Parkinson’s Disease – Poster</h3>
+          <p><em>August 2023</em></p>
+          <p>Phase‑I results showing tremor reduction using adaptive stimulation.</p>
+          <button>View Poster</button>
+        </div>
+        <div class="pub-card reveal">
+          <span class="badge">Technical Brief</span>
+          <h3>API Access for Secure Data Retrieval – Gated</h3>
+          <p><em>November 2023</em></p>
+          <p>Specification of REST endpoints, authentication flows, and data schemas.</p>
+          <button>Request Access</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Banner -->
+  <section class="final_cta_banner" id="final_cta_banner">
+    <div class="container" style="text-align:center;padding:80px 0;">
+      <h2>Ready to Accelerate Your Neuro‑Therapeutic Study?</h2>
+      <button class="btn-primary">Schedule a Partnership Inquiry</button>
+    </div>
+  </section>
+</main>
+
+<footer style="padding:24px 0; text-align:center; color:var(--color-text-secondary);">
+  © 2025 NeuroVanta Systems. All rights reserved.
+</footer>
+
+<script>
+/* Mobile navigation toggle */
+const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+menuBtn?.addEventListener('click', () => {
+  const expanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+  menuBtn.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('open');
+  // swap icons
+  const icon = expanded ? 'menu' : 'x';
+  menuBtn.innerHTML = `<i data-lucide="${icon}"></i>`;
+  lucide.createIcons();
+});
+
+/* Intersection Observer for reveal animations */
+const revealElements = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.1});
+
+revealElements.forEach(el => observer.observe(el));
+
+/* Header shadow on scroll */
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if(window.scrollY > 10){
+    header.style.boxShadow = '0 4px 12px var(--color-shadow)';
+  }else{
+    header.style.boxShadow = 'none';
+  }
+});
+
+/* Initialize lucide icons */
+lucide.createIcons();
+</script>
 </body>
 </html>

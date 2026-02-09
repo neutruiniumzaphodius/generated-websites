@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clinical & Research – NeuroVanta Systems</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --color-bg-primary:#050608;
+  --color-bg-surface:#0E1116;
+  --color-bg-alt:#07090C;
+  --color-bg-card:#0E1116;
+  --color-border:#1B2230;
+  --color-primary:#4DA3FF;
+  --color-secondary:#00E5C4;
+  --color-text-primary:#F2F4F8;
+  --color-text-secondary:#B8C0CC;
+  --color-error:#FF5A6A;
+  --color-shadow:rgba(0,0,0,0.4);
+  --font-heading:"Inter",sans-serif;
+  --font-body:"Inter",sans-serif;
+}
+*,
+*::before,
+*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-bg-primary);
+  color:var(--color-text-secondary);
+  font-family:var(--font-body);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+h1,h2,h3{
+  font-family:var(--font-heading);
+  color:var(--color-text-primary);
+  margin-bottom:0.5em;
+  letter-spacing:-0.5px;
+}
+h1{font-size:clamp(48px,5vw,56px);margin-bottom:24px;}
+h2{font-size:clamp(36px,4vw,42px);margin-bottom:20px;}
+h3{font-size:32px;margin-bottom:16px;}
+p{margin-bottom:12px;font-size:clamp(16px,1.2vw,18px);}
+button{font-family:inherit;cursor:pointer;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:sticky;top:0;z-index:10;background:var(--color-bg-primary);border-bottom:1px solid var(--color-border);transition:box-shadow .3s;}
+nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{color:var(--color-text-secondary);font-weight:600;padding:8px;transition:color .2s;}
+.nav-link:hover,
+.nav-link:focus-visible{color:var(--color-primary);}
+.nav-link.active{color:var(--color-primary);}
+.menu-btn{display:none;background:none;border:none;color:var(--color-text-secondary);}
+.menu-btn:focus-visible{outline:2px solid var(--color-primary);}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:72px;right:0;background:var(--color-bg-primary);flex-direction:column;width:200px;transform:translateX(100%);transition:transform .3s;}
+  .nav-links.open{transform:translateX(0);}
+  .menu-btn{display:block;}
+}
+
+/* Section spacing */
+section{padding:80px 0;background:var(--color-bg-surface);}
+section.alt-bg{background:var(--color-bg-primary);}
+section.final-cta{background:var(--color-bg-alt);color:var(--color-text-primary);text-align:center;padding:80px 0;}
+
+/* Card styles (reuse from home) */
+.platform-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
+}
+.platform-card{
+  background:var(--color-bg-card);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 4px 12px var(--color-shadow);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.platform-card.reveal{opacity:1;transform:none;}
+.platform-card svg{stroke:var(--color-primary);width:48px;height:48px;margin-bottom:16px;}
+
+/* List styling */
+ul.checklist{list-style:none;padding-left:0;margin-bottom:24px;}
+ul.checklist li{position:relative;padding-left:24px;margin-bottom:12px;font-size:clamp(16px,1.2vw,18px);}
+ul.checklist li::before{
+  content:"✓";
+  position:absolute;left:0;color:var(--color-primary);font-weight:600;
+}
+
+/* Accordion */
+.accordion-item{border-top:1px solid var(--color-border);}
+.accordion-button{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:none;
+  color:var(--color-text-primary);
+  font-size:clamp(16px,1.2vw,18px);
+  padding:16px 0;
+  cursor:pointer;
+}
+.accordion-button:focus-visible{outline:2px solid var(--color-primary);}
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .4s ease;
+  font-size:clamp(14px,1.1vw,16px);
+  color:var(--color-text-secondary);
+}
+.accordion-content p{margin:0;}
+.accordion-item.active .accordion-content{max-height:200px;}
+
+/* Reveal animation */
+.reveal{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Buttons */
+.btn-primary{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  border:none;
+  padding:12px 24px;
+  font-weight:600;
+  border-radius:4px;
+  transition:background .2s;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible{background:var(--color-secondary);}
+.btn-outline{
+  background:transparent;
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s,color .2s;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible{background:var(--color-primary);color:var(--color-bg-primary);}
+.mt-24{margin-top:24px;}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav class="container">
+    <a href="index.html" class="logo"><strong>NeuroVanta</strong></a>
+    <button class="menu-btn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="platform.html" class="nav-link">Platform</a>
+      <a href="safety.html" class="nav-link">Safety &amp; Compliance</a>
+      <a href="clinical.html" class="nav-link active">Clinical &amp; Research</a>
+      <a href="resources.html" class="nav-link">Resources</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="container">
+
+  <!-- Who We Work With -->
+  <section id="who_we_work_with">
+    <h1>Who We Work With</h1>
+    <div class="platform-grid reveal">
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke-width="4"/></svg>
+        <h3>Academic Research Labs</h3>
+        <p>Cutting‑edge university labs focused on neural engineering and translational neuroscience.</p>
+      </div>
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="40" height="40" stroke-width="4"/></svg>
+        <h3>Hospital Neurology Departments</h3>
+        <p>Clinicians seeking FDA‑compliant BCI solutions for patient trials and therapeutic studies.</p>
+      </div>
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="32,8 56,56 8,56" stroke-width="4"/></svg>
+        <h3>Medical Device Companies</h3>
+        <p>Partners co‑developing custom neurotechnology platforms with shared IP.</p>
+      </div>
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 32h32" stroke-width="4"/></svg>
+        <h3>Consortia & Research Networks</h3>
+        <p>Multi‑site collaborations requiring standardized data pipelines and regulatory support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Study Support Services -->
+  <section id="study_support_services" class="reveal">
+    <h2>Study Support Services</h2>
+    <ul class="checklist">
+      <li>Site‑training workshops (hardware setup, safety protocols, software onboarding)</li>
+      <li>IRB & regulatory assistance (device master files, risk analysis, FDA/EMA documentation)</li>
+      <li>Real‑time data monitoring and quality‑control dashboards</li>
+      <li>24/7 technical support during enrollment and data collection phases</li>
+      <li>Customizable stimulation protocols and closed‑loop algorithm integration</li>
+    </ul>
+  </section>
+
+  <!-- Collaboration Models -->
+  <section id="collaboration_models" class="reveal">
+    <h2>Collaboration Models</h2>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" stroke-width="4"/></svg>
+        <h3>Joint Development</h3>
+        <p>Co‑creation of bespoke BCI solutions with shared IP, joint funding, and collaborative milestones.</p>
+      </div>
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="40" height="40" stroke-width="4"/></svg>
+        <h3>Investigator‑Initiated Support</h3>
+        <p>Hardware, software, and regulatory assistance provided on a cost‑recovery basis for PI‑driven studies.</p>
+      </div>
+      <div class="platform-card">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="32,8 56,56 8,56" stroke-width="4"/></svg>
+        <h3>Partnership Program</h3>
+        <p>Long‑term strategic alliances with volume pricing, dedicated account management, and joint publications.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="reveal">
+    <h2>Frequently Asked Questions</h2>
+    <div class="accordion">
+      <div class="accordion-item" >
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq1">What is the typical timeline from device shipment to first patient data?</button>
+        <div class="accordion-content" id="faq1" hidden>
+          <p>Standard delivery and integration takes 6–8 weeks, including site‑training and IRB alignment.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq2">How do you handle data security for multi‑site studies?</button>
+        <div class="accordion-content" id="faq2" hidden>
+          <p>All data are encrypted at source, transmitted over TLS 1.3, and stored in isolated cloud workspaces with role‑based access.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq3">Can the stimulation parameters be adjusted in real time?</button>
+        <div class="accordion-content" id="faq3" hidden>
+          <p>Yes – our closed‑loop controller updates pulse parameters every 10 ms based on streamed neural biomarkers, within pre‑set safety envelopes.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="faq4">Do you provide regulatory documentation for IND submissions?</button>
+        <div class="accordion-content" id="faq4" hidden>
+          <p>We supply device master files, risk analyses, and validation reports that satisfy FDA and EMA requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <h2>Start a Collaboration Inquiry</h2>
+    <a href="contact.html#inquiry-form" class="btn-primary">Begin Inquiry</a>
+  </section>
+
+</main>
+
+<footer class="trust-bar">
+  <div class="container">
+    <p style="color:var(--color-text-secondary);font-size:clamp(14px,1vw,16px);margin:0;">
+      © 2025 NeuroVanta Systems • 123 Innovation Way, Suite 400, Boston, MA 02115, USA • 
+      <a href="mailto:info@neurovanta.com">info@neurovanta.com</a> • 
+      <a href="tel:+15551234567">+1 (555) 123‑4567</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+// Mobile menu toggle
+const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+menuBtn?.addEventListener('click', () => {
+  const expanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+  menuBtn.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('open');
+});
+
+// Reveal on scroll
+const revealElements = document.querySelectorAll('.reveal');
+const onScroll = () => {
+  const viewportBottom = window.innerHeight;
+  revealElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < viewportBottom - 100) {
+      el.classList.add('visible');
+    }
+  });
+};
+window.addEventListener('scroll', onScroll);
+window.addEventListener('load', onScroll);
+
+// Accordion functionality
+document.querySelectorAll('.accordion-button').forEach(button => {
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', !expanded);
+    const content = document.getElementById(button.getAttribute('aria-controls'));
+    if (expanded) {
+      content.setAttribute('hidden', '');
+      button.parentElement.classList.remove('active');
+    } else {
+      content.removeAttribute('hidden');
+      button.parentElement.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>

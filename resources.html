@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resources – NeuroVanta Systems</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --color-bg-primary:#050608;
+  --color-bg-surface:#0E1116;
+  --color-bg-alt:#07090C;
+  --color-bg-card:#0E1116;
+  --color-border:#1B2230;
+  --color-primary:#4DA3FF;
+  --color-secondary:#00E5C4;
+  --color-text-primary:#F2F4F8;
+  --color-text-secondary:#B8C0CC;
+  --color-error:#FF5A6A;
+  --color-shadow:rgba(0,0,0,0.4);
+  --font-heading:"Inter",sans-serif;
+  --font-body:"Inter",sans-serif;
+}
+*,
+*::before,
+*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-bg-primary);
+  color:var(--color-text-secondary);
+  font-family:var(--font-body);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:var(--font-heading);color:var(--color-text-primary);margin-bottom:0.5em;letter-spacing:-0.5px;}
+h1{font-size:clamp(48px,5vw,56px);margin-bottom:24px;}
+h2{font-size:clamp(36px,4vw,42px);margin-bottom:20px;}
+h3{font-size:32px;margin-bottom:16px;}
+p{margin-bottom:12px;font-size:clamp(16px,1.2vw,18px);}
+button{font-family:inherit;cursor:pointer;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:sticky;top:0;z-index:10;background:var(--color-bg-primary);border-bottom:1px solid var(--color-border);transition:box-shadow .3s;}
+nav{display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{color:var(--color-text-secondary);font-weight:600;padding:8px;transition:color .2s;}
+.nav-link:hover,
+.nav-link:focus-visible{color:var(--color-primary);}
+.nav-link.active{color:var(--color-primary);}
+.menu-btn{display:none;background:none;border:none;color:var(--color-text-secondary);}
+.menu-btn:focus-visible{outline:2px solid var(--color-primary);}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:72px;right:0;background:var(--color-bg-primary);flex-direction:column;width:200px;transform:translateX(100%);transition:transform .3s;}
+  .nav-links.open{transform:translateX(0);}
+  .menu-btn{display:block;}
+}
+
+/* Filter Bar */
+.filter-bar{
+  background:var(--color-bg-primary);
+  padding:40px 0;
+}
+.filter-tabs{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.filter-tabs button{
+  background:transparent;
+  border:none;
+  padding:8px 16px;
+  border-radius:4px;
+  font-weight:600;
+  color:var(--color-text-secondary);
+  transition:background .2s,color .2s;
+}
+.filter-tabs button[aria-selected="true"]{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+}
+.filter-tabs button:hover,
+.filter-tabs button:focus-visible{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+}
+
+/* Resource Grid */
+.res-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+  padding:40px 0;
+}
+.res-card{
+  background:var(--color-bg-card);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:24px;
+  box-shadow:0 4px 12px var(--color-shadow);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.res-card.reveal{opacity:1;transform:none;}
+.badge{
+  display:inline-block;
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  padding:4px 8px;
+  border-radius:4px;
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+.res-card button{
+  background:var(--color-primary);
+  color:var(--color-bg-primary);
+  border:none;
+  padding:8px 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background .2s;
+}
+.res-card button:hover,
+.res-card button:focus-visible{background:var(--color-secondary);}
+footer{
+  background:var(--color-bg-surface);
+  color:var(--color-text-secondary);
+  padding:40px 0;
+  text-align:center;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav class="container">
+    <a href="index.html" class="logo"><strong>NeuroVanta</strong></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="safety.html" class="nav-link">Safety &amp; Compliance</a></li>
+      <li><a href="clinical.html" class="nav-link">Clinical &amp; Research</a></li>
+      <li><a href="resources.html" class="nav-link active">Resources</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="menu-btn" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+      ☰
+    </button>
+  </nav>
+</header>
+
+<main id="main" class="container">
+  <section class="mt-24">
+    <h1 class="mt-24">Resources Hub</h1>
+    <p>Explore our publications, posters, press assets, FAQs and technical briefs.</p>
+  </section>
+
+  <!-- FILTER BAR -->
+  <section class="filter-bar" id="filter_bar">
+    <div class="filter-tabs">
+      <button type="button" class="btn-outline" aria-selected="true">Publications</button>
+      <button type="button" class="btn-outline" aria-selected="false">Posters &amp; Abstracts</button>
+      <button type="button" class="btn-outline" aria-selected="false">Press Kit</button>
+      <button type="button" class="btn-outline" aria-selected="false">FAQs</button>
+      <button type="button" class="btn-outline" aria-selected="false">Technical Briefs</button>
+    </div>
+  </section>
+
+  <!-- RESOURCE GRID -->
+  <section class="resource-grid" id="resource_grid">
+    <div class="res-grid">
+      <!-- Card 1 -->
+      <div class="res-card reveal">
+        <span class="badge">Publication</span>
+        <h3>Neural Data Fidelity in Chronic Implants – 2024 IEEE EMBS</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">March 2024</p>
+        <p>Quantitative analysis of signal‑to‑noise ratios across 12‑month in‑vivo trials.</p>
+        <button onclick="location.href='downloads/2024-ieee-embs.pdf'">Download PDF</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="res-card reveal">
+        <span class="badge">Poster</span>
+        <h3>Closed‑Loop Therapy for Parkinson’s Disease – Poster</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">August 2023</p>
+        <p>Phase‑I results showing tremor reduction using adaptive stimulation.</p>
+        <button id="open-poster-2">View Poster</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="res-card reveal">
+        <span class="badge">Press Kit</span>
+        <h3>Press Kit – NeuroVanta Systems 2025</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">January 2025</p>
+        <p>Company overview, executive bios, high‑resolution logos and approved media assets.</p>
+        <button onclick="location.href='downloads/press-kit-2025.zip'">Download ZIP</button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="res-card reveal">
+        <span class="badge">FAQ</span>
+        <h3>FAQ – Implant Safety &amp; Usage</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">February 2024</p>
+        <p>Answers to the most common safety and operational questions from investigators.</p>
+        <button id="toggle-faq-4">Read Online</button>
+        <div class="faq-content" style="display:none;margin-top:8px;">
+          <p><strong>Q:</strong> How is data encrypted?</p>
+          <p><strong>A:</strong> All data are encrypted at source using AES‑256 and transmitted over TLS 1.3.</p>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="res-card reveal">
+        <span class="badge">Technical Brief</span>
+        <h3>Technical Brief – API Access for Secure Data Retrieval</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">November 2023</p>
+        <p>Detailed specification of REST endpoints, authentication flows, and data schemas.</p>
+        <button id="request-access-5">Request Access</button>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="res-card reveal">
+        <span class="badge">Publication</span>
+        <h3>Neural Data Fidelity in Chronic Implants – 2024 IEEE EMBS</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">March 2024</p>
+        <p>Quantitative analysis of signal‑to‑noise ratios across 12‑month in‑vivo trials.</p>
+        <button onclick="location.href='downloads/2024-ieee-embs.pdf'">Download PDF</button>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="res-card reveal">
+        <span class="badge">Poster</span>
+        <h3>Closed‑Loop Therapy for Parkinson’s Disease – Poster</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">August 2023</p>
+        <p>Phase‑I results showing tremor reduction using adaptive stimulation.</p>
+        <button id="open-poster-7">View Poster</button>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="res-card reveal">
+        <span class="badge">Press Kit</span>
+        <h3>Press Kit – NeuroVanta Systems 2025</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">January 2025</p>
+        <p>Company overview, executive bios, high‑resolution logos, and approved media assets.</p>
+        <button onclick="location.href='downloads/press-kit-2025.zip'">Download ZIP</button>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="res-card reveal">
+        <span class="badge">FAQ</span>
+        <h3>FAQ – Implant Safety &amp; Usage</h3>
+        <p class="date" style="margin-bottom:8px;color:var(--color-text-secondary);font-size:14px;">February 2024</p>
+        <p>Answers to the most common safety and operational questions from investigators.</p>
+        <button id="toggle-faq-9">Read Online</button>
+        <div class="faq-content" style="display:none;margin-top:8px;">
+          <p><strong>Q:</strong> What is the typical timeline from device shipment to first patient data?</p>
+          <p><strong>A:</strong> Standard delivery and integration takes 6–8 weeks, including site‑training and IRB alignment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <h2>Need More Information?</h2>
+    <p>Explore additional resources or get in touch with our team.</p>
+    <button class="btn-primary" onclick="location.href='contact.html#inquiry-form'">Contact Us</button>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 NeuroVanta Systems. All rights reserved.</p>
+    <p>
+      <a href="mailto:info@neurovanta.com">info@neurovanta.com</a> |
+      <a href="tel:+15551234567">+1 (555) 123‑4567</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+/* Simple reveal on scroll */
+document.addEventListener('DOMContentLoaded', function () {
+  const revealElems = document.querySelectorAll('.reveal');
+  const onScroll = () => {
+    const viewportHeight = window.innerHeight;
+    revealElems.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < viewportHeight - 100) {
+        el.classList.add('visible');
+      }
+    });
+  };
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+});
+
+/* Simple tab interaction (no actual filtering) */
+document.querySelectorAll('.filter-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tabs button').forEach(b => b.setAttribute('aria-selected','false'));
+    btn.setAttribute('aria-selected','true');
+  });
+});
+
+/* Modal / expand logic for gated items & FAQs */
+function toggleVisibility(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  }
+}
+document.getElementById('open-poster-2')?.addEventListener('click', () => {
+  const modal = document.createElement('div');
+  modal.style.position = 'fixed';
+  modal.style.inset = '0';
+  modal.style.background = 'rgba(0,0,0,0.8)';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
+  modal.innerHTML = `<img src="downloads/poster-2023.png" alt="Poster Image" style="max-width:90%;max-height:90%;border:4px solid var(--color-primary);"><button style="position:absolute;top:20px;right:20px;background:var(--color-primary);color:var(--color-bg-primary);border:none;padding:8px 12px;border-radius:4px;" onclick="this.parentElement.remove()">Close</button>`;
+  document.body.appendChild(modal);
+});
+document.getElementById('open-poster-7')?.addEventListener('click', () => {
+  const modal = document.createElement('div');
+  modal.style.position = 'fixed';
+  modal.style.inset = '0';
+  modal.style.background = 'rgba(0,0,0,0.8)';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
+  modal.innerHTML = `<img src="downloads/poster-2023.png" alt="Poster Image" style="max-width:90%;max-height:90%;border:4px solid var(--color-primary);"><button style="position:absolute;top:20px;right:20px;background:var(--color-primary);color:var(--color-bg-primary);border:none;padding:8px 12px;border-radius:4px;" onclick="this.parentElement.remove()">Close</button>`;
+  document.body.appendChild(modal);
+});
+document.getElementById('toggle-faq-4')?.addEventListener('click', () => toggleVisibility('faq-content-4'));
+document.getElementById('toggle-faq-9')?.addEventListener('click', () => toggleVisibility('faq-content-9'));
+document.getElementById('request-access-5')?.addEventListener('click', () => {
+  const modal = document.createElement('div');
+  modal.style.position = 'fixed';
+  modal.style.inset = '0';
+  modal.style.background = 'rgba(0,0,0,0.8)';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
+  modal.innerHTML = `<div style="background:var(--color-bg-surface);padding:24px;border-radius:8px;max-width:400px;width:100%;text-align:center;">
+    <h3>Request Access</h3>
+    <p>Enter your email to receive the technical brief.</p>
+    <input type="email" placeholder="you@example.com" style="width:100%;padding:8px;margin:12px 0;border:1px solid var(--color-border);border-radius:4px;background:var(--color-bg-primary);color:var(--color-text-primary);" />
+    <button class="btn-primary" style="margin-top:8px;">Submit</button>
+    <button class="btn-outline" style="margin-top:8px;" onclick="this.parentElement.parentElement.remove()">Close</button>
+  </div>`;
+  document.body.appendChild(modal);
+});
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav class="container">
+    <a href="index.html" class="logo"><strong>NeuroVanta</strong></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="platform.html" class="nav-link">Platform</a></li>
+      <li><a href="safety.html" class="nav-link">Safety &amp; Compliance</a></li>
+      <li><a href="clinical.html" class="nav-link">Clinical &amp; Research</a></li>
+      <li><a href="resources.html" class="nav-link active">Resources</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="menu-btn" aria-label="Toggle navigation" aria-controls="nav-links" aria-expanded="false">
+      ☰
+    </button>
+  </nav>
+</header>
+
+<main class="container" id="main">
+  <!-- Content is rendered above inside <main> -->
+</main>
+</body>
+</html>
