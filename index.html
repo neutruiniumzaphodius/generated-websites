@@ -1,75 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Stunna Nails – Home</title>
+<meta name="description" content="Luxurious handcrafted press‑on nail kits. Glam on the go, your way. Order via Instagram for a flawless, custom set in minutes.">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" as="style" onload="this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" href="https://unpkg.com/lucide@latest" as="script">
+<script defer src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --gradient-primary: linear-gradient(135deg, #FF6EC7, #8A2BE2);
+  --color-pink:#FF6EC7;
+  --color-purple:#8A2BE2;
+  --color-lavender:#F5C6FF;
+  --color-hover:#FFE4E1;
+  --color-text:#2C2C2C;
+  --color-shadow:rgba(0,0,0,0.12);
+  --color-bg-dark:#2C2C2C;
+  --font-logo:"Great Vibes",cursive;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Montserrat",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text);
+  line-height:1.6;
+  background:var(--gradient-primary);
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+.container{max-width:1240px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px 16px;
+  z-index:1000;
+}
+.skip-link:focus{
+  left:10px;
+}
+header{
+  background:rgba(255,255,255,0.9);
+  backdrop-filter:blur(6px);
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 0;
+}
+nav .logo{
+  font-family:var(--font-logo);
+  font-size:2rem;
+  color:var(--color-pink);
+}
+nav .nav-links{
+  display:flex;
+  gap:24px;
+}
+nav .nav-links a{
+  font-family:var(--font-heading);
+  font-size:0.9rem;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--color-text);
+  padding:4px 8px;
+  border-radius:4px;
+  transition:background 0.3s;
+}
+nav .nav-links a:hover,
+nav .nav-links a:focus-visible{
+  background:var(--color-lavender);
+}
+nav .nav-links a.active{
+  background:var(--color-pink);
+  color:#fff;
+}
+nav .hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+nav .hamburger span{
+  width:24px;
+  height:3px;
+  background:#000;
+}
+.mobile-menu{
+  display:none;
+  flex-direction:column;
+  background:#fff;
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  border-top:1px solid #eee;
+}
+.mobile-menu a{
+  padding:12px 24px;
+}
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible{
+  background:var(--color-lavender);
+}
+@media (max-width:1024px){
+  nav .nav-links{display:none;}
+  nav .hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+}
+
+/* Hero */
+.hero{
+  display:grid;
+  grid-template-columns:55% 45%;
+  min-height:80vh;
+  align-items:center;
+  gap:24px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--gradient-primary);
+  z-index:-2;
+}
+.hero .blob{
+  position:absolute;
+  right:-120px;
+  bottom:-120px;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle, rgba(255,110,199,0.4), transparent);
+  border-radius:50%;
+  z-index:-1;
+  animation:blobPulse 6s infinite;
+}
+@keyframes blobPulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+}
+.hero img{
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  box-shadow:0 6px 12px var(--color-shadow);
+}
+.hero .content{
+  text-align:left;
+  color:#fff;
+  padding:0 16px;
+}
+.hero h1{
+  font-family:var(--font-heading);
+  font-size:clamp(36px,5vw,48px);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  line-height:1.2;
+  text-shadow:0 0 8px rgba(255,110,199,0.6);
+}
+.hero p{
+  font-size:clamp(16px,2.5vw,18px);
+  margin:16px 0;
+}
+.hero .cta-btn{
+  background:var(--color-pink);
+  color:#fff;
+  border-radius:12px;
+  padding:12px 24px;
+  font-family:var(--font-heading);
+  font-size:18px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  box-shadow:0 4px 8px var(--color-shadow);
+  transition:transform 0.2s ease,background-color 0.3s ease;
+}
+.hero .cta-btn:hover,
+.hero .cta-btn:focus-visible{
+  transform:scale(1.04);
+  background:var(--color-hover);
+}
+
+/* Secondary Nav */
+.secondary-nav{
+  display:flex;
+  justify-center:center;
+  gap:16px;
+  padding:24px 0;
+}
+.secondary-nav a{
+  font-family:var(--font-heading);
+  font-size:0.9rem;
+  text-transform:uppercase;
+  padding:8px 16px;
+  border:1px solid var(--color-lavender);
+  border-radius:9999px;
+  background:transparent;
+  transition:transform 0.2s ease,background-color 0.3s ease;
+}
+.secondary-nav a.active,
+.secondary-nav a:hover,
+.secondary-nav a:focus-visible{
+  background:var(--color-lavender);
+  transform:scale(1.05);
+}
+
+/* Value Proposition */
+.value-prop{
+  text-align:center;
+  padding:48px 0;
+}
+.value-prop h2{
+  font-family:var(--font-heading);
+  font-size:clamp(28px,4vw,36px);
+  margin-bottom:24px;
+}
+.value-cards{
+  display:grid;
+  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+}
+.value-card{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 6px 12px rgba(0,0,0,0.08);
+  padding:24px;
+  transition:transform 0.25s ease,box-shadow 0.25s ease;
+}
+.value-card:hover,
+.value-card:focus-visible{
+  transform:translateY(-8px);
+  box-shadow:0 8px 16px rgba(0,0,0,0.12);
+}
+.value-card .icon{
+  width:48px;height:48px;margin-bottom:12px;color:var(--color-pink);
+}
+
+/* Kit Contents */
+.kit{
+  background:#fff;
+  padding:48px 0;
+  text-align:center;
+}
+.kit h2{
+  font-family:var(--font-heading);
+  font-size:clamp(24px,4vw,30px);
+  margin-bottom:32px;
+  position:relative;
+  display:inline-block;
+}
+.kit h2::after{
+  content:"";
+  position:absolute;
+  left:50%;transform:translateX(-50%);
+  bottom:-8px;
+  width:60px;height:4px;
+  background:radial-gradient(circle, rgba(255,110,199,0.6), transparent);
+}
+.kit-cards{
+  display:grid;
+  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.kit-card{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.06);
+  padding:24px;
+  text-align:left;
+}
+.kit-card h3{
+  font-family:var(--font-heading);
+  font-size:1.1rem;
+  margin-bottom:8px;
+}
+.kit-card p{
+  font-size:0.95rem;
+}
+
+/* Support Notice */
+.support{
+  background:var(--color-lavender);
+  color:var(--color-text);
+  padding:12px 0;
+  text-align:center;
+  font-size:0.9rem;
+}
+
+/* Footer */
+footer{
+  background:var(--color-bg-dark);
+  color:#fff;
+  padding:48px 0 24px;
+  position:relative;
+}
+footer .overlay{
+  position:absolute;
+  inset:0;
+  background:var(--gradient-primary);
+  opacity:0.2;
+  z-index:0;
+}
+footer .footer-inner{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  color:#fff;
+}
+footer .logo{
+  font-family:var(--font-logo);
+  font-size:1.8rem;
+  color:var(--color-pink);
+}
+footer .socials{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+footer .socials i{
+  width:24px;height:24px;
+}
+footer a{
+  color:#fff;
+}
+footer a:hover,
+footer a:focus-visible{
+  text-decoration:underline;
+}
+footer .bottom{
+  text-align:center;
+  font-size:0.8rem;
+  margin-top:24px;
+}
+footer .bottom a{
+  margin:0 8px;
+}
+
+/* Animations */
+section{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.6s ease-out,transform 0.6s ease-out;
+}
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Lightbox placeholder (not used on home) */
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+<header>
+  <nav class="container" aria-label="Primary navigation">
+    <a href="index.html" class="logo" aria-label="My Stunna Nails">My Stunna Nails</a>
+    <div class="nav-links">
+      <a href="index.html" class="active" aria-current="page">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="hamburger" aria-label="Open menu" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+<main id="main-content">
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+<section class="hero container" id="hero">
+  <picture>
+    <source srcset="https://picsum.photos/800/800.webp?random=1 1x, https://picsum.photos/1600/1600.webp?random=1 2x" type="image/webp">
+    <img src="https://picsum.photos/800/800?random=1" alt="Custom pink glitter press‑on nails on marble" loading="eager">
+  </picture>
+  <div class="content">
+    <h1>A Fresh Start With A Fresh Set.</h1>
+    <p>Looking for that on‑the‑go glam that’s convenient for you? Get flawless, customized nails in minutes.</p>
+    <a href="https://instagram.com/mystunnanails" target="_blank" rel="noopener" class="cta-btn">Get Started</a>
+  </div>
+  <div class="blob"></div>
+</section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+<nav class="secondary-nav container" aria-label="Secondary navigation">
+  <a href="#home" class="active">Home</a>
+  <a href="#about">About</a>
+  <a href="#shop">Shop</a>
+  <a href="#new">New</a>
+</nav>
+
+<section class="value-prop container" id="value-prop">
+  <h2>Why Choose My Stunna Nails?</h2>
+  <div class="value-cards">
+    <div class="value-card" tabindex="0">
+      <div class="icon" data-lucide="palette"></div>
+      <h3>Customizable</h3>
+      <p>Choose colors, finishes and glitter – each set is made for your style.</p>
+    </div>
+    <div class="value-card" tabindex="0">
+      <div class="icon" data-lucide="zap"></div>
+      <h3>Fast Delivery</h3>
+      <p>Instant Instagram ordering and same‑day shipping for quick glam.</p>
+    </div>
+    <div class="value-card" tabindex="0">
+      <div class="icon" data-lucide="scissors"></div>
+      <h3>Salon Quality</h3>
+      <p>Professional grade materials give a flawless, long‑lasting finish.</p>
+    </div>
+    <div class="value-card" tabindex="0">
+      <div class="icon" data-lucide="clock"></div>
+      <h3>Convenient</h3>
+      <p>Apply at home – no appointments, no mess, just sparkle.</p>
+    </div>
+  </div>
+</section>
+
+<section class="kit container" id="kit">
+  <h2>What’s Inside My Press‑On Kit?</h2>
+  <div class="kit-cards">
+    <div class="kit-card" tabindex="0">
+      <h3>Press‑On Nails</h3>
+      <p>10 custom‑shaped press‑on nails with glitter and adhesive backing.</p>
+    </div>
+    <div class="kit-card" tabindex="0">
+      <h3>Application Tools</h3>
+      <p>Two reusable tweezers and a smoothing tool for perfect placement.</p>
+    </div>
+    <div class="kit-card" tabindex="0">
+      <h3>Care Instructions</h3>
+      <p>Step‑by‑step PDF guide for prep, application, and removal.</p>
+    </div>
+    <div class="kit-card" tabindex="0">
+      <h3>Packaging</h3>
+      <p>Elegant reusable velvet pouch for storage and travel.</p>
+    </div>
+  </div>
+</section>
+
+<section class="support" id="support">
+  Inquiries regarding sizes that need to be rectified can be contacted.
+</section>
+
+</main>
+
+<footer>
+  <div class="overlay"></div>
+  <div class="container footer-inner">
+    <div>
+      <div class="logo">My Stunna Nails</div>
+      <p>Handcrafted press‑on nail kits for effortless glamour.</p>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <nav aria-label="Footer navigation">
+        <a href="index.html">Home</a><br>
+        <a href="about.html">About</a><br>
+        <a href="services.html">Services</a><br>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div>
+      <h3>Follow Us</h3>
+      <div class="socials" aria-label="Social media links">
+        <a href="https://instagram.com/mystunnanails" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <a href="https://www.tiktok.com/@stunnanails14" target="_blank" aria-label="TikTok"><i data-lucide="tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom container">
+    <a href="#" class="terms" aria-label="Terms & Support">Terms &amp; Support</a> |
+    <a href="#" class="privacy" aria-label="Privacy Policy">Privacy Policy</a>
+    <p>&copy; 2024 My Stunna Nails. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // init lucide icons
+  lucide.createIcons();
+
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger?.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !expanded);
+    mobileMenu.style.display = expanded ? 'none' : 'flex';
+    mobileMenu.setAttribute('aria-hidden', expanded);
+  });
+
+  // IntersectionObserver for sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.1});
+
+  document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+});
+</script>
 </body>
 </html>
