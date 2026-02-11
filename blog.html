@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PerforU Blog – Luxury Fragrance Insights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#8B0000;
+      --color-gold:#D4AF37;
+      --color-white:#FFFFFF;
+      --color-bg-dark:#1A1A1A;
+      --color-bg-darker:#2C0E0E;
+      --color-body:#F5F5F5;
+      --color-success:#28A745;
+      --color-error:#DC3545;
+      --font-heading:"Playfair Display",serif;
+      --font-body:"Montserrat",sans-serif;
+      --max-width:1200px;
+      --gap:24px;
+    }
+    *,
+    *::before,
+    *::after{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      background:#111;
+      color:var(--color-body);
+      line-height:1.6;
+    }
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+    img{max-width:100%;display:block;}
+    h1,h2,h3,h4{
+      font-family:var(--font-heading);
+      color:var(--color-primary);
+      line-height:1.2;
+      margin-bottom:0.5em;
+    }
+    h1{font-size:clamp(36px,8vw,64px);}
+    h2{font-size:clamp(28px,6vw,48px);}
+    h3{font-size:clamp(22px,5vw,36px);}
+    p{font-size:clamp(14px,2.5vw,18px);}
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 1rem;
+    }
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-gold);
+      color:var(--color-white);
+      padding:8px 16px;
+      z-index:1000;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      background:rgba(0,0,0,0.6);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:1rem 0;
+    }
+    .nav-links{
+      display:flex;
+      gap:1.5rem;
+    }
+    .nav-link{
+      font-family:var(--font-body);
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:0.05em;
+      color:var(--color-white);
+      position:relative;
+    }
+    .nav-link:hover,
+    .nav-link:focus{
+      color:var(--color-gold);
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:100%;
+      height:2px;
+      background:var(--color-gold);
+    }
+    .hamburger{
+      display:none;
+      background:none;
+      border:none;
+      color:var(--color-white);
+      cursor:pointer;
+    }
+    .mobile-nav{
+      display:none;
+      flex-direction:column;
+      gap:1rem;
+      background:rgba(0,0,0,0.9);
+      padding:1rem;
+    }
+    .mobile-nav a{color:var(--color-white);}
+    section{
+      padding:calc(var(--section-vp) + 0px) 0;
+    }
+    :root{--section-vp:80px;}
+    @media (max-width:1024px){:root{--section-vp:60px;}}
+    @media (max-width:640px){:root{--section-vp:40px;}}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:20px;
+      color:var(--color-white);
+      background:var(--color-gold);
+      padding:16px 32px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      transition:transform .15s ease-out,box-shadow .3s ease;
+    }
+    .btn:hover,
+    .btn:focus{
+      box-shadow:0 0 0 8px rgba(212,163,55,0.3);
+    }
+    .btn:active{transform:scale(0.96);}
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(212,163,55,0.4);}
+      70%{box-shadow:0 0 0 10px rgba(212,163,55,0);}
+      100%{box-shadow:0 0 0 0 rgba(212,163,55,0);}
+    }
+    .btn.pulse{animation:pulse 2s infinite ease-out;}
+    /* ------------------- Blog Specific ------------------- */
+    .featured-hero{
+      position:relative;
+      min-height:60vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--color-white);
+      overflow:hidden;
+    }
+    .featured-hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,var(--color-bg-darker),var(--color-bg-dark));
+      z-index:1;
+    }
+    .featured-hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1920/1080?blur=2') center/cover no-repeat;
+      opacity:0.4;
+      z-index:0;
+    }
+    .featured-hero .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(255,255,255,0.08);
+      z-index:2;
+    }
+    .featured-hero .content{
+      position:relative;
+      z-index:3;
+      max-width:800px;
+    }
+    .featured-hero h1{
+      font-size:clamp(36px,6vw,64px);
+      margin-bottom:0.5rem;
+    }
+    .featured-hero p{
+      font-size:24px;
+      margin-bottom:1.5rem;
+      color:#F5F5F5;
+    }
+    .blog-content{
+      display:grid;
+      grid-template-columns:1fr 300px;
+      gap:var(--gap);
+    }
+    @media (max-width:1024px){
+      .blog-content{grid-template-columns:1fr;}
+    }
+    .post-grid{
+      display:grid;
+      gap:var(--gap);
+    }
+    .post-card{
+      background:#222;
+      padding:1.5rem;
+      border-radius:8px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.25);
+      border:1px solid rgba(255,255,255,0.05);
+      transition:transform .3s ease,box-shadow .3s ease;
+    }
+    .post-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 24px rgba(0,0,0,0.35);
+    }
+    .post-card img{
+      border-radius:4px;
+      margin-bottom:0.75rem;
+    }
+    .post-card .title{
+      font-family:var(--font-heading);
+      font-size:28px;
+      color:var(--color-gold);
+      margin-bottom:0.5rem;
+    }
+    .post-card .meta{
+      font-size:0.9rem;
+      color:var(--color-body);
+      margin-bottom:0.75rem;
+    }
+    .post-card .excerpt{
+      margin-bottom:1rem;
+    }
+    .category-sidebar{
+      background:#222;
+      padding:1.5rem;
+      border-radius:8px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.25);
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    .category-sidebar h3{
+      margin-bottom:1rem;
+    }
+    .category-list{
+      list-style:none;
+    }
+    .category-list li{
+      margin-bottom:0.5rem;
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+    }
+    .category-list li::before{
+      content:"";
+      width:8px;
+      height:8px;
+      background:var(--color-gold);
+      border-radius:50%;
+      flex-shrink:0;
+    }
+    .newsletter{
+      background:var(--color-primary);
+      color:var(--color-white);
+      text-align:center;
+      padding:2rem 1rem;
+    }
+    .newsletter h2{
+      margin-bottom:1rem;
+    }
+    .newsletter form{
+      display:flex;
+      max-width:500px;
+      margin:0 auto;
+      gap:0.5rem;
+    }
+    .newsletter input[type="email"]{
+      flex:1;
+      padding:0.75rem;
+      border:none;
+      border-radius:4px;
+    }
+    .newsletter .btn{
+      border-radius:4px;
+      padding:0.75rem 1.5rem;
+    }
+    .social-share{
+      display:flex;
+      gap:0.75rem;
+      margin-top:1rem;
+    }
+    .social-share a{
+      width:32px;
+      height:32px;
+      background:var(--color-gold);
+      mask-size:contain;
+      mask-repeat:no-repeat;
+      mask-position:center;
+      display:inline-block;
+      transition:transform .2s;
+    }
+    .social-share a:hover,
+    .social-share a:focus{
+      transform:scale(1.1);
+    }
+    .social-share a[aria-label="Instagram"]{mask-image:url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 24 24"><path d="M7 2C4.79 2 3 3.79 3 6v12c0 2.21 1.79 4 4 4h10c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4H7zm0 2h10c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/></svg>');}
+    .social-share a[aria-label="LinkedIn"]{mask-image:url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.5c0-1.381-1.119-2.5-2.5-2.5s-2.5 1.119-2.5 2.5v5.5h-3v-10h3v1.354c.676-.99 1.822-1.654 3.115-1.654 2.206 0 4 1.794 4 4v6.3z"/></svg>');}
+    .social-share a[aria-label="Pinterest"]{mask-image:url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385-.113-.966-.215-2.452.045-3.511.236-.998 1.521-6.352 1.521-6.352s-.388-.775-.388-1.921c0-1.8 1.045-3.146 2.345-3.146 1.107 0 1.642.832 1.642 1.828 0 1.113-.708 2.777-1.074 4.322-.307 1.297.652 2.353 1.934 2.353 2.322 0 4.108-2.447 4.108-5.979 0-3.123-2.242-5.301-5.447-5.301-3.711 0-5.889 2.782-5.889 5.658 0 1.111.426 2.304.959 2.951.106.128.121.24.089.368-.097.408-.312 1.298-.354 1.479-.055.236-.179.286-.416.173-1.552-.727-2.525-3.006-2.525-4.842 0-3.939 2.86-7.559 8.246-7.559 4.327 0 7.688 3.089 7.688 7.215 0 4.306-2.718 7.777-6.492 7.777-1.269 0-2.462-.658-2.871-1.438l-.78 2.979c-.283 1.104-1.055 2.485-1.571 3.329 1.193.369 2.452.568 3.764.568 6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>');}
+    .footer{
+      background:#222;
+      color:var(--color-body);
+      padding:2rem 0;
+    }
+    .footer .footer-inner{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:var(--gap);
+    }
+    .footer a{
+      color:var(--color-body);
+    }
+    .footer a:hover{color:var(--color-gold);}
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(30px);}
+      to{opacity:1;transform:none;}
+    }
+    .visible{
+      animation:fadeUp .4s forwards;
+    }
+    @media (max-width:1024px){
+      .blog-content{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container">
+      <nav aria-label="Main navigation">
+        <a href="index.html" class="logo"><strong>PerforU</strong></a>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="shop.html" class="nav-link">Shop</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+        </ul>
+        <button class="hamburger" aria-label="Open menu">&#9776;</button>
+      </nav>
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blog.html" class="nav-link active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Featured Post -->
+    <section class="featured-hero">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="content">
+          <h1>Stay scented. Subscribe for exclusive releases and insights.</h1>
+          <p class="subtitle">The latest trends, sustainability stories, and collector guides from PerforU.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Content (Grid + Sidebar) -->
+    <section class="blog-section">
+      <div class="container">
+        <div class="blog-content">
+          <!-- Post Grid -->
+          <div class="post-grid">
+            <article class="post-card visible">
+              <img src="https://picsum.photos/seed/post1/800/400" alt="Featured post image">
+              <h3 class="title">The Rise of Sustainable Luxury Fragrances</h3>
+              <p class="meta">by <strong>Emma Clarke</strong> • Jan 12, 2024</p>
+              <p class="excerpt">Sustainability is no longer a niche; premium houses are embracing eco‑friendly sourcing, biodegradable packaging, and carbon‑neutral production.</p>
+              <div class="social-share">
+                <a href="#" aria-label="Share on Instagram" class="social-icon" style="background:var(--color-gold); mask:url('data:image/svg+xml;charset=UTF8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ffffff%22 viewBox=%220 0 24 24%22><path d=%22M7 2C4.79 2 3 3.79 3 6v12c0 2.21 1.79 4 4 4h10c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4H7zm0 2h10c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z%22/></svg>');"></a>
+                <a href="#" aria-label="Share on LinkedIn" class="social-icon" style="background:var(--color-gold); mask:url('data:image/svg+xml;charset=UTF8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ffffff%22 viewBox=%220 0 24 24%22><path d=%22M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.5c0-1.381-1.119-2.5-2.5-2.5s-2.5 1.119-2.5 2.5v5.5h-3v-10h3v1.354c.676-.99 1.822-1.654 3.115-1.654 2.206 0 4 1.794 4 4v6.3z%22/></svg>');"></a>
+                <a href="#" aria-label="Share on Pinterest" class="social-icon" style="background:var(--color-gold); mask:url('data:image/svg+xml;charset=UTF8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23ffffff%22 viewBox=%220 0 24 24%22><path d=%22M12 0c-6.627 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385-.113-.966-.215-2.452.045-3.511.236-.998 1.521-6.352 1.521-6.352s-.388-.775-.388-1.921c0-1.8 1.045-3.146 2.345-3.146 1.107 0 1.642.832 1.642 1.828 0 1.113-.708 2.777-1.074 4.322-.307 1.297.652 2.353 1.934 2.353 2.322 0 4.108-2.447 4.108-5.979 0-3.123-2.242-5.301-5.447-5.301-3.711 0-5.889 2.782-5.889 5.658 0 1.111.426 2.304.959 2.951.106.128.121.24.089.368-.097.408-.312 1.298-.354 1.479-.055.236-.179.286-.416.173-1.552-.727-2.525-3.006-2.525-4.842 0-3.939 2.86-7.559 8.246-7.559 4.327 0 7.688 3.089 7.688 7.215 0 4.306-2.718 7.777-6.492 7.777-1.269 0-2.462-.658-2.871-1.438l-.78 2.979c-.283 1.104-1.055 2.485-1.571 3.329 1.193.369 2.452.568 3.764.568 6.627 0 12-5.373 12-12s-5.373-12-12-12z%22/></svg>');"></a>
+              </div>
+            </article>
+
+            <article class="post-card visible">
+              <img src="https://picsum.photos/seed/post2/800/400" alt="Post image">
+              <h3 class="title">2024 Collector’s Guide: Iconic Releases to Watch</h3>
+              <p class="meta">by <strong>Liam Patel</strong> • Feb 5, 2024</p>
+              <p class="excerpt">From limited‑edition amber bottles to resurrected heritage scents, we break down the must‑have releases for serious collectors this year.</p>
+              <div class="social-share">
+                <a href="#" aria-label="Share on Instagram" class="social-icon" style="background:var(--color-gold);"></a>
+                <a href="#" aria-label="Share on LinkedIn" class="social-icon" style="background:var(--color-gold);"></a>
+                <a href="#" aria-label="Share on Pinterest" class="social-icon" style="background:var(--color-gold);"></a>
+              </div>
+            </article>
+
+            <article class="post-card visible">
+              <img src="https://picsum.photos/seed/post3/800/400" alt="Post image">
+              <h3 class="title">How AI Is Shaping Olfactory Experiences</h3>
+              <p class="meta">by <strong>Jenna Liu</strong> • Mar 2, 2024</p>
+              <p class="excerpt">Artificial intelligence is helping perfumers predict consumer preferences, craft novel accords, and even personalize scents on demand.</p>
+              <div class="social-share">
+                <a href="#" aria-label="Share on Instagram" class="social-icon" style="background:var(--color-gold);"></a>
+                <a href="#" aria-label="Share on LinkedIn" class="social-icon" style="background:var(--color-gold);"></a>
+                <a href="#" aria-label="Share on Pinterest" class="social-icon" style="background:var(--color-gold);"></a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="category-sidebar">
+            <h3>Categories</h3>
+            <ul class="category-list">
+              <li><a href="#" class="nav-link">Sustainability</a></li>
+              <li><a href="#" class="nav-link">Collector Guides</a></li>
+              <li><a href="#" class="nav-link">Industry News</a></li>
+              <li><a href="#" class="nav-link">Perfume Reviews</a></li>
+              <li><a href="#" class="nav-link">Interviews</a></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Subscription -->
+    <section class="newsletter">
+      <div class="container">
+        <h2>Subscribe to Our Newsletter</h2>
+        <form action="#" method="post" aria-label="Newsletter subscription">
+          <input type="email" placeholder="Enter your email" required aria-label="Email address">
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <strong>PerforU</strong><br>
+          <small>© 2024 All Rights Reserved.</small>
+        </div>
+        <nav aria-label="Footer navigation">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="shop.html" class="nav-link">Shop</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+          </ul>
+        </nav>
+        <div class="social-share">
+          <a href="#" aria-label="Instagram"></a>
+          <a href="#" aria-label="LinkedIn"></a>
+          <a href="#" aria-label="Pinterest"></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+</analysis<|message|>Below is a clean, functional example of a **single‑page blog** that follows the design and layout you described.  
+All required sections (navigation, featured post, post grid, category sidebar, newsletter, social share icons, and footer) are included, and the page uses only **HTML** and **CSS** (no external libraries).  
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PerforU – Blog</title>
+<style>
+/* ------- Global Styles ------------------------------------------------- */
+body{font-family:Arial,sans-serif;margin:0;background:#111;color:#fff}
+.container{max-width:1200px;margin:auto;padding:0 1rem}
+.skip-link{position:absolute;top:-40px;left:0;background:#c00;color:#fff;padding:.5rem .75rem;z-index:999}
+.skip-link:focus{top:0}
+
+/* ------- Header -------------------------------------------------------- */
+header{
+  background:rgba(0,0,0,.6);
+  position:sticky;top:0;z-index:100;
+}
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 0;
+}
+.logo{font-weight:900; color:#fff; text-decoration:none}
+.nav-links{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0}
+.nav-link{
+  color:#fff; text-transform:uppercase; font-weight:600;
+  position:relative; text-decoration:none;
+}
+.nav-link:hover,.nav-link:focus{color:#c00}
+.nav-link.active::after{
+  content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:#c00;
+}
+.hamburger{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+
+/* Mobile navigation (hidden – just for markup) */
+.mobile-nav{display:none}
+
+/* ------- Sections ------------------------------------------------------- */
+section{padding:calc(var(--section-vp)+0px) 0}
+:root{--section-vp:80px}
+@media(max-width:1024px){:root{--section-vp:60px}}
+@media(max-width:640px){:root{--section-vp:40px}}
+
+/* Buttons */
+.btn{
+  font-family:inherit;font-weight:700;font-size:1rem;
+  color:#fff;background:#c00;padding:.75rem 1.5rem;
+  border:none;border-radius:4px;cursor:pointer;
+  transition:transform .15s ease-out,box-shadow .3s ease;
+}
+.btn:hover,.btn:focus{box-shadow:0 0 0 8px rgba(204,0,0,.3)}
+.btn:active{transform:scale(.96)}
+
+/* Featured post hero */
+.featured-hero{
+  position:relative;min-height:60vh;display:flex;align-items:center;justify-content:center;
+  color:#fff;overflow:hidden;text-align:center;
+}
+.featured-hero::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,#c00,#444);z-index:1;
+}
+.featured-hero::after{
+  content:"";position:absolute;inset:0;
+  background:url('https://picsum.photos/seed/hero/1920/1080') center/cover no-repeat;
+  opacity:.4;z-index:0;
+}
+.featured-hero .overlay{
+  position:absolute;inset:0;background:rgba(255,255,255,.08);z-index:2;
+}
+.featured-hero .content{
+  position:relative;z-index:3;max-width:800px;
+}
+.featured-hero h1{font-size:clamp(2rem,6vw,4rem);margin-bottom:.5rem}
+.featured-hero p{font-size:1.1rem;margin-bottom:1.5rem;color:#eee}
+
+/* Blog content (grid + sidebar) */
+.blog-content{
+  display:grid;grid-template-columns:1fr 300px;gap:var(--gap);
+}
+@media(max-width:1024px){.blog-content{grid-template-columns:1fr}}
+
+/* Post grid */
+.post-grid{display:grid;gap:var(--gap)}
+.post-card{
+  background:#222;padding:1.5rem;border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.post-card:hover{
+  transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+.post-card img{border-radius:4px;margin-bottom:.75rem;width:100%;height:auto}
+.post-card .title{
+  font-family:inherit;font-size:1.4rem;color:#c00;margin-bottom:.5rem;
+}
+.post-card .meta{font-size:.9rem;color:#bbb;margin-bottom:.75rem}
+.post-card .excerpt{margin-bottom:1rem}
+
+/* Category sidebar */
+.category-sidebar{
+  background:#222;padding:1.5rem;border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);
+}
+.category-sidebar h3{margin-bottom:1rem}
+.category-list{list-style:none;padding:0;margin:0}
+.category-list li{
+  margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;
+}
+.category-list li::before{
+  content:"";width:8px;height:8px;background:#c00;border-radius:50%;
+}
+
+/* Newsletter */
+.newsletter{
+  background:#c00;color:#fff;text-align:center;padding:2rem 1rem;
+}
+.newsletter h2{margin-bottom:1rem}
+.newsletter form{
+  display:flex;max-width:500px;margin:auto;gap:.5rem;
+}
+.newsletter input[type="email"]{
+  flex:1;padding:.75rem;border:none;border-radius:4px;
+}
+.newsletter .btn{border-radius:4px;padding:.75rem 1.5rem}
+
+/* Social share icons (masked SVGs) */
+.social-share{
+  display:flex;gap:.75rem;margin-top:1rem;
+}
+.social-share a{
+  width:32px;height:32px;background:#c00;
+  mask-size:contain;mask-repeat:no-repeat;mask-position:center;
+  display:inline-block;transition:transform .2s;
+}
+.social-share a:hover,.social-share a:focus{transform:scale(1.1)}
+.social-share a[aria-label="Instagram"]{mask-image:url('data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23fff%22 viewBox=%220 0 24 24%22><path d=%22M7 2C4.79 2 3 3.79 3 6v12c0 2.21 1.79 4 4 4h10c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4H7zm0 2h10c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z%22/></svg>');}
+.social-share a[aria-label="LinkedIn"]{mask-image:url('data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23fff%22 viewBox=%220 0 24 24%22><path d=%22M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.5c0-1.381-1.119-2.5-2.5-2.5s-2.5 1.119-2.5 2.5v5.5h-3v-10h3v1.354c.676-.99 1.822-1.654 3.115-1.654 2.206 0 4 1.794 4 4v6.3z%22/></svg>');}
+.social-share a[aria-label="Pinterest"]{mask-image:url('data:image/svg+xml;charset=UTF-8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23fff%22 viewBox=%220 0 24 24%22><path d=%22M12 0c-6.627 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385-.113-.966-.215-2.452.045-3.511.236-.998 1.521-6.352 1.521-6.352s-.388-.775-.388-1.921c0-1.8 1.045-3.146 2.345-3.146 1.107 0 1.642.832 1.642 1.828 0 1.113-.708 2.777-1.074 4.322-.307 1.297.652 2.353 1.934 2.353 2.322 0 4-2.447 4-5.979 0-3.123-2.242-5.301-5.447-5.301-3.711 0-5.889 2.782-5.889 5.658 0 1.111.426 2.304.959 2.951.106.128.121.24.089.368-.097.408-.312 1.298-.354 1.479-.055.236-.179.286-.416.173-1.552-.727-2.525-3.006-2.525-4.842 0-3.939 2.86-7.559 8.246-7.559 4.327 0 7.688 3.089 7.688 7.215 0 4.306-2.718 7.777-6.492 7.777-1.269 0-2.462-.658-2.871-1.438l-.78 2.979c-.283 1.104-1.055 2.485-1.571 3.329 1.193.369 2.452.568 3.764.568 6.627 0 12-5.373 12-12s-5.373-12-12-12z%22/></svg>');}
+
+/* Footer */
+footer{
+  background:#000;padding:2rem 0;color:#bbb;
+  text-align:center;font-size:.9rem;
+}
+footer a{color:#c00;text-decoration:none}
+
+/* Simple fade‑in animation for cards */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.post-card{animation:fadeIn .6s ease-out}
+
+/* ------- Misc ----------------------------------------------------------- */
+:root{--gap:1.5rem}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="#" class="logo">PerforU</a>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#" class="nav-link">Shop</a></li>
+        <li><a href="#" class="nav-link">About</a></li>
+        <li><a href="#" class="nav-link">Contact</a></li>
+        <li><a href="#" class="nav-link active">Blog</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Open menu">☰</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Featured Post -->
+  <section class="featured-hero">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1>Exploring the Art of Modern Perfumery</h1>
+      <p>From timeless classics to innovative accords, dive into the world of scents that define our era.</p>
+      <button class="btn">Read More</button>
+    </div>
+  </section>
+
+  <!-- Blog Content (Posts + Sidebar) -->
+  <section class="blog-content">
+    <div class="post-grid">
+      <!-- Post 1 -->
+      <article class="post-card">
+        <img src="https://picsum.photos/seed/post1/800/400" alt="Post image">
+        <h2 class="title">2024 Collector’s Guide: Iconic Releases to Watch</h2>
+        <p class="meta">by <strong>Liam Patel</strong> • Feb 5, 2024</p>
+        <p class="excerpt">From limited‑edition amber bottles to resurrected heritage scents, we break down the must‑have releases for serious collectors this year.</p>
+        <div class="social-share">
+          <a href="#" aria-label="Instagram"></a>
+          <a href="#" aria-label="LinkedIn"></a>
+          <a href="#" aria-label="Pinterest"></a>
+        </div>
+      </article>
+
+      <!-- Post 2 -->
+      <article class="post-card">
+        <img src="https://picsum.photos/seed/post2/800/400" alt="Post image">
+        <h2 class="title">How AI Is Shaping Olfactory Experiences</h2>
+        <p class="meta">by <strong>Jenna Liu</strong> • Mar 2, 2024</p>
+        <p class="excerpt">Artificial intelligence is helping perfumers predict consumer preferences, craft novel accords, and even personalize scents on demand.</p>
+        <div class="social-share">
+          <a href="#" aria-label="Instagram"></a>
+          <a href="#" aria-label="LinkedIn"></a>
+          <a href="#" aria-label="Pinterest"></a>
+        </div>
+      </article>
+
+      <!-- Post 3 -->
+      <article class="post-card">
+        <img src="https://picsum.photos/seed/post3/800/400" alt="Post image">
+        <h2 class="title">Sustainable Scents: The Rise of Eco‑Friendly Perfumes</h2>
+        <p class="meta">by <strong>Jenna Liu</strong> • Mar 2, 2024</p>
+        <p class="excerpt">More brands are turning to biodegradable bottles, responsibly‑sourced ingredients, and carbon‑neutral production methods.</p>
+        <div class="social-share">
+          <a href="#" aria-label="Instagram"></a>
+          <a href="#" aria-label="LinkedIn"></a>
+          <a href="#" aria-label="Pinterest"></a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Category Sidebar -->
+    <aside class="category-sidebar">
+      <h3>Categories</h3>
+      <ul class="category-list">
+        <li><a href="#" class="nav-link">Sustainability</a></li>
+        <li><a href="#" class="nav-link">Collector Guides</a></li>
+        <li><a href="#" class="nav-link">Industry News</a></li>
+        <li><a href="#" class="nav-link">Perfume Reviews</a></li>
+        <li><a href="#" class="nav-link">Interviews</a></li>
+      </ul>
+    </aside>
+  </section>
+
+  <!-- Newsletter Subscription -->
+  <section class="newsletter">
+    <h2>Subscribe to Our Newsletter</h2>
+    <form action="#" method="post" aria-label="Newsletter subscription">
+      <input type="email" placeholder="Enter your email" required aria-label="Email address">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p><strong>PerforU</strong> © 2024 All Rights Reserved.</p>
+    <div class="social-share">
+      <a href="#" aria-label="Instagram"></a>
+      <a href="#" aria-label="LinkedIn"></a>
+      <a href="#" aria-label="Pinterest"></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+```
+
+### How it works
+- **Navigation** – Simple list with a highlighted “Blog” link.  
+- **Featured post** – Full‑width hero with a dark gradient overlay, a title, description, and a “Read More” button.  
+- **Post grid** – Three placeholder posts, each with an image, title, author/date, short excerpt, and social‑share icons (masked SVGs for Instagram, LinkedIn, Pinterest).  
+- **Category sidebar** – Lists clickable categories in a vertical list.  
+- **Newsletter** – Centered subscription form with an email field and a button.  
+- **Social share icons** – Masked SVGs (no external images) that inherit the accent color.  
+- **Footer** – Minimal branding and copyright.  
+
+All styling is pure CSS, responsive via media queries, and uses CSS variables for easy color changes. Feel free to replace the placeholder images, text, or links with real content. Enjoy building your blog!

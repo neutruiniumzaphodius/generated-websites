@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us – PerforU Luxury Fragrances</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#8B0000;
+  --color-gold:#D4AF37;
+  --color-white:#FFFFFF;
+  --color-bg-dark:#1A1A1A;
+  --color-bg-darker:#2C0E0E;
+  --color-body:#F5F5F5;
+  --color-success:#28A745;
+  --color-error:#DC3545;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Montserrat",sans-serif;
+  --max-width:1200px;
+  --gap:24px;
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  font-family:var(--font-body);
+  background:#111;
+  color:var(--color-body);
+  line-height:1.6;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3,h4{
+  font-family:var(--font-heading);
+  color:var(--color-primary);
+  line-height:1.2;
+  margin-bottom:0.5em;
+}
+h1{font-size:clamp(36px,8vw,64px);}
+h2{font-size:clamp(28px,6vw,48px);}
+h3{font-size:clamp(22px,5vw,36px);}
+p{
+  font-size:clamp(14px,2.5vw,18px);
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 1rem;
+}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:var(--color-gold);
+  color:var(--color-white);
+  padding:8px 16px;
+  z-index:1000;
+}
+.skip-link:focus{
+  top:0;
+}
+header{
+  background:rgba(0,0,0,0.6);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:1rem 0;
+}
+.nav-links{
+  display:flex;
+  gap:1.5rem;
+}
+.nav-link{
+  font-family:var(--font-body);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--color-white);
+  position:relative;
+}
+.nav-link:hover,
+.nav-link:focus{
+  color:var(--color-gold);
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:2px;
+  background:var(--color-gold);
+}
+.hamburger{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-white);
+  cursor:pointer;
+}
+.mobile-nav{
+  display:none;
+  flex-direction:column;
+  gap:1rem;
+  background:rgba(0,0,0,0.9);
+  padding:1rem;
+}
+.mobile-nav a{
+  color:var(--color-white);
+}
+section{
+  padding:calc(var(--section-vp) + 0px) 0;
+}
+:root{
+  --section-vp:80px;
+}
+@media (max-width:1024px){
+  :root{--section-vp:60px;}
+}
+@media (max-width:640px){
+  :root{--section-vp:40px;}
+}
+.hero{
+  position:relative;
+  min-height:60vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--color-white);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--color-bg-darker),var(--color-bg-dark));
+  z-index:1;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1920/1080?blur=2') center/cover no-repeat;
+  opacity:0.3;
+  z-index:0;
+}
+.hero .overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.08);
+  z-index:2;
+}
+.hero .content{
+  position:relative;
+  z-index:3;
+  max-width:800px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:20px;
+  color:var(--color-white);
+  background:var(--color-gold);
+  padding:16px 32px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:transform .15s ease-out,box-shadow .3s ease;
+}
+.btn:hover,
+.btn:focus{
+  box-shadow:0 0 0 8px rgba(212,163,55,0.3);
+}
+.btn:active{
+  transform:scale(0.96);
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(212,163,55,0.4);}
+  70%{box-shadow:0 0 0 10px rgba(212,163,55,0);}
+  100%{box-shadow:0 0 0 0 rgba(212,163,55,0);}
+}
+.btn.pulse{
+  animation:pulse 2s infinite ease-out;
+}
+.underline{
+  width:80px;
+  height:4px;
+  background:var(--color-gold);
+  margin:1rem auto;
+}
+.visible{
+  animation:fadeUp .4s forwards;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:none;}
+}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:var(--gap);
+}
+.about-grid img{
+  border-radius:8px;
+}
+.founder-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.founder-card{
+  background:#222;
+  padding:1.5rem;
+  border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.founder-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 24px rgba(0,0,0,0.35);
+}
+.founder-card img{
+  border-radius:8px;
+  margin-bottom:1rem;
+}
+.sustainability,
+.auth-process,
+.timeline{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(4px);
+  border-radius:8px;
+  padding:2rem;
+}
+.flowchart{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--gap);
+  justify-content:center;
+}
+.flow-step{
+  flex:1 1 200px;
+  background:#222;
+  padding:1rem;
+  border-radius:8px;
+  text-align:center;
+  position:relative;
+}
+.flow-step::after{
+  content:"→";
+  position:absolute;
+  right:-20px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:1.5rem;
+  color:var(--color-gold);
+}
+.flow-step:last-child::after{content:"";}
+.timeline{
+  overflow-x:auto;
+}
+.timeline-track{
+  display:flex;
+  gap:var(--gap);
+}
+.timeline-item{
+  min-width:250px;
+  background:#222;
+  padding:1rem;
+  border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);
+  transition:transform .3s ease;
+}
+.timeline-item:hover{
+  transform:translateY(-4px);
+}
+.primary-cta{
+  background:rgba(0,0,0,0.7);
+  color:var(--color-white);
+  text-align:center;
+  padding:2rem 1rem;
+}
+.primary-cta h2{
+  font-size:clamp(32px,6vw,48px);
+  margin-bottom:1rem;
+}
+footer{
+  background:#000;
+  color:var(--color-body);
+  padding:2rem 0;
+  text-align:center;
+}
+footer a{
+  color:var(--color-gold);
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav class="container">
+    <div class="logo"><a href="index.html" class="nav-link">PerforU</a></div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="shop.html" class="nav-link">Shop</a></li>
+      <li><a href="about.html" class="nav-link active">About</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Open menu">☰</button>
+  </nav>
+  <nav class="mobile-nav">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="shop.html" class="nav-link">Shop</a>
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="content">
+        <h1 class="visible">Our Story</h1>
+        <p class="visible">From the heart of Missouri to the world’s most coveted perfume houses.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Origin Story -->
+  <section id="origin_story" class="container visible">
+    <div class="about-grid">
+      <div class="text">
+        <h2>Origin Story</h2>
+        <div class="underline"></div>
+        <p>PerforU began in 2015 as a modest pop‑up shop on the River Market in St. Louis. Two friends, Alex Monroe and Riley Hart, shared a passion for rare, artisanal fragrances and a deep love for their Missouri roots.</p>
+        <p>Guided by the rolling hills of the Ozarks and the timeless flow of the Mississippi, they set out to create a curated space where collectors could discover authentic luxury scents, all while honoring the craftsmanship of perfumers.</p>
+      </div>
+      <div class="image">
+        <img src="https://picsum.photos/800/600?image=1050" alt="Vintage Missouri map with perfume bottles">
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Profiles -->
+  <section id="founder_profiles" class="container visible">
+    <h2 class="text-center">Founders</h2>
+    <div class="underline"></div>
+    <div class="founder-grid">
+      <div class="founder-card">
+        <img src="https://picsum.photos/400/300?image=1025" alt="Alex Monroe">
+        <h3>Alex Monroe</h3>
+        <p>Co‑Founder & Creative Director. Alex’s background in art history fuels PerforU’s aesthetic, blending classic elegance with modern luxury.</p>
+      </div>
+      <div class="founder-card">
+        <img src="https://picsum.photos/400/300?image=1026" alt="Riley Hart">
+        <h3>Riley Hart</h3>
+        <p>Co‑Founder & Operations Lead. Riley’s deep ties to Missouri’s agricultural heritage inspire the brand’s commitment to sustainable sourcing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sustainability Commitment -->
+  <section id="sustainability_commitment" class="container visible">
+    <h2 class="text-center">Sustainability Commitment</h2>
+    <div class="underline"></div>
+    <div class="sustainability">
+      <p>PerforU pledges to minimize its environmental footprint while delivering unparalleled luxury. Our initiatives include:</p>
+      <ul>
+        <li>Using 100 % recycled, gold‑stamped packaging.</li>
+        <li>Partnering with farms that practice regenerative agriculture.</li>
+        <li>Carbon‑offsetting every shipment from Missouri to the world.</li>
+        <li>Supporting local Missouri artisans through collaborative limited‑edition releases.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Authenticity Process -->
+  <section id="authenticity_process" class="container visible">
+    <h2 class="text-center">Authenticity Verification</h2>
+    <div class="underline"></div>
+    <div class="auth-process">
+      <p>Every PerforU fragrance undergoes a rigorous three‑step verification to guarantee provenance:</p>
+      <div class="flowchart">
+        <div class="flow-step">
+          <h3>1. Source Audit</h3>
+          <p>We verify each supplier’s credentials and trace the raw materials back to their origin.</p>
+        </div>
+        <div class="flow-step">
+          <h3>2. Lab Analysis</h3>
+          <p>Our in‑house chemists run GC‑MS tests to confirm composition matches the original formula.</p>
+        </div>
+        <div class="flow-step">
+          <h3>3. Certificate of Authenticity</h3>
+          <p>Every bottle ships with a blockchain‑backed certificate, ensuring immutable proof of origin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Milestones -->
+  <section id="timeline_milestones" class="container visible">
+    <h2 class="text-center">Milestones</h2>
+    <div class="underline"></div>
+    <div class="timeline">
+      <div class="timeline-track">
+        <div class="timeline-item">
+          <h3>2015</h3>
+          <p>Launch of PerforU pop‑up in St. Louis.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2017</h3>
+          <p>First sustainable line – “Ozark Harvest”.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2019</h3>
+          <p>Introduced blockchain authentication.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2021</h3>
+          <p>Opened flagship boutique in Columbia, MO.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2023</h3>
+          <p>Reached 10,000 satisfied collectors worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Contact -->
+  <section id="call_to_action_contact" class="primary-cta visible">
+    <h2>Ready to Explore the Scent of Missouri?</h2>
+    <p>Book a private consultation or reach out with any questions.</p>
+    <a href="contact.html" class="btn pulse">Schedule a Private Consultation</a>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> PerforU. All rights reserved.</p>
+    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+  </div>
+</footer>
+
+<script>
+/* Simple scroll‑reveal for .visible elements */
+const observer = new IntersectionObserver((entries)=> {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.3});
+
+document.querySelectorAll('section, .primary-cta, .hero, .about-grid, .founder-grid, .sustainability, .auth-process, .timeline').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shop – PerforU Luxury Fragrances</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#8B0000;
+  --color-gold:#D4AF37;
+  --color-white:#FFFFFF;
+  --color-bg-dark:#1A1A1A;
+  --color-bg-darker:#2C0E0E;
+  --color-body:#F5F5F5;
+  --color-success:#28A745;
+  --color-error:#DC3545;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Montserrat",sans-serif;
+  --max-width:1200px;
+  --gap:24px;
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:#111;
+  color:var(--color-body);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3,h4{
+  font-family:var(--font-heading);
+  color:var(--color-primary);
+  line-height:1.2;
+  margin-bottom:.5em;
+}
+h1{font-size:clamp(36px,8vw,64px);}
+h2{font-size:clamp(28px,6vw,48px);}
+h3{font-size:clamp(22px,5vw,36px);}
+p{font-size:clamp(14px,2.5vw,18px);}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 1rem;}
+.skip-link{
+  position:absolute;top:-40px;left:0;background:var(--color-gold);color:var(--color-white);
+  padding:8px 16px;z-index:1000;
+}
+.skip-link:focus{top:0;}
+header{
+  background:rgba(0,0,0,0.6);
+  position:sticky;top:0;z-index:100;
+}
+nav{
+  display:flex;align-items:center;justify-content:space-between;padding:1rem 0;
+}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-link{
+  font-family:var(--font-body);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
+  color:var(--color-white);position:relative;
+}
+.nav-link:hover,.nav-link:focus{color:var(--color-gold);}
+.nav-link.active::after{
+  content:"";position:absolute;left:0;bottom:-4px;width:100%;height:2px;background:var(--color-gold);
+}
+.hamburger{display:none;background:none;border:none;color:var(--color-white);cursor:pointer;}
+.mobile-nav{display:none;flex-direction:column;gap:1rem;background:rgba(0,0,0,0.9);padding:1rem;}
+.mobile-nav a{color:var(--color-white);}
+section{padding:calc(var(--section-vp)+0px) 0;}
+:root{--section-vp:80px;}
+@media (max-width:1024px){:root{--section-vp:60px;}}
+@media (max-width:640px){:root{--section-vp:40px;}}
+/* ---- BUTTON ---- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font-heading);font-weight:700;font-size:20px;color:var(--color-white);
+  background:var(--color-gold);padding:16px 32px;border:none;border-radius:8px;
+  cursor:pointer;transition:transform .15s ease-out,box-shadow .3s ease;
+}
+.btn:hover,.btn:focus{box-shadow:0 0 0 8px rgba(212,163,55,0.3);}
+.btn:active{transform:scale(0.96);}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(212,163,55,0.4);}
+  70%{box-shadow:0 0 0 10px rgba(212,163,55,0);}
+  100%{box-shadow:0 0 0 0 rgba(212,163,55,0);}
+}
+.btn.pulse{animation:pulse 2s infinite ease-out;}
+
+/* ---- SEARCH BAR ---- */
+.advanced-search{
+  background:#222;padding:1rem;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);margin-bottom:var(--gap);
+}
+.advanced-search select,
+.advanced-search input{
+  font-family:var(--font-body);font-size:1rem;padding:.5rem 0.75rem;
+  background:#333;color:var(--color-body);border:none;border-radius:4px;
+  margin-right:.5rem;appearance:none;
+}
+.advanced-search button{margin-left:.5rem;}
+
+/* ---- FILTER SIDEBAR ---- */
+.filter-sidebar{
+  background:#222;padding:1rem;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);
+}
+.filter-group{margin-bottom:1.5rem;}
+.filter-group h3{
+  font-size:clamp(18px,4vw,22px);color:var(--color-gold);margin-bottom:.5rem;
+}
+.filter-group label{
+  display:block;font-weight:600;margin:.25rem 0;
+}
+.filter-group input[type="checkbox"]{
+  margin-right:.5rem;transform:scale(1.2);cursor:pointer;
+}
+.filter-group input[type="checkbox"]:focus{
+  outline:2px solid var(--color-gold);
+}
+
+/* ---- PRODUCT GRID ---- */
+.product-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:var(--gap);
+}
+.product-card{
+  background:#222;padding:1rem;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);transition:transform .3s ease,box-shadow .3s ease;
+  cursor:pointer;
+}
+.product-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 24px rgba(0,0,0,0.35);
+}
+.product-card img{border-radius:4px;margin-bottom:.75rem;}
+.product-card .name{
+  font-family:var(--font-heading);font-size:1.2rem;color:var(--color-gold);margin-bottom:.5rem;
+}
+.product-card .price{
+  font-size:1rem;color:var(--color-white);
+}
+
+/* ---- MODAL ---- */
+#preview-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,0.8);
+  display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;
+  transition:opacity .3s ease,visibility .3s;
+  z-index:200;
+}
+#preview-modal.open{
+  opacity:1;visibility:visible;
+}
+.modal-content{
+  background:#222;padding:2rem;border-radius:8px;max-width:800px;width:90%;
+  box-shadow:0 12px 30px rgba(0,0,0,0.5);position:relative;
+}
+.modal-content img{margin-bottom:1rem;}
+.modal-close{
+  position:absolute;top:.5rem;right:.5rem;background:none;border:none;
+  color:var(--color-gold);font-size:1.5rem;cursor:pointer;
+}
+
+/* ---- PAGINATION ---- */
+.pagination{
+  display:flex;justify-content:center;gap:.5rem;margin-top:var(--gap);
+}
+.pagination button{
+  background:#222;color:var(--color-white);border:none;padding:.5rem .75rem;
+  border-radius:4px;cursor:pointer;transition:background .2s;
+}
+.pagination button:hover,
+.pagination button:focus{background:var(--color-primary);}
+.pagination .current{
+  background:var(--color-gold);color:var(--color-white);
+}
+
+/* ---- FEATURED COLLECTION BANNER ---- */
+.featured-banner{
+  background:linear-gradient(135deg,var(--color-bg-darker),var(--color-bg-dark));
+  color:var(--color-white);text-align:center;padding:2rem 1rem;border-radius:8px;
+  margin:var(--gap) 0;
+}
+.featured-banner h2{margin-bottom:.75rem;}
+@media (max-width:1024px){
+  .nav-links{display:none;}
+  .hamburger{display:block;}
+  .mobile-nav{display:flex;}
+}
+@media (max-width:1024px){
+  .product-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="logo"><img src="https://picsum.photos/120/40?blur=1" alt="PerforU Logo"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="shop.html" class="nav-link active">Shop</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Open menu">
+        &#9776;
+      </button>
+    </nav>
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link active">Shop</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+  <!-- Advanced Search Bar -->
+  <section class="advanced-search visible">
+    <form id="search-form" aria-label="Advanced product search">
+      <select name="brand" aria-label="Brand">
+        <option value="">All Brands</option>
+        <option>Chanel</option>
+        <option>Dior</option>
+        <option>Tom Ford</option>
+      </select>
+      <select name="type" aria-label="Fragrance type">
+        <option value="">All Types</option>
+        <option>Eau de Parfum</option>
+        <option>Cologne</option>
+        <option>Limited Edition</option>
+      </select>
+      <input type="text" name="keyword" placeholder="Search by name or notes" aria-label="Keyword search">
+      <button type="submit" class="btn">Search</button>
+    </form>
+  </section>
+
+  <!-- Main Shop Layout -->
+  <section class="shop-main visible" style="display:flex;gap:var(--gap);flex-wrap:wrap;">
+    
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar" style="flex:1 0 260px;max-width:260px;">
+      <div class="filter-sidebar">
+        <h3>Filters</h3>
+
+        <div class="filter-group">
+          <h3>Brand</h3>
+          <label><input type="checkbox" name="brand" value="Chanel"> Chanel</label>
+          <label><input type="checkbox" name="brand" value="Dior"> Dior</label>
+          <label><input type="checkbox" name="brand" value="Tom Ford"> Tom Ford</label>
+        </div>
+
+        <div class="filter-group">
+          <h3>Price</h3>
+          <label><input type="checkbox" name="price" value="0-100"> $0 – $100</label>
+          <label><input type="checkbox" name="price" value="101-300"> $101 – $300</label>
+          <label><input type="checkbox" name="price" value="301-600"> $301 – $600</label>
+          <label><input type="checkbox" name="price" value="601+"> $601+</label>
+        </div>
+
+        <div class="filter-group">
+          <h3>Notes</h3>
+          <label><input type="checkbox" name="note" value="Citrus"> Citrus</label>
+          <label><input type="checkbox" name="note" value="Woody"> Woody</label>
+          <label><input type="checkbox" name="note" value="Floral"> Floral</label>
+          <label><input type="checkbox" name="note" value="Oriental"> Oriental</label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Product Grid -->
+    <div class="product-grid" style="flex:3 1 0;">
+      <div class="product-grid">
+        <!-- Example Card 1 -->
+        <div class="product-card" tabindex="0" role="button"
+             data-id="1"
+             aria-label="Open preview for Chanel No 5 – $150">
+          <img src="https://picsum.photos/400/400?random=1" alt="Chanel No 5">
+          <div class="name">Chanel No 5</div>
+          <div class="price">$150</div>
+        </div>
+
+        <!-- Example Card 2 -->
+        <div class="product-card" tabindex="0" role="button"
+             data-id="2"
+             aria-label="Open preview for Dior Sauvage – $190">
+          <img src="https://picsum.photos/400/400?random=2" alt="Dior Sauvage">
+          <div class="name">Dior Sauvage</div>
+          <div class="price">$190</div>
+        </div>
+
+        <!-- Example Card 3 -->
+        <div class="product-card" tabindex="0" role="button"
+             data-id="3"
+             aria-label="Open preview for Tom Ford Noir – $210">
+          <img src="https://picsum.photos/400/400?random=3" alt="Tom Ford Noir">
+          <div class="name">Tom Ford Noir</div>
+          <div class="price">$210</div>
+        </div>
+
+        <!-- Add more product‑card elements as needed -->
+      </div>
+
+      <!-- Featured Collection Banner -->
+      <section class="featured-banner visible">
+        <h2>Exclusive: Spring 2024 Collector’s Edition</h2>
+        <p>Discover limited‑edition releases hand‑crafted in Missouri.</p>
+        <button class="btn pulse">Shop the Collection</button>
+      </section>
+
+      <!-- Continue Grid (for demo we repeat a few cards) -->
+      <div class="product-grid">
+        <div class="product-card" tabindex="0" role="button"
+             data-id="4"
+             aria-label="Open preview for Chanel Coco Mademoiselle – $175">
+          <img src="https://picsum.photos/400/400?random=4" alt="Chanel Coco Mademoiselle">
+          <div class="name">Chanel Coco Mademoiselle</div>
+          <div class="price">$175</div>
+        </div>
+        <div class="product-card" tabindex="0" role="button"
+             data-id="5"
+             aria-label="Open preview for Dior J'adore – $185">
+          <img src="https://picsum.photos/400/400?random=5" alt="Dior J'adore">
+          <div class="name">Dior J'adore</div>
+          <div class="price">$185</div>
+        </div>
+        <div class="product-card" tabindex="0" role="button"
+             data-id="6"
+             aria-label="Open preview for Tom Ford Oud Wood – $230">
+          <img src="https://picsum.photos/400/400?random=6" alt="Tom Ford Oud Wood">
+          <div class="name">Tom Ford Oud Wood</div>
+          <div class="price">$230</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pagination -->
+  <section class="pagination visible" aria-label="Product pagination">
+    <button class="btn" aria-label="Previous page" disabled>&laquo; Prev</button>
+    <button class="btn current">1</button>
+    <button class="btn">2</button>
+    <button class="btn">3</button>
+    <button class="btn" aria-label="Next page">Next &raquo;</button>
+  </section>
+
+</main>
+
+<!-- Product Preview Modal -->
+<div id="preview-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Close preview">&times;</button>
+    <img src="" alt="" id="modal-image">
+    <h2 id="modal-title"></h2>
+    <p id="modal-price"></p>
+    <p id="modal-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.</p>
+    <button class="btn pulse">Add to Cart</button>
+  </div>
+</div>
+
+<footer class="primary-cta visible">
+  <div class="container">
+    <h2>Stay scented. Subscribe for exclusive releases.</h2>
+    <form id="newsletter-form" style="display:flex;gap:var(--gap);flex-wrap:wrap;justify-content:center;">
+      <input type="email" placeholder="Your email" required
+             style="padding:.75rem 1rem;border:none;border-radius:4px;flex:1 0 200px;">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+    <p style="margin-top:1rem;">© 2024 PerforU – Missouri’s premier luxury fragrance boutique.</p>
+  </div>
+</footer>
+
+<script>
+/* Simple modal logic – replace with real data from your headless CMS */
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('preview-modal');
+  const modalImg = document.getElementById('modal-image');
+  const modalTitle = document.getElementById('modal-title');
+  const modalPrice = document.getElementById('modal-price');
+  const closeBtn = modal.querySelector('.modal-close');
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const imgSrc = card.querySelector('img').src;
+      const name = card.querySelector('.name')?.textContent || card.querySelector('.name')?.innerText || card.querySelector('.name')?.innerHTML || card.querySelector('.name')?.textContent || card.querySelector('.name')?.innerText || card.querySelector('.name')?.innerHTML || card.querySelector('.name')?.textContent || card.querySelector('.name')?.innerText || card.querySelector('.name')?.innerHTML || card.querySelector('.name')?.textContent || card.querySelector('.name')?.innerText || card.querySelector('.name')?.innerHTML || card.querySelector('.name')?.textContent || card.querySelector('.name')?.innerText || card.querySelector('.name')?.innerHTML;
+      const price = card.querySelector('.price')?.textContent || '';
+      modalImg.src = imgSrc;
+      modalImg.alt = name;
+      modalTitle.textContent = name;
+      modalPrice.textContent = price;
+      modal.classList.add('open');
+    });
+  });
+
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+});
+</script>
+</body>
+</html>

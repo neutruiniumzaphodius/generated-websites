@@ -1,75 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>PerforU – Luxury Fragrances, Missouri Roots</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Boutique luxury reseller of authentic designer fragrances rooted in Missouri. Shop curated collections, discover sustainability, and enjoy a boutique experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#8B0000;
+  --color-gold:#D4AF37;
+  --color-white:#FFFFFF;
+  --color-bg-dark:#1A1A1A;
+  --color-bg-darker:#2C0E0E;
+  --color-body:#F5F5F5;
+  --color-success:#28A745;
+  --color-error:#DC3545;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Montserrat",sans-serif;
+  --max-width:1200px;
+  --gap:24px;
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  font-family:var(--font-body);
+  background:#111;
+  color:var(--color-body);
+  line-height:1.6;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+img{
+  max-width:100%;
+  display:block;
+}
+h1,h2,h3,h4{
+  font-family:var(--font-heading);
+  color:var(--color-primary);
+  line-height:1.2;
+  margin-bottom:0.5em;
+}
+h1{font-size:clamp(36px,8vw,64px);}
+h2{font-size:clamp(28px,6vw,48px);}
+h3{font-size:clamp(22px,5vw,36px);}
+p{
+  font-size:clamp(14px,2.5vw,18px);
+}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 1rem;
+}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:var(--color-gold);
+  color:var(--color-white);
+  padding:8px 16px;
+  z-index:1000;
+}
+.skip-link:focus{
+  top:0;
+}
+header{
+  background:rgba(0,0,0,0.6);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:1rem 0;
+}
+.nav-links{
+  display:flex;
+  gap:1.5rem;
+}
+.nav-link{
+  font-family:var(--font-body);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--color-white);
+  position:relative;
+}
+.nav-link:hover,
+.nav-link:focus{
+  color:var(--color-gold);
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-4px;
+  width:100%;
+  height:2px;
+  background:var(--color-gold);
+}
+.hamburger{
+  display:none;
+  background:none;
+  border:none;
+  color:var(--color-white);
+  cursor:pointer;
+}
+.mobile-nav{
+  display:none;
+  flex-direction:column;
+  gap:1rem;
+  background:rgba(0,0,0,0.9);
+  padding:1rem;
+}
+.mobile-nav a{
+  color:var(--color-white);
+}
+section{
+  padding:calc(var(--section-vp) + 0px) 0;
+}
+:root{
+  --section-vp:80px;
+}
+@media (max-width:1024px){
+  :root{--section-vp:60px;}
+}
+@media (max-width:640px){
+  :root{--section-vp:40px;}
+}
+.hero{
+  position:relative;
+  min-height:80vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--color-white);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--color-bg-darker),var(--color-bg-dark));
+  z-index:1;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1920/1080?blur=2') center/cover no-repeat;
+  opacity:0.4;
+  z-index:0;
+}
+.hero .overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.08);
+  z-index:2;
+}
+.hero .content{
+  position:relative;
+  z-index:3;
+  max-width:800px;
+}
+.hero h1{
+  font-size:clamp(36px,6vw,64px);
+  margin-bottom:0.5rem;
+}
+.hero p{
+  font-size:24px;
+  margin-bottom:1.5rem;
+  color:#F5F5F5;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:20px;
+  color:var(--color-white);
+  background:var(--color-gold);
+  padding:16px 32px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:transform .15s ease-out,box-shadow .3s ease;
+}
+.btn:hover,
+.btn:focus{
+  box-shadow:0 0 0 8px rgba(212,163,55,0.3);
+}
+.btn:active{
+  transform:scale(0.96);
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(212,163,55,0.4);}
+  70%{box-shadow:0 0 0 10px rgba(212,163,55,0);}
+  100%{box-shadow:0 0 0 0 rgba(212,163,55,0);}
+}
+.btn.pulse{
+  animation:pulse 2s infinite ease-out;
+}
+.carousel{
+  position:relative;
+  overflow:hidden;
+}
+.carousel-track{
+  display:flex;
+  gap:var(--gap);
+  scroll-behavior:smooth;
+}
+.carousel-item{
+  min-width:calc(100%/3 - var(--gap));
+  background:#222;
+  padding:1rem;
+  border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.carousel-item:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 24px rgba(0,0,0,0.35);
+}
+.carousel-item img{
+  width:100%;
+  border-radius:4px;
+  margin-bottom:0.75rem;
+}
+.carousel-item .name{
+  font-family:var(--font-heading);
+  font-size:28px;
+  color:var(--color-gold);
+  margin-bottom:0.5rem;
+}
+.carousel-item .price{
+  font-size:18px;
+  color:var(--color-white);
+}
+@media (max-width:1024px){
+  .carousel-item{min-width:calc(100%/2 - var(--gap));}
+}
+@media (max-width:640px){
+  .carousel-item{min-width:100%;}
+}
+.mission{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(4px);
+  text-align:center;
+  max-width:800px;
+  margin:0 auto;
+  padding:2rem;
+  border-radius:8px;
+}
+.mission p{
+  margin-bottom:1rem;
+}
+.underline{
+  width:80px;
+  height:4px;
+  background:var(--color-gold);
+  margin:1rem auto;
+}
+.scents-ticker{
+  overflow:hidden;
+  white-space:nowrap;
+  background:#111;
+  padding:1rem 0;
+}
+.scents-ticker span{
+  display:inline-block;
+  font-family:var(--font-heading);
+  font-size:1.2rem;
+  color:var(--color-gold);
+  margin:0 2rem;
+}
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:var(--gap);
+}
+.about img{
+  border-radius:8px;
+}
+.about .text{
+  max-width:500px;
+}
+.about .text h2{
+  margin-top:0;
+}
+.about .text p{
+  margin-bottom:1rem;
+}
+@media (max-width:1024px){
+  .about{grid-template-columns:1fr;}
+}
+.testimonials{
+  position:relative;
+  overflow:hidden;
+}
+.testimonial-track{
+  display:flex;
+  gap:var(--gap);
+}
+.testimonial{
+  min-width:calc(100%/2 - var(--gap));
+  background:#222;
+  padding:1.5rem;
+  border-radius:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.05);
+  transition:transform .3s ease;
+}
+.testimonial:hover{
+  transform:translateY(-4px);
+}
+.testimonial p{
+  margin-bottom:0.75rem;
+}
+.testimonial .author{
+  font-weight:600;
+  color:var(--color-gold);
+}
+.primary-cta{
+  background:rgba(0,0,0,0.7);
+  color:var(--color-white);
+  text-align:center;
+  padding:2rem 1rem;
+}
+.primary-cta h2{
+  font-size:clamp(32px,6vw,48px);
+  margin-bottom:1rem;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:none;}
+}
+.visible{
+  animation:fadeUp .4s forwards;
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Primary navigation">
+      <a href="index.html" class="logo" aria-label="PerforU Home">
+        <svg width="120" height="30" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" fill="white" font-family="var(--font-heading)" font-size="20">PerforU</text></svg>
+      </a>
+      <button class="hamburger" aria-label="Open menu" aria-controls="mobile-nav" aria-expanded="false">
+        <i data-lucide="menu" size="24"></i>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+      </ul>
+      <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main-content">
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Hero">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1>[VERBATIM]Luxury Fragrances, Missouri Roots.[/VERBATIM]</h1>
+      <p>Experience curated designer scents with a sustainable Missouri touch.</p>
+      <button class="btn pulse" onclick="document.querySelector('#shop-section').scrollIntoView();">Shop Highlights</button>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Highlighted Products Carousel -->
+  <section class="carousel_highlighted_products" id="shop-section">
+    <div class="container">
+      <h2 class="visible">Featured Selections</h2>
+      <div class="carousel" aria-label="Featured products carousel">
+        <div class="carousel-track" id="product-track">
+          <div class="carousel-item">
+            <img src="https://picsum.photos/400/400?random=1" alt="Featured fragrance 1">
+            <div class="name">Midnight Orchid</div>
+            <div class="price">$120</div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/400/400?random=2" alt="Featured fragrance 2">
+            <div class="name">Golden Amber</div>
+            <div class="price">$135</div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/400/400?random=3" alt="Featured fragrance 3">
+            <div class="name">Citrus Dawn</div>
+            <div class="price">$98</div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/400/400?random=4" alt="Featured fragrance 4">
+            <div class="name">Velvet Woods</div>
+            <div class="price">$150</div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/400/400?random=5" alt="Featured fragrance 5">
+            <div class="name">Silk Lavender</div>
+            <div class="price">$110</div>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission_statement">
+    <div class="container">
+      <h2 class="visible">Our Mission</h2>
+      <div class="mission" style="background:rgba(255,255,255,0.05);border-radius:8px;padding:2rem;">
+        <p>PerforU curates the finest authentic designer fragrances, championing sustainability and offering a boutique experience rooted in Missouri’s rich heritage.</p>
+        <div class="underline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Featured Scents Rotating -->
+  <section class="dynamic_featured_scents_rotating">
+    <div class="container">
+      <h2 class="visible">Featured Scents</h2>
+      <div class="scents-ticker" aria-live="polite">
+        <span id="scent-0">Eau de Magnolia</span>
+        <span id="scent-1">Midnight Orchid</span>
+        <span id="scent-2">Golden Amber</span>
+        <span id="scent-3">Citrus Dawn</span>
+        <span id="scent-4">Velvet Woods</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brief About Snippet -->
+  <section class="brief_about_snippet">
+    <div class="container">
+      <div class="about">
+        <img src="https://picsum.photos/600/400?random=6" alt="Founder Alex Monroe in the boutique">
+        <div class="text">
+          <h2 class="visible">Discover PerforU</h2>
+          <p>Founded in the heart of Missouri, we blend heritage with modern luxury, delivering authentic, sustainably packaged designer fragrances directly to you.</p>
+          <button class="btn" onclick="document.querySelector('#about-section').scrollIntoView();">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Preview -->
+  <section class="testimonials_preview">
+    <div class="container">
+      <h2 class="visible">What Our Clients Say</h2>
+      <div class="carousel" aria-label="Testimonials carousel">
+        <div class="carousel-track" id="testimonial-track">
+          <div class="testimonial">
+            <p>“PerforU’s collection feels like a private boutique in my living room. The authenticity guarantee gave me peace of mind.”</p>
+            <div class="author">- Sarah L., Chicago</div>
+          </div>
+          <div class="testimonial">
+            <p>“I love the sustainable packaging and the 360° rotator—makes shopping so interactive!”</p>
+            <div class="author">- Mark D., Kansas City</div>
+          </div>
+          <div class="testimonial">
+            <p>“The private scent consultation was unforgettable. Truly a unique Missouri experience.”</p>
+            <div class="author">- Emily R., St. Louis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primary CTA Footer Strip -->
+  <section class="primary_cta" style="background:rgba(0,0,0,0.7);color:#fff;padding:2rem 0;">
+    <div class="container" style="text-align:center;">
+      <h2 class="visible">Ready to Explore Our Collection?</h2>
+      <button class="btn pulse" onclick="window.location='shop.html'">Shop Now</button>
+    </div>
+  </section>
+</main>
+
+<footer style="background:#111;padding:2rem 0;color:#fff;text-align:center;">
+  <div class="container">
+    <p>&copy; 2024 PerforU. All rights reserved.</p>
+  </div>
+</footer>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Hamburger menu
+  const hamburger = document.querySelector('.hamburger');
+  const mobileNav = document.querySelector('.mobile-nav');
+  const navLinks = document.querySelectorAll('.nav-link');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      mobileNav.style.display = expanded ? 'none' : 'flex';
+    });
+  }
+
+  // Auto‑scroll carousel (products)
+  const productTrack = document.getElementById('product-track');
+  let productIndex = 0;
+  const productItems = productTrack.children.length;
+  const productStep = () => {
+    const itemWidth = productTrack.children[0].getBoundingClientRect().width + parseInt(getComputedStyle(productTrack).gap);
+    productTrack.scrollBy({left: itemWidth, behavior:'smooth'});
+    productIndex = (productIndex + 1) % productItems;
+    if (productIndex === 0) productTrack.scrollTo({left:0, behavior:'smooth'});
+  };
+  setInterval(productStep, 4000);
+
+  // Dynamic scent ticker rotation
+  const scents = ['Eau de Magnolia','Midnight Orchid','Golden Amber','Citrus Dawn','Velvet Woods'];
+  const ticker = document.querySelector('.scents-ticker');
+  let scentIdx = 0;
+  const rotateTicker = () => {
+    ticker.innerHTML = `<span>${scents[scentIdx]}</span>`;
+    scentIdx = (scentIdx + 1) % scents.length;
+  };
+  rotateTicker();
+  setInterval(rotateTicker, 3000);
+
+  // Testimonials carousel auto‑scroll
+  const testimonialTrack = document.getElementById('testimonial-track');
+  let testimonialIdx = 0;
+  const testimonialStep = () => {
+    const itemWidth = testimonialTrack.children[0].getBoundingClientRect().width + parseInt(getComputedStyle(testimonialTrack).gap);
+    testimonialTrack.scrollBy({left: itemWidth, behavior:'smooth'});
+    testimonialIdx = (testimonialIdx + 1) % testimonialTrack.children.length;
+    if (testimonialIdx === 0) testimonialTrack.scrollTo({left:0, behavior:'smooth'});
+  };
+  setInterval(testimonialStep, 5000);
+
+  // Scroll‑triggered reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.3});
+  document.querySelectorAll('section, .hero .content, .mission, .about .text, .testimonials_preview .testimonial').forEach(el=>observer.observe(el));
+});
+</script>
 </body>
 </html>
