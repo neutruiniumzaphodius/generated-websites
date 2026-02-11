@@ -1,75 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centerium – AI‑Powered Automation for Local Businesses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#000000;
+  --color-secondary:#FFFFFF;
+  --color-accent:#FFD700;
+  --color-gray:#808080;
+  --color-bg-dark:#111111;
+  --color-bg-gradient:linear-gradient(180deg, #111111 0%, #000000 100%);
+  --font-heading:"Montserrat",sans-serif;
+  --font-body:"Open Sans",sans-serif;
+  --spacing-unit:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-secondary);
+  background:var(--color-bg-dark);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;cursor:pointer;}
+img{max-width:100%;display:block;}
+ul{list-style:none;}
+button{font-family:inherit;border:none;background:none;cursor:pointer;}
+h1,h2,h3{font-family:var(--font-heading);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+h1{font-size:clamp(2.5rem,6vw,3rem);}
+h2{font-size:clamp(2rem,5vw,2.5rem);}
+h3{font-size:clamp(1.5rem,4vw,2rem);}
+p{margin-top:1rem;}
+.container{padding-inline:var(--spacing-unit);max-width:1200px;margin:auto;}
+/* Skip Link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#FFD700;
+  color:#000;
+  padding:8px 12px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Header */
+header{
+  position:sticky;
+  top:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.9);
+  backdrop-filter:blur(4px);
+  z-index:1000;
+  transition:height .3s ease,background .3s ease;
+  height:80px;
+  display:flex;
+  align-items:center;
+}
+header.shrink{height:56px;background:rgba(0,0,0,0.95);}
+nav{
+  display:flex;
+  align-items:center;
+  gap:calc(var(--spacing-unit)*2);
+  margin-left:auto;
+}
+nav a{
+  font-family:var(--font-heading);
+  font-size:0.875rem;
+  text-transform:uppercase;
+  color:var(--color-secondary);
+  position:relative;
+  padding-bottom:4px;
+}
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:2px;
+  width:0;
+  background:var(--color-accent);
+  transition:width .3s ease;
+}
+nav a:hover::after,nav a.active::after{width:100%;}
+/* Hamburger */
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+}
+.hamburger span{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+.mobile-nav{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  width:100%;
+  background:#000;
+  flex-direction:column;
+  gap:1rem;
+  padding:1rem;
+}
+.mobile-nav a{color:#fff;}
+/* Hero */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background-image:var(--color-bg-gradient),url('https://picsum.photos/1920/1080');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,215,0,0) 0%, rgba(255,215,0,0.3) 100%);
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  z-index:1;
+}
+.hero h1{
+  color:#fff;
+  text-shadow:0 2px 4px rgba(0,0,0,0.6);
+}
+.hero p{
+  color:#ccc;
+  margin-top:1rem;
+}
+.btn{
+  display:inline-block;
+  background:var(--color-accent);
+  color:#000;
+  padding:12px 24px;
+  border-radius:4px;
+  font-family:var(--font-heading);
+  font-weight:600;
+  font-size:1rem;
+  text-transform:uppercase;
+  transition:transform .2s ease,box-shadow .2s ease;
+  margin-top:2rem;
+}
+.btn:hover{transform:scale(1.02);box-shadow:0 4px 8px rgba(0,0,0,0.2);}
+.btn:active{transform:scale(0.98);}
+.link-underline{
+  display:inline-block;
+  margin-left:1rem;
+  color:#ccc;
+  position:relative;
+}
+.link-underline::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:2px;
+  width:0;
+  background:var(--color-accent);
+  transition:width .3s ease;
+}
+.link-underline:hover::after{width:100%;}
+/* Mission */
+.mission{
+  display:grid;
+  gap:var(--spacing-unit);
+  padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+  background:var(--color-primary);
+}
+.mission img{
+  border-radius:4px;
+}
+.mission-text{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.mission h2{color:#fff;}
+.mission p{color:#ccc;}
+/* Solution Overview */
+.solution{
+  display:grid;
+  gap:calc(var(--spacing-unit)*4);
+  padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+  background:var(--color-bg-dark);
+  color:#ccc;
+}
+.solution-item{
+  text-align:center;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.solution-item:hover{
+  transform:scale(1.02);
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+.solution-item svg{
+  width:48px;height:48px;stroke:var(--color-accent);
+  margin-bottom:1rem;
+}
+.solution-item h3{
+  color:#fff;
+  margin-bottom:.5rem;
+}
+/* Key Benefits */
+.benefits{
+  display:grid;
+  gap:calc(var(--spacing-unit)*4);
+  padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+  background:var(--color-primary);
+  color:#ccc;
+}
+.benefit{
+  text-align:center;
+}
+.benefit .num{
+  font-size:2.5rem;
+  font-weight:700;
+  color:var(--color-accent);
+  margin-bottom:.5rem;
+}
+.benefit h4{
+  color:#fff;
+  margin-bottom:.5rem;
+}
+/* Primary CTA */
+.cta-primary{
+  text-align:center;
+  padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+  background:var(--color-bg-dark);
+}
+.cta-primary .btn{
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+/* Footer */
+footer{
+  background:#000;
+  color:#ccc;
+  padding:calc(var(--spacing-unit)*4) var(--spacing-unit);
+}
+footer .footer-grid{
+  display:grid;
+  gap:calc(var(--spacing-unit)*4);
+}
+footer a{color:#ccc;}
+footer a:hover{color:#fff;}
+footer .social a{
+  margin-right:1rem;
+  color:#fff;
+  transition:transform .3s ease;
+}
+footer .social a:hover{transform:scale(1.1);color:var(--color-accent);}
+footer .newsletter input{
+  padding:8px;
+  border:none;
+  border-radius:4px 0 0 4px;
+}
+footer .newsletter button{
+  padding:8px 16px;
+  background:var(--color-accent);
+  color:#000;
+  border-radius:0 4px 4px 0;
+}
+footer .newsletter button:hover{background:#e6c200;}
+/* Responsive */
+@media(min-width:640px){
+  .mission{grid-template-columns:1fr 1fr;}
+  .solution{grid-template-columns:repeat(3,1fr);}
+  .benefits{grid-template-columns:repeat(4,1fr);}
+}
+@media(max-width:768px){
+  .hamburger{display:flex;}
+  nav{display:none;}
+  .mobile-nav{display:flex;}
+}
+@media(min-width:768px){
+  .mission{grid-template-columns:1fr 1fr;}
+}
+@media(min-width:1024px){
+  .mission{grid-template-columns:1fr 1fr;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header id="site-header">
+  <div class="container" style="display:flex;align-items:center;">
+    <a href="index.html" class="logo" style="color:#fff;font-family:var(--font-heading);font-size:1.25rem;">Centerium</a>
+    <div class="hamburger" aria-label="Toggle navigation" aria-controls="mobile-menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <nav aria-label="Primary">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="testimonials.html" class="nav-link">Testimonials</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-link">Contact Us</a>
+    </nav>
+    <div class="mobile-nav" id="mobile-menu">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="testimonials.html" class="nav-link">Testimonials</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-link">Contact Us</a>
+    </div>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main-content">
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1>business_name: Centerium – AI‑Powered Automation for Local Businesses</h1>
+      <p>Transform your operations with AI‑driven solutions designed for local businesses. Efficiency, accuracy, and growth—all in one place.</p>
+      <a href="#contact" class="btn">Schedule a Free Consultation</a>
+      <a href="#mission" class="link-underline">Learn How It Works</a>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- Mission Statement -->
+  <section class="mission" id="mission">
+    <img src="https://picsum.photos/800/600" alt="Team collaborating on strategy" loading="lazy">
+    <div class="mission-text">
+      <h2>Our Mission</h2>
+      <p>At Centerium we empower local businesses to harness the power of AI, simplifying complex processes and delivering measurable results.</p>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <!-- Solution Overview -->
+  <section class="solution" id="solution">
+    <div class="solution-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8 4.5"/><path d="M12 2a10 10 0 0 1 8 4.5"/><path d="M12 2v20"/></svg>
+      <h3>Intelligent Automation</h3>
+      <p>Leverage AI to automate repetitive tasks and free up valuable time.</p>
+    </div>
+    <div class="solution-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+      <h3>Data Insights</h3>
+      <p>Turn raw data into actionable insights with real‑time analytics.</p>
+    </div>
+    <div class="solution-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M3 12l2-2 4 4 8-8 4 4"/><path d="M3 6h18"/></svg>
+      <h3>Seamless Integration</h3>
+      <p>Easily connect with existing tools and platforms for a unified workflow.</p>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <!-- Key Benefits -->
+  <section class="benefits" id="benefits">
+    <div class="benefit">
+      <div class="num">01</div>
+      <h4>Boost Productivity</h4>
+      <p>Automate routine tasks and focus on what truly matters.</p>
+    </div>
+    <div class="benefit">
+      <div class="num">02</div>
+      <h4>Reduce Errors</h4>
+      <p>AI ensures precision, minimizing costly mistakes.</p>
+    </div>
+    <div class="benefit">
+      <div class="num">03</div>
+      <h4>Increase Revenue</h4>
+      <p>Optimized processes lead to higher sales and profitability.</p>
+    </div>
+    <div class="benefit">
+      <div class="num">04</div>
+      <h4>Scalable Solutions</h4>
+      <p>Grow your business confidently with adaptable AI tools.</p>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+  <!-- Primary CTA -->
+  <section class="cta-primary">
+    <a href="#contact" class="btn">Schedule a Free Consultation</a>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <h4 style="color:#fff;">Quick Links</h4>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="social">
+      <h4 style="color:#fff;">Follow Us</h4>
+      <a href="#" aria-label="LinkedIn"><svg id="linkedin-icon" width="24" height="24" stroke="currentColor" fill="none"><use href="#linkedin"/></svg></a>
+      <a href="#" aria-label="Twitter"><svg id="twitter-icon" width="24" height="24" stroke="currentColor" fill="none"><use href="#twitter"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg id="facebook-icon" width="24" height="24" stroke="currentColor" fill="none"><use href="#facebook"/></svg></a>
+    </div>
+    <div class="newsletter">
+      <h4 style="color:#fff;">Newsletter</h4>
+      <form id="newsletter-form" novalidate>
+        <input type="email" placeholder="Your email" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const mobileNav = document.querySelector('.mobile-nav');
+  hamburger.addEventListener('click', function(){
+    const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+    this.setAttribute('aria-expanded', !expanded);
+    mobileNav.style.display = expanded ? 'none' : 'flex';
+  });
+
+  // Header shrink on scroll
+  const header = document.getElementById('site-header');
+  const shrinkOn = 100;
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > shrinkOn){
+      header.classList.add('shrink');
+    } else {
+      header.classList.remove('shrink');
+    }
+  });
+
+  // IntersectionObserver for sections
+  const sections = document.querySelectorAll('.hero, .mission, .solution, .benefits, .cta-primary');
+  const observerOptions = {
+    threshold: 0.1
+  };
+  const revealObserver = new IntersectionObserver((entries, observer)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  },observerOptions);
+  sections.forEach(sec=>{
+    sec.style.opacity = 0;
+    sec.style.transform = 'translateY(20px)';
+    sec.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    revealObserver.observe(sec);
+  });
+
+  // Simple newsletter validation
+  const newsletterForm = document.getElementById('newsletter-form');
+  newsletterForm.addEventListener('submit', function(e){
+    const email = this.querySelector('input[type="email"]');
+    if(!email.checkValidity()){
+      e.preventDefault();
+      email.style.border = '2px solid red';
+    } else {
+      email.style.border = '2px solid var(--color-accent)';
+    }
+  });
+
+  // Initialize Lucide icons
+  lucide.createIcons();
+});
+</script>
 </body>
 </html>

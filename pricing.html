@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing | Centerium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#000000;
+      --color-secondary:#FFFFFF;
+      --color-accent:#FFD700;
+      --color-gray:#808080;
+      --color-bg-dark:#111111;
+      --color-bg-gradient:linear-gradient(180deg, #111111 0%, #000000 100%);
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Open Sans",sans-serif;
+      --spacing-unit:8px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-secondary);
+      background:var(--color-bg-dark);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;cursor:pointer;}
+    img{max-width:100%;display:block;}
+    ul{list-style:none;}
+    button{font-family:inherit;border:none;background:none;cursor:pointer;}
+    h1,h2,h3{font-family:var(--font-heading);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+    h1{font-size:clamp(2.5rem,6vw,3rem);}
+    h2{font-size:clamp(2rem,5vw,2.5rem);}
+    h3{font-size:clamp(1.5rem,4vw,2rem);}
+    p{margin-top:1rem;}
+    .container{padding-inline:var(--spacing-unit);max-width:1200px;margin:auto;}
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:#FFD700;
+      color:#000;
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      position:sticky;
+      top:0;
+      left:0;
+      width:100%;
+      background:rgba(0,0,0,0.9);
+      backdrop-filter:blur(4px);
+      z-index:1000;
+      transition:height .3s ease,background .3s ease;
+      height:80px;
+      display:flex;
+      align-items:center;
+      padding:0 var(--spacing-unit);
+    }
+    header.shrink{height:56px;background:rgba(0,0,0,0.95);}
+    .logo{
+      font-family:var(--font-heading);
+      font-size:1.2rem;
+      color:var(--color-secondary);
+      text-transform:uppercase;
+    }
+    nav{
+      display:flex;
+      align-items:center;
+      gap:calc(var(--spacing-unit)*2);
+      margin-left:auto;
+    }
+    nav a{
+      font-family:var(--font-heading);
+      font-size:0.875rem;
+      text-transform:uppercase;
+      color:var(--color-secondary);
+      position:relative;
+      padding-bottom:4px;
+    }
+    nav a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      height:2px;
+      width:0;
+      background:var(--color-accent);
+      transition:width .3s ease;
+    }
+    nav a:hover::after,nav a.active::after{width:100%;}
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:5px;
+      cursor:pointer;
+      margin-left:auto;
+    }
+    .hamburger span{
+      width:24px;
+      height:2px;
+      background:#fff;
+    }
+    .mobile-nav{
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      width:100%;
+      background:#000;
+      flex-direction:column;
+      gap:1rem;
+      padding:1rem;
+    }
+    .mobile-nav a{color:#fff;}
+    @media(max-width:768px){
+      .hamburger{display:flex;}
+      nav{display:none;}
+      .mobile-nav{display:flex;}
+    }
+    .section{
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity .4s ease,transform .4s ease;
+    }
+    .section.visible{opacity:1;transform:translateY(0);}
+    .pricing-intro{
+      padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+      text-align:center;
+    }
+    .pricing-intro h2{color:#fff;}
+    .pricing-intro p{color:#ccc;}
+    .plans{
+      display:grid;
+      gap:calc(var(--spacing-unit)*4);
+      padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+      background:var(--color-bg-dark);
+    }
+    .plan-card{
+      background:#000;
+      border:2px solid var(--color-gray);
+      border-radius:4px;
+      padding:2rem;
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+      transition:transform .3s ease,box-shadow .3s ease;
+    }
+    .plan-card.starter{border-color:var(--color-accent);}
+    .plan-card h3{color:#fff;margin-bottom:.5rem;}
+    .plan-features{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:.5rem;
+    }
+    .plan-features li{
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      color:#ccc;
+    }
+    .plan-features li .icon{
+      stroke:var(--color-accent);
+      width:18px;
+      height:18px;
+    }
+    .plan-card .price{
+      font-size:2rem;
+      font-weight:600;
+      color:var(--color-accent);
+      margin-top:auto;
+    }
+    .plan-card .btn{
+      margin-top:1rem;
+      align-self:center;
+    }
+    .quote-form{
+      background:var(--color-primary);
+      padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+    }
+    .quote-form h2{color:#fff;}
+    .quote-form form{
+      display:grid;
+      gap:var(--spacing-unit);
+      max-width:600px;
+      margin:auto;
+    }
+    .quote-form input,
+    .quote-form textarea{
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:4px;
+      background:#222;
+      color:#fff;
+    }
+    .quote-form input:focus,
+    .quote-form textarea:focus{
+      outline:2px solid var(--color-accent);
+    }
+    .quote-form button{
+      background:var(--color-accent);
+      color:#000;
+      padding:12px 24px;
+      border-radius:4px;
+      font-family:var(--font-heading);
+      font-weight:600;
+      text-transform:uppercase;
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .quote-form button:hover{transform:scale(1.02);box-shadow:0 4px 8px rgba(0,0,0,0.2);}
+    .quote-form button:active{transform:scale(0.98);}
+    .faq{
+      padding:calc(var(--spacing-unit)*6) var(--spacing-unit);
+      background:var(--color-bg-dark);
+    }
+    .faq-item{
+      border-bottom:1px solid var(--color-gray);
+      padding:1rem 0;
+    }
+    .faq-question{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      color:#fff;
+    }
+    .faq-answer{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .35s ease;
+      color:#ccc;
+      margin-top:.5rem;
+    }
+    .faq-item.open .faq-answer{max-height:200px;}
+    .faq-item.open .chevron{transform:rotate(180deg);}
+    .chevron{
+      transition:transform .35s ease;
+    }
+    footer{
+      background:#000;
+      color:#ccc;
+      padding:calc(var(--spacing-unit)*4) var(--spacing-unit);
+    }
+    footer .footer-grid{
+      display:grid;
+      gap:calc(var(--spacing-unit)*4);
+    }
+    footer a{color:#ccc;}
+    footer a:hover{color:#fff;}
+    footer .social a{
+      margin-right:1rem;
+      color:#fff;
+      transition:transform .3s ease;
+    }
+    footer .social a:hover{transform:scale(1.1);color:var(--color-accent);}
+    footer .newsletter input{
+      padding:8px;
+      border:none;
+      border-radius:4px 0 0 4px;
+    }
+    footer .newsletter button{
+      padding:8px 16px;
+      background:var(--color-accent);
+      color:#000;
+      border-radius:0 4px 4px 0;
+    }
+    footer .newsletter button:hover{background:#e6c200;}
+    @media(min-width:640px){
+      .plans{grid-template-columns:repeat(3,1fr);}
+      .plan-card{padding:2rem;}
+    }
+    @media(max-width:768px){
+      .hamburger{display:flex;}
+      nav{display:none;}
+      .mobile-nav{display:flex;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <header id="site-header">
+    <div class="logo">Centerium</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobile-nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="testimonials.html">Testimonials</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Pricing Intro -->
+    <section id="pricing_intro" class="section pricing-intro">
+      <h2>Choose the plan that fits your business</h2>
+      <p>Transparent pricing, no hidden fees. All plans include 24/7 support, secure data handling, and unlimited access to our AI‑powered platform.</p>
+    </section>
+
+    <!-- Plan Comparison -->
+    <section id="plan_comparison" class="section plan-comparison">
+      <div class="plans">
+        <div class="plan-card starter">
+          <h3>Starter</h3>
+          <p class="price">$199<span style="font-size:.6rem;">/mo</span></p>
+          <ul class="plan-features">
+            <li><i data-lucide="check" class="icon"></i>Basic support</li>
+            <li><i data-lucide="check" class="icon"></i>Access to Customer Service Automation</li>
+            <li><i data-lucide="x" class="icon" style="stroke:#ff4444;"></i>Personalized Chatbots</li>
+          </ul>
+          <a href="#custom_quote_form" class="btn">Get Started</a>
+        </div>
+        <div class="plan-card">
+          <h3>Pro</h3>
+          <p class="price">$499<span style="font-size:.6rem;">/mo</span></p>
+          <ul class="plan-features">
+            <li><i data-lucide="check" class="icon"></i>Priority support</li>
+            <li><i data-lucide="check" class="icon"></i>All Starter features</li>
+            <li><i data-lucide="check" class="icon"></i>Inventory Management</li>
+            <li><i data-lucide="check" class="icon"></i>Sales Forecasting</li>
+          </ul>
+          <a href="#custom_quote_form" class="btn">Upgrade</a>
+        </div>
+        <div class="plan-card enterprise">
+          <h3>Enterprise</h3>
+          <p class="price">Custom<span style="font-size:.6rem;"></span></p>
+          <ul class="plan-features">
+            <li><i data-lucide="check" class="icon"></i>Dedicated account manager</li>
+            <li><i data-lucide="check" class="icon"></i>All Pro features</li>
+            <li><i data-lucide="check" class="icon"></i>Data Analysis & Reporting</li>
+            <li><i data-lucide="check" class="icon"></i>Workflow Optimization</li>
+          </ul>
+          <a href="#custom_quote_form" class="btn">Request Quote</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom Quote Form -->
+    <section id="custom_quote_form" class="section custom-quote-form">
+      <h2>Need a tailored solution?</h2>
+      <p>Fill out the form below and we’ll craft a custom quote just for you.</p>
+      <form id="quoteForm" novalidate>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+          <small class="error-msg" aria-live="polite"></small>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+          <small class="error-msg" aria-live="polite"></small>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+          <small class="error-msg" aria-live="polite"></small>
+        </div>
+        <div class="form-group">
+          <label for="details">Project Details</label>
+          <textarea id="details" name="details" rows="4" required></textarea>
+          <small class="error-msg" aria-live="polite"></small>
+        </div>
+        <!-- Placeholder for reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="your-site-key"></div>
+        <button type="submit" class="btn">Send Request</button>
+      </form>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section faq">
+      <h2>Frequently Asked Questions</h2>
+      <ul>
+        <li class="faq-item">
+          <div class="faq-question">
+            <span>What is included in the Starter plan?</span>
+            <i data-lucide="chevron-down" class="chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <p>The Starter plan gives you basic support, access to our Customer Service Automation module, and the ability to manage up to 1,000 tickets per month.</p>
+          </div>
+        </li>
+        <li class="faq-item">
+          <div class="faq-question">
+            <span>Can I upgrade later?</span>
+            <i data-lucene="chevron-down" class="chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely! You can upgrade at any time from your dashboard or by contacting our sales team.</p>
+          </div>
+        </li>
+        <li class="faq-item">
+          <div class="faq-question">
+            <span>Do you offer discounts for annual billing?</span>
+            <i data-lucide="chevron-down" class="chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we provide a 15% discount when you choose to pay annually.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="social">
+        <h4>Follow Us</h4>
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      </div>
+      <div class="newsletter">
+        <h4>Newsletter</h4>
+        <form>
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;">© 2024 Centerium. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js"></script>
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+
+    // Header shrink on scroll
+    const header = document.querySelector('header');
+    const shrinkOn = 100;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > shrinkOn) {
+        header.classList.add('shrink');
+      } else {
+        header.classList.remove('shrink');
+      }
+    });
+
+    // Mobile navigation toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+        hamburger.setAttribute('aria-expanded', !expanded);
+        mobileNav.classList.toggle('open');
+      });
+    }
+
+    // Section reveal observer
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.2});
+    sections.forEach(sec => observer.observe(sec));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        item.classList.toggle('open');
+      });
+    });
+
+    // Simple form validation
+    const form = document.getElementById('quoteForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+      form.querySelectorAll('input, textarea').forEach(field => {
+        const error = field.nextElementSibling;
+        if (!field.checkValidity()) {
+          valid = false;
+          field.style.borderBottom = '2px solid #ff4444';
+          if (error) error.textContent = field.validationMessage;
+        } else {
+          field.style.borderBottom = '2px solid var(--color-accent)';
+          if (error) error.textContent = '';
+        }
+      });
+      if (valid) {
+        alert('Thank you! Your request has been sent.');
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
