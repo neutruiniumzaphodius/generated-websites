@@ -1,75 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Clad’s Cookies – Fresh‑baked joy for North Las Vegas families</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+/* Base Variables */
+:root{
+  --color-primary:#C89E5C;
+  --color-primary-dark:#B58A4E;
+  --color-bg:#fdfdfd;
+  --color-text:#222;
+  --color-muted:#666;
+  --radius:8px;
+  --transition:0.3s ease;
+}
+
+/* Reset & Base */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-family:'Inter',sans-serif;font-size:16px;scroll-behavior:smooth;}
+body{background:var(--color-bg);color:var(--color-text);line-height:1.6;}
+img{max-width:100%;display:block;}
+ul{list-style:none;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;background:none;border:none;cursor:pointer;}
+
+/* BEM Naming */
+.header{position:fixed;top:0;left:0;right:0;background:transparent;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;z-index:1000;transition:var(--transition);}
+.header--scrolled{background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);height:64px;}
+.header__logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--color-primary);}
+.header__nav{display:flex;gap:1.5rem;}
+.header__nav-item{font-size:.95rem;padding:.5rem 0;position:relative;}
+.header__nav-item::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--color-primary);transition:var(--transition);}
+.header__nav-item:hover::after{width:100%;}
+.header__hamburger{display:none;flex-direction:column;gap:.3rem;cursor:pointer;}
+.header__hamburger span{display:block;width:24px;height:2px;background:#333;}
+
+/* Hero Section */
+.hero{position:relative;background:url('https://picsum.photos/1920/1080?random=1') center/cover no-repeat;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 1rem;}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,.6));}
+.hero__title{position:relative;color:#fff;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;max-width:800px;}
+.hero__cta{position:relative;margin-top:1.5rem;padding:.9rem 2rem;background:linear-gradient(135deg,var(--color-primary),#A97B4A);color:#fff;border-radius:var(--radius);font-weight:600;transition:var(--transition);box-shadow:0 4px 12px rgba(0,0,0,.2);}
+.hero__cta:hover{transform:translateY(-2px);}
+
+/* Container */
+.container{max-width:1200px;margin:auto;padding:2rem 1rem;}
+
+/* About Section */
+.about{display:flex;gap:2rem;align-items:center;flex-wrap:wrap;}
+.about__content{flex:1 1 500px;}
+.about__title{font-family:'Playfair Display',serif;font-size:2rem;color:var(--color-primary);}
+.about__text{margin-top:.8rem;font-size:.95rem;color:var(--color-muted);}
+.about__image{flex:1 1 400px;}
+
+/* Card Component */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;}
+.card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:var(--transition);}
+.card:hover{transform:translateY(-4px);box-shadow:0 6px 12px rgba(0,0,0,.15);}
+.card__image{height:150px;object-fit:cover;width:100%;}
+.card__title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--color-primary);margin:1rem .5rem 0;}
+.card__desc{margin:.5rem .5rem 0;font-size:.9rem;color:var(--color-muted);}
+.card__benefits{margin:.5rem .5rem 1rem;padding-left:1.2rem;font-size:.85rem;color:var(--color-muted);}
+.card__benefits li{display:flex;align-items:center;gap:.4rem;}
+.card__benefits svg{width:16px;height:16px;color:var(--color-primary);}
+
+/* Ribbon */
+.ribbon{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;}
+.ribbon__item{display:flex;align-items:center;gap:.4rem;color:var(--color-primary-dark);font-size:.85rem;}
+.ribbon__item svg{width:18px;height:18px;color:var(--color-primary-dark);}
+
+/* Testimonials Carousel */
+.testimonials{margin-top:4rem;}
+.testimonials__title{font-family:'Playfair Display',serif;font-size:2rem;color:var(--color-primary);margin-bottom:1.5rem;}
+.carousel{position:relative;overflow:hidden;}
+.carousel__slides{display:flex;transition:transform var(--transition);}
+.carousel__slide{min-width:100%;padding:1rem;}
+.carousel__card{display:flex;gap:1rem;background:#fff;padding:1rem;border-radius:var(--radius);box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.carousel__photo{flex:0 0 80px;height:80px;border-radius:50%;object-fit:cover;}
+.carousel__content{flex:1;}
+.carousel__dots{display:flex;gap:.5rem;justify-content:center;margin-top:.8rem;}
+.carousel__dot{width:12px;height:12px;background:#ccc;border-radius:50%;cursor:pointer;}
+.carousel__dot.active{background:var(--color-primary);}
+.carousel__dot:focus{outline:2px solid var(--color-primary);}
+
+/* Contact Form */
+.contact{margin-top:4rem;}
+.contact__title{font-family:'Playfair Display',serif;font-size:2rem;color:var(--color-primary);margin-bottom:1rem;}
+.contact__text{font-size:.95rem;color:var(--color-muted);margin-bottom:2rem;}
+.form{display:grid;gap:1rem;}
+.form__group{position:relative;}
+.form__input,
+.form__textarea{width:100%;padding:.9rem 1rem;border:1px solid #ddd;border-radius:var(--radius);font-size:.95rem;transition:border-color var(--transition);}
+.form__input:focus,
+.form__textarea:focus{outline:none;border-color:var(--color-primary);}
+.form__label{position:absolute;top:50%;left:1rem;transform:translateY(-50%);background:#fff;padding:0 .3rem;color:var(--color-muted);pointer-events:none;transition:var(--transition);}
+.form__input:not(:placeholder-shown)+.form__label,
+.form__textarea:not(:placeholder-shown)+.form__label,
+.form__input:focus+ .form__label,
+.form__textarea:focus+ .form__label{top:-.6rem;font-size:.75rem;color:var(--color-primary);}
+.error{color:#e63946;font-size:.75rem;margin-top:.3rem;}
+.btn{display:inline-block;padding:.9rem 2rem;background:var(--color-primary);color:#fff;border-radius:var(--radius);font-weight:600;transition:var(--transition);}
+.btn:hover{background:var(--color-primary-dark);}
+
+/* Info List */
+.info-list{margin-top:2rem;display:flex;flex-direction:column;gap:.5rem;font-size:.95rem;color:var(--color-muted);}
+.info-list svg{width:18px;height:18px;margin-right:.5rem;vertical-align:middle;color:var(--color-primary);}
+
+/* Footer */
+.footer{background:#222;color:#fff;padding:2rem 1rem;text-align:center;}
+.footer__logo{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1rem;}
+.socials{display:flex;gap:.8rem;justify-content:center;margin-bottom:1rem;}
+.socials a{color:#fff;transition:transform var(--transition);}
+.socials a:hover{transform:scale(1.1);}
+.socials svg{width:24px;height:24px;}
+
+/* Responsive */
+@media (max-width: 767px){
+  .header{padding:0 .8rem;}
+  .header__nav{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;box-shadow:0 4px 8px rgba(0,0,0,.1);padding:1rem;}
+  .header__nav-item{padding:.8rem 0;}
+  .header__hamburger{display:flex;}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;}
+}
+
+/* Visibility Animations */
+@media (prefers-reduced-motion: no-preference){
+  .section--hidden{opacity:0;transform:translateY(20px);}
+  .section--visible{opacity:1;transform:translateY(0);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="header" id="header">
+  <div class="header__logo">Clad’s Cookies</div>
+  <button class="header__hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="header__nav" id="nav">
+    <a href="#hero" class="header__nav-item">Home</a>
+    <a href="#services" class="header__nav-item">Menu</a>
+    <a href="#testimonials" class="header__nav-item">Reviews</a>
+    <a href="#contact" class="header__nav-item">Contact</a>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main>
+  <section class="hero section--hidden" id="hero">
+    <h1 class="hero__title">Fresh‑baked joy for North Las Vegas families</h1>
+    <a href="#contact" class="hero__cta btn">Order Now</a>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <section class="about container section--hidden" id="services">
+    <div class="about__content">
+      <h2 class="about__title">Our Story</h2>
+      <p class="about__text">At Clad’s Cookies we believe that great food starts with real butter and a lot of love. Since 2015, our family‑run bakery has been serving the North Las Vegas community with handcrafted cookies that bring smiles to every table.</p>
+    </div>
+    <div class="about__image">
+      <img src="https://picsum.photos/500/400?random=13" alt="Baking fresh cookies" loading="lazy">
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <section class="container section--hidden">
+    <h2 class="section__title">Our Cookies</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="https://picsum.photos/250/150?random=14" alt="Chocolate Chip" class="card__image" loading="lazy">
+        <h3 class="card__title">Chocolate Chip</h3>
+        <p class="card__desc">Warm, buttery, and always fresh.</p>
+        <ul class="card__benefits">
+          <li><svg aria-hidden="true"><use href="#check"/></svg>Classic favorite</li>
+          <li><svg aria-hidden="true"><use href="#butter"/></svg>Made with real butter</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/250/150?random=15" alt="Oatmeal Raisin" class="card__image" loading="lazy">
+        <h3 class="card__title">Oatmeal Raisin</h3>
+        <p class="card__desc">Hearty, sweet, and perfect with coffee.</p>
+        <ul class="card__benefits">
+          <li><svg aria-hidden="true"><use href="#check"/></svg>Wholesome oats</li>
+          <li><svg aria-hidden="true"><use href="#heart"/></svg>Made with love</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/250/150?random=16" alt="Double Chocolate" class="card__image" loading="lazy">
+        <h3 class="card__title">Double Chocolate</h3>
+        <p class="card__desc">Rich cocoa with generous chocolate chunks.</p>
+        <ul class="card__benefits">
+          <li><svg aria-hidden="true"><use href="#check"/></svg>Decadent</li>
+          <li><svg aria-hidden="true"><use href="#butter"/></svg>Real butter</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ribbon">
+      <span class="ribbon__item" aria-hidden="true"><svg><use href="#butter"/></svg>Made with real butter, not margarine</span>
+      <span class="ribbon__item" aria-hidden="true"><svg><use href="#heart"/></svg>No preservatives – just love</span>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
+  <section class="testimonials container section--hidden" id="testimonials">
+    <h2 class="section__title">What Our Customers Say</h2>
+    <div class="carousel" role="region" aria-label="Customer testimonials" aria-live="polite">
+      <div class="carousel__slides">
+        <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="Slide 1">
+          <div class="carousel__card">
+            <img src="https://picsum.photos/80/80?random=17" alt="Emily R." class="carousel__photo" loading="lazy">
+            <div class="carousel__content">
+              <p><strong>Emily R.</strong></p>
+              <p>"The chocolate chip cookies are the best I've ever had. Warm, buttery, and always fresh!"</p>
             </div>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="Slide 2">
+          <div class="carousel__card">
+            <img src="https://picsum.photos/80/80?random=18" alt="Marcus L." class="carousel__photo" loading="lazy">
+            <div class="carousel__content">
+              <p><strong>Marcus L.</strong></p>
+              <p>"I love the oatmeal raisin – it’s hearty and not too sweet. Perfect with my coffee."</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel__slide" role="group" aria-roledescription="slide" aria-label="Slide 3">
+          <div class="carousel__card">
+            <img src="https://picsum.photos/80/80?random=19" alt="Sofia K." class="carousel__photo" loading="lazy">
+            <div class="carousel__content">
+              <p><strong>Sofia K.</strong></p>
+              <p>"The double chocolate is pure indulgence. My kids can’t get enough!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel__dots" role="tablist">
+        <button class="carousel__dot active" data-index="0" aria-label="Slide 1"></button>
+        <button class="carousel__dot" data-index="1" aria-label="Slide 2"></button>
+        <button class="carousel__dot" data-index="2" aria-label="Slide 3"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact container section--hidden" id="contact">
+    <h2 class="section__title">Contact Us</h2>
+    <p class="contact__text">Ready to taste the difference? Fill out the form below or call us directly.</p>
+    <form class="form" id="contactForm" novalidate>
+      <div class="form__group">
+        <input type="text" id="name" class="form__input" placeholder=" " required>
+        <label for="name" class="form__label">Your Name</label>
+        <div class="error" id="nameError"></div>
+      </div>
+      <div class="form__group">
+        <input type="email" id="email" class="form__input" placeholder=" " required>
+        <label for="email" class="form__label">Email Address</label>
+        <div class="error" id="emailError"></div>
+      </div>
+      <div class="form__group">
+        <textarea id="message" class="form__textarea" rows="4" placeholder=" " required></textarea>
+        <label for="message" class="form__label">Message</label>
+        <div class="error" id="messageError"></div>
+      </div>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+    <ul class="info-list">
+      <li><svg aria-hidden="true"><use href="#phone"/></svg>+1 (555) 123‑4567</li>
+      <li><svg aria-hidden="true"><use href="#mail"/></svg>info@cladscookies.com</li>
+      <li><svg aria-hidden="true"><use href="#map"/></svg>123 Main St, Las Vegas, NV</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer__logo">Clad’s Cookies</div>
+  <div class="socials">
+    <a href="#" aria-label="Facebook"><svg><use href="#facebook"/></svg></a>
+    <a href="#" aria-label="Instagram"><svg><use href="#instagram"/></svg></a>
+    <a href="#" aria-label="Twitter"><svg><use href="#twitter"/></svg></a>
+  </div>
+  <p>&copy; 2024 Clad’s Cookies. All rights reserved.</p>
+</footer>
+
+<svg style="display:none;">
+  <symbol id="check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="butter" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></symbol>
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21C12 21 5 13.5 5 8.5C5 5.5 7.5 3 10.5 3C12 3 13.5 4 14 5.5C14.5 4 16 3 17.5 3C20.5 3 23 5.5 23 8.5C23 13.5 16 21 16 21Z"/></symbol>
+  <symbol id="facebook" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 5 3.657 9.128 8.438 9.876v-6.987H7.898v-2.889h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.889h-2.33V22C18.343 21.128 22 17 22 12z"/></symbol>
+  <symbol id="instagram" viewBox="0 0 24 24"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h10zM12 7a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.5a1 1 0 110 2 1 1 0 010-2z"/></symbol>
+  <symbol id="twitter" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.26 4.26 0 001.88-2.35 8.59 8.59 0 01-2.71 1.04 4.23 4.23 0 00-7.22 3.86A12 12 0 013 4.79a4.23 4.23 0 001.31 5.65c-.66-.02-1.28-.2-1.82-.5v.05c0 2.01 1.43 3.68 3.33 4.07-.35.1-.73.15-1.12.15-.27 0-.53-.03-.78-.07a4.24 4.24 0 003.96 2.94A8.5 8.5 0 012 19.54a12 12 0 006.29 1.84c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.35-.02-.53A8.33 8.33 0 0024 5.5a8.2 8.2 0 01-2.34.64 4.1 4.1 0 001.8-2.27z"/></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.5 2.53.78 3.88.78a1 1 0 011 1V20a1 1 0 01-1 1C10.28 21 3 13.72 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.28 2.67.78 3.88a1 1 0 01-.21 1.11l-2.45 2.45z"/></symbol>
+  <symbol id="mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
+  <symbol id="map" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></symbol>
+</svg>
+
+<script>
+/* Responsive Navigation */
+const header = document.getElementById('header');
+const nav = document.getElementById('nav');
+const hamburger = document.querySelector('.header__hamburger');
+
+function toggleMenu(){
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+  hamburger.setAttribute('aria-expanded', !expanded);
+  nav.style.display = expanded ? 'none' : 'flex';
+}
+hamburger.addEventListener('click', toggleMenu);
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 767) {
+    nav.style.display = 'flex';
+    hamburger.setAttribute('aria-expanded', false);
+  } else {
+    nav.style.display = 'none';
+    hamburger.setAttribute('aria-expanded', false);
+  }
+});
+
+/* Scroll Header Effect */
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    header.classList.add('header--scrolled');
+  } else {
+    header.classList.remove('header--scrolled');
+  }
+});
+
+/* Section Reveal */
+const sections = document.querySelectorAll('.section--hidden');
+if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('section--visible');
+        entry.target.classList.remove('section--hidden');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.1});
+  sections.forEach(sec => observer.observe(sec));
+} else {
+  sections.forEach(sec => {
+    sec.classList.add('section--visible');
+    sec.classList.remove('section--hidden');
+  });
+}
+
+/* Carousel Functionality */
+class Carousel {
+  constructor(root) {
+    this.root = root;
+    this.slidesContainer = root.querySelector('.carousel__slides');
+    this.slides = root.querySelectorAll('.carousel__slide');
+    this.dots = root.querySelectorAll('.carousel__dot');
+    this.current = 0;
+    this.total = this.slides.length;
+    this.init();
+  }
+  init(){
+    this.update();
+    this.root.querySelector('.carousel__dots').addEventListener('click', e => {
+      if (e.target.classList.contains('carousel__dot')) {
+        this.current = Number(e.target.dataset.index);
+        this.update();
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (document.activeElement.closest('.carousel')) {
+        if (e.key === 'ArrowRight') this.next();
+        if (e.key === 'ArrowLeft') this.prev();
+      }
+    });
+  }
+  next(){
+    this.current = (this.current + 1) % this.total;
+    this.update();
+  }
+  prev(){
+    this.current = (this.current - 1 + this.total) % this.total;
+    this.update();
+  }
+  update(){
+    const offset = -this.current * 100;
+    this.slidesContainer.style.transform = `translateX(${offset}%)`;
+    this.dots.forEach((dot,i)=>dot.classList.toggle('active', i===this.current));
+    this.slides.forEach((slide,i)=>slide.setAttribute('aria-label', `Slide ${i+1}`));
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const carousels = document.querySelectorAll('.carousel');
+  carousels.forEach(c => new Carousel(c));
+});
+</script>
 </body>
 </html>
