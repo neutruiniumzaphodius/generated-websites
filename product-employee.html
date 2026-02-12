@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Management | Iontic</title>
+<link href="https://fonts.googleapis.com/css2?family=Impact&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#007bff;
+  --color-primary-dark:#0056b3;
+  --color-secondary:#6c757d;
+  --color-accent:#ffc107;
+  --color-bg:#f8f9fa;
+  --color-text:#343a40;
+  --color-footer-bg:#343a40;
+  --color-footer-text:#f8f9fa;
+  --radius:4px;
+  --transition:0.2s ease;
+  --shadow-btn:0 2px 4px rgba(0,0,0,0.15);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  opacity:0;
+  animation:fadeIn 0.5s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+img,video{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+.skip-link:focus{left:0;}
+header{
+  position:sticky;
+  top:0;
+  background:transparent;
+  transition:background var(--transition),box-shadow var(--transition);
+  z-index:999;
+}
+header.scrolled{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:600;
+  color:var(--color-text);
+}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
+.hamburger span{
+  width:24px;height:2px;background:var(--color-text);
+}
+@media (max-width:768px){
+  .nav-links{
+    display:none;
+    flex-direction:column;
+    background:#fff;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    padding:16px;
+  }
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.hero{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  padding:48px 16px;
+  gap:32px;
+  background:#fff;
+}
+.hero .hero-image{
+  flex:1 1 300px;
+}
+.hero .hero-copy{
+  flex:1 1 300px;
+}
+.hero h1{
+  font-family:Impact,system-ui,sans-serif;
+  font-size:48px;
+  color:var(--color-primary);
+  letter-spacing:-0.5px;
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.hero p{
+  font-size:20px;
+  color:var(--color-text);
+  margin-bottom:24px;
+}
+.cta-group{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.btn{
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 150ms,var(--transition);
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+  box-shadow:var(--shadow-btn);
+}
+.btn-primary:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.03);
+}
+.btn-secondary{
+  border:1px solid var(--color-secondary);
+  color:var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:var(--color-secondary);
+  color:#fff;
+}
+.intro-video{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+}
+.features{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.feature-card{
+  background:rgba(255,255,255,0.85);
+  border-radius:8px;
+  padding:24px;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(4px);
+  opacity:0;
+  transform:translateY(20px);
+  transition:transform 0.3s ease-out,box-shadow 0.3s ease-out,opacity var(--transition);
+}
+.feature-card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.feature-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+.feature-icon{
+  width:48px;height:48px;margin-bottom:12px;color:var(--color-secondary);
+}
+.feature-card:hover .feature-icon{color:var(--color-primary);}
+.feature-card h3{
+  font-size:24px;
+  margin-bottom:12px;
+  color:var(--color-text);
+}
+.feature-card p{
+  margin-bottom:16px;
+}
+.demo-carousel{
+  position:relative;
+  max-width:1200px;
+  margin:auto;
+  overflow:hidden;
+  padding:48px 16px;
+}
+.demo-carousel .slides{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+}
+.demo-carousel .slide{
+  flex:0 0 100%;
+  scroll-snap-align:start;
+}
+.demo-carousel img{
+  width:100%;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+}
+.demo-carousel .nav-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  border:none;
+  color:#fff;
+  padding:8px;
+  border-radius:50%;
+}
+.demo-carousel .prev{left:16px;}
+.demo-carousel .next{right:16px;}
+.demo-carousel .nav-btn:hover{background:rgba(0,0,0,0.8);}
+.demo-section{
+  background:var(--color-accent);
+  color:#000;
+  text-align:center;
+  padding:48px 16px;
+}
+.demo-section h2{
+  font-size:clamp(32px,6vw,48px);
+  margin-bottom:16px;
+}
+.demo-section p{
+  font-size:18px;
+  margin-bottom:24px;
+}
+details{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+}
+footer{
+  background:var(--color-footer-bg);
+  color:var(--color-footer-text);
+  padding:48px 16px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+.footer-grid a{color:var(--color-footer-text);}
+.footer-grid a:hover{color:var(--color-accent);}
+.newsletter{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+}
+.newsletter input{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:var(--radius);
+}
+.newsletter button{
+  background:var(--color-primary);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:var(--radius);
+}
+.social-icons{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+}
+.social-icons a{
+  color:var(--color-footer-text);
+  font-size:20px;
+}
+.social-icons a:hover{color:var(--color-accent);}
+.bottom-bar{
+  text-align:center;
+  margin-top:24px;
+  font-size:14px;
+}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+.skip-link:focus{left:0;}
+header{
+  position:sticky;
+  top:0;
+  background:transparent;
+  transition:background var(--transition),box-shadow var(--transition);
+  z-index:999;
+}
+header.scrolled{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:600;
+  color:var(--color-text);
+}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
+.hamburger span{
+  width:24px;height:2px;background:var(--color-text);
+}
+@media (max-width:768px){
+  .nav-links{
+    display:none;
+    flex-direction:column;
+    background:#fff;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    padding:16px;
+  }
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/style.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="site-header">
+  <nav>
+    <a href="index.html" class="logo"><strong>Iontic</strong></a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="product-investment.html" class="nav-link">Investment Management</a>
+      <a href="product-employee.html" class="nav-link active">Employee Management</a>
+      <a href="product-tax.html" class="nav-link">Tax & Market Analysis</a>
+      <a href="product-reporting.html" class="nav-link">Strategic Reporting</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="demo.html" class="nav-link">Demo</a>
+      <a href="testimonials.html" class="nav-link">Testimonials</a>
+      <a href="faq.html" class="nav-link">FAQ</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Hero Image Section -->
+  <section class="hero" id="hero_image">
+    <div class="hero-content" style="position:relative; inset:auto; flex-direction:row; align-items:center; justify-content:center; color:#000; background:none; text-align:left;">
+      <div class="hero-image">
+        <img src="https://picsum.photos/seed/employee/800/600" alt="Employee Management dashboard mockup">
+      </div>
+      <div class="hero-copy" style="padding:0 24px;">
+        <h1>Employee Management</h1>
+        <p>Streamline onboarding, automate time‑tracking, and unlock productivity insights across every department.</p>
+        <div class="cta-group">
+          <a href="demo.html#employee" class="btn btn-primary">Request a Demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Video Section -->
+  <section class="intro-video" id="intro_video">
+    <div class="features">
+      <video autoplay muted loop playsinline style="border-radius:8px;box-shadow:var(--shadow-card);">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Feature List Section -->
+  <section class="features" id="feature_list">
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="users"></svg>
+      <h3>Automated Onboarding</h3>
+      <p>New hires are provisioned instantly with role‑based access, paperwork, and welcome workflows.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="clock"></svg>
+      <h3>Time‑Tracking Integration</h3>
+      <p>Real‑time clock‑in/out, overtime alerts and seamless payroll export.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="activity"></svg>
+      <h3>Productivity Analytics</h4>
+      <p>Dashboard visualizes attendance trends, project allocation and performance KPIs.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="shield"></svg>
+      <h3>Compliance Management</h3>
+      <p>Automatic tracking of labor law limits, certifications and mandatory training.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="folder-open"></svg>
+      <h3>Self‑Service Portal</h3>
+      <p>Employees manage their profiles, request time off and view payslips without admin help.</p>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Screenshot Carousel -->
+  <section class="demo-section" id="interactive_demo_screenshot">
+    <div class="demo-carousel">
+      <button class="nav-btn prev" aria-label="Previous slide">&lt;</button>
+      <div class="slides" id="demo-slides">
+        <div class="slide"><img src="https://picsum.photos/seed/demo1/800/500" alt="Demo screenshot 1"></div>
+        <div class="slide"><img src="https://picsum.photos/seed/demo2/800/500" alt="Demo screenshot 2"></div>
+        <div class="slide"><img src="https://picsum.photos/seed/demo3/800/500" alt="Demo screenshot 3"></div>
+      </div>
+      <button class="nav-btn next" aria-label="Next slide">&gt;</button>
+    </div>
+  </section>
+
+  <!-- Technical Specifications Hidden -->
+  <section class="technical-specs" id="technical_specifications_hidden">
+    <details>
+      <summary style="font-weight:600;cursor:pointer;">Technical Specifications</summary>
+      <p><strong>API Access:</strong> RESTful & GraphQL endpoints, pre‑built ERP connectors.</p>
+      <p><strong>Security:</strong> Role‑based permissions, SSO (SAML/OIDC), data encryption at rest.</p>
+      <p><strong>Scalability:</strong> Cloud‑native micro‑services, supports 10,000+ employee records.</p>
+      <p><strong>Compliance:</strong> GDPR, CCPA, SOC 2 ready.</p>
+    </details>
+  </section>
+
+  <!-- CTA Demo Banner -->
+  <section class="cta-demo" id="cta_demo" style="background:var(--color-accent);color:#000;text-align:center;padding:48px 16px;">
+    <h2 style="font-size:clamp(32px,6vw,48px);margin-bottom:16px;">Ready to Transform Your Workforce?</h2>
+    <p style="font-size:18px;margin-bottom:24px;">Experience Iontic’s Employee Management in action – schedule your live demo now.</p>
+    <a href="demo.html#employee" class="btn btn-primary">Request a Demo</a>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Company</h4>
+      <a href="index.html">Home</a><br>
+      <a href="about.html">About Us</a><br>
+      <a href="pricing.html">Pricing</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <a href="product-investment.html">Investment Management</a><br>
+      <a href="product-employee.html">Employee Management</a><br>
+      <a href="product-tax.html">Tax & Market Analysis</a><br>
+      <a href="product-reporting.html">Strategic Reporting</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="demo.html">Demo</a><br>
+      <a href="testimonials.html">Testimonials</a><br>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>Stay Updated</h4>
+      <div class="newsletter">
+        <input type="email" placeholder="Your email">
+        <button type="submit">Subscribe</button>
+      </div>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">&copy; 2024 Iontic. All rights reserved.</div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('show');
+  });
+
+  // Header scroll effect
+  const header = document.querySelector('header');
+  const heroHeight = document.querySelector('.hero') ? document.querySelector('.hero').offsetHeight : 0;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Feature cards reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.2});
+  document.querySelectorAll('.feature-card').forEach(card => observer.observe(card));
+
+  // Demo carousel navigation
+  const slides = document.getElementById('demo-slides');
+  const prevBtn = document.querySelector('.nav-btn.prev');
+  const nextBtn = document.querySelector('.nav-btn.next');
+  let slideIndex = 0;
+  function updateCarousel() {
+    slides.scrollTo({
+      left: slides.offsetWidth * slideIndex,
+      behavior: 'smooth'
+    });
+  }
+  prevBtn.addEventListener('click', () => {
+    if (slideIndex > 0) slideIndex--;
+    else slideIndex = slides.children.length - 1;
+    updateCarousel();
+  });
+  nextBtn.addEventListener('click', () => {
+    if (slideIndex < slides.children.length - 1) slideIndex++;
+    else slideIndex = 0;
+    updateCarousel();
+  });
+</script>
+</body>
+</html>
+</analysis>

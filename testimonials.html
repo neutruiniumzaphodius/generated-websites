@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials & Case Studies – Iontic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Impact&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+:root{
+  --color-primary:#007bff;
+  --color-primary-dark:#0056b3;
+  --color-secondary:#6c757d;
+  --color-accent:#ffc107;
+  --color-bg:#f8f9fa;
+  --color-text:#343a40;
+  --color-footer-bg:#343a40;
+  --color-footer-text:#f8f9fa;
+  --radius:4px;
+  --transition:0.2s ease;
+  --shadow-btn:0 2px 4px rgba(0,0,0,0.15);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  opacity:0;
+  animation:fadeIn 0.5s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+img,video{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+.skip-link:focus{left:0;}
+header{
+  position:sticky;
+  top:0;
+  background:transparent;
+  transition:background var(--transition),box-shadow var(--transition);
+  z-index:999;
+}
+header.scrolled{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:600;
+  color:var(--color-text);
+}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger span{
+  width:24px;height:2px;background:var(--color-text);
+}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;padding:16px;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+section{padding:48px 16px;}
+.section-title{
+  font-size:32px;
+  margin-bottom:24px;
+  text-align:center;
+  color:var(--color-primary);
+}
+.quote-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.quote-card{
+  background:rgba(255,255,255,0.85);
+  border-radius:8px;
+  padding:24px;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(4px);
+  transition:transform 0.3s ease-out,box-shadow 0.3s ease-out;
+  opacity:0;
+  transform:translateY(20px);
+}
+.quote-card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.quote-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+.quote-text{
+  font-style:italic;
+  margin-bottom:12px;
+}
+.quote-author{
+  font-weight:600;
+  margin-bottom:4px;
+}
+.quote-meta{
+  font-size:14px;
+  color:var(--color-secondary);
+}
+.result-metric{
+  color:var(--color-accent);
+  font-weight:600;
+}
+.video-wrapper{
+  max-width:800px;
+  margin:auto;
+}
+.video-wrapper iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  border:none;
+  box-shadow:var(--shadow-card);
+}
+.case-study{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  align-items:start;
+}
+.case-img{
+  border-radius:8px;
+  overflow:hidden;
+}
+.case-content h3{
+  font-size:24px;
+  margin-bottom:12px;
+  color:var(--color-text);
+}
+.case-content p{
+  margin-bottom:16px;
+}
+.btn{
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 150ms,var(--transition);
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+  box-shadow:var(--shadow-btn);
+}
+.btn-primary:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.03);
+}
+footer{
+  background:var(--color-footer-bg);
+  color:var(--color-footer-text);
+  padding:48px 16px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+.footer-grid a{color:var(--color-footer-text);}
+.footer-grid a:hover{color:var(--color-accent);}
+.newsletter{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+}
+.newsletter input{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:var(--radius);
+}
+.newsletter button{
+  background:var(--color-primary);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:var(--radius);
+}
+.social-icons{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+}
+.social-icons a{
+  color:var(--color-footer-text);
+  font-size:20px;
+}
+.social-icons a:hover{color:var(--color-accent);}
+.bottom-bar{
+  text-align:center;
+  margin-top:24px;
+  font-size:14px;
+}
+@media (max-width:640px){
+  .nav-links{flex-direction:column;}
+}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header id="site-header">
+    <nav aria-label="Primary navigation">
+      <a href="index.html" class="logo"><strong>Iontic</strong></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="product-investment.html" class="nav-link">Investment</a></li>
+        <li><a href="product-employee.html" class="nav-link">Employee</a></li>
+        <li><a href="product-tax.html" class="nav-link">Tax</a></li>
+        <li><a href="product-reporting.html" class="nav-link">Reporting</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="demo.html" class="nav-link">Demo</a></li>
+        <li><a href="testimonials.html" class="nav-link active">Testimonials</a></li>
+        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Quote Cards -->
+    <section class="quote-section">
+      <h2 class="section-title">What Our Customers Say</h2>
+      <div class="quote-grid">
+        <div class="quote-card feature-card">
+          <p class="quote-text">“Iontic increased our operational efficiency by 20% within three months.”</p>
+          <p class="quote-author"><strong>James Liu</strong>, CFO, <strong>Acme Corp</strong></p>
+          <p class="result-metric">+20 % Efficiency</p>
+        </div>
+        <div class="quote-card feature-card">
+          <p class="quote-text">“Thanks to Iontic, we reduced our annual costs by 15% while improving data visibility.”</p>
+          <p class="quote-author"><strong>Maria Gomez</strong>, VP of Operations, <strong>Beta Solutions</strong></p>
+          <p class="result-metric">‑15 % Costs</p>
+        </div>
+        <div class="quote-card feature-card">
+          <p class="quote-text">“The platform’s insights drove a 30% revenue growth in Q4.”</p>
+          <p class="quote-author"><strong>Elena Petrova</strong>, Chief Growth Officer, <strong>GlobalTech</strong></p>
+          <p class="result-metric">+30 % Revenue</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Testimonial -->
+    <section class="video-section">
+      <h2 class="section-title">Video Testimonial</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/5qap5aO4i9A?rel=0" title="GlobalTech CEO Testimonial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <!-- Case Study Blog Post -->
+    <section class="case-study-section">
+      <h2 class="section-title">Featured Case Study</h2>
+      <div class="case-study">
+        <div class="case-img">
+          <img src="https://picsum.photos/800/450?random=1" alt="Acme Corp case study thumbnail">
+        </div>
+        <div class="case-content">
+          <h3>How Acme Corp Cut Operating Costs 15% Using Iontic</h3>
+          <p>Acme Corp faced rising operational expenses and fragmented data sources. After implementing Iontic, they streamlined workflows, eliminated redundant processes, and achieved a 15% reduction in operating costs within six months while gaining real‑time insights across the organization.</p>
+          <a href="/blog/acme-cost-reduction" class="btn btn-primary">Read Full Case Study</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Company</h4>
+        <a href="index.html">Home</a><br>
+        <a href="about.html">About Us</a><br>
+        <a href="testimonials.html" class="nav-link active">Testimonials</a><br>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <a href="product-investment.html">Investment Management</a><br>
+        <a href="product-employee.html">Employee Management</a><br>
+        <a href="product-tax.html">Tax & Market Analysis</a><br>
+        <a href="product-reporting.html">Strategic Reporting</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="contact.html">Contact</a><br>
+        <a href="pricing.html">Pricing</a><br>
+        <a href="demo.html">Demo</a>
+      </div>
+      <div>
+        <h4>Stay Updated</h4>
+        <div class="newsletter">
+          <input type="email" placeholder="Your email">
+          <button type="submit">Subscribe</button>
+        </div>
+        <div class="social-icons">
+          <a href="#"><i data-lucide="facebook"></i></a>
+          <a href="#"><i data-lucide="twitter"></i></a>
+          <a href="#"><i data-lucide="linkedin"></i></a>
+          <a href="#"><i data-lucide="instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-bar">© 2024 Iontic. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('header');
+    const heroHeight = 80; // approximate height before scrolled
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > heroHeight) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for quote cards
+    const observerOptions = {
+      threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.quote-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

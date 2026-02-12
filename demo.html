@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iontic Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Impact&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --color-primary:#007bff;
+      --color-primary-dark:#0056b3;
+      --color-secondary:#6c757d;
+      --color-accent:#ffc107;
+      --color-bg:#f8f9fa;
+      --color-text:#343a40;
+      --color-footer-bg:#343a40;
+      --color-footer-text:#f8f9fa;
+      --radius:4px;
+      --transition:0.2s ease;
+      --shadow-btn:0 2px 4px rgba(0,0,0,0.15);
+      --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+      opacity:0;
+      animation:fadeIn .5s forwards;
+    }
+    @keyframes fadeIn{to{opacity:1}}
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:2px solid var(--color-primary);}
+    button{cursor:pointer;border:none;background:none;font-family:inherit;}
+    img,video{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:8px;z-index:1000;
+    }
+    .skip-link:focus{left:0;}
+    header{
+      position:sticky;top:0;background:transparent;transition:background var(--transition),box-shadow var(--transition);z-index:999;
+    }
+    header.scrolled{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+    nav{
+      max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:16px;
+    }
+    .nav-links{
+      display:flex;gap:24px;
+    }
+    .nav-link{
+      font-weight:600;color:var(--color-text);
+    }
+    .nav-link.active{color:var(--color-primary);}
+    .hamburger{
+      display:none;flex-direction:column;gap:4px;
+    }
+    .hamburger span{
+      width:24px;height:2px;background:var(--color-text);
+    }
+    @media (max-width:768px){
+      .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;padding:16px;}
+      .nav-links.show{display:flex;}
+      .hamburger{display:flex;}
+    }
+    .section{
+      max-width:1200px;margin:auto;padding:48px 16px;
+    }
+    .section + .section{margin-top:48px;}
+    .iframe-wrapper{
+      box-shadow:var(--shadow-card);
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .iframe-wrapper iframe{
+      width:100%;
+      height:calc(100vh - 200px);
+      border:none;
+    }
+    .download-demo{
+      text-align:center;
+    }
+    .download-demo p{
+      margin-top:8px;font-size:14px;color:#555;
+    }
+    .calendly-inline-widget{
+      min-width:320px;height:630px;
+    }
+    footer{
+      background:var(--color-footer-bg);
+      color:var(--color-footer-text);
+      padding:48px 16px;
+    }
+    .footer-grid{
+      max-width:1200px;margin:auto;display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    }
+    .footer-grid a{color:var(--color-footer-text);}
+    .footer-grid a:hover{color:var(--color-accent);}
+    .newsletter{
+      display:flex;gap:8px;margin-top:16px;
+    }
+    .newsletter input{
+      flex:1;padding:8px;border:none;border-radius:var(--radius);
+    }
+    .newsletter button{
+      background:var(--color-primary);color:#fff;padding:8px 16px;border-radius:var(--radius);
+    }
+    .social-icons{
+      display:flex;gap:12px;margin-top:24px;
+    }
+    .social-icons a{
+      color:var(--color-footer-text);font-size:20px;
+    }
+    .social-icons a:hover{color:var(--color-accent);}
+    .bottom-bar{
+      text-align:center;margin-top:24px;font-size:14px;
+    }
+    .btn{
+      padding:12px 24px;border-radius:var(--radius);font-weight:600;transition:transform 150ms,var(--transition);
+    }
+    .btn-primary{
+      background:var(--color-primary);color:#fff;box-shadow:var(--shadow-btn);
+    }
+    .btn-primary:hover{
+      background:var(--color-primary-dark);transform:scale(1.03);
+    }
+    .btn-secondary{
+      border:1px solid var(--color-secondary);color:var(--color-secondary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-secondary);color:#fff;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header id="site-header">
+    <nav>
+      <a href="index.html" class="logo"><strong>Iontic</strong></a>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="demo.html" class="nav-link active">Demo</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Embedded Interactive Demo -->
+    <section class="section" id="embedded-demo">
+      <h2 style="font-size:clamp(32px,5vw,48px);margin-bottom:24px;text-align:center;color:var(--color-primary);">Try Iontic Live</h2>
+      <div class="iframe-wrapper" style="border-radius:8px;overflow:hidden;">
+        <iframe src="https://demo.iontic.com" title="Iontic Interactive Demo" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- Download Demo Link -->
+    <section class="section download-demo">
+      <h2 style="font-size:clamp(28px,5vw,36px);margin-bottom:24px;text-align:center;color:var(--color-primary);">Download Limited‑Functionality Demo</h2>
+      <div class="cta-group" style="justify-content:center;">
+        <a href="/downloads/iontic-demo.zip" download class="btn btn-primary">Download Limited‑Functionality Demo</a>
+      </div>
+      <p style="margin-top:12px;font-size:14px;color:#555;text-align:center;">
+        *The downloadable demo includes a subset of features for offline evaluation. It is not intended for production use.
+      </p>
+    </section>
+
+    <!-- Live Demo Scheduler -->
+    <section class="section live-demo">
+      <h2 style="font-size:clamp(28px,5vw,36px);margin-bottom:24px;text-align:center;color:var(--color-primary);">Book a Live Demo</h2>
+      <div style="display:flex;justify-content:center;">
+        <div class="calendly-inline-widget" data-url="https://calendly.com/iontic/demo" style="min-width:320px;height:630px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Company</h4>
+        <a href="index.html" class="nav-link">Home</a><br>
+        <a href="about.html" class="nav-link">About</a><br>
+        <a href="services.html" class="nav-link">Services</a><br>
+        <a href="pricing.html" class="nav-link">Pricing</a><br>
+        <a href="demo.html" class="nav-link">Demo</a><br>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Phone: <a href="tel:+18005550123">+1 800‑555‑0123</a></p>
+        <p>Email: <a href="mailto:info@iontic.com">info@iontic.com</a></p>
+        <p>Address: 100 Innovation Way, Suite 400, San Francisco, CA 94107</p>
+      </div>
+      <div>
+        <h4>Newsletter</h4>
+        <form class="newsletter" aria-label="Subscribe to newsletter">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="https://facebook.com/iontic" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="https://twitter.com/iontic" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+          <a href="https://linkedin.com/company/iontic" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-bar">© 2024 Iontic. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('header');
+    const heroHeight = 0; // No hero on this page
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tax Implications & Market Analysis – Iontic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Impact&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#007bff;
+  --color-primary-dark:#0056b3;
+  --color-secondary:#6c757d;
+  --color-accent:#ffc107;
+  --color-bg:#f8f9fa;
+  --color-text:#343a40;
+  --color-footer-bg:#343a40;
+  --color-footer-text:#f8f9fa;
+  --radius:4px;
+  --transition:0.2s ease;
+  --shadow-btn:0 2px 4px rgba(0,0,0,0.15);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  opacity:0;
+  animation:fadeIn .5s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+img,video{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+.skip-link:focus{left:0;}
+header{
+  position:sticky;
+  top:0;
+  background:transparent;
+  transition:background var(--transition),box-shadow var(--transition);
+  z-index:999;
+}
+header.scrolled{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:600;
+  color:var(--color-text);
+}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger span{
+  width:24px;height:2px;background:var(--color-text);
+}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;padding:16px;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.hero{
+  position:relative;
+  height:calc(100vh - 80px);
+  overflow:hidden;
+}
+.hero img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35));
+}
+.hero-content{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  padding:0 16px;
+}
+.hero h1{
+  font-family:Impact,system-ui,sans-serif;
+  font-size:clamp(48px,8vw,72px);
+  color:var(--color-primary);
+  letter-spacing:-0.5px;
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.cta-group{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.btn{
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 150ms,var(--transition);
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+  box-shadow:var(--shadow-btn);
+}
+.btn-primary:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.03);
+}
+.btn-secondary{
+  border:1px solid var(--color-secondary);
+  color:var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:var(--color-secondary);
+  color:#fff;
+}
+.features{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.feature-card{
+  background:rgba(255,255,255,0.85);
+  border-radius:8px;
+  padding:24px;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(4px);
+  transition:transform .3s ease-out,box-shadow .3s ease-out,opacity .5s ease-out;
+  opacity:0;
+}
+.feature-card.visible{opacity:1;transform:translateY(0);}
+.feature-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+.feature-icon{
+  width:48px;height:48px;margin-bottom:12px;color:var(--color-secondary);
+}
+.feature-card:hover .feature-icon{color:var(--color-primary);}
+.feature-card h3{
+  font-size:24px;
+  margin-bottom:12px;
+  color:var(--color-text);
+}
+.feature-card p{
+  margin-bottom:16px;
+}
+.demo-carousel{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+  display:flex;
+  overflow:hidden;
+  gap:16px;
+}
+.demo-carousel img{
+  flex:0 0 calc(100% / 3 - 16px);
+  border-radius:8px;
+  cursor:pointer;
+}
+.cta-banner{
+  background:var(--color-accent);
+  color:#000;
+  text-align:center;
+  padding:32px 16px;
+}
+.cta-banner h2{
+  font-family:Impact,system-ui,sans-serif;
+  font-size:clamp(32px,6vw,48px);
+  margin-bottom:16px;
+}
+footer{
+  background:var(--color-footer-bg);
+  color:var(--color-footer-text);
+  padding:48px 16px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+.footer-grid a{color:var(--color-footer-text);}
+.footer-grid a:hover{color:var(--color-accent);}
+.newsletter{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+}
+.newsletter input{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:var(--radius);
+}
+.newsletter button{
+  background:var(--color-primary);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:var(--radius);
+}
+.social-icons{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+}
+.social-icons a{
+  color:var(--color-footer-text);
+  font-size:20px;
+}
+.social-icons a:hover{color:var(--color-accent);}
+.bottom-bar{
+  text-align:center;
+  margin-top:24px;
+  font-size:14px;
+}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;padding:16px;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+@media (max-width:640px){
+  .hero-content{padding:0 8px;}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header">
+  <nav>
+    <div class="logo"><strong>Iontic</strong></div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="product-investment.html" class="nav-link">Investment Management</a></li>
+      <li><a href="product-employee.html" class="nav-link">Employee Management</a></li>
+      <li><a href="product-tax.html" class="nav-link active">Tax & Market Analysis</a></li>
+      <li><a href="product-reporting.html" class="nav-link">Strategic Reporting</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Hero Image -->
+  <section class="hero">
+    <img src="https://picsum.photos/seed/tax-hero/1920/1080" alt="Tax analysis illustration">
+    <div class="hero-content">
+      <h1>Tax Implications & Market Analysis</h1>
+      <h2>Turn complex tax data into actionable market insights.</h2>
+      <div class="cta-group">
+        <button class="btn btn-primary">Request a Demo</button>
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Video -->
+  <section class="intro-video" style="padding:48px 16px; background:#fff;">
+    <div style="max-width:1200px;margin:auto;">
+      <video autoplay muted loop playsinline style="border-radius:8px;box-shadow:var(--shadow-card);">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Feature List -->
+  <section class="features">
+    <div class="feature-card">
+      <i class="feature-icon" data-lucide="file-text"></i>
+      <h3>Automated Tax Calculations</h3>
+      <p>Instantly compute tax liabilities across jurisdictions with built‑in rules.</p>
+    </div>
+    <div class="feature-card">
+      <i class="feature-icon" data-lucide="trend-up"></i>
+      <h3>Market Trend Forecasting</h3>
+      <p>Leverage AI‑driven market forecasts to anticipate tax impact before it occurs.</p>
+    </div>
+    <div class="feature-card">
+      <i class="feature-icon" data-lucide="pie-chart"></i>
+      <h3>Scenario Modeling</h3>
+      <p>Run multiple “what‑if” scenarios to evaluate tax strategies and ROI.</p>
+    </div>
+    <div class="feature-card">
+      <i class="feature-icon" data-lucide="shield"></i>
+      <h3>Compliance Alerts</h12>
+      <p>Real‑time alerts keep you ahead of regulatory changes worldwide.</p>
+    </div>
+    <div class="feature-card">
+      <i class="feature-icon" data-lucide="globe"></i>
+      <h3>Global Market Insights</h3>
+      <p>Integrate market data to see how macro‑economic shifts affect tax exposure.</p>
+    </div>
+    <div class="feature-card">
+      <i class="feature-icon" data-lucide="credit-card"></i>
+      <h3>Tax Optimisation Recommendations</h3>
+      <p>Actionable suggestions to minimise liabilities and maximise deductions.</p>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Screenshot -->
+  <section class="demo-carousel">
+    <h2 style="text-align:center;margin-bottom:24px;font-family:'Impact',system-ui,sans-serif;font-size:clamp(32px,6vw,48px);color:var(--color-primary);">Live Demo Screenshots</h2>
+    <div class="carousel-inner" id="screenshot-carousel">
+      <img src="https://picsum.photos/seed/tax-demo1/800/450" alt="Demo screenshot 1">
+      <img src="https://picsum.photos/seed/tax-demo2/800/450" alt="Demo screenshot 2">
+      <img src="https://picsum.photos/seed/tax-demo3/800/450" alt="Demo screenshot 3">
+    </div>
+  </section>
+
+  <!-- Technical Specifications Hidden -->
+  <section style="max-width:1200px;margin:auto;padding:48px 16px;">
+    <details>
+      <summary style="font-weight:600;cursor:pointer;">Technical Specs</summary>
+      <ul style="margin-top:12px;list-style:none;">
+        <li>• Cloud‑native architecture on AWS/GCP/DigitalOcean.</li>
+        <li>• RESTful & GraphQL APIs with pre‑built ERP connectors.</li>
+        <li>• Data encryption at rest & in transit (AES‑256).</li>
+        <li>• Scalable micro‑services with Docker containers.</li>
+        <li>• 99.9% SLA uptime with automated backups.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- CTA Demo -->
+  <section class="cta-banner">
+    <h2>Ready to Transform Your Tax Strategy?</h2>
+    <button class="btn btn-primary" onclick="location.href='demo.html'">Request a Demo</button>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Company</h4>
+      <a href="index.html">Home</a><br>
+      <a href="about.html">About Us</a><br>
+      <a href="pricing.html">Pricing</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <a href="product-investment.html">Investment Management</a><br>
+      <a href="product-employee.html">Employee Management</a><br>
+      <a href="product-tax.html">Tax & Market Analysis</a><br>
+      <a href="product-reporting.html">Strategic Reporting</a>
+    </div>
+    <div>
+      <h4>Stay Updated</h4>
+      <form class="newsletter" onsubmit="return false;">
+        <input type="email" placeholder="Your email">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="social-icons">
+        <a href="#"><i data-lucide="facebook"></i></a>
+        <a href="#"><i data-lucide="twitter"></i></a>
+        <a href="#"><i data-lucide="linkedin"></i></a>
+        <a href="#"><i data-lucide="instagram"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">© 2024 Iontic. All rights reserved.</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger && hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+  const header = document.querySelector('header');
+  const heroHeight = document.querySelector('.hero')?.offsetHeight || 0;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroHeight) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+  const cards = document.querySelectorAll('.feature-card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.1});
+  cards.forEach(card => observer.observe(card));
+});
+</script>
+</body>
+</html>

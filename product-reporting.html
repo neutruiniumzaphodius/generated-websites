@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Strategic Reporting – Iontic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Impact&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#007bff;
+  --color-primary-dark:#0056b3;
+  --color-secondary:#6c757d;
+  --color-accent:#ffc107;
+  --color-bg:#f8f9fa;
+  --color-text:#343a40;
+  --color-footer-bg:#343a40;
+  --color-footer-text:#f8f9fa;
+  --radius:4px;
+  --transition:0.2s ease;
+  --shadow-btn:0 2px 4px rgba(0,0,0,0.15);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  opacity:0;
+  animation:fadeIn 0.5s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+img,video{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+.skip-link:focus{left:0;}
+header{
+  position:sticky;
+  top:0;
+  background:transparent;
+  transition:background var(--transition),box-shadow var(--transition);
+  z-index:999;
+}
+header.scrolled{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:600;
+  color:var(--color-text);
+}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger span{
+  width:24px;height:2px;background:var(--color-text);
+}
+@media (max-width:768px){
+  .nav-links{
+    display:none;
+    flex-direction:column;
+    background:#fff;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    padding:16px;
+  }
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.hero-product{
+  display:grid;
+  gap:24px;
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+}
+.hero-product img{
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+}
+.hero-product h1{
+  font-family:Impact,system-ui,sans-serif;
+  font-size:48px;
+  color:var(--color-primary);
+  letter-spacing:-0.5px;
+  line-height:1.1;
+  margin-bottom:16px;
+}
+.hero-product p{
+  font-size:20px;
+  color:var(--color-text);
+  margin-bottom:24px;
+}
+.cta-group{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.btn{
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 150ms,var(--transition);
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+  box-shadow:var(--shadow-btn);
+}
+.btn-primary:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.03);
+}
+.btn-secondary{
+  border:1px solid var(--color-secondary);
+  color:var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:var(--color-secondary);
+  color:#fff;
+}
+.intro-video{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+}
+.intro-video video{
+  width:100%;
+  height:auto;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  animation:fadeUp 0.6s forwards;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.features-list{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+}
+.features-list ul{
+  list-style:none;
+  display:grid;
+  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.features-list li{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+.features-list .icon{
+  flex-shrink:0;
+  width:24px;
+  height:24px;
+  color:var(--color-primary);
+}
+.interactive-demo{
+  max-width:1200px;
+  margin:auto;
+  padding:48px 16px;
+}
+.carousel{
+  display:flex;
+  overflow-x:auto;
+  gap:12px;
+  scroll-behavior:smooth;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel-item{
+  flex:0 0 auto;
+  width:260px;
+  height:180px;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+}
+.carousel-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+details{
+  max-width:1200px;
+  margin:auto;
+  padding:0 16px 48px;
+}
+details[open] summary{
+  margin-bottom:12px;
+}
+summary{
+  font-weight:600;
+  cursor:pointer;
+}
+.cta-demo{
+  background:var(--color-accent);
+  color:#000;
+  text-align:center;
+  padding:48px 16px;
+}
+.cta-demo h3{
+  font-size:clamp(24px,5vw,32px);
+  margin-bottom:16px;
+}
+@media (max-width:768px){
+  .hero-product{
+    grid-template-columns:1fr;
+  }
+}
+footer{
+  background:var(--color-footer-bg);
+  color:var(--color-footer-text);
+  padding:48px 16px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+.footer-grid a{color:var(--color-footer-text);}
+.footer-grid a:hover{color:var(--color-accent);}
+.newsletter{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+}
+.newsletter input{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:var(--radius);
+}
+.newsletter button{
+  background:var(--color-primary);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:var(--radius);
+}
+.social-icons{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+}
+.social-icons a{
+  color:var(--color-footer-text);
+  font-size:20px;
+}
+.social-icons a:hover{color:var(--color-accent);}
+.bottom-bar{
+  text-align:center;
+  margin-top:24px;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header id="site-header">
+  <nav>
+    <a href="index.html" class="logo"><strong>Iontic</strong></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="product-investment.html" class="nav-link">Investment Management</a>
+      <a href="product-employee.html" class="nav-link">Employee Management</a>
+      <a href="product-tax.html" class="nav-link">Tax & Market Analysis</a>
+      <a href="product-reporting.html" class="nav-link active">Strategic Reporting</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Hero Section -->
+  <section class="hero-product" id="hero_image">
+    <div class="hero-image">
+      <img src="https://picsum.photos/800/600?random=reporting" alt="Strategic Reporting dashboard mockup">
+    </div>
+    <div class="hero-text">
+      <h1>Strategic Reporting</h1>
+      <p>Turn raw data into actionable insights with beautifully designed, customizable reports that empower executives to make data‑driven decisions faster.</p>
+      <div class="cta-group">
+        <button class="btn btn-primary">Start Free Trial</button>
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Video -->
+  <section class="intro-video" id="intro_video">
+    <div class="container">
+      <video autoplay muted loop playsinline poster="https://picsum.photos/1200/800?random=reportingvideo">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Feature List -->
+  <section class="features" id="feature_list">
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="layout-grid"></svg>
+      <h3>Customizable Dashboards</h3>
+      <p>Drag‑and‑drop widgets to build executive‑level dashboards that reflect your unique KPIs.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="file-text"></svg>
+      <h3>Automated Report Generation</h3>
+      <p>Schedule reports to be generated and delivered automatically via email or Slack.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="pie-chart"></svg>
+      <h3>Advanced Visualisations</h3>
+      <p>Interactive charts, heatmaps, and funnel analyses that surface trends at a glance.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="share-2"></svg>
+      <h3>Secure Sharing</h3>
+      <p>Control access with role‑based permissions and share reports with stakeholders securely.</p>
+    </div>
+    <div class="feature-card">
+      <svg class="feature-icon" data-lucide="activity"></svg>
+      <h3>Real‑time Data Refresh</h3>
+      <p>Connect to your data warehouse and see updates in seconds, ensuring decisions are based on the latest data.</p>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Screenshot Carousel -->
+  <section class="carousel interactive-demo" id="interactive_demo_screenshot">
+    <div class="carousel-inner">
+      <div class="carousel-item"><img src="https://picsum.photos/260/180?random=report1" alt="Demo screenshot 1"></div>
+      <div class="carousel-item"><img src="https://picsum.photos/260/180?random=report2" alt="Demo screenshot 2"></div>
+      <div class="carousel-item"><img src="https://picsum.photos/260/180?random=report3" alt="Demo screenshot 3"></div>
+    </div>
+  </section>
+
+  <!-- Technical Specifications Hidden -->
+  <details class="technical-specs" id="technical_specifications_hidden">
+    <summary>Technical Specs</summary>
+    <ul>
+      <li>Scalable cloud‑native architecture on AWS with auto‑scaling.</li>
+      <li>RESTful & GraphQL APIs, pre‑built ERP connectors.</li>
+      <li>Data encryption at rest and in transit (AES‑256, TLS 1.3).</li>
+      <li>Role‑based access control (RBAC) with SSO (SAML, OIDC).</li>
+      <li>High‑availability with multi‑AZ deployment and automated backups.</li>
+    </ul>
+  </details>
+
+  <!-- CTA Demo Banner -->
+  <section class="cta-demo" id="cta_demo">
+    <h3>Ready to transform your reporting?</h3>
+    <button class="btn btn-primary">Request a Live Demo</button>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Company</h4>
+      <a href="index.html">Home</a><br>
+      <a href="about.html">About Us</a><br>
+      <a href="pricing.html">Pricing</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <a href="product-investment.html">Investment Management</a><br>
+      <a href="product-employee.html">Employee Management</a><br>
+      <a href="product-tax.html">Tax & Market Analysis</a><br>
+      <a href="product-reporting.html">Strategic Reporting</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="testimonials.html">Testimonials</a><br>
+      <a href="faq.html">FAQ</a><br>
+      <a href="demo.html">Demo</a>
+    </div>
+    <div>
+      <h4>Stay Updated</h4>
+      <div class="newsletter">
+        <input type="email" placeholder="Your email">
+        <button type="submit">Subscribe</button>
+      </div>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">© 2024 Iontic. All rights reserved.</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Mobile navigation toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger && hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+
+  // Header scroll effect
+  const header = document.querySelector('header');
+  const heroHeight = document.querySelector('.hero')?.offsetHeight || 0;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroHeight) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+});
+</script>
+</body>
+</html>

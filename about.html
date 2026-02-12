@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us – Iontic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Impact&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#007bff;
+  --color-primary-dark:#0056b3;
+  --color-secondary:#6c757d;
+  --color-accent:#ffc107;
+  --color-bg:#f8f9fa;
+  --color-text:#343a40;
+  --color-footer-bg:#343a40;
+  --color-footer-text:#f8f9fa;
+  --radius:4px;
+  --transition:0.2s ease;
+  --shadow-btn:0 2px 4px rgba(0,0,0,0.15);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  opacity:0;
+  animation:fadeIn 0.5s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
+img,video{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:1000;
+}
+.skip-link:focus{left:0;}
+header{
+  position:sticky;
+  top:0;
+  background:transparent;
+  transition:background var(--transition),box-shadow var(--transition);
+  z-index:999;
+}
+header.scrolled{
+  background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:600;
+  color:var(--color-text);
+}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger span{
+  width:24px;height:2px;background:var(--color-text);
+}
+@media (max-width:768px){
+  .nav-links{
+    display:none;
+    flex-direction:column;
+    background:#fff;
+    position:absolute;
+    top:100%;left:0;right:0;
+    padding:16px;
+  }
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.hero{
+  position:relative;
+  height:calc(100vh - 80px);
+  overflow:hidden;
+  background:url('https://picsum.photos/1920/1080?random=1') center/cover fixed;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35));
+}
+.hero-content{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  padding:0 16px;
+}
+.hero-content h2{
+  font-family:'Open Sans',sans-serif;
+  font-size:clamp(24px,4vw,36px);
+  line-height:1.4;
+}
+section{
+  padding:48px 16px;
+}
+.section-title{
+  font-family:Impact,system-ui,sans-serif;
+  font-size:clamp(32px,6vw,48px);
+  color:var(--color-primary);
+  margin-bottom:24px;
+  text-align:center;
+}
+.mission{
+  max-width:1200px;
+  margin:auto;
+  background:var(--color-bg);
+}
+.timeline{
+  max-width:1200px;
+  margin:auto;
+  overflow-x:auto;
+  display:flex;
+  gap:24px;
+  padding-bottom:8px;
+}
+.timeline-item{
+  min-width:200px;
+  background:#fff;
+  padding:16px;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  flex-shrink:0;
+  text-align:center;
+}
+.timeline-item h4{
+  margin-bottom:8px;
+  color:var(--color-primary);
+}
+.team-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  gap:32px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.team-card{
+  background:rgba(255,255,255,0.85);
+  border-radius:8px;
+  padding:24px;
+  box-shadow:var(--shadow-card);
+  backdrop-filter:blur(4px);
+  text-align:center;
+  transition:transform 0.3s ease-out,box-shadow 0.3s ease-out;
+}
+.team-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+.team-card img{
+  width:180px;height:180px;
+  object-fit:cover;
+  border-radius:50%;
+  margin:auto;
+}
+.team-card h3{
+  margin-top:12px;
+  font-size:20px;
+  color:var(--color-text);
+}
+.team-card p{
+  margin-top:4px;
+  font-size:14px;
+  color:var(--color-secondary);
+}
+.cta-contact{
+  background:var(--color-primary);
+  color:#fff;
+  text-align:center;
+  padding:48px 16px;
+}
+.cta-contact h2{
+  font-family:'Impact',system-ui,sans-serif;
+  font-size:clamp(32px,6vw,48px);
+  margin-bottom:16px;
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+  box-shadow:var(--shadow-btn);
+}
+.btn-primary:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.03);
+}
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .6s ease-out,transform .6s ease-out;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;padding:16px;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+@media (max-width:640px){
+  .hero-content{padding:0 8px;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header id="site-header">
+  <nav aria-label="Main navigation">
+    <div class="logo"><a href="index.html"><strong>Iontic</strong></a></div>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link active" aria-current="page">About Us</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Hero Image -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>[subheadline] Technology Driving Business Transformation. [/subheadline]</h2>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission reveal">
+    <h2 class="section-title">Our Mission</h2>
+    <p>At Iontic we empower businesses to unlock the full potential of their data through an intuitive, secure, and scalable platform. Our mission is to simplify complex operations, accelerate growth, and foster data‑driven decision‑making for enterprises worldwide.</p>
+  </section>
+
+  <!-- Timeline Story -->
+  <section class="timeline reveal">
+    <h2 class="section-title">Our Story</h2>
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <i data-lucide="calendar" class="timeline-icon"></i>
+        <h4>2018</h4>
+        <p>Founding of Iontic – a small team of innovators set out to reimagine enterprise software.</p>
+      </div>
+      <div class="timeline-item">
+        <i data-lucide="calendar" class="timeline-icon"></i>
+        <h4>2020</h4>
+        <p>Launch of the first beta version, gaining early adopters in the fintech sector.</p>
+      </div>
+      <div class="timeline-item">
+        <i data-lucide="calendar" class="timeline-icon"></i>
+        <h4>2022</h4>
+        <p>Series A funding secured, enabling rapid product development and global expansion.</p>
+      </div>
+      <div class="timeline-item">
+        <i data-lucide="calendar" class="timeline-icon"></i>
+        <h4>2025</h4>
+        <p>Projected milestone: serving over 500 enterprise customers worldwide.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Profiles -->
+  <section class="team reveal">
+    <h2 class="section-title">Our Team</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="https://picsum.photos/seed/alex/180/180" alt="Alex Rivera">
+        <h3>Alex Rivera</h3>
+        <p>Chief Executive Officer</p>
+      </div>
+      <div class="team-card">
+        <img src="https://picsum.photos/seed/maria/180/180" alt="Maria Chen">
+        <h3>Maria Chen</h3>
+        <p>Chief Technology Officer</p>
+      </div>
+      <div class="team-card">
+        <img src="https://picsum.photos/seed/david/180/180" alt="David Patel">
+        <h3>David Patel</h3>
+        <p>Head of Product Design</p>
+      </div>
+      <div class="team-card">
+        <img src="https://picsum.photos/seed/sophia/180/180" alt="Sophia Gómez">
+        <h3>Sophia Gómez</h3>
+        <p>Director of Customer Success</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Contact -->
+  <section class="cta-contact">
+    <div class="cta-content">
+      <h2>Ready to Transform Your Business?</h2>
+      <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About Us</a><br>
+      <a href="pricing.html">Pricing</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>
+      <h4>Products</h4>
+      <a href="product-investment.html">Investment Management</a><br>
+      <a href="product-employee.html">Employee Management</a><br>
+      <a href="product-tax.html">Tax & Market Analysis</a><br>
+      <a href="product-reporting.html">Strategic Reporting</a>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <a href="demo.html">Demo</a><br>
+      <a href="testimonials.html">Testimonials</a><br>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>Stay Updated</h4>
+      <div class="newsletter">
+        <input type="email" placeholder="Your email">
+        <button type="submit">Subscribe</button>
+      </div>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar">© 2024 Iontic. All rights reserved.</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+  });
+
+  // Header scroll effect
+  const header = document.querySelector('header');
+  const heroHeight = document.querySelector('.hero')?.offsetHeight || 0;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroHeight / 2) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // IntersectionObserver for reveal animations
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1});
+  revealElements.forEach(el => observer.observe(el));
+
+  // Initialize Lucide icons
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>
