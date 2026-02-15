@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eurinum – Wallet Integrations</title>
+  <meta name="description" content="Seamless wallet connectivity with hardware, software and custodial integrations protected by multi‑layer encryption.">
+  <meta property="og:title" content="Eurinum – Wallet Integrations">
+  <meta property="og:description" content="Seamless wallet connectivity with hardware, software and custodial integrations protected by multi‑layer encryption.">
+  <meta property="og:image" content="https://picsum.photos/1200/630">
+  <meta property="og:type" content="website">
+  <style>
+    :root{
+      --color-black:#000000;
+      --color-teal:#008080;
+      --color-teal-dark:#006666;
+      --color-white:#FFFFFF;
+      --gradient-bg:linear-gradient(135deg,#1a1a1a,#2b2b2b);
+      --font-heading:'Montserrat',sans-serif;
+      --font-body:'Open Sans',sans-serif;
+      --radius:4px;
+      --transition:0.25s ease;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-white);
+      background:var(--gradient-bg);
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{
+      font-family:inherit;
+      cursor:pointer;
+      border:none;
+      background:none;
+    }
+    h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.2;}
+    h1{font-size:64px;letter-spacing:-0.5px;}
+    h2{font-size:48px;letter-spacing:-0.4px;}
+    h3{font-size:32px;}
+    h4{font-size:24px;}
+    p{font-size:16px;}
+    .container{max-width:1440px;margin:auto;padding:0 24px;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:0;
+      top:0;
+      width:auto;
+      height:auto;
+      padding:8px 16px;
+      background:var(--color-teal);
+      color:var(--color-white);
+      z-index:1000;
+    }
+    header{
+      position:sticky;
+      top:0;
+      background:rgba(0,0,0,0.8);
+      backdrop-filter:blur(8px);
+      z-index:100;
+      transition:background var(--transition);
+    }
+    header.scrolled{background:var(--color-black);}
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:700;
+      color:var(--color-white);
+    }
+    .nav-links{
+      display:flex;
+      gap:24px;
+    }
+    .nav-link{
+      position:relative;
+      padding:8px;
+      font-size:1rem;
+      color:var(--color-white);
+    }
+    .nav-link:hover,.nav-link:focus{color:var(--color-teal);}
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-4px;
+      height:2px;
+      background:var(--color-teal);
+    }
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:4px;
+      width:24px;
+      height:24px;
+      cursor:pointer;
+    }
+    .hamburger span{
+      height:3px;
+      background:var(--color-white);
+      border-radius:2px;
+    }
+    .mobile-menu{
+      display:none;
+      flex-direction:column;
+      gap:16px;
+      background:var(--color-black);
+      position:absolute;
+      top:64px;
+      left:0;
+      right:0;
+      padding:16px 24px;
+    }
+    .mobile-menu a{color:var(--color-white);}
+    .mobile-menu a.active{color:var(--color-teal);}
+    @media (max-width:768px){
+      .nav-links{display:none;}
+      .hamburger{display:flex;}
+      .mobile-menu{display:flex;}
+    }
+    .section{
+      padding:80px 0;
+    }
+    .integration-overview{
+      text-align:center;
+    }
+    .integration-overview h1{margin-bottom:24px;}
+    .security-features{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:48px;
+      align-items:start;
+    }
+    .icon-list{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    .icon-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .icon-item i{
+      width:48px;
+      height:48px;
+      stroke:var(--color-white);
+      transition:stroke var(--transition),transform var(--transition);
+    }
+    .icon-item:hover i{
+      stroke:var(--color-teal);
+      transform:rotate(3deg);
+    }
+    .security-copy{background:rgba(0,0,0,0.6);padding:48px;border-radius:var(--radius);}
+    .accordion{
+      margin-top:32px;
+    }
+    .accordion-item{
+      border-top:1px solid rgba(255,255,255,0.2);
+    }
+    .accordion-header{
+      width:100%;
+      text-align:left;
+      padding:16px 0;
+      font-size:1.25rem;
+      color:var(--color-white);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .accordion-header::after{
+      content:"▾";
+      font-size:1rem;
+      transition:transform var(--transition);
+    }
+    .accordion-header[aria-expanded="true"]::after{
+      transform:rotate(180deg);
+    }
+    .accordion-content{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height var(--transition);
+    }
+    .accordion-content ul,
+    .accordion-content ol{
+      padding-left:1.5rem;
+      margin-top:12px;
+    }
+    .accordion-content li{
+      margin-bottom:8px;
+    }
+    .accordion-content li::marker{
+      color:var(--color-teal);
+    }
+    .cta-primary{
+      display:inline-block;
+      background:var(--color-teal);
+      color:var(--color-white);
+      padding:0 32px;
+      min-height:48px;
+      line-height:48px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:background var(--transition),transform var(--transition);
+    }
+    .cta-primary:hover,.cta-primary:focus{
+      background:var(--color-teal-dark);
+      transform:scale(1.04);
+    }
+    footer{
+      background:var(--color-black);
+      color:var(--color-white);
+      padding:48px 0;
+    }
+    footer .footer-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:24px;
+      text-align:center;
+    }
+    footer .logo{font-size:1.2rem;margin-bottom:8px;}
+    footer a{color:var(--color-white);}
+    footer a:hover{color:var(--color-teal);}
+    @media (min-width:768px){
+      .footer-grid{grid-template-columns:1fr 1fr;text-align:left;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *,*::before,*::after{animation-duration:0.001ms !important;transition-duration:0.001ms !important;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header id="site-header">
+    <nav class="container" aria-label="Main navigation">
+      <a href="/" class="logo">Eurinum</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="invest.html" class="nav-link">Invest</a>
+        <a href="wallets.html" class="nav-link active">Wallets</a>
+        <a href="learn.html" class="nav-link">Learn</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="hamburger" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="invest.html" class="nav-link">Invest</a>
+        <a href="wallets.html" class="nav-link active">Wallets</a>
+        <a href="learn.html" class="nav-link">Learn</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Integration Overview -->
+    <section class="integration-overview section">
+      <div class="container">
+        <h1>Seamless Wallet Connectivity</h1>
+        <p>Connect your preferred crypto wallets securely. Eurinum supports hardware, software and custodial wallets, all protected by multi‑layer encryption.</p>
+      </div>
+    </section>
+
+    <!-- Security Features -->
+    <section class="security-features section">
+      <div class="container">
+        <div class="security-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;">
+          <!-- Icon List -->
+          <div class="icon-list">
+            <div class="icon-item">
+              <i data-lucide="hard-drive"></i>
+              <h4>Hardware Wallet Support</h4>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="code"></i>
+              <h4>Software Wallet Support</h4>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="cloud"></i>
+              <h4>Cold‑Storage Vault</h4>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="activity"></i>
+              <h4>Threat Monitoring</h4>
+            </div>
+          </div>
+
+          <!-- Copy & Accordion -->
+          <div class="security-copy">
+            <p>Our platform safeguards every transaction with advanced encryption, isolated key storage, and continuous monitoring to detect anomalies before they become threats.</p>
+
+            <div class="accordion" aria-label="Wallet integration details">
+              <!-- Hardware -->
+              <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false" aria-controls="panel-hardware" id="header-hardware">
+                  Hardware Wallet Support
+                </button>
+                <div class="accordion-content" id="panel-hardware" role="region" aria-labelledby="header-hardware">
+                  <h4>Setup Steps</h4>
+                  <ol>
+                    <li>Connect the hardware device via USB.</li>
+                    <li>Enter device PIN.</li>
+                    <li>Authorize the connection in Eurinum.</li>
+                    <li>Verify the public address.</li>
+                  </ol>
+                  <h4>Security Benefits</h4>
+                  <ul>
+                    <li>Private keys never leave the device.</li>
+                    <li>Isolated secure element.</li>
+                    <li>Physical confirmation for each transaction.</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- Software -->
+              <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false" aria-controls="panel-software" id="header-software">
+                  Software Wallet Support
+                </button>
+                <div class="accordion-content" id="panel-software" role="region" aria-labelledby="header-software">
+                  <h4>Setup Steps</h4>
+                  <ol>
+                    <li>Download the wallet app.</li>
+                    <li>Create a new wallet or import seed phrase.</li>
+                    <li>Enable two‑factor authentication.</li>
+                    <li>Connect to Eurinum via secured API.</li>
+                  </ol>
+                  <h4>Security Benefits</h4>
+                  <ul>
+                    <li>Encrypted local storage of keys.</li>
+                    <li>Biometric or PIN protection.</li>
+                    <li>Automatic firmware updates.</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- Custodial -->
+              <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false" aria-controls="panel-custodial" id="header-custodial">
+                  Custodial Wallet Support
+                </button>
+                <div class="accordion-content" id="panel-custodial" role="region" aria-labelledby="header-custodial">
+                  <h4>Setup Steps</h4>
+                  <ol>
+                    <li>Verify identity through KYC.</li>
+                    <li>Generate custodial wallet credentials.</li>
+                    <li>Set up multi‑signature policy.</li>
+                    <li>Link custodial wallet to your Eurinum account.</li>
+                  </ol>
+                  <h4>Security Benefits</h4>
+                  <ul>
+                    <li>Multi‑signature approval required.</li>
+                    <li>Cold‑storage of majority of assets.</li>
+                    <li>24/7 monitoring by security team.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-secondary section">
+      <div class="container">
+        <h2>Ready to secure your assets?</h2>
+        <a href="index.html" class="cta-primary">Explore Investments</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo">Eurinum</div>
+        <p>© 2024 Eurinum. All rights reserved.</p>
+      </div>
+      <div>
+        <a href="mailto:support@eurinum.com">support@eurinum.com</a> |
+        <a href="tel:+18005550199">+1 (800) 555‑0199</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js" defer></script>
+  <script defer>
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    hamburger?.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      mobileMenu.style.display = expanded ? 'none' : 'flex';
+    });
+
+    // Accordion functionality
+    document.querySelectorAll('.accordion-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        const content = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!expanded) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = null;
+        }
+      });
+    });
+
+    // Initialize Lucide icons after DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+
+    // Sticky header background change on scroll
+    const header = document.querySelector('header');
+    const observer = new IntersectionObserver(
+      ([e]) => e.target.classList.toggle('scrolled', e.intersectionRatio < 1),
+      {threshold: [1]}
+    );
+    observer.observe(document.querySelector('.hero') || document.body);
+  </script>
+</body>
+</html>

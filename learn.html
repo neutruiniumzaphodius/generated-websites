@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Learn - Eurinum Crypto Education</title>
+<meta name="description" content="Educational guides, glossary and market insights to help you navigate the crypto world with confidence.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://unpkg.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-black:#000000;
+  --color-teal:#008080;
+  --color-teal-dark:#006666;
+  --color-white:#FFFFFF;
+  --gradient-bg:linear-gradient(135deg,#1a1a1a,#2b2b2b);
+  --font-heading:'Montserrat',sans-serif;
+  --font-body:'Open Sans',sans-serif;
+  --radius:4px;
+  --transition:0.25s ease;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-white);
+  background:var(--gradient-bg);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  font-family:inherit;
+  cursor:pointer;
+  border:none;
+  background:none;
+}
+h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.2;}
+h1{font-size:64px;letter-spacing:-0.5px;}
+h2{font-size:48px;letter-spacing:-0.4px;}
+h3{font-size:32px;}
+h4{font-size:24px;}
+p{font-size:16px;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+
+/* Skip link */
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 16px;
+  background:var(--color-teal);
+  color:var(--color-white);
+  z-index:1000;
+}
+
+/* Header & Nav */
+header{
+  position:sticky;
+  top:0;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(8px);
+  z-index:100;
+  transition:background var(--transition);
+}
+header.scrolled{background:var(--color-black);}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:64px;
+}
+.logo{
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--color-white);
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  position:relative;
+  padding:8px;
+  font-size:1rem;
+  color:var(--color-white);
+}
+.nav-link:hover,.nav-link:focus{color:var(--color-teal);}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-teal);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  width:24px;
+  height:24px;
+  cursor:pointer;
+}
+.hamburger span{
+  height:3px;
+  background:var(--color-white);
+  border-radius:2px;
+}
+.mobile-menu{
+  display:none;
+  flex-direction:column;
+  gap:16px;
+  background:var(--color-black);
+  position:absolute;
+  top:64px;
+  left:0;
+  right:0;
+  padding:16px 24px;
+}
+.mobile-menu a{color:var(--color-white);}
+.mobile-menu a.active{color:var(--color-teal);}
+@media (max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:600px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:960px;
+  margin:auto;
+  padding:0 16px;
+}
+.hero-content h1,
+.hero-content h2{margin-bottom:24px;}
+
+/* CTA Primary */
+.cta-primary{
+  display:inline-block;
+  background:var(--color-teal);
+  color:var(--color-white);
+  padding:0 32px;
+  min-height:48px;
+  line-height:48px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition),transform var(--transition);
+}
+.cta-primary:hover,.cta-primary:focus{
+  background:var(--color-teal-dark);
+  transform:scale(1.04);
+}
+
+/* Resource Grid */
+.resource-grid{
+  padding:80px 0;
+}
+.resource-card{
+  background:#fff;
+  color:#000;
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,0.3);
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .45s ease-out,transform .45s ease-out;
+}
+.resource-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+.resource-card .card-body{
+  padding:16px;
+}
+.resource-card h3{
+  margin:0 0 8px;
+  font-size:24px;
+  color:#000;
+}
+.resource-card p{
+  font-size:14px;
+  line-height:1.4;
+  color:#222;
+}
+.resource-card:hover .underline{
+  width:100%;
+}
+.resource-card .underline{
+  height:3px;
+  background:var(--color-teal);
+  width:0;
+  transition:width var(--transition);
+}
+
+/* Glossary */
+.glossary{
+  padding:80px 0;
+}
+.glossary input{
+  background:rgba(255,255,255,0.1);
+  border:none;
+  color:var(--color-white);
+  padding:12px 8px;
+  width:100%;
+  font-size:1rem;
+  border-radius:var(--radius);
+}
+.glossary label{
+  position:absolute;
+  left:12px;
+  top:12px;
+  font-size:0.9rem;
+  color:var(--color-white);
+  pointer-events:none;
+  transition:var(--transition);
+}
+.glossary .input-wrapper{
+  position:relative;
+  margin-bottom:24px;
+}
+.glossary input:focus + label,
+.glossary input:not(:placeholder-shown) + label{
+  top:-8px;
+  left:8px;
+  font-size:0.75rem;
+  color:var(--color-teal);
+}
+.term{
+  border-top:1px solid rgba(255,255,255,0.2);
+}
+.term button{
+  width:100%;
+  text-align:left;
+  padding:12px 0;
+  font-size:1.1rem;
+  color:var(--color-white);
+  background:none;
+}
+.term button:hover,.term button:focus{color:var(--color-teal);}
+.definition{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease,opacity .35s ease;
+  opacity:0;
+}
+.definition.open{
+  max-height:200px;
+  opacity:1;
+}
+
+/* Market Insights */
+.market-insights{
+  padding:80px 0;
+  text-align:center;
+}
+#heatmap{
+  max-width:100%;
+  height:auto;
+}
+
+/* CTA */
+.cta-section{
+  padding:80px 0;
+  background:rgba(0,0,0,0.7);
+  text-align:center;
+}
+.cta-section h2{margin-bottom:24px;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header id="site-header">
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="logo">Eurinum</a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="invest.html" class="nav-link">Invest</a>
+        <a href="wallets.html" class="nav-link">Wallets</a>
+        <a href="learn.html" class="nav-link active">Learn</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="hamburger" aria-label="Open mobile menu" aria-controls="mobile-menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <a href="index.html">Home</a>
+        <a href="invest.html">Invest</a>
+        <a href="wallets.html">Wallets</a>
+        <a href="learn.html" class="active">Learn</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content container">
+      <h1>Learn Crypto with Eurinum</h1>
+      <h2>Guides, Glossary & Market Insights</h2>
+      <a href="#resource-grid" class="cta-primary">Explore Resources</a>
+    </div>
+  </section>
+
+  <!-- Resource Grid -->
+  <section id="resource-grid" class="resource-grid container">
+    <h2 class="reveal">Educational Resources</h2>
+    <div class="grid">
+      <div class="resource-card reveal">
+        <img src="https://picsum.photos/seed/guide1/600/180" alt="Guide thumbnail showing abstract technology">
+        <div class="card-body">
+          <h3>Blockchain Basics</h3>
+          <p>Understand the fundamentals of blockchain technology, its architecture, and how it powers cryptocurrencies.</p>
+        </div>
+        <div class="underline"></div>
+      </div>
+      <div class="resource-card reveal">
+        <img src="https://picsum.photos/seed/guide2/600/180" alt="Guide thumbnail of a digital ledger">
+        <div class="card-body">
+          <h3>Smart Contracts Explained</h3>
+          <p>Learn how smart contracts work, their use‑cases, and why they are pivotal for decentralized finance.</p>
+        </div>
+        <div class="underline"></div>
+      </div>
+      <div class="resource-card reveal">
+        <img src="https://picsum.photos/seed/guide3/600/180" alt="Guide thumbnail of a secure vault">
+        <div class="card-body">
+          <h3>Security Best Practices</h3>
+          <p>Tips and strategies to keep your crypto assets safe, from hardware wallets to phishing awareness.</p>
+        </div>
+        <div class="underline"></div>
+      </div>
+      <div class="resource-card reveal">
+        <img src="https://picsum.photos/seed/guide4/600/180" alt="Guide thumbnail of a market chart">
+        <div class="card-body">
+          <h3>Market Analysis 101</h3>
+          <p>Introduction to reading crypto market charts, indicators, and making informed decisions.</p>
+        </div>
+        <div class="underline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Glossary -->
+  <section class="glossary container" id="glossary">
+    <h2 class="reveal">Glossary</h2>
+    <div class="input-wrapper">
+      <input type="search" id="glossary-search" placeholder=" " aria-label="Search glossary">
+      <label for="glossary-search">Search terms</label>
+    </div>
+    <div class="terms">
+      <div class="term">
+        <button aria-expanded="false" aria-controls="def1">Blockchain</button>
+        <div class="definition" id="def1">
+          <p>A decentralized ledger that records all transactions across a network of computers.</p>
+        </div>
+      </div>
+      <div class="term">
+        <button aria-expanded="false" aria-controls="def2">Smart Contract</button>
+        <div class="definition" id="def2">
+          <p>Self‑executing contracts with the terms directly written into code, running on a blockchain.</p>
+        </div>
+      </div>
+      <div class="term">
+        <button aria-expanded="false" aria-controls="def3">Cold Wallet</button>
+        <div class="definition" id="def3">
+          <p>An offline storage device for private keys, providing maximum security against online threats.</p>
+        </div>
+      </div>
+      <div class="term">
+        <button aria-expanded="false" aria-controls="def4">Liquidity</button>
+        <div class="definition" id="def4">
+          <p>The ease with which an asset can be bought or sold without affecting its price.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Market Insights -->
+  <section class="market-insights container" id="market-insights">
+    <h2 class="reveal">Live Market Insights</h2>
+    <svg id="heatmap" role="img" aria-label="Heat map of top 10 cryptocurrencies by volume"></svg>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Dive Deeper?</h2>
+      <a href="invest.html" class="cta-primary">Explore Investments</a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="logo">Eurinum</div>
+      <p>© 2024 Eurinum. All rights reserved.</p>
+    </div>
+    <div>
+      <a href="mailto:support@eurinum.com">support@eurinum.com</a> |
+      <a href="tel:+18005550199">+1 (800) 555‑0199</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+/* Mobile menu */
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+hamburger?.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  mobileMenu.setAttribute('aria-hidden', expanded);
+});
+
+/* Header scroll effect */
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+/* Reveal on scroll */
+const revealElems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=> {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.1});
+revealElems.forEach(el=> observer.observe(el));
+
+/* Glossary accordion */
+document.querySelectorAll('.term button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    const def = btn.nextElementSibling;
+    if(!expanded){
+      def.classList.add('open');
+    }else{
+      def.classList.remove('open');
+    }
+  });
+});
+
+/* Simple heat map with D3 */
+function drawHeatMap(){
+  const data = [
+    {coin:'BTC',volume:120},
+    {coin:'ETH',volume:95},
+    {coin:'BNB',volume:70},
+    {coin:'SOL',volume:55},
+    {coin:'ADA',volume:40},
+    {coin:'DOT',volume:35},
+    {coin:'XRP',volume:30},
+    {coin:'LTC',volume:25},
+    {coin:'DOGE',volume:20},
+    {coin:'MATIC',volume:15}
+  ];
+  const width = 800;
+  const height = 300;
+  const svg = d3.select('#heatmap')
+    .attr('width', width)
+    .attr('height', height);
+  const x = d3.scaleBand()
+    .domain(data.map(d=>d.coin))
+    .range([0,width])
+    .padding(0.1);
+  const y = d3.scaleLinear()
+    .domain([0,d3.max(data,d=>d.volume)])
+    .nice()
+    .range([height,0]);
+  const color = d3.scaleSequential()
+    .domain([0,d3.max(data,d=>d.volume)])
+    .interpolator(d3.interpolateTurbo);
+  svg.append('g')
+    .selectAll('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('x', d=>x(d.coin))
+    .attr('y', d=>y(d.volume))
+    .attr('width', x.bandwidth())
+    .attr('height', d=>height - y(d.volume))
+    .attr('fill', d=>color(d.volume))
+    .attr('stroke', var(--color-white))
+    .attr('stroke-width',1);
+  // Axes
+  svg.append('g')
+    .attr('transform',`translate(0,${height})`)
+    .call(d3.axisBottom(x).tickSize(0))
+    .selectAll('text')
+    .attr('fill',var(--color-white));
+  svg.append('g')
+    .call(d3.axisLeft(y).ticks(5))
+    .selectAll('text')
+    .attr('fill',var(--color-white));
+}
+drawHeatMap();
+</script>
+</body>
+</html>

@@ -1,75 +1,464 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Eurinum – Simplify Your Crypto Journey</title>
+<meta name="description" content="Eurinum is a premium crypto‑access and investment platform offering secure wallet integration, AI‑driven portfolio tools, and seamless buy/sell experience.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://unpkg.com/lucide@latest">
+<style>
+:root{
+  --color-black:#000000;
+  --color-teal:#008080;
+  --color-teal-dark:#006666;
+  --color-white:#FFFFFF;
+  --gradient-bg:linear-gradient(135deg,#1a1a1a,#2b2b2b);
+  --font-heading:'Montserrat',sans-serif;
+  --font-body:'Open Sans',sans-serif;
+  --radius:4px;
+  --transition:0.25s ease;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-white);
+  background:var(--gradient-bg);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  font-family:inherit;
+  cursor:pointer;
+  border:none;
+  background:none;
+}
+h1,h2,h3,h4{font-family:var(--font-heading);font-weight:700;line-height:1.2;}
+h1{font-size:64px;letter-spacing:-0.5px;}
+h2{font-size:48px;letter-spacing:-0.4px;}
+h3{font-size:32px;}
+h4{font-size:24px;}
+p{font-size:16px;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 16px;
+  background:var(--color-teal);
+  color:var(--color-white);
+  z-index:1000;
+}
+/* Header & Nav */
+header{
+  position:sticky;
+  top:0;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(8px);
+  z-index:100;
+  transition:background var(--transition);
+}
+header.scrolled{background:var(--color-black);}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:64px;
+}
+.logo{
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--color-white);
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  position:relative;
+  padding:8px;
+  font-size:1rem;
+  color:var(--color-white);
+}
+.nav-link:hover,.nav-link:focus{color:var(--color-teal);}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-teal);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  width:24px;
+  height:24px;
+  cursor:pointer;
+}
+.hamburger span{
+  height:3px;
+  background:var(--color-white);
+  border-radius:2px;
+}
+.mobile-menu{
+  display:none;
+  flex-direction:column;
+  gap:16px;
+  background:var(--color-black);
+  position:absolute;
+  top:64px;
+  left:0;
+  right:0;
+  padding:16px 24px;
+}
+.mobile-menu a{color:var(--color-white);}
+.mobile-menu a.active{color:var(--color-teal);}
+@media (max-width:768px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .mobile-menu{display:flex;}
+}
+/* Hero */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:600px;
+  overflow:hidden;
+}
+.hero video{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  max-width:960px;
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  text-align:center;
+  padding:0 16px;
+}
+.hero-content h1,
+.hero-content h2{margin-bottom:24px;}
+.cta-primary{
+  display:inline-block;
+  background:var(--color-teal);
+  color:var(--color-white);
+  padding:0 32px;
+  min-height:48px;
+  line-height:48px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition),transform var(--transition);
+}
+.cta-primary:hover,.cta-primary:focus{
+  background:var(--color-teal-dark);
+  transform:scale(1.04);
+}
+.sticky-cta{
+  position:fixed;
+  top:16px;
+  right:16px;
+  z-index:1000;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity var(--transition);
+}
+.sticky-cta.show{
+  opacity:1;
+  pointer-events:auto;
+}
+/* Features */
+.features{
+  padding:96px 0;
+  background:rgba(0,0,0,0.6);
+}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:48px;
+}
+.feature-card{
+  text-align:center;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .45s ease-out,transform .45s ease-out;
+}
+.feature-card i{
+  width:48px;height:48px;margin-bottom:16px;
+  color:var(--color-white);
+  transition:stroke var(--transition),transform var(--transition);
+}
+.feature-card:hover i{
+  stroke:var(--color-teal);
+  transform:rotate(3deg);
+}
+.feature-card h3{
+  margin-bottom:12px;
+}
+.feature-card p{
+  font-size:14px;
+  line-height:1.4;
+}
+/* Testimonials */
+.testimonials{
+  position:relative;
+  padding:80px 0;
+  background:rgba(0,0,0,0.5);
+}
+.testimonial-slide{
+  opacity:0;
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:0 24px;
+  transition:opacity .6s ease;
+}
+.testimonial-slide.active{opacity:1;}
+.testimonial-slide blockquote{
+  font-size:1.25rem;
+  line-height:1.4;
+  margin-bottom:16px;
+}
+.testimonial-slide cite{
+  font-size:1rem;
+  font-weight:600;
+}
+/* Secondary CTA */
+.cta-secondary{
+  padding:80px 0;
+  background:rgba(0,0,0,0.7);
+  text-align:center;
+}
+.cta-secondary h2{margin-bottom:24px;}
+.cta-secondary .cta-primary{margin-top:16px;}
+/* Footer */
+footer{
+  background:var(--color-black);
+  color:var(--color-white);
+  padding:48px 0;
+}
+footer .footer-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:24px;
+  text-align:center;
+}
+footer .logo{font-size:1.2rem;margin-bottom:8px;}
+footer a{color:var(--color-white);}
+footer a:hover{color:var(--color-teal);}
+@media (min-width:768px){
+  footer .footer-grid{grid-template-columns:1fr 1fr;text-align:left;}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.001ms !important;transition-duration:0.001ms !important;}
+}
+</style>
+<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header id="site-header">
+  <nav class="container" aria-label="Main navigation">
+    <a href="index.html" class="logo">Eurinum</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="invest.html" class="nav-link">Invest</a>
+      <a href="wallets.html" class="nav-link">Wallets</a>
+      <a href="learn.html" class="nav-link">Learn</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="invest.html" class="nav-link">Invest</a>
+      <a href="wallets.html" class="nav-link">Wallets</a>
+      <a href="learn.html" class="nav-link">Learn</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Hero">
+    <video autoplay muted loop playsinline loading="lazy" poster="https://picsum.photos/1920/1080">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1 id="hero-headline">Eurinum: Simplify Your Crypto Journey.</h1>
+      <h2 id="hero-subheadline">Secure Access. Intelligent Investment. Seamless Experience.</h2>
+      <a href="invest.html" class="cta-primary" id="hero-cta">Explore Investments</a>
+    </div>
+    <a href="invest.html" class="cta-primary sticky-cta" id="sticky-cta">Explore Investments</a>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" aria-label="Key Features">
+    <div class="container">
+      <div class="features-grid">
+        <article class="feature-card">
+          <i data-lucide="lock"></i>
+          <h3>Secure Wallet Integration</h3>
+          <p>Connect your favorite hardware and software wallets with end‑to‑end encryption, guaranteeing that only you control your assets.</p>
+        </article>
+        <article class="feature-card">
+          <i data-lucide="cpu"></i>
+          <h3>Smart Portfolio Tools</h3>
+          <p>AI‑driven analytics suggest optimal allocations, automatically rebalancing to stay ahead of market swings.</p>
+        </article>
+        <article class="feature-card">
+          <i data-lucide="shield"></i>
+          <h3>Advanced Security Protocols</h3>
+          <p>Multi‑factor authentication, real‑time monitoring, and industry‑leading encryption keep your funds safe.</p>
+        </article>
+        <article class="feature-card">
+          <i data-lucide="swap-horizontal"></i>
+          <h3>Seamless Buy/Sell</h3>
+          <p>Fast, frictionless transactions with market‑leading liquidity and transparent pricing.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Carousel -->
+  <section class="testimonials" aria-label="Testimonials">
+    <div class="container">
+      <div class="testimonial-slide active">
+        <blockquote>"Eurinum gave me the confidence to manage my crypto assets securely while its AI tools grew my portfolio effortlessly."</blockquote>
+        <cite>— Alex M., Institutional Investor</cite>
+      </div>
+      <div class="testimonial-slide">
+        <blockquote>"The seamless integration with my hardware wallet saved me hours of setup and gave me peace of mind."</blockquote>
+        <cite>— Priya R., Crypto Enthusiast</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary CTA -->
+  <section class="cta-secondary" aria-label="Call to Action">
+    <div class="container">
+      <h2>Ready to Elevate Your Crypto Experience?</h2>
+      <p>Join thousands of professionals who trust Eurinum for secure, intelligent investing.</p>
+      <a href="invest.html" class="cta-primary">Explore Investments</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-left">
+        <div class="logo">Eurinum</div>
+        <p>&copy; 2024 Eurinum. All rights reserved.</p>
+      </div>
+      <div class="footer-right">
+        <nav aria-label="Footer navigation">
+          <a href="index.html">Home</a> |
+          <a href="invest.html">Invest</a> |
+          <a href="wallets.html">Wallets</a> |
+          <a href="learn.html">Learn</a> |
+          <a href="contact.html">Contact</a>
         </nav>
-    </header>
+      </div>
+    </div>
+  </div>
+</footer>
+</main>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<script defer>
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  // Mobile menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+    mobileMenu.setAttribute('aria-hidden', expanded);
+  });
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  // Sticky CTA handling
+  const stickyCTA = document.getElementById('sticky-cta');
+  const heroHeadline = document.getElementById('hero-headline');
+  const heroSub = document.getElementById('hero-subheadline');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    if (scrolled > 200) {
+      stickyCTA.classList.add('show');
+    } else {
+      stickyCTA.classList.remove('show');
+    }
+    // fade out headline
+    const fadePoint = 150;
+    const opacity = Math.max(0, 1 - scrolled / fadePoint);
+    heroHeadline.style.opacity = opacity;
+    heroSub.style.opacity = opacity;
+  });
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  // Header scroll class
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+  // Feature cards reveal on scroll
+  const featureCards = document.querySelectorAll('.feature-card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.2});
+  featureCards.forEach(card => observer.observe(card));
+
+  // Testimonial carousel
+  const slides = document.querySelectorAll('.testimonial-slide');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 8000);
+});
+</script>
 </body>
 </html>
