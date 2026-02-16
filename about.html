@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me – Patty Alvarez Medicare Services</title>
+  <meta name="description" content="Learn about Patty Alvarez, your trusted Medicare specialist in Las Vegas. Discover her background, credentials, and personal story.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --color-primary:#29ABE2;
+      --color-secondary:#F0F4F8;
+      --color-accent:#FFC107;
+      --color-bg:#FFFFFF;
+      --color-text:#222222;
+      --color-muted:#777777;
+      --color-border:#CCCCCC;
+      --color-error:#FF4D4D;
+      --color-success:#28A745;
+      --radius:4px;
+      --shadow:0 2px 6px rgba(0,0,0,0.08);
+      --transition:0.2s ease-out;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Open Sans",sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:var(--font-body);
+      font-size:16px;
+      line-height:1.5;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-secondary) 0%,var(--color-bg) 100%);
+      scroll-behavior:smooth;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:2px solid var(--color-primary);outline-offset:2px;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:#000;
+      color:#fff;
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      position:sticky;
+      top:0;
+      width:100%;
+      background:transparent;
+      transition:background var(--transition);
+      z-index:10;
+    }
+    .nav-container{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:600;
+      font-family:var(--font-heading);
+      color:var(--color-primary);
+    }
+    nav{
+      display:flex;
+      gap:24px;
+    }
+    .nav-link{
+      position:relative;
+      font-family:var(--font-heading);
+      font-weight:600;
+      color:var(--color-text);
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      background:var(--color-accent);
+      transition:width var(--transition);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      width:100%;
+    }
+    .mobile-toggle{
+      display:none;
+      background:none;
+      border:none;
+    }
+    .mobile-toggle svg{stroke:var(--color-primary);}
+    @media (max-width:639px){
+      .mobile-toggle{display:block;}
+      nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:var(--color-bg);
+        flex-direction:column;
+        gap:0;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height var(--transition);
+      }
+      nav.open{max-height:300px;}
+      .nav-link{
+        padding:12px 16px;
+        border-bottom:1px solid var(--color-secondary);
+      }
+    }
+    main{max-width:1200px;margin:auto;padding:0 16px;}
+    section{
+      padding:48px 0;
+      opacity:0;
+      transform:translateY(30px);
+      transition:opacity .6s var(--transition),transform .6s var(--transition);
+    }
+    section.visible{opacity:1;transform:translateY(0);}
+    /* Hero Headshot */
+    .hero-headshot{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:24px;
+      background:var(--color-secondary);
+      padding:48px 0;
+      text-align:center;
+    }
+    .hero-headshot .portrait{
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .hero-headshot h1{
+      font-family:var(--font-heading);
+      font-size:2.25rem;
+      font-weight:700;
+      color:var(--color-primary);
+      margin:0;
+    }
+    /* Generic Section Title */
+    .section-title{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      margin-bottom:32px;
+      text-align:center;
+    }
+    /* All About Me Heading */
+    .about-heading{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      text-align:center;
+      margin:0 0 24px;
+      position:relative;
+    }
+    .about-heading::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      background:var(--color-accent);
+      transform:translateX(-50%);
+      transition:width var(--transition);
+    }
+    .about-heading:hover::after{
+      width:100%;
+    }
+    /* Biography */
+    .biography{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:24px;
+      align-items:start;
+    }
+    .biography img{
+      border-radius:8px;
+      box-shadow:var(--shadow);
+    }
+    .biography h2{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      margin:0 0 16px;
+    }
+    @media (min-width:640px){
+      .biography{grid-template-columns:1fr 1fr;}
+    }
+    /* License Badge */
+    .license-badge{
+      display:inline-flex;
+      align-items:center;
+      background:var(--color-accent);
+      color:#fff;
+      padding:6px 12px;
+      border-radius:9999px;
+      font-family:var(--font-heading);
+      font-weight:600;
+      font-size:1.125rem;
+      margin-bottom:12px;
+    }
+    .license-sub{
+      font-size:.95rem;
+      color:var(--color-text);
+    }
+    /* Photo Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:24px;
+    }
+    .gallery-item{
+      overflow:hidden;
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      transition:transform .15s ease-out,box-shadow .15s;
+    }
+    .gallery-item:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    .gallery-item img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    /* Footer */
+    footer{
+      background:var(--color-primary);
+      color:#fff;
+      text-align:center;
+      padding:32px 16px;
+    }
+    .footer-nav{
+      display:flex;
+      gap:24px;
+      justify-content:center;
+      margin-bottom:12px;
+    }
+    .footer-nav a{
+      font-family:var(--font-heading);
+      font-weight:600;
+    }
+    .footer-nav a:hover{opacity:0.8;}
+    .mobile-toggle{
+      display:none;
+      background:none;
+      border:none;
+      font-size:1.5rem;
+    }
+    @media (max-width:639px){
+      .mobile-toggle{display:block;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header id="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="logo" aria-label="Patty Alvarez Medicare Services">Patty<span style="color:var(--color-primary);">Alvarez</span></a>
+      <button class="mobile-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav id="primary-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link active">About Me</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Headshot -->
+    <section class="hero-headshot visible">
+      <div class="hero-content" style="background:var(--color-secondary);padding:48px 0;text-align:center;">
+        <div class="portrait" style="margin:auto;width:240px;height:240px;border-radius:50%;overflow:hidden;box-shadow:var(--shadow);">
+          <picture>
+            <source type="image/webp" srcset="https://picsum.photos/seed/patty/480/640.webp">
+            <img src="https://picsum.photos/seed/patty/480/640" alt="Patty Alvarez smiling" loading="lazy">
+          </picture>
+        </div>
+        <h1 style="font-family:var(--font-heading);font-size:2.25rem;font-weight:700;color:var(--color-primary);margin-top:24px;">Patty Alvarez, Medicare Specialist</h1>
+      </div>
+    </section>
+
+    <!-- All About Me Heading -->
+    <section class="section visible" id="about-heading">
+      <h2 class="about-heading">All About Me</h2>
+    </section>
+
+    <!-- Biography -->
+    <section class="section visible" id="biography">
+      <div class="intro">
+        <div class="biography-text">
+          <h2>Biography</h2>
+          <p>Born and raised in Las Vegas, Patty discovered early on the challenges seniors faced when navigating healthcare. After earning her degree in Health Administration, she spent a decade working in hospital administration before transitioning to Medicare consulting. Her passion lies in simplifying complex insurance jargon into clear, actionable advice for her clients.</p>
+        </div>
+        <picture class="biography-img">
+          <source type="image/webp" srcset="https://picsum.photos/seed/biography/500/600.webp">
+          <img src="https://picsum.photos/seed/biography/500/600" alt="Patty Alvarez in a casual setting" loading="lazy">
+        </picture>
+      </div>
+    </section>
+
+    <!-- Licenses -->
+    <section class="section visible" id="license">
+      <div style="text-align:center;">
+        <div class="license-badge">4136902</div>
+        <p class="license-sub">Certified Medicare Insurance Agent, Nevada Department of Insurance</p>
+      </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="section visible" id="photo-gallery">
+      <h2 class="section-title">Photo Gallery</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <picture>
+            <source type="image/webp" srcset="https://picsum.photos/seed/gallery1/400/300.webp">
+            <img src="https://picsum.photos/seed/gallery1/400/300" alt="Patty at community event" loading="lazy">
+          </picture>
+        </div>
+        <div class="gallery-item">
+          <picture>
+            <source type="image/webp" srcset="https://picsum.photos/seed/gallery2/400/300.webp">
+            <img src="https://picsum.photos/seed/gallery2/400/300" alt="Patty speaking at a health seminar" loading="lazy">
+          </picture>
+        </div>
+        <div class="gallery-item">
+          <picture>
+            <source type="image/webp" srcset="https://picsum.photos/seed/gallery3/400/300.webp">
+            <img src="https://picsum.photos/seed/gallery3/400/300" alt="Patty with her family" loading="lazy">
+          </picture>
+        </div>
+        <div class="gallery-item">
+          <picture>
+            <source type="image/webp" srcset="https://picsum.photos/seed/gallery4/400/300.webp">
+            <img src="https://picsum.photos/seed/gallery4/400/300" alt="Patty at her office" loading="lazy">
+          </picture>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <nav class="footer-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link active">About Me</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+    <p style="margin-top:12px;font-size:.875rem;">© 2024 Patty Alvarez Medicare Services. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const nav = document.querySelector('nav');
+    mobileToggle?.addEventListener('click', () => {
+      const expanded = mobileToggle.getAttribute('aria-expanded') === 'true' || false;
+      mobileToggle.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Scroll-triggered reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+
+    document.querySelectorAll('section, .hero-headshot, .section').forEach(el => observer.observe(el));
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

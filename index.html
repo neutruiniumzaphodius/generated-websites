@@ -1,75 +1,569 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patty Alvarez Medicare Services – Home</title>
+  <meta name="description" content="Professional, empathetic Medicare guidance for seniors in Las Vegas. Schedule a free consultation with Patty Alvarez today.">
+  <meta property="og:title" content="Patty Alvarez Medicare Services – Home">
+  <meta property="og:description" content="Professional, empathetic Medicare guidance for seniors in Las Vegas.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --color-primary:#29ABE2;
+      --color-secondary:#F0F4F8;
+      --color-accent:#FFC107;
+      --color-bg:#FFFFFF;
+      --color-text:#222222;
+      --color-muted:#777777;
+      --color-border:#CCCCCC;
+      --color-error:#FF4D4D;
+      --color-success:#28A745;
+      --radius:4px;
+      --shadow:0 2px 6px rgba(0,0,0,0.08);
+      --transition:0.2s ease-out;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Open Sans",sans-serif;
+    }
+    *,*:before,*:after{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:var(--font-body);
+      font-size:16px;
+      line-height:1.5;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-secondary) 0%,var(--color-bg) 100%);
+      scroll-behavior:smooth;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:2px solid var(--color-primary);outline-offset:2px;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:#000;
+      color:#fff;
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      position:sticky;
+      top:0;
+      width:100%;
+      background:transparent;
+      transition:background var(--transition);
+      z-index:10;
+    }
+    .nav-container{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:600;
+      font-family:var(--font-heading);
+      color:var(--color-primary);
+    }
+    nav{
+      display:flex;
+      gap:24px;
+    }
+    .nav-link{
+      position:relative;
+      font-family:var(--font-heading);
+      font-weight:600;
+      color:var(--color-text);
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      background:var(--color-accent);
+      transition:width var(--transition);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      width:100%;
+    }
+    .mobile-toggle{
+      display:none;
+      background:none;
+      border:none;
+    }
+    .mobile-toggle svg{stroke:var(--color-primary);}
+    @media (max-width:639px){
+      .mobile-toggle{display:block;}
+      nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:var(--color-bg);
+        flex-direction:column;
+        gap:0;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height var(--transition);
+      }
+      nav.open{max-height:300px;}
+      .nav-link{
+        padding:12px 16px;
+        border-bottom:1px solid var(--color-secondary);
+      }
+    }
+    main{max-width:1200px;margin:auto;padding:0 16px;}
+    section{padding:48px 0;opacity:0;transform:translateY(30px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+    section.visible{opacity:1;transform:translateY(0);}
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns:1fr;
+      align-items:center;
+      gap:24px;
+      background:linear-gradient(to bottom,var(--color-secondary) 0%,var(--color-bg) 100%);
+    }
+    .hero-content{
+      max-width:600px;
+    }
+    .hero h1{
+      font-family:var(--font-heading);
+      font-size:2.25rem;
+      font-weight:700;
+      color:var(--color-primary);
+      margin:0 0 16px;
+    }
+    .hero h2{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      font-weight:400;
+      color:var(--color-text);
+      margin:0 0 24px;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:var(--color-text);
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-weight:600;
+      font-size:1.125rem;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      transition:transform .2s ease-out,background .2s;
+    }
+    .btn-primary:hover{
+      transform:scale(1.05);
+      background:#FFB300;
+    }
+    .hero-img{
+      width:100%;
+      max-width:500px;
+      border-radius:8px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .hero-img img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    @media (min-width:640px){
+      .hero{grid-template-columns:1fr 1fr;}
+    }
+    /* Intro */
+    .intro{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:24px;
+      align-items:center;
+    }
+    .intro img{
+      border-radius:8px;
+      box-shadow:var(--shadow);
+    }
+    .intro h2{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      margin:0 0 16px;
+    }
+    .icon-row{
+      display:flex;
+      gap:32px;
+      justify-content:center;
+      margin-top:24px;
+    }
+    .icon-item{
+      text-align:center;
+      color:var(--color-primary);
+    }
+    .icon-item svg{
+      width:48px;
+      height:48px;
+    }
+    .icon-label{
+      margin-top:8px;
+      font-size:.875rem;
+      font-weight:600;
+    }
+    @media (min-width:640px){
+      .intro{grid-template-columns:1fr 1fr;}
+    }
+    /* Quick Links */
+    .quick-links{
+      text-align:center;
+    }
+    .quick-links h2{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      margin-bottom:32px;
+    }
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:24px;
+    }
+    .card{
+      background:#fff;
+      border:1px solid var(--color-secondary);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      transition:transform .15s ease-out,box-shadow .15s;
+      cursor:pointer;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    .card h3{
+      font-family:var(--font-heading);
+      font-size:1.125rem;
+      color:var(--color-text);
+      margin:0;
+    }
+    .card:hover h3{
+      text-decoration:underline;
+      text-underline-offset:4px;
+      text-decoration-color:var(--color-accent);
+    }
+    /* Testimonials */
+    .testimonials{
+      position:relative;
+    }
+    .testimonials h2{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      text-align:center;
+      margin-bottom:32px;
+    }
+    .testimonial-slider{
+      overflow:hidden;
+      max-width:800px;
+      margin:auto;
+    }
+    .testimonial-track{
+      display:flex;
+      transition:transform .5s ease;
+    }
+    .testimonial{
+      min-width:100%;
+      padding:24px;
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .testimonial p{
+      font-style:italic;
+      margin:0 0 12px;
+    }
+    .testimonial .author{
+      font-weight:600;
+      font-size:.95rem;
+    }
+    .carousel-nav{
+      position:absolute;
+      top:50%;
+      left:0;
+      right:0;
+      display:flex;
+      justify-content:space-between;
+      transform:translateY(-50%);
+    }
+    .carousel-btn{
+      background:rgba(255,255,255,.8);
+      border-radius:50%;
+      width:40px;
+      height:40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .carousel-btn:hover{background:var(--color-primary);color:#fff;}
+    /* Map Snippet */
+    .map-snippet{
+      text-align:center;
+    }
+    .map-snippet h2{
+      font-family:var(--font-heading);
+      font-size:1.5rem;
+      color:var(--color-primary);
+      margin-bottom:24px;
+    }
+    .map-wrapper{
+      display:inline-block;
+      overflow:hidden;
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      transition:transform .2s;
+    }
+    .map-wrapper:hover{
+      transform:scale(1.05);
+    }
+    /* CTA Footer */
+    .cta-footer{
+      background:var(--color-primary);
+      color:#fff;
+      text-align:center;
+      padding:48px 16px;
+    }
+    .cta-footer h2{
+      font-family:var(--font-heading);
+      font-size:1.75rem;
+      margin:0 0 24px;
+    }
+    .btn-secondary{
+      background:transparent;
+      color:#fff;
+      border:2px solid #fff;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-weight:600;
+      font-size:1.125rem;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      transition:background .2s,transform .2s;
+    }
+    .btn-secondary:hover{
+      background:rgba(255,255,255,.2);
+      transform:scale(1.05);
+    }
+    footer{
+      background:#222;
+      color:#ccc;
+      text-align:center;
+      padding:24px;
+      font-size:.875rem;
+    }
+  </style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header>
+    <div class="nav-container">
+      <div class="logo">Patty Alvarez</div>
+      <button class="mobile-toggle" aria-label="Toggle navigation" aria-controls="main-nav" aria-expanded="false">
+        <svg width="24" height="24"><use xlink:href="#menu"/></svg>
+      </button>
+      <nav id="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="plans.html" class="nav-link">Medicare Plans</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1>tagline</h1><!-- placeholder for script replacement -->
+        <h2>Professional, empathetic Medicare guidance for seniors in Las Vegas.</h2>
+        <a href="contact.html#contact-form" class="btn-primary">Schedule a Free Consultation</a>
+      </div>
+      <div class="hero-img">
+        <picture>
+          <source type="image/webp" srcset="https://picsum.photos/800/600.webp?random=1">
+          <img src="https://picsum.photos/800/600?random=1" alt="Patty Alvarez consulting a senior couple" loading="lazy" width="800" height="600">
+        </picture>
+      </div>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+    <!-- Intro Section -->
+    <section class="intro">
+      <img src="https://picsum.photos/600/400?random=2" alt="Friendly consultation" loading="lazy">
+      <div>
+        <h2>Welcome to Your Trusted Medicare Partner</h2>
+        <p>Patty Alvarez provides personalized, clear, and compassionate Medicare assistance to seniors and their families throughout Las Vegas. Our mission is to simplify the Medicare journey, ensuring you receive the coverage you deserve.</p>
+        <div class="icon-row">
+          <div class="icon-item">
+            <svg data-lucide="heart"></svg>
+            <div class="icon-label">Compassion</div>
+          </div>
+          <div class="icon-item">
+            <svg data-lucide="check-circle"></svg>
+            <div class="icon-label">Expertise</div>
+          </div>
+          <div class="icon-item">
+            <svg data-lucide="shield"></svg>
+            <div class="icon-label">Trust</div>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+      <h2>Explore</h2>
+      <div class="cards">
+        <div class="card" onclick="location.href='about.html'"><h3>About</h3></div>
+        <div class="card" onclick="location.href='services.html'"><h3>Services</h3></div>
+        <div class="card" onclick="location.href='plans.html'"><h3>Medicare Plans</h3></div>
+        <div class="card" onclick="location.href='contact.html'"><h3>Contact</h3></div>
+        <div class="card" onclick="location.href='blog.html'"><h3>Blog</h3></div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial-slider">
+        <div class="testimonial-track">
+          <div class="testimonial">
+            <p>“Patty made the entire Medicare process painless and understandable.”</p>
+            <div class="author">— Maria G., Las Vegas</div>
+          </div>
+          <div class="testimonial">
+            <p>“Her empathy and expertise gave us confidence in our choices.”</p>
+            <div class="author">— James & Linda H., Henderson</div>
+          </div>
+          <div class="testimonial">
+            <p>“I recommend Patty to every senior looking for trustworthy guidance.”</p>
+            <div class="author">— Carlos M., North Las Vegas</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn prev" aria-label="Previous testimonial"><svg width="24" height="24"><use xlink:href="#chevron-left"/></svg></button>
+        <button class="carousel-btn next" aria-label="Next testimonial"><svg width="24" height="24"><use xlink:href="#chevron-right"/></svg></button>
+      </div>
+    </section>
+
+    <!-- Map Snippet -->
+    <section class="map-snippet">
+      <h2>Find Us</h2>
+      <div class="map-wrapper">
+        <iframe class="map-embed" src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=2250+E+Tropicana+Ave+Ste+4+Las+Vegas+NV" width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- CTA Footer -->
+    <section class="cta-footer">
+      <h2>Ready to Secure Your Medicare Future?</h2>
+      <a href="contact.html#contact-form" class="btn-secondary">Schedule a Free Consultation</a>
+    </section>
+  </main>
+
+  <footer>
+    © 2024 Patty Alvarez Medicare Services. All rights reserved.
+  </footer>
+
+  <!-- SVG Icons for Lucide -->
+  <svg style="display:none;">
+    <symbol id="menu" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
+    <symbol id="chevron-left" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="chevron-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  </svg>
+
+  <script>
+    // Mobile navigation toggle
+    const toggleBtn = document.querySelector('.mobile-toggle');
+    const nav = document.getElementById('main-nav');
+    toggleBtn.addEventListener('click', () => {
+      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true' || false;
+      toggleBtn.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Sticky nav background change
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.style.background = '#fff';
+      } else {
+        header.style.background = 'transparent';
+      }
+    });
+
+    // Intersection Observer for section reveal
+    const observerOptions = {threshold: 0.15};
+    const observer = new IntersectionObserver((entries,obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    },observerOptions);
+    document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+    // Testimonial carousel
+    const track = document.querySelector('.testimonial-track');
+    const slides = Array.from(track.children);
+    let currentIndex = 0;
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+
+    function updateCarousel(){
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    });
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateCarousel();
+    });
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    },6000);
+
+    // Replace placeholder tagline and cta text with verbatim strings
+    document.querySelector('.hero h1').textContent = "tagline";
+    document.querySelector('.hero .btn-primary').textContent = "Schedule a Free Consultation";
+    document.querySelector('.hero .btn-primary').setAttribute('href','contact.html#contact-form');
+  </script>
+
+  <!-- Google Analytics placeholder -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </body>
 </html>

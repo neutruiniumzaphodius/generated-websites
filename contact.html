@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact – Patty Alvarez Medicare Services</title>
+  <meta name="description" content="Get in touch with Patty Alvarez Medicare Services for a free consultation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#29ABE2;
+      --color-secondary:#F0F4F8;
+      --color-accent:#FFC107;
+      --color-bg:#FFFFFF;
+      --color-text:#222222;
+      --color-muted:#777777;
+      --color-border:#CCCCCC;
+      --color-error:#FF4D4D;
+      --color-success:#28A745;
+      --radius:4px;
+      --shadow:0 2px 6px rgba(0,0,0,0.08);
+      --transition:0.2s ease-out;
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Open Sans",sans-serif;
+    }
+    *,*:before,*:after{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:var(--font-body);
+      font-size:16px;
+      line-height:1.5;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-secondary) 0%,var(--color-bg) 100%);
+      scroll-behavior:smooth;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:2px solid var(--color-primary);outline-offset:2px;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:#000;
+      color:#fff;
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      position:sticky;
+      top:0;
+      width:100%;
+      background:transparent;
+      transition:background var(--transition);
+      z-index:10;
+    }
+    .nav-container{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:600;
+      font-family:var(--font-heading);
+      color:var(--color-primary);
+    }
+    nav{
+      display:flex;
+      gap:24px;
+    }
+    .nav-link{
+      position:relative;
+      font-family:var(--font-heading);
+      font-weight:600;
+      color:var(--color-text);
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      background:var(--color-accent);
+      transition:width var(--transition);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      width:100%;
+    }
+    .mobile-toggle{
+      display:none;
+      background:none;
+      border:none;
+    }
+    .mobile-toggle svg{stroke:var(--color-primary);}
+    @media (max-width:639px){
+      .mobile-toggle{display:block;}
+      nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:var(--color-bg);
+        flex-direction:column;
+        gap:0;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height var(--transition);
+      }
+      nav.open{max-height:300px;}
+      .nav-link{
+        padding:12px 16px;
+        border-bottom:1px solid var(--color-secondary);
+      }
+    }
+    main{max-width:1200px;margin:auto;padding:0 16px;}
+    section{
+      padding:48px 0;
+      opacity:0;
+      transform:translateY(30px);
+      transition:opacity .6s var(--transition),transform .6s var(--transition);
+    }
+    section.visible{opacity:1;transform:translateY(0);}
+    .btn-primary{
+      background:var(--color-accent);
+      color:var(--color-text);
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-weight:600;
+      font-size:1.125rem;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      transition:transform .2s ease-out,background .2s;
+    }
+    .btn-primary:hover{
+      transform:scale(1.05);
+      background:#FFB300;
+    }
+    .card{
+      background:#fff;
+      border:1px solid var(--color-secondary);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      transition:transform .15s ease-out,box-shadow .15s;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    .footer{
+      background:var(--color-primary);
+      color:#fff;
+      text-align:center;
+      padding:32px 16px;
+      margin-top:48px;
+    }
+    .footer .logo{color:#fff;}
+    .footer nav{
+      justify-content:center;
+      gap:16px;
+      margin-top:16px;
+    }
+    .footer .nav-link::after{background:#fff;}
+    .social-links{
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      margin-top:12px;
+    }
+    .social-links button{
+      color:var(--color-primary);
+      transition:color var(--transition);
+    }
+    .social-links button:hover{
+      color:var(--color-accent);
+    }
+    .form-group{
+      margin-bottom:20px;
+    }
+    .form-group label{
+      display:block;
+      margin-bottom:4px;
+      font-weight:600;
+    }
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+      padding:10px;
+      border:1px solid var(--color-border);
+      border-radius:var(--radius);
+      font-family:inherit;
+      font-size:1rem;
+      transition:border-color var(--transition);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus{
+      outline:2px solid var(--color-primary);
+    }
+    .error-msg{
+      color:var(--color-error);
+      font-size:.875rem;
+      margin-top:4px;
+      display:none;
+    }
+    .success-msg{
+      color:var(--color-success);
+      font-size:1rem;
+      margin-top:12px;
+    }
+    .contact-card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:32px;
+    }
+    .contact-details{
+      margin-top:24px;
+      font-weight:600;
+    }
+    .map-wrapper{
+      width:100%;
+      max-width:800px;
+      margin:auto;
+      overflow:hidden;
+      border-radius:8px;
+      box-shadow:var(--shadow);
+      transition:transform .2s;
+    }
+    .map-wrapper:hover{
+      transform:scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <header id="site-header">
+    <div class="nav-container">
+      <div class="logo">Patty Alvarez Medicare</div>
+      <button class="mobile-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav id="site-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Me</a>
+        <a href="plans.html" class="nav-link">Medicare Plans</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="contact-section visible">
+      <div class="contact-card">
+        <h2 style="font-family:var(--font-heading);font-size:1.5rem;color:var(--color-primary);margin-bottom:24px;">Contact Us</h2>
+        <form id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" aria-required="true" />
+            <div class="error-msg" id="error-name">Please enter your name.</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" aria-required="true" />
+            <div class="error-msg" id="error-email">Please enter a valid email.</div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" aria-required="true"></textarea>
+            <div class="error-msg" id="error-message">Please enter a message.</div>
+          </div>
+          <button type="submit" class="btn-primary">Schedule a Free Consultation Today!</button>
+          <div class="success-msg" id="successMsg" style="display:none;">Thank you! Your message has been sent.</div>
+        </form>
+      </div>
+    </section>
+
+    <section class="address-section visible">
+      <div class="contact-card">
+        <h2 style="font-family:var(--font-heading);font-size:1.5rem;color:var(--color-primary);margin-bottom:16px;">Our Office</h2>
+        <p class="contact-details" style="font-family:var(--font-heading);font-weight:600;color:var(--color-text);margin:0;">
+          2250 E Tropicana Ave Ste 4. Las Vegas, NV
+        </p>
+        <p class="contact-details" style="margin-top:12px;">
+          <a href="tel:702-756-7043" style="color:var(--color-primary);font-weight:600;">702-756-7043</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="map-section visible">
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.025726447332!2d-95.36327428468146!3d29.76042798175448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c5e5a1b5b3d9%3A0x6b0d4f2f0e6f5c5e!2s2250%20E%20Tropicana%20Ave%20Ste%204%2C%20Las%20Vegas%2C%20NV%2017015%2C%20USA!5e0!3m2!1sen!2sus!4v1697041234567!5m2!1sen!2sus"
+          width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+
+    <section class="social-section visible">
+      <div class="contact-card">
+        <h2 style="font-family:var(--font-heading);font-size:1.5rem;color:var(--color-primary);margin-bottom:16px;">Connect With Us</h2>
+        <div class="social-links">
+          <button aria-label="Facebook"><i data-lucide="facebook"></i></button>
+          <button aria-label="LinkedIn"><i data-lucide="linkedin"></i></button>
+          <button aria-label="Twitter"><i data-lucide="twitter"></i></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="nav-container">
+      <div class="logo">Patty Alvarez Medicare</div>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Me</a>
+        <a href="plans.html" class="nav-link">Medicare Plans</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </nav>
+    </div>
+    <p style="margin-top:24px;font-size:.875rem;">© 2024 Patty Alvarez Medicare Services. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Mobile navigation toggle
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const nav = document.querySelector('nav');
+    mobileToggle?.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+
+    // Scroll‑triggered reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {threshold:0.1});
+    document.querySelectorAll('section, .contact-section, .address-section, .map-section, .social-section').forEach(sec => observer.observe(sec));
+
+    // Simple form validation
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('successMsg');
+
+    const showError = (input, msg) => {
+      const err = document.getElementById('error-' + input.id);
+      err.textContent = msg;
+      err.style.display = 'block';
+      input.style.borderColor = 'var(--color-error)';
+    };
+    const hideError = (input) => {
+      const err = document.getElementById('error-' + input.id);
+      err.style.display = 'none';
+      input.style.borderColor = 'var(--color-border)';
+    };
+    const validateEmail = (email) => {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      // Name
+      const name = form.name;
+      if (!name.value.trim()){
+        showError(name, 'Please enter your name.');
+        valid = false;
+      } else { hideError(name); }
+
+      // Email
+      const email = form.email;
+      if (!email.value.trim() || !validateEmail(email.value)){
+        showError(email, 'Please enter a valid email.');
+        valid = false;
+      } else { hideError(email); }
+
+      // Message
+      const message = form.message;
+      if (!message.value.trim()){
+        showError(message, 'Please enter a message.');
+        valid = false;
+      } else { hideError(message); }
+
+      if (valid){
+        // Simulate successful submission
+        form.reset();
+        successMsg.style.display = 'block';
+        setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>
