@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Appointment – Happy Hound Grooming Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preload" href="https://picsum.photos/1920/1080?blur=2" as="image">
+<style>
+:root{
+  --color-primary-beige:#F5F5DC;
+  --color-accent-yellow:#FFDB58;
+  --color-accent-yellow-light:#FFEA8A;
+  --color-brown:#A0522D;
+  --color-bg:#FFFFFF;
+  --color-text:#333333;
+  --color-heading:#222222;
+  --transition-fast:300ms ease-out;
+  --radius:8px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-inner:inset 0 0 4px rgba(0,0,0,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-heading);
+  margin-bottom:.5em;
+}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+h2{font-size:clamp(2rem,5vw,3rem);font-weight:600;letter-spacing:0.5px;}
+h3{font-size:1.5rem;font-weight:500;letter-spacing:0.5px;}
+p{margin-bottom:1rem;}
+button{font-family:'Montserrat',sans-serif;cursor:pointer;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Header */
+header{
+  background:var(--color-primary-beige);
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.logo img{
+  height:48px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  font-family:'Montserrat',sans-serif;
+  font-weight:500;
+  color:var(--color-text);
+  position:relative;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  height:2px;
+  background:var(--color-accent-yellow);
+  left:0;
+  right:0;
+  bottom:-4px;
+  transform:scaleX(0);
+  transition:transform var(--transition-fast);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after{
+  transform:scaleX(1);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  width:28px;
+  height:24px;
+}
+.hamburger span{
+  height:3px;
+  background:var(--color-brown);
+  border-radius:2px;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-beige);
+    flex-direction:column;
+    align-items:center;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{max-height:300px;}
+  .hamburger{display:flex;}
+}
+/* Hero */
+.hero{
+  position:relative;
+  height:60vh;
+  min-height:400px;
+  background:url('https://picsum.photos/1920/1080?blur=2') center/cover no-repeat fixed;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(255,219,88,0.6),rgba(245,245,220,0.6));
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+}
+.btn-primary{
+  background:var(--color-accent-yellow);
+  color:#fff;
+  border:none;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-size:1.125rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.75px;
+  box-shadow:0 0 12px rgba(255,219,88,0.5);
+  transition:background var(--transition-fast),box-shadow var(--transition-fast);
+}
+.btn-primary:hover{
+  background:var(--color-accent-yellow-light);
+  box-shadow:0 0 20px rgba(255,219,88,0.7);
+}
+.btn-secondary{
+  background:transparent;
+  color:#fff;
+  border:2px solid var(--color-brown);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  font-size:1rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-left:16px;
+  transition:border-color var(--transition-fast),color var(--transition-fast);
+}
+.btn-secondary:hover{
+  border-color:var(--color-accent-yellow);
+  color:var(--color-accent-yellow);
+}
+/* Sections */
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:64px 16px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+section.visible{opacity:1;transform:none;}
+/* Form */
+.form-container{
+  background:#fff;
+  padding:32px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  max-width:800px;
+  margin:auto;
+}
+.service-toggle{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:24px;
+}
+.service-toggle button{
+  flex:1 1 120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:var(--color-primary-beige);
+  border:2px solid var(--color-brown);
+  border-radius:var(--radius);
+  padding:8px 12px;
+  font-weight:600;
+  transition:background var(--transition-fast),border-color var(--transition-fast),color var(--transition-fast);
+}
+.service-toggle button.active{
+  background:var(--color-accent-yellow);
+  color:#fff;
+  border-color:var(--color-accent-yellow);
+}
+.service-toggle button i{
+  stroke:currentColor;
+}
+.input-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:16px;
+}
+.input-group label{
+  margin-bottom:4px;
+  font-weight:600;
+}
+.input-group input,
+.input-group select,
+.input-group textarea{
+  padding:8px 12px;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+  font-family:inherit;
+}
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus{
+  outline:none;
+  border-color:var(--color-brown);
+}
+.payment-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.payment-options label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.payment-icons img{
+  height:24px;
+}
+.error{
+  color:#D32F2F;
+  font-size:0.875rem;
+  margin-top:4px;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+.error.show{opacity:1;}
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .3s ease,visibility .3s;
+}
+.modal.show{
+  visibility:visible;
+  opacity:1;
+}
+.modal-content{
+  background:#fff;
+  padding:24px;
+  border-radius:var(--radius);
+  text-align:center;
+  max-width:400px;
+  width:90%;
+  box-shadow:var(--shadow-card);
+}
+.modal-content .checkmark{
+  font-size:3rem;
+  color:var(--color-accent-yellow);
+  margin-bottom:16px;
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header>
+  <nav>
+    <div class="logo">
+      <img src="https://picsum.photos/48/48?blur=1" alt="Happy Hound logo">
+      <span>Happy Hound Grooming Services</span>
+    </div>
+    <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links" id="navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="services.html">Services</a>
+      <a href="new-arrivals.html">New Arrivals</a>
+      <a href="booking.html" class="active">Book Appointment</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Book Appointment</h1>
+      <button class="btn-primary">Book Appointment</button>
+    </div>
+  </section>
+
+  <section id="booking_form">
+    <h2>Schedule Your Grooming Session</h2>
+
+    <!-- Service Selector -->
+    <div class="service-selector">
+      <h3>Select Services</h3>
+      <div class="service-toggle" role="group" aria-label="Service selector">
+        <button type="button" class="service-btn" data-service="Bath">
+          <i data-lucide="shower"></i> Bath
+        </button>
+        <button type="button" class="service-btn" data-service="Haircut">
+          <i data-lucide="scissors"></i> Haircut
+        </button>
+        <button type="button" class="service-btn" data-service="Nail Trim">
+          <i data-lucide="cut"></i> Nail Trim
+        </button>
+        <button type="button" class="service-btn" data-service="Full Groom">
+          <i data-lucide="layers"></i> Full Groom
+        </button>
+      </div>
+    </div>
+
+    <!-- Date & Time Picker -->
+    <div class="date-time-picker">
+      <h3>Choose Date & Time</h3>
+      <div class="input-group">
+        <label for="appt-date">Date</label>
+        <input type="date" id="appt-date" required>
+        <div class="error" id="error-date"></div>
+      </div>
+      <div class="input-group">
+        <label for="appt-time">Time</label>
+        <input type="time" id="appt-time" required>
+        <div class="error" id="error-time"></div>
+      </div>
+    </div>
+
+    <!-- Client Info Fields -->
+    <div class="client-info">
+      <h3>Your Details</h3>
+      <div class="input-group">
+        <label for="client-name">Your Name</label>
+        <input type="text" id="client-name" required>
+        <div class="error" id="error-name"></div>
+      </div>
+      <div class="input-group">
+        <label for="client-email">Email</label>
+        <input type="email" id="client-email" required>
+        <div class="error" id="error-email"></div>
+      </div>
+      <div class="input-group">
+        <label for="client-phone">Phone</label>
+        <input type="tel" id="client-phone" required>
+        <div class="error" id="error-phone"></div>
+      </div>
+      <div class="input-group">
+        <label for="dog-name">Dog’s Name</label>
+        <input type="text" id="dog-name" required>
+        <div class="error" id="error-dog-name"></div>
+      </div>
+      <div class="input-group">
+        <label for="dog-breed">Breed</label>
+        <input type="text" id="dog-breed" required>
+        <div class="error" id="error-dog-breed"></div>
+      </div>
+      <div class="input-group">
+        <label for="special-instructions">Special Instructions</label>
+        <textarea id="special-instructions" rows="4"></textarea>
+      </div>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="payment-section">
+      <h3>Payment</h3>
+      <div class="payment-options">
+        <label>
+          <input type="radio" name="payment-method" value="online" required>
+          Pay Now (Stripe/PayPal)
+        </label>
+        <label>
+          <input type="radio" name="payment-method" value="arrival">
+          Pay at Arrival
+        </label>
+      </div>
+      <div class="payment-icons" style="margin-top:12px;">
+        <img src="https://picsum.photos/40/24?text=V" alt="Visa">
+        <img src="https://picsum.photos/40/24?text=MC" alt="MasterCard">
+        <img src="https://picsum.photos/40/24?text=PP" alt="PayPal">
+      </div>
+    </div>
+
+    <!-- Primary CTA -->
+    <div style="margin-top:24px; text-align:center;">
+      <button class="btn-primary" id="submitBtn">Book Appointment</button>
+    </div>
+  </section>
+</main>
+
+<!-- Confirmation Modal -->
+<div class="modal" id="confirmationModal" aria-modal="true" role="dialog" aria-labelledby="confirmTitle">
+  <div class="modal-content">
+    <div class="checkmark">✔️</div>
+    <h2 id="confirmTitle">Your appointment is confirmed! 🎉</h2>
+    <p>Check your email for details.</p>
+    <button class="btn-primary" id="closeModalBtn">Close</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>Quick Links</h3>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="services.html">Services</a>
+        <a href="new-arrivals.html">New Arrivals</a>
+        <a href="booking.html" class="active">Book Appointment</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p><i data-lucide="phone"></i> (858) 555‑1234</p>
+      <p><i data-lucide="mail"></i> <a href="mailto:info@happyhoundgroomingsd.com">info@happyhoundgroomingsd.com</a></p>
+      <p><i data-lucide="map-pin"></i> 1234 Paw Lane, San Diego, CA 92101</p>
+    </div>
+    <div>
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <i data-lucide="instagram"></i>
+        <i data-lucide="facebook"></i>
+        <i data-lucide="twitter"></i>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Hamburger menu
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger?.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+  });
+
+  // Service selector toggle
+  const serviceButtons = document.querySelectorAll('.service-btn');
+  const selectedServices = new Set();
+  serviceButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const service = btn.dataset.service;
+      if (selectedServices.has(service)) {
+        selectedServices.delete(service);
+        btn.classList.remove('active');
+      } else {
+        selectedServices.add(service);
+        btn.classList.add('active');
+      }
+    });
+  });
+
+  // Form validation & submission
+  const submitBtn = document.getElementById('submitBtn');
+  const modal = document.getElementById('confirmationModal');
+  const closeModal = document.getElementById('closeModalBtn');
+
+  function showError(id, message) {
+    const err = document.getElementById(id);
+    err.textContent = message;
+    err.classList.add('show');
+  }
+  function clearErrors() {
+    document.querySelectorAll('.error').forEach(e => e.classList.remove('show'));
+  }
+
+  submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    clearErrors();
+    let valid = true;
+
+    if (selectedServices.size === 0) {
+      alert('Please select at least one service.');
+      valid = false;
+    }
+
+    const date = document.getElementById('appt-date').value;
+    const time = document.getElementById('appt-time').value;
+    if (!date) { showError('error-date', 'Select a date'); valid = false; }
+    if (!time) { showError('error-time', 'Select a time'); valid = false; }
+
+    const name = document.getElementById('client-name').value.trim();
+    const email = document.getElementById('client-email').value.trim();
+    const phone = document.getElementById('client-phone').value.trim();
+    const dogName = document.getElementById('dog-name').value.trim();
+    const breed = document.getElementById('dog-breed').value.trim();
+
+    if (!name) { showError('error-name', 'Name required'); valid = false; }
+    if (!email) { showError('error-email', 'Email required'); valid = false; }
+    if (!phone) { showError('error-phone', 'Phone required'); valid = false; }
+    if (!dogName) { showError('error-dog-name', "Dog's name required"); valid = false; }
+    if (!breed) { showError('error-dog-breed', 'Breed required'); valid = false; }
+
+    const payment = document.querySelector('input[name="payment-method"]:checked');
+    if (!payment) {
+      alert('Select a payment option.');
+      valid = false;
+    }
+
+    if (valid) {
+      // Simulate submission delay
+      setTimeout(() => {
+        modal.classList.add('show');
+        // Reset form (optional)
+      }, 500);
+    }
+  });
+
+  closeModal.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  // Scroll reveal sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+  });
+</script>
+
+<!-- Live Chat Widget Placeholder -->
+<script>
+  // Placeholder for live chat integration
+  // e.g., window.liveChat = new LiveChat({ apiKey: 'YOUR_KEY' });
+</script>
+
+<!-- Live Chat Button -->
+<div style="position:fixed; bottom:20px; right:20px;">
+  <button class="btn-primary" onclick="alert('Live chat would open here');">Live Chat</button>
+</div>
+
+<!-- Tidio Live Chat (example) -->
+<script src="//code.tidio.co/your-tidio-key.js" async></script>
+
+</body>
+</html>

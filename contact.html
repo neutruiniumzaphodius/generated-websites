@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Happy Hound Grooming Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary-beige:#F5F5DC;
+  --color-accent-yellow:#FFDB58;
+  --color-accent-yellow-light:#FFEA8A;
+  --color-brown:#A0522D;
+  --color-bg:#FFFFFF;
+  --color-text:#333333;
+  --color-heading:#222222;
+  --transition-fast:300ms ease-out;
+  --radius:8px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-inner:inset 0 0 4px rgba(0,0,0,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-heading);
+  margin-bottom:.5em;
+}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+h2{font-size:clamp(2rem,5vw,3rem);font-weight:600;letter-spacing:0.5px;}
+h3{font-size:1.5rem;font-weight:500;letter-spacing:0.5px;}
+p{margin-bottom:1rem;}
+button{font-family:'Montserrat',sans-serif;cursor:pointer;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Header */
+header{
+  background:var(--color-primary-beige);
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.logo img{
+  height:48px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  font-family:'Montserrat',sans-serif;
+  font-weight:500;
+  color:var(--color-text);
+  position:relative;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  height:2px;
+  background:var(--color-accent-yellow);
+  left:0;
+  right:0;
+  bottom:-4px;
+  transform:scaleX(0);
+  transition:transform var(--transition-fast);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after{
+  transform:scaleX(1);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  width:28px;
+  height:24px;
+}
+.hamburger span{
+  height:3px;
+  background:var(--color-brown);
+  border-radius:2px;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-beige);
+    flex-direction:column;
+    align-items:center;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{max-height:300px;}
+  .hamburger{display:flex;}
+}
+/* Buttons */
+.btn-primary{
+  background:var(--color-accent-yellow);
+  color:#fff;
+  border:none;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-size:1.125rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.75px;
+  box-shadow:0 0 12px rgba(255,219,88,0.5);
+  transition:background var(--transition-fast),box-shadow var(--transition-fast);
+}
+.btn-primary:hover{
+  background:var(--color-accent-yellow-light);
+  box-shadow:0 0 20px rgba(255,219,88,0.7);
+}
+.btn-secondary{
+  background:transparent;
+  color:#fff;
+  border:2px solid var(--color-brown);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  font-size:1rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-left:16px;
+  transition:border-color var(--transition-fast),color var(--transition-fast);
+}
+.btn-secondary:hover{
+  border-color:var(--color-accent-yellow);
+  color:var(--color-accent-yellow);
+}
+/* Sections */
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:64px 16px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+section.visible{opacity:1;transform:none;}
+/* Contact Details */
+.contact-details{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:24px;
+  text-align:center;
+}
+.contact-details .detail{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.contact-details i{
+  width:32px;height:32px;
+  margin-bottom:8px;
+  color:var(--color-brown);
+}
+.contact-details a{
+  color:var(--color-text);
+}
+.contact-details a:hover{
+  color:var(--color-accent-yellow);
+}
+/* Map */
+.map-container{
+  width:100%;
+  height:400px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow-card);
+}
+/* Form */
+form{
+  display:grid;
+  gap:16px;
+}
+form input, form textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+  font-family:inherit;
+}
+form input:focus, form textarea:focus{
+  outline:none;
+  border-color:var(--color-accent-yellow);
+  box-shadow:0 0 5px rgba(255,219,88,0.3);
+}
+.error-msg{
+  color:#D32F2F;
+  font-size:0.875rem;
+  margin-top:-8px;
+  display:none;
+}
+.error-msg.visible{
+  display:block;
+}
+/* Hours Table */
+.hours-table{
+  width:100%;
+  border-collapse:collapse;
+}
+.hours-table th,
+.hours-table td{
+  padding:12px;
+  border:1px solid #e0e0e0;
+  text-align:left;
+}
+.hours-table tr.today{
+  background:var(--color-accent-yellow);
+  color:#222;
+}
+/* Social Icons */
+.social-links{
+  display:flex;
+  gap:24px;
+  justify-content:center;
+}
+.social-links a{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:var(--color-brown);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background var(--transition-fast), transform var(--transition-fast);
+}
+.social-links a i{
+  color:#fff;
+  width:24px;height:24px;
+}
+.social-links a:hover{
+  background:var(--color-accent-yellow);
+  transform:rotate(10deg);
+}
+@media (max-width:640px){
+  section{padding:32px 16px;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav>
+    <div class="logo">
+      <img src="https://picsum.photos/48/48?random=1" alt="Happy Hound Logo" aria-hidden="true">
+      <span>Happy Hound Grooming Services</span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="services.html">Services</a>
+      <a href="new-arrivals.html">New Arrivals</a>
+      <a href="booking.html">Book Appointment</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section id="contact-details" class="contact-details">
+    <h2>Get in Touch</h2>
+    <div class="contact-details">
+      <div class="detail">
+        <i data-lucide="phone"></i>
+        <p><strong>Phone:</strong> (858) 555‑1234</p>
+      </div>
+      <div class="detail">
+        <i data-lucide="mail"></i>
+        <p><strong>Email:</strong> <a href="mailto:info@happyhoundgroomingsd.com">info@happyhoundgroomingsd.com</a></p>
+      </div>
+      <div class="detail">
+        <i data-lucide="map-pin"></i>
+        <p><strong>Address:</strong> 1234 Paw Lane, San Diego, CA 92101</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="interactive-map">
+    <h2>Our Location</h2>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3303.437862447949!2d-117.16309928478269!3d32.71573808096806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d9545f3c5d5b1f%3A0x1b6e5e2c8e6d8e5!2s1234%20Paw%20Lane%2C%20San%20Diego%2C%20CA%2092101!5e0!3m2!1sen!2sus!4v1699999999999!5m2!1sen!2sus"
+        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <section id="contact-form">
+    <h2>Send Us a Message</h2>
+    <form id="contactForm" novalidate>
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
+      <div class="error-msg" id="err-name">Please enter your name.</div>
+
+      <input type="email" id="email" name="email" placeholder="Your Email" required>
+      <div class="error-msg" id="err-email">Please enter a valid email.</div>
+
+      <input type="text" id="subject" name="subject" placeholder="Subject" required>
+      <div class="error-msg" id="err-subject">Please enter a subject.</div>
+
+      <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+      <div class="error-msg" id="err-message">Please enter a message.</div>
+
+      <button type="submit" class="btn-primary">Book Appointment</button>
+    </form>
+  </section>
+
+  <section id="operating-hours">
+    <h2>Operating Hours</h2>
+    <table class="hours-table">
+      <thead>
+        <tr><th>Day</th><th>Hours</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Monday</td><td>9:00 am – 6:00 pm</td></tr>
+        <tr><td>Tuesday</td><td>9:00 am – 6:00 pm</td></tr>
+        <tr><td>Wednesday</td><td>9:00 am – 6:00 pm</td></tr>
+        <tr class="today"><td>Thursday</td><td>9:00 am – 6:00 pm</td></tr>
+        <tr><td>Friday</td><td>9:00 am – 6:00 pm</td></tr>
+        <tr><td>Saturday</td><td>10:00 am – 4:00 pm</td></tr>
+        <tr><td>Sunday</td><td>Closed</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="social-links">
+    <h2>Follow Us</h2>
+    <div class="social-links">
+      <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+      <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+    </div>
+  </section>
+</main>
+
+<div class="cta-banner" id="ctaBanner">
+  <span>Have a question? Let’s chat!</span>
+  <button class="btn-primary">Book Appointment</button>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="new-arrivals.html">New Arrivals</a></li>
+        <li><a href="booking.html">Book Appointment</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p>Phone: (858) 555‑1234</p>
+      <p>Email: <a href="mailto:info@happyhoundgroomingsd.com">info@happyhoundgroomingsd.com</a></p>
+      <p>Address: 1234 Paw Lane, San Diego, CA 92101</p>
+    </div>
+    <div>
+      <h3>Hours</h3>
+      <p>Mon‑Fri: 9 am – 6 pm</p>
+      <p>Sat: 10 am – 4 pm</p>
+      <p>Sun: Closed</p>
+    </div>
+    <div class="social-icons">
+      <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+      <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:24px;">© 2024 Happy Hound Grooming Services. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+/* Navigation toggle */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger?.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+/* Scroll reveal */
+const observer = new IntersectionObserver((entries)=> {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+},{threshold:0.2});
+document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
+
+/* Form validation */
+const form = document.getElementById('contactForm');
+form?.addEventListener('submit',function(e){
+  e.preventDefault();
+  let valid = true;
+  const fields = [
+    {id:'name',msg:'Please enter your name.'},
+    {id:'email',msg:'Please enter a valid email.'},
+    {id:'subject',msg:'Please enter a subject.'},
+    {id:'message',msg:'Please enter a message.'}
+  ];
+  fields.forEach(f=>{
+    const input = document.getElementById(f.id);
+    const error = document.getElementById('err-'+f.id);
+    if(!input.value.trim()){
+      error.textContent = f.msg;
+      error.classList.add('visible');
+      valid = false;
+    }else{
+      error.classList.remove('visible');
+    }
+    if(f.id==='email' && input.value){
+      const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if(!emailPattern.test(input.value)){
+        error.textContent = 'Please enter a valid email.';
+        error.classList.add('visible');
+        valid = false;
+      }else{
+        error.classList.remove('visible');
+      }
+    }
+  });
+  if(valid){
+    // Simulate submission
+    alert('Message sent! We will get back to you shortly.');
+    form.reset();
+  }
+});
+
+/* Sticky CTA Banner – show on scroll up */
+let lastScroll = 0;
+const ctaBanner = document.getElementById('ctaBanner');
+window.addEventListener('scroll',()=>{
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  if(currentScroll < lastScroll && currentScroll > 100){
+    ctaBanner.classList.add('show');
+  }else{
+    ctaBanner.classList.remove('show');
+  }
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+});
+
+/* Render Lucide icons */
+lucide.createIcons();
+</script>
+
+<!-- Live Chat (Tawk.to) -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/xxxxxxxx/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+</body>
+</html>

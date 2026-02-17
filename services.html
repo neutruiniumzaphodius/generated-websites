@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Services – Happy Hound Grooming Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary-beige:#F5F5DC;
+  --color-accent-yellow:#FFDB58;
+  --color-accent-yellow-light:#FFEA8A;
+  --color-brown:#A0522D;
+  --color-bg:#FFFFFF;
+  --color-text:#333333;
+  --color-heading:#222222;
+  --transition-fast:300ms ease-out;
+  --radius:8px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-inner:inset 0 0 4px rgba(0,0,0,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-heading);
+  margin-bottom:.5em;
+}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+h2{font-size:clamp(2rem,5vw,3rem);font-weight:600;letter-spacing:0.5px;}
+h3{font-size:1.5rem;font-weight:500;letter-spacing:0.5px;}
+p{margin-bottom:1rem;}
+button{font-family:'Montserrat',sans-serif;cursor:pointer;}
+/* Skip link */
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{top:0;}
+/* Header */
+header{
+  background:var(--color-primary-beige);
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.logo img{
+  height:48px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-links a{
+  font-family:'Montserrat',sans-serif;
+  font-weight:500;
+  color:var(--color-text);
+  position:relative;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  height:2px;
+  background:var(--color-accent-yellow);
+  left:0;
+  right:0;
+  bottom:-4px;
+  transform:scaleX(0);
+  transition:transform var(--transition-fast);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after{
+  transform:scaleX(1);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  width:28px;
+  height:24px;
+}
+.hamburger span{
+  height:3px;
+  background:var(--color-brown);
+  border-radius:2px;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-beige);
+    flex-direction:column;
+    align-items:center;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{max-height:300px;}
+  .hamburger{display:flex;}
+}
+
+/* Sections */
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:64px 16px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+section.visible{opacity:1;transform:none;}
+.service-intro{
+  text-align:center;
+}
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:24px;
+}
+.service-card{
+  background:#fff;
+  padding:24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  transition:transform .3s ease;
+}
+.service-card:hover{
+  transform:translateY(-4px);
+}
+.service-card .icon{
+  color:var(--color-brown);
+  margin-bottom:12px;
+}
+.price-badge{
+  display:inline-block;
+  background:var(--color-accent-yellow);
+  color:#fff;
+  padding:4px 8px;
+  border-radius:4px;
+  font-weight:600;
+  margin-top:8px;
+}
+.pricing-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:24px;
+}
+.pricing-table th,
+.pricing-table td{
+  padding:12px;
+  border:1px solid #ddd;
+  text-align:center;
+}
+.pricing-table th{
+  background:var(--color-primary-beige);
+  font-weight:600;
+}
+.pricing-table td.best{
+  background:var(--color-accent-yellow);
+  color:#fff;
+}
+.download-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.download-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.download-item i{
+  color:var(--color-brown);
+}
+.faq-item{
+  border-bottom:1px solid #eee;
+}
+.faq-question{
+  width:100%;
+  text-align:left;
+  background:none;
+  border:none;
+  padding:12px;
+  font-family:'Montserrat',sans-serif;
+  font-size:1rem;
+  font-weight:500;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+}
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease;
+  padding:0 12px;
+}
+.faq-item.open .faq-answer{
+  max-height:200px;
+  padding:12px;
+}
+.faq-chevron{
+  transition:transform var(--transition-fast);
+}
+.faq-item.open .faq-chevron{
+  transform:rotate(180deg);
+}
+
+/* CTA Banner (section) */
+.cta-section{
+  background:var(--color-accent-yellow);
+  color:#222;
+  text-align:center;
+  padding:48px 16px;
+}
+.cta-section button{
+  margin-top:16px;
+}
+
+/* Footer */
+footer{
+  background:var(--color-brown);
+  color:#fff;
+  padding:48px 16px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:24px;
+}
+.footer-grid a{
+  color:#fff;
+  transition:color .3s;
+}
+.footer-grid a:hover{
+  color:var(--color-accent-yellow);
+}
+.social-icons{
+  display:flex;
+  gap:12px;
+}
+.social-icons i{
+  width:24px;height:24px;
+  color:var(--color-accent-yellow);
+  transition:transform .3s;
+}
+.social-icons i:hover{
+  transform:rotate(15deg);
+}
+
+/* Misc */
+@media (max-width:640px){
+  section{padding:32px 16px;}
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav>
+    <div class="logo">
+      <img src="https://picsum.photos/48/48?random=logo" alt="Happy Hound Grooming Services logo">
+      <span>brand_name: Happy Hound Grooming Services</span>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="new-arrivals.html">New Arrivals</a>
+      <a href="booking.html">Book Appointment</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+  <!-- Service Intro -->
+  <section class="service-intro visible">
+    <h2>Our Grooming Packages</h2>
+    <p>Choose the perfect grooming experience for your beloved companion. Each package is crafted with love, care, and expertise.</p>
+  </section>
+
+  <!-- Service Cards -->
+  <section class="service-cards visible">
+    <h2>Grooming Packages</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="icon" aria-hidden="true"><i data-lucide="scissors"></i></div>
+        <h3>Basic Bath & Brush</h3>
+        <p>A gentle bath, thorough brushing, nail trim, and ear cleaning to keep your dog fresh and tidy.</p>
+        <span class="price-badge">Starting at $35</span>
+      </div>
+      <div class="service-card">
+        <div class="icon" aria-hidden="true"><i data-lucide="sun"></i></div>
+        <h3>Deluxe Spa</h3>
+        <p>Includes a premium bath, deep conditioning, full-body brush-out, nail trim, ear cleaning, and a calming massage.</p>
+        <span class="price-badge">Starting at $55</span>
+      </div>
+      <div class="service-card">
+        <div class="icon" aria-hidden="true"><i data-lucide="star"></i></div>
+        <h3>Premium Pamper</h3>
+        <p>All Deluxe benefits plus a haircut tailored to breed standards, teeth cleaning, and a scented coat finish.</p>
+        <span class="price-badge">Starting at $80</span>
+      </div>
+      <div class="service-card">
+        <div class="icon" aria-hidden="true"><i data-lucide="heart"></i></div>
+        <h3>Ultimate Luxury</h3>
+        <p>The full suite: premium spa, breed-specific haircut, teeth cleaning, paw balm, de-shedding treatment, and a photo shoot.</p>
+        <span class="price-badge">Starting at $120</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Table -->
+  <section class="pricing-table visible">
+    <h2>Pricing Overview</h2>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Package</th>
+          <th>Price (USD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Basic Bath & Brush</td>
+          <td>$35</td>
+        </tr>
+        <tr class="best">
+          <td>Deluxe Spa</td>
+          <td>$55</td>
+        </tr>
+        <tr>
+          <td>Premium Pamper</td>
+          <td>$80</td>
+        </tr>
+        <tr>
+          <td>Ultimate Luxury</td>
+          <td>$120</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="price-note">All packages include a complimentary health check.</p>
+  </section>
+
+  <!-- Download Guides -->
+  <section class="download-guides visible">
+    <h2>Helpful Guides</h2>
+    <div class="download-list">
+      <div class="download-item">
+        <i data-lucide="download" class="icon"></i>
+        <a href="#" download>Guide: Preparing Your Dog for Grooming (PDF)</a>
+      </div>
+      <div class="download-item">
+        <i data-lucide="download" class="icon"></i>
+        <a href="#" download>Guide: Post‑Grooming Care Tips (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="faq-accordion visible">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" aria-controls="faq1">
+        What is the typical duration of a grooming session?
+        <i data-lucide="chevron-down" class="faq-chevron"></i>
+      </button>
+      <div class="faq-answer" id="faq1" role="region" aria-labelledby="faq1-question">
+        <p>Sessions range from 45 minutes for a Basic Bath & Brush to 2 hours for the Ultimate Luxury package.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" aria-controls="faq2">
+        Do you accommodate special needs or anxious dogs?
+        <i data-lucide="chevron-down" class="faq-chevron"></i>
+      </button>
+      <div class="faq-answer" id="faq2" role="region" aria-labelledby="faq2-question">
+        <p>Absolutely! Our groomers are trained in gentle handling techniques and can use calming aids upon request.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" aria-controls="faq3">
+        How far in advance should I book an appointment?
+        <i data-lucide="chevron-down" class="faq-chevron"></i>
+      </button>
+      <div class="faq-answer" id="faq3" role="region" aria-labelledby="faq3-question">
+        <p>We recommend booking at least 7 days ahead, especially for weekend slots.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section visible">
+    <h2>Ready to Pamper Your Pup?</h2>
+    <p>Choose the perfect package and book your appointment today.</p>
+    <button class="btn-primary">cta_button: Book Appointment</button>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="new-arrivals.html">New Arrivals</a></li>
+        <li><a href="booking.html">Book Appointment</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p><i data-lucide="phone"></i> (858) 555‑1234</p>
+      <p><i data-lucide="mail"></i> <a href="mailto:info@happyhoundgroomingsd.com">info@happyhoundgroomingsd.com</a></p>
+      <p><i data-lucide="map-pin"></i> 1234 Paw Lane, San Diego, CA 92101</p>
+    </div>
+    <div>
+      <h3>Operating Hours</h3>
+      <table>
+        <tr><td>Mon‑Fri</td><td>9am – 7pm</td></tr>
+        <tr><td>Sat</td><td>9am – 5pm</td></tr>
+        <tr><td>Sun</td><td>Closed</td></tr>
+      </table>
+    </div>
+    <div class="social-icons">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <i data-lucide="instagram"></i>
+        <i data-lucide="facebook"></i>
+        <i data-lucide="twitter"></i>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Initialize Lucide icons
+lucide.createIcons();
+
+// Hamburger menu toggle
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('open');
+});
+
+// Scroll reveal using IntersectionObserver
+const sections = document.querySelectorAll('section, .service-intro, .service-cards, .pricing-table, .download-guides, .faq-accordion, .cta-section');
+const observer = new IntersectionObserver((entries,obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, {threshold: 0.1});
+sections.forEach(sec => observer.observe(sec));
+
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!open) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
