@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FAQ – Sunflower Organic Skincare</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+      --color-primary-1:#C7D44C;
+      --color-primary-2:#97C93C;
+      --color-accent:#FFC600;
+      --color-promo:#FF6F00;
+      --color-purple:#1B1464;
+      --color-bg-white:#FFFFFF;
+      --color-bg-gradient-start:#F5F0E6;
+      --color-bg-gradient-end:#E8F5E9;
+      --color-charcoal:#2E2E2E;
+      --color-light:#F9F9F9;
+      --shadow-sm:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg:0 8px 16px rgba(0,0,0,0.12);
+      --radius-sm:8px;
+      --radius-md:12px;
+      --radius-full:9999px;
+      --transition-ease:0.25s ease-out;
+    }
+    *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;font-size:16px;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-charcoal);
+      background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif;color:var(--color-charcoal);}
+    h1{font-size:clamp(32px,5vw,48px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;}
+    h2{font-size:clamp(24px,4vw,36px);font-weight:600;line-height:1.3;letter-spacing:-0.25px;}
+    h3{font-size:clamp(20px,3.5vw,28px);font-weight:600;line-height:1.4;}
+    .skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 12px;z-index:100;transition:top .3s;}
+    .skip-link:focus{top:0;}
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:24px;
+      padding:16px;
+      background:rgba(255,255,255,0.9);
+      position:sticky;top:0;z-index:10;
+    }
+    .nav-link{
+      font-size:18px;
+      font-weight:500;
+      color:var(--color-charcoal);
+      position:relative;
+    }
+    .nav-link.active{color:var(--color-primary-1);}
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-4px;width:100%;height:2px;background:var(--color-primary-1);
+      opacity:0;transition:opacity .3s;
+    }
+    .nav-link.active::after{opacity:1;}
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1600/900?random=2') center/cover no-repeat;
+      background-attachment:fixed;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(rgba(245,240,230,0.45),rgba(232,245,233,0.45));
+    }
+    .hero h1{
+      text-shadow:0 1px 2px rgba(0,0,0,0.4);
+    }
+    .cta-group{
+      margin-top:24px;
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .btn{
+      padding:16px 32px;
+      border-radius:var(--radius-sm);
+      font-weight:600;
+      transition:var(--transition-ease);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-primary{
+      background:var(--color-primary-1);
+      color:#fff;
+      box-shadow:var(--shadow-sm);
+    }
+    .btn-primary:hover{
+      background:var(--color-primary-2);
+      transform:scale(1.03);
+    }
+    .btn-secondary{
+      border:2px solid var(--color-accent);
+      color:var(--color-accent);
+      background:transparent;
+    }
+    .btn-secondary:hover{
+      background:var(--color-accent);
+      color:var(--color-charcoal);
+    }
+    .section{
+      padding:48px 24px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    /* Accordion */
+    .accordion{margin-top:24px;border-top:1px solid #e0e0e0;}
+    .accordion-item{border-bottom:1px solid #e0e0e0;}
+    .accordion-button{
+      width:100%;
+      text-align:left;
+      background:var(--color-bg-gradient-start);
+      padding:16px;
+      font-weight:600;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      border:none;
+    }
+    .accordion-button:hover{
+      background:rgba(199,212,76,0.15);
+    }
+    .accordion-content{
+      padding:16px;
+      background:#fff;
+      display:none;
+    }
+    .accordion-content.open{display:block;}
+    .chevron{
+      transition:transform var(--transition-ease);
+    }
+    .accordion-button[aria-expanded="true"] .chevron{
+      transform:rotate(180deg);
+    }
+    .search-box{
+      max-width:500px;
+      margin:0 auto 24px;
+      position:relative;
+    }
+    .search-box input{
+      width:100%;
+      padding:12px 40px 12px 12px;
+      border:2px solid #ccc;
+      border-radius:var(--radius-sm);
+      font-size:1rem;
+    }
+    .search-box input:focus{outline:2px solid var(--color-accent);}
+    .search-box .icon{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      pointer-events:none;
+    }
+    .cta-footer{
+      background:var(--color-purple);
+      color:#fff;
+      text-align:center;
+      padding:32px 24px;
+    }
+    .cta-footer .btn-primary{margin-top:16px;}
+    @media(min-width:768px){
+      .hero{min-height:70vh;}
+    }
+    @media(min-width:1024px){
+      nav{justify-content:space-between;max-width:1200px;margin:0 auto;}
+    }
+    button:focus, a:focus{
+      outline:2px solid var(--color-accent);
+      outline-offset:2px;
+    }
+    .skeleton{
+      background:#e0e0e0;
+      position:relative;
+      overflow:hidden;
+    }
+    .skeleton::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer{
+      0%{transform:translateX(-100%);}
+      100%{transform:translateX(100%);}
+    }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav aria-label="Main navigation">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="about.html" class="nav-link">About</a>
+  <a href="products.html" class="nav-link">Products</a>
+  <a href="careers.html" class="nav-link">Careers</a>
+  <a href="blog.html" class="nav-link">Blog</a>
+  <a href="faq.html" class="nav-link active" aria-current="page">FAQ</a>
+</nav>
+
+<header class="hero" id="main">
+  <h1>Frequently Asked Questions</h1>
+  <div class="cta-group">
+    <a href="index.html" class="btn btn-primary">Back to Home</a>
+    <a href="products.html" class="btn btn-secondary">Shop Now</a>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="search-box">
+      <input type="search" id="faq-search" placeholder="Search questions…" aria-label="Search FAQs">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </div>
+
+    <div class="accordion" id="faq-accordion">
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="answer-1" id="question-1">
+          How can I track my order?
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content" id="answer-1" role="region" aria-labelledby="question-1">
+          Once shipped, you’ll receive a tracking link via email and can also view status in your Shopify account dashboard.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="answer-2" id="question-2">
+          What payment methods are accepted?
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content" id="answer-2" role="region" aria-labelledby="question-2">
+          We support Stripe, PayPal, Apple Pay, Google Pay, and Bitcoin for a seamless checkout experience.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="answer-3" id="question-3">
+          How can I track my order?
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content" id="answer-3" role="region" aria-labelledby="question-3">
+          Once shipped, you’ll receive a tracking link via email and can also view status in your Shopify account dashboard.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="answer-4" id="question-4">
+          What payment methods are accepted?
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content" id="answer-4" role="region" aria-labelledby="question-4">
+          We support Stripe, PayPal, Apple Pay, Google Pay, and Bitcoin for a seamless checkout experience.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-button" aria-expanded="false" aria-controls="answer-5" id="question-5">
+          How can I track my order?
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-content" id="answer-5" role="region" aria-labelledby="question-5">
+          Once shipped, you’ll receive a tracking link via email and can also view status in your Shopify account dashboard.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="cta-footer">
+  <h2>Got more questions? We're here to help.</h2>
+  <a href="products.html" class="btn btn-primary">Shop Our Products</a>
+</footer>
+
+<script>
+/* Accordion functionality */
+document.querySelectorAll('.accordion-button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    const content = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!expanded) {
+      content.classList.add('open');
+    } else {
+      content.classList.remove('open');
+    }
+  });
+});
+
+/* Search filter */
+const searchInput = document.getElementById('faq-search');
+searchInput.addEventListener('input', () => {
+  const term = searchInput.value.toLowerCase();
+  document.querySelectorAll('.accordion-item').forEach(item => {
+    const question = item.querySelector('.accordion-button').textContent.toLowerCase();
+    const answer = item.querySelector('.accordion-content').textContent.toLowerCase();
+    if (question.includes(term) || answer.includes(term)) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+});
+</script>
+
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"How can I track my order?",
+      "acceptedAnswer":{"@type":"Answer","text":"Once shipped, you’ll receive a tracking link via email and can also view status in your Shopify account dashboard."}
+    },
+    {
+      "@type":"Question",
+      "name":"What payment methods are accepted?",
+      "acceptedAnswer":{"@type":"Answer","text":"We support Stripe, PayPal, Apple Pay, Google Pay, and Bitcoin for a seamless checkout experience."}
+    },
+    {
+      "@type":"Question",
+      "name":"How can I track my order?",
+      "acceptedAnswer":{"@type":"Answer","text":"Once shipped, you’ll receive a tracking link via email and can also view status in your Shopify account dashboard."}
+    },
+    {
+      "@type":"Question",
+      "name":"What payment methods are accepted?",
+      "acceptedAnswer":{"@type":"Answer","text":"We support Stripe, PayPal, Apple Pay, Google Pay, and Bitcoin for a seamless checkout experience."}
+    }
+  ]
+}
+</script>
+</body>
+</html>

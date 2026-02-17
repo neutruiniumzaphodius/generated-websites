@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers – Sunflower Organic Skincare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary-1:#C7D44C;
+      --color-primary-2:#97C93C;
+      --color-accent:#FFC600;
+      --color-promo:#FF6F00;
+      --color-purple:#1B1464;
+      --color-bg-white:#FFFFFF;
+      --color-bg-gradient-start:#F5F0E6;
+      --color-bg-gradient-end:#E8F5E9;
+      --color-charcoal:#2E2E2E;
+      --color-light:#F9F9F9;
+      --shadow-sm:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg:0 8px 16px rgba(0,0,0,0.12);
+      --radius-sm:8px;
+      --radius-md:12px;
+      --radius-full:9999px;
+      --transition-ease:0.25s ease-out;
+    }
+    *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;font-size:16px;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-charcoal);
+      background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif;color:var(--color-charcoal);}
+    h1{font-size:clamp(32px,5vw,48px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;}
+    h2{font-size:clamp(24px,4vw,36px);font-weight:600;line-height:1.3;letter-spacing:-0.25px;}
+    h3{font-size:clamp(20px,3.5vw,28px);font-weight:600;line-height:1.4;}
+    .skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 12px;z-index:100;transition:top .3s;}
+    .skip-link:focus{top:0;}
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:24px;
+      padding:16px;
+      background:rgba(255,255,255,0.9);
+      position:sticky;top:0;z-index:10;
+    }
+    .nav-link{
+      font-size:18px;
+      font-weight:500;
+      color:var(--color-charcoal);
+      position:relative;
+    }
+    .nav-link.active{color:var(--color-primary-1);}
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-4px;width:100%;height:2px;background:var(--color-primary-1);
+      opacity:0;transition:opacity .3s;
+    }
+    .nav-link.active::after{opacity:1;}
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1600/900?random=2') center/cover no-repeat;
+      background-attachment:fixed;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(rgba(245,240,230,0.45),rgba(232,245,233,0.45));
+    }
+    .hero h1{text-shadow:0 1px 2px rgba(0,0,0,0.4);}
+    .cta-group{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+    .btn{
+      padding:16px 32px;
+      border-radius:var(--radius-sm);
+      font-weight:600;
+      transition:var(--transition-ease);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-primary{
+      background:var(--color-primary-1);
+      color:#fff;
+      box-shadow:var(--shadow-sm);
+    }
+    .btn-primary:hover{
+      background:var(--color-primary-2);
+      transform:scale(1.03);
+    }
+    .btn-secondary{
+      border:2px solid var(--color-accent);
+      color:var(--color-accent);
+      background:transparent;
+    }
+    .btn-secondary:hover{
+      background:var(--color-accent);
+      color:var(--color-charcoal);
+    }
+    .section{
+      padding:48px 24px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .culture-overview{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:24px;
+      text-align:center;
+    }
+    .culture-card{
+      background:#fff;
+      padding:24px;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-md);
+      transition:var(--transition-ease);
+    }
+    .culture-card:hover{
+      box-shadow:var(--shadow-lg);
+      transform:translateY(-4px);
+    }
+    .culture-card svg{
+      width:48px;height:48px;margin-bottom:12px;
+      stroke:var(--color-primary-2);
+    }
+    .accordion{
+      border-top:1px solid #e0e0e0;
+    }
+    .accordion-item{
+      border-bottom:1px solid #e0e0e0;
+    }
+    .accordion-header{
+      background:transparent;
+      width:100%;
+      text-align:left;
+    }
+    .accordion-header button{
+      width:100%;
+      padding:16px;
+      font-size:1rem;
+      font-weight:600;
+      background:var(--color-primary-1);
+      color:#fff;
+      border-radius:var(--radius-sm);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      transition:var(--transition-ease);
+    }
+    .accordion-header button:hover{
+      background:var(--color-primary-2);
+      transform:scale(1.02);
+    }
+    .accordion-content{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .35s var(--transition-ease);
+      background:#fff;
+      padding:0 16px;
+    }
+    .accordion-content.open{
+      padding:16px;
+    }
+    .testimonial-carousel{
+      position:relative;
+      overflow:hidden;
+      max-width:800px;
+      margin:0 auto;
+    }
+    .testimonial-track{
+      display:flex;
+      transition:transform .5s ease;
+    }
+    .testimonial-card{
+      min-width:100%;
+      background:#fff;
+      padding:24px;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-md);
+      text-align:center;
+    }
+    .testimonial-card img{
+      width:80px;height:80px;border-radius:var(--radius-full);
+      margin-bottom:12px;
+    }
+    .carousel-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(0,0,0,0.5);
+      color:#fff;
+      width:36px;height:36px;
+      border-radius:var(--radius-full);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .carousel-btn.prev{left:8px;}
+    .carousel-btn.next{right:8px;}
+    .apply-cta{
+      background:var(--color-accent);
+      color:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .cta-footer{
+      background:var(--color-purple);
+      color:#fff;
+      text-align:center;
+      padding:32px 24px;
+    }
+    .cta-footer .btn-primary{margin-top:16px;}
+    @media(min-width:768px){
+      .culture-overview{grid-template-columns:repeat(3,1fr);}
+      .hero{min-height:70vh;}
+    }
+    @media(min-width:768px){
+      .culture-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    }
+    @media(min-width:1024px){
+      nav{justify-content:space-between;max-width:1200px;margin:0 auto;}
+    }
+    button:focus, a:focus{
+      outline:2px solid var(--color-accent);
+      outline-offset:2px;
+    }
+    .skeleton{
+      background:#e0e0e0;
+      position:relative;
+      overflow:hidden;
+    }
+    .skeleton::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer{
+      0%{transform:translateX(-100%);}
+      100%{transform:translateX(100%);}
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="products.html" class="nav-link">Products</a>
+    <a href="careers.html" class="nav-link active">Careers</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="main-content">
+    <h1>Grow With Us</h1>
+    <h2>Join a team that nurtures beauty, sustainability, and innovation.</h2>
+    <div class="cta-group">
+      <a href="#open-positions" class="btn btn-primary">View Open Positions</a>
+      <a href="#apply-cta" class="btn btn-secondary">Apply Now</a>
+    </div>
+  </section>
+
+  <!-- Culture Overview -->
+  <section class="section" id="culture-overview">
+    <h2>Our Culture</h2>
+    <p style="max-width:800px;margin:0 auto 32px;text-align:center;">
+      At Sunflower we believe great products start with great people. Collaboration, curiosity,
+      and commitment to sustainability define how we work together.
+    </p>
+    <div class="culture-overview">
+      <div class="culture-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2c3 0 5 2 5 5s-2 5-5 5-5-2-5-5 2-5 5-5z"/></svg>
+        <h3>Collaboration</h3>
+        <p>Cross‑functional teams brainstorm, prototype, and iterate together, ensuring every voice is heard.</p>
+      </div>
+      <div class="culture-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12l1.5 2 2.5-1 3 5 4-8 5 2"/></svg>
+        <h3>Curiosity</h3>
+        <p>We encourage continuous learning, from botanical research to cutting‑edge e‑commerce tech.</p>
+      </div>
+      <div class="culture-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <h3>Sustainability</h3>
+        <p>Every decision, from packaging to office practices, aims to protect the planet we love.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Positions -->
+  <section class="section" id="open-positions">
+    <h2>Open Positions</h2>
+    <p style="max-width:800px;margin:0 auto 32px;text-align:center;">
+      Explore current opportunities. Click a role to view details and apply.
+    </p>
+
+    <div class="accordion" id="jobs-accordion">
+      <!-- Example Position 1 -->
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <button aria-expanded="false" aria-controls="job-1-content" class="btn btn-primary">
+            🌱 Marketing & Communications Manager
+            <span class="icon-chevron">▾</span>
+          </button>
+        </div>
+        <div id="job-1-content" class="accordion-content" hidden>
+          <h4>Responsibilities</h4>
+          <ul>
+            <li>Develop and execute brand storytelling campaigns.</li>
+            <li>Manage social media, PR, and content calendars.</li>
+            <li>Collaborate with design & product teams.</li>
+          </ul>
+          <h4>Requirements</h4>
+          <ul>
+            <li>3+ years in brand marketing, preferably in beauty or sustainability.</li>
+            <li>Strong copywriting and visual storytelling skills.</li>
+            <li>Passion for eco‑friendly products.</li>
+          </ul>
+          <a href="#apply-cta" class="btn btn-primary">Apply for this role</a>
+        </div>
+      </div>
+
+      <!-- Example Position 2 -->
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <button aria-expanded="false" aria-controls="job-2-content" class="btn btn-primary">
+            🌿 Front‑End Engineer (Shopify Hydrogen)
+            <span class="icon-chevron">▾</span>
+          </button>
+        </div>
+        <div id="job-2-content" class="accordion-content" hidden>
+          <h4>Responsibilities</h4>
+          <ul>
+            <li>Build performant, headless Shopify experiences.</li>
+            <li>Implement interactive UI components and animations.</li>
+            <li>Collaborate with design & backend teams.</li>
+          </ul>
+          <h4>Requirements</h4>
+          <ul>
+            <li>2+ years with React/Vue and modern JavaScript.</li>
+            <li>Experience with Shopify APIs and Hydrogen.</li>
+            <li>Understanding of WCAG accessibility.</li>
+          </ul>
+          <a href="#apply-cta" class="btn btn-primary">Apply for this role</a>
+        </div>
+      </div>
+
+      <!-- Example Position 3 -->
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <button aria-expanded="false" aria-controls="job-3-content" class="btn btn-primary">
+            🌻 Customer Success Specialist
+            <span class="icon-chevron">▾</span>
+          </button>
+        </div>
+        <div id="job-3-content" class="accordion-content" hidden>
+          <h4>Responsibilities</h4>
+          <ul>
+            <li>Provide exceptional support via chat, email, and phone.</li>
+            <li>Assist customers with orders, product info, and skin consultations.</li>
+            <li>Gather feedback to improve the customer journey.</li>
+          </ul>
+          <h4>Requirements</h4>
+          <ul>
+            <li>Excellent communication and empathy.</li>
+            <li>Interest in skincare and sustainability.</li>
+            <li>Experience with Shopify or similar e‑commerce platforms.</li>
+          </ul>
+          <a href="#apply-cta" class="btn btn-primary">Apply for this role</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Employee Testimonials -->
+  <section class="section" id="testimonials">
+    <h2>What Our Team Says</h2>
+    <div class="testimonial-carousel">
+      <div class="testimonial-track">
+        <div class="testimonial-card">
+          <img src="https://picsum.photos/seed/emp1/100/100" alt="Employee photo">
+          <p>“Working at Sunflower feels like being part of a family that truly cares about the planet and each other.”</p>
+          <strong>— Maya L., Marketing Lead</strong>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://picsum.photos/seed/emp2/100/100" alt="Employee photo">
+          <p>“The freedom to experiment with new tech while staying grounded in sustainability is inspiring.”</p>
+          <strong>— Alex R., Front‑End Engineer</strong>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://picsum.photos/seed/emp3/100/100" alt="Employee photo">
+          <p>“Every day I see the positive impact our products have on customers and the environment.”</p>
+          <strong>— Priya S., Customer Success</strong>
+        </div>
+      </div>
+      <button class="carousel-btn prev" aria-label="Previous testimonial">‹</button>
+      <button class="carousel-btn next" aria-label="Next testimonial">›</button>
+    </div>
+  </section>
+
+  <!-- Apply CTA -->
+  <section class="apply-cta" id="apply-cta">
+    <h2>Ready to Grow With Us?</h2>
+    <p style="max-width:800px;margin:0 auto 24px;text-align:center;">
+      If you share our passion for beauty, sustainability, and innovation, we’d love to hear from you.
+    </p>
+    <a href="https://app.hubspot.com/login" class="btn btn-primary">Apply Now</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="cta-footer">
+    <p>&copy; 2024 Sunflower Organic Skincare – All Rights Reserved</p>
+    <a href="#top" class="btn btn-secondary">Back to top</a>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Accordion functionality
+    document.querySelectorAll('.accordion-header button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        const content = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!expanded) {
+          content.hidden = false;
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.classList.add('open');
+        } else {
+          content.style.maxHeight = 0;
+          content.classList.remove('open');
+          setTimeout(() => content.hidden = true, 350);
+        }
+      });
+    });
+
+    // Simple testimonial carousel
+    const track = document.querySelector('.testimonial-track');
+    const slides = Array.from(track.children);
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    let currentIndex = 0;
+
+    const updateCarousel = () => {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    };
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateCarousel();
+    });
+
+    // Auto-play
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    }, 8000);
+    window.addEventListener('resize', updateCarousel);
+  </script>
+</body>
+</html>
+</analysis>

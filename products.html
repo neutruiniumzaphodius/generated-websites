@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products – Sunflower Organic Skincare</title>
+  <meta name="description" content="Shop premium, organic, cruelty‑free skincare. Filter by skin type, concern, or ingredient and discover your radiant glow.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary-1:#C7D44C;
+      --color-primary-2:#97C93C;
+      --color-accent:#FFC600;
+      --color-promo:#FF6F00;
+      --color-purple:#1B1464;
+      --color-bg-white:#FFFFFF;
+      --color-bg-gradient-start:#F5F0E6;
+      --color-bg-gradient-end:#E8F5E9;
+      --color-charcoal:#2E2E2E;
+      --color-light:#F9F9F9;
+      --shadow-sm:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg:0 8px 16px rgba(0,0,0,0.12);
+      --radius-sm:8px;
+      --radius-md:12px;
+      --radius-full:9999px;
+      --transition-ease:0.25s ease-out;
+    }
+    *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;font-size:16px;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-charcoal);
+      background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif;color:var(--color-charcoal);}
+    h1{font-size:clamp(32px,5vw,48px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;}
+    h2{font-size:clamp(24px,4vw,36px);font-weight:600;line-height:1.3;letter-spacing:-0.25px;}
+    h3{font-size:clamp(20px,3.5vw,28px);font-weight:600;line-height:1.4;}
+    .skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 12px;z-index:100;transition:top .3s;}
+    .skip-link:focus{top:0;}
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:24px;
+      padding:16px;
+      background:rgba(255,255,255,0.9);
+      position:sticky;top:0;z-index:10;
+    }
+    .nav-link{
+      font-size:18px;
+      font-weight:500;
+      color:var(--color-charcoal);
+      position:relative;
+    }
+    .nav-link.active{color:var(--color-primary-1);}
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-4px;width:100%;height:2px;background:var(--color-primary-1);
+      opacity:0;transition:opacity .3s;
+    }
+    .nav-link.active::after{opacity:1;}
+    .hero{
+      position:relative;
+      min-height:60vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1600/900?random=2') center/cover no-repeat;
+      background-attachment:fixed;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(rgba(245,240,230,0.45),rgba(232,245,233,0.45));
+    }
+    .hero h1{
+      text-shadow:0 1px 2px rgba(0,0,0,0.4);
+    }
+    .hero .cta-group{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+    .btn{
+      padding:16px 32px;
+      border-radius:var(--radius-sm);
+      font-weight:600;
+      transition:var(--transition-ease);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-primary{
+      background:var(--color-primary-1);
+      color:#fff;
+      box-shadow:var(--shadow-sm);
+    }
+    .btn-primary:hover{
+      background:var(--color-primary-2);
+      transform:scale(1.03);
+    }
+    .btn-secondary{
+      border:2px solid var(--color-accent);
+      color:var(--color-accent);
+      background:transparent;
+    }
+    .btn-secondary:hover{
+      background:var(--color-accent);
+      color:var(--color-charcoal);
+    }
+    .section{
+      padding:48px 24px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .filter-bar{
+      position:sticky;
+      top:80px;
+      background:var(--color-bg-white);
+      padding:12px 24px;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-sm);
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      justify-content:center;
+      z-index:5;
+    }
+    .filter-tag{
+      background:#e0e0e0;
+      color:#333;
+      padding:6px 14px;
+      border-radius:var(--radius-full);
+      font-size:0.9rem;
+      transition:var(--transition-ease);
+    }
+    .filter-tag[aria-pressed="true"]{
+      background:var(--color-primary-2);
+      color:#fff;
+    }
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+    }
+    .product-card{
+      background:#fff;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-md);
+      padding:16px;
+      position:relative;
+      transition:var(--transition-ease);
+    }
+    .product-card:hover{
+      box-shadow:var(--shadow-lg);
+      transform:scale(1.03);
+    }
+    .product-card img{
+      border-radius:var(--radius-sm);
+      transition:transform .3s;
+    }
+    .product-card:hover img{
+      transform:scale(1.05);
+    }
+    .badge{
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:28px;
+      height:28px;
+      background:var(--color-promo);
+      color:#fff;
+      border-radius:var(--radius-full);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:0.75rem;
+      font-weight:600;
+    }
+    /* Quick View Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:20;
+    }
+    .modal[open]{
+      display:flex;
+    }
+    .modal-content{
+      background:#fff;
+      border-radius:var(--radius-md);
+      max-width:800px;
+      width:90%;
+      max-height:90vh;
+      overflow:auto;
+      padding:24px;
+      position:relative;
+      box-shadow:var(--shadow-lg);
+    }
+    .modal-close{
+      position:absolute;
+      top:12px;
+      right:12px;
+      background:var(--color-charcoal);
+      color:#fff;
+      width:32px;
+      height:32px;
+      border-radius:var(--radius-full);
+      font-size:1.2rem;
+      line-height:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .modal-close:focus{
+      outline:2px solid var(--color-accent);
+    }
+    /* Recommendations Slider */
+    .rec-slider{
+      position:relative;
+      overflow:hidden;
+    }
+    .rec-track{
+      display:flex;
+      transition:transform .5s ease;
+    }
+    .rec-item{
+      min-width:250px;
+      flex-shrink:0;
+      margin:12px;
+    }
+    .carousel-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(0,0,0,0.5);
+      color:#fff;
+      width:36px;height:36px;
+      border-radius:var(--radius-full);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .carousel-btn.prev{left:8px;}
+    .carousel-btn.next{right:8px;}
+    .cta-footer{
+      background:var(--color-purple);
+      color:#fff;
+      text-align:center;
+      padding:32px 24px;
+    }
+    .cta-footer .btn-primary{margin-top:16px;}
+    /* Focus */
+    button:focus, a:focus{
+      outline:2px solid var(--color-accent);
+      outline-offset:2px;
+    }
+    /* Loader */
+    .skeleton{
+      background:#e0e0e0;
+      position:relative;
+      overflow:hidden;
+    }
+    .skeleton::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer{
+      0%{transform:translateX(-100%);}
+      100%{transform:translateX(100%);}
+    }
+    @media(min-width:768px){
+      .hero{min-height:70vh;}
+    }
+    @media(min-width:1024px){
+      nav{justify-content:space-between;max-width:1200px;margin:0 auto;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Navigation -->
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About Us</a>
+    <a href="products.html" class="nav-link active">Products</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="careers.html" class="nav-link">Careers</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+  </nav>
+
+  <!-- Hero with Filters -->
+  <section class="hero" id="hero-with-filters">
+    <h1>Find Your Perfect Glow</h1>
+    <p class="subtitle" style="font-size:1.2rem; margin-top:0.5rem;">Shop our full catalog – filter by skin type, concern or ingredient.</p>
+    <div class="cta-group" style="margin-top:24px;">
+      <a href="#product-grid" class="btn btn-primary">Browse All</a>
+    </div>
+  </section>
+
+  <div class="filter-bar" role="region" aria-label="Product filters">
+    <button class="filter-tag" aria-pressed="false" data-filter="type" data-value="dry">Dry Skin</button>
+    <button class="filter-tag" aria-pressed="false" data-filter="type" data-value="oily">Oily Skin</button>
+    <button class="filter-tag" aria-pressed="false" data-filter="concern" data-value="acne">Acne</button>
+    <button class="filter-tag" aria-pressed="false" data-filter="concern" data-value="aging">Aging</button>
+    <button class="filter-tag" aria-pressed="false" data-filter="ingredient" data-value="rosehip">Rosehip</button>
+    <button class="filter-tag" aria-pressed="false" data-filter="ingredient" data-value="coconut">Coconut</button>
+  </div>
+
+  <!-- Product Grid -->
+  <section class="section" id="product-grid">
+    <h2 class="section-title">All Products</h2>
+    <div class="product-grid">
+      <!-- Example Product Card -->
+      <article class="product-card" aria-label="Product: Radiant Face Oil">
+        <div class="badge" aria-label="Promo">NEW</div>
+        <img src="https://picsum.photos/400/400?random=11" alt="Radiant Face Oil" class="skeleton">
+        <h3>Radiant Face Oil</h3>
+        <p>30 ml – $38.00</p>
+        <div class="cta-group" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-primary" aria-label="Add Radiant Face Oil to cart">Add to Cart</button>
+          <button class="btn btn-secondary quick-view" data-id="1" aria-label="Open quick view for Radiant Face Oil">Quick View</button>
+        </div>
+      </article>
+
+      <article class="product-card" aria-label="Product: Calming Night Cream">
+        <div class="badge" aria-label="Promo">SALE</div>
+        <img src="https://picsum.photos/400/400?random=12" alt="Calming Night Cream" class="skeleton">
+        <h3>Calming Night Cream</h3>
+        <p>50 ml – $45.00</p>
+        <div class="cta-group" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-primary" aria-label="Add Calming Night Cream to cart">Add to Cart</button>
+          <button class="btn btn-secondary quick-view" data-id="2" aria-label="Open quick view for Calming Night Cream">Quick View</button>
+        </div>
+      </article>
+
+      <article class="product-card" aria-label="Product: Brightening Serum">
+        <img src="https://picsum.photos/400/400?random=13" alt="Brightening Serum" class="skeleton">
+        <h3>Brightening Serum</h3>
+        <p>30 ml – $52.00</p>
+        <div class="cta-group" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-primary" aria-label="Add Brightening Serum to cart">Add to Cart</button>
+          <button class="btn btn-secondary quick-view" data-id="3" aria-label="Open quick view for Brightening Serum">Quick View</button>
+        </div>
+      </article>
+
+      <!-- Add more product cards as needed -->
+    </div>
+  </section>
+
+  <!-- Quick View Modal -->
+  <dialog class="modal" id="quick-view-modal" aria-labelledby="quick-view-title">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close quick view">&times;</button>
+      <h2 id="quick-view-title">Product Quick View</h2>
+      <div id="quick-view-body">
+        <!-- Content injected via JavaScript -->
+        <p class="skeleton" style="height:200px;"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Recommendations Slider -->
+  <section class="section" id="recommendations-slider">
+    <h2>You Might Also Like</h2>
+    <div class="rec-slider carousel">
+      <button class="carousel-btn prev" aria-label="Previous recommendations">&#9664;</button>
+      <button class="carousel-btn next" aria-label="Next recommendations">&#9654;</button>
+      <div class="rec-track">
+        <div class="rec-item product-card">
+          <img src="https://picsum.photos/300/300?random=21" alt="Soothing Body Lotion" class="skeleton">
+          <h4>Soothing Body Lotion</h4>
+          <p>$30.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <div class="rec-item product-card">
+          <img src="https://picsum.photos/300/300?random=22" alt="Hydrating Eye Gel" class="skeleton">
+          <h4>Hydrating Eye Gel</h4>
+          <p>$28.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <div class="rec-item product-card">
+          <img src="https://picsum.photos/300/300?random=23" alt="Renewal Face Mask" class="skeleton">
+          <h4>Renewal Face Mask</h4>
+          <p>$35.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <!-- Add more recommendation cards as needed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Footer -->
+  <section class="cta-footer">
+    <h2>Need a Personal Skin Consultation?</h2>
+    <p>Book a free 15‑minute virtual consultation with our skincare experts.</p>
+    <a href="https://calendly.com/sunflower-consultation" class="btn btn-primary" target="_blank" rel="noopener">Schedule Now</a>
+  </section>
+
+  <!-- Global Footer (same as other pages) -->
+  <footer class="cta-footer">
+    <p>&copy; 2024 Sunflower Organic Skincare – All Rights Reserved.</p>
+    <div class="cta-group" style="margin-top:16px;">
+      <a href="privacy.html" class="btn btn-secondary">Privacy Policy</a>
+      <a href="terms.html" class="btn btn-secondary">Terms of Service</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Quick View Modal
+    const modal = document.getElementById('quick-view-modal');
+    const modalClose = modal.querySelector('.modal-close');
+    const quickViewButtons = document.querySelectorAll('.quick-view');
+
+    const productData = {
+      1: {
+        title: 'Radiant Face Oil',
+        img: 'https://picsum.photos/800/800?random=111',
+        description: 'A lightweight, fast‑absorbing oil packed with rosehip and jojoba to brighten and hydrate.',
+        price: '$38.00',
+        sku: 'RFO-001'
+      },
+      2: {
+        title: 'Calming Night Cream',
+        img: 'https://picsum.photos/800/800?random=112',
+        description: 'Rich night cream with chamomile and oat extract to soothe and restore skin while you sleep.',
+        price: '$45.00',
+        sku: 'CNC-002'
+      },
+      3: {
+        title: 'Brightening Serum',
+        img: 'https://picsum.photos/800/800?random=113',
+        description: 'Vitamin C serum formulated to even tone and reduce the appearance of dark spots.',
+        price: '$52.00',
+        sku: 'BRS-003'
+      }
+    };
+
+    quickViewButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const data = productData[id];
+        if (data) {
+          modal.querySelector('#quick-view-title').textContent = data.title;
+          modal.querySelector('#quick-view-body').innerHTML = `
+            <img src="${data.img}" alt="${data.title}" style="border-radius:var(--radius-md);margin-bottom:16px;">
+            <p>${data.description}</p>
+            <p><strong>Price:</strong> ${data.price}</p>
+            <p><strong>SKU:</strong> ${data.sku}</p>
+            <button class="btn btn-primary" style="margin-top:12px;">Add to Cart</button>
+          `;
+          modal.showModal();
+        }
+      });
+    });
+
+    modalClose.addEventListener('click', () => modal.close());
+
+    // Simple Recommendations Carousel
+    const track = document.querySelector('.rec-track');
+    const prevBtn = document.querySelector('.rec-slider .prev');
+    const nextBtn = document.querySelector('.rec-slider .next');
+    let index = 0;
+
+    const slideWidth = 274; // Approximate width including margin
+
+    function setPosition() {
+      track.style.transform = `translateX(${-index * slideWidth}px)`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (index > 0) {
+        index--;
+        setPosition();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const maxIndex = track.children.length - Math.floor(track.parentElement.offsetWidth / slideWidth);
+      if (index < maxIndex) {
+        index++;
+        setPosition();
+      }
+    });
+  </script>
+</body>
+</html>

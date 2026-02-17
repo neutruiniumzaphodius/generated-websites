@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us – Sunflower Organic Skincare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary-1:#C7D44C;
+      --color-primary-2:#97C93C;
+      --color-accent:#FFC600;
+      --color-promo:#FF6F00;
+      --color-purple:#1B1464;
+      --color-bg-white:#FFFFFF;
+      --color-bg-gradient-start:#F5F0E6;
+      --color-bg-gradient-end:#E8F5E9;
+      --color-charcoal:#2E2E2E;
+      --color-light:#F9F9F9;
+      --shadow-sm:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg:0 8px 16px rgba(0,0,0,0.12);
+      --radius-sm:8px;
+      --radius-md:12px;
+      --radius-full:9999px;
+      --transition-ease:0.25s ease-out;
+    }
+    *, *::before, *::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;font-size:16px;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-charcoal);
+      background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif;color:var(--color-charcoal);}
+    h1{font-size:clamp(32px,5vw,48px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;}
+    h2{font-size:clamp(24px,4vw,36px);font-weight:600;line-height:1.3;letter-spacing:-0.25px;}
+    h3{font-size:clamp(20px,3.5vw,28px);font-weight:600;line-height:1.4;}
+    .skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 12px;z-index:100;transition:top .3s;}
+    .skip-link:focus{top:0;}
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:24px;
+      padding:16px;
+      background:rgba(255,255,255,0.9);
+      position:sticky;top:0;z-index:10;
+    }
+    .nav-link{
+      font-size:18px;
+      font-weight:500;
+      color:var(--color-charcoal);
+      position:relative;
+    }
+    .nav-link.active{color:var(--color-primary-1);}
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-4px;width:100%;height:2px;background:var(--color-primary-1);
+      opacity:0;transition:opacity .3s;
+    }
+    .nav-link.active::after{opacity:1;}
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1600/900?random=2') center/cover no-repeat;
+      background-attachment:fixed;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(rgba(245,240,230,0.45),rgba(232,245,233,0.45));
+    }
+    .hero h1{text-shadow:0 1px 2px rgba(0,0,0,0.4);}
+    .hero .cta-group{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+    .btn{
+      padding:16px 32px;
+      border-radius:var(--radius-sm);
+      font-weight:600;
+      transition:var(--transition-ease);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn-primary{
+      background:var(--color-primary-1);
+      color:#fff;
+      box-shadow:var(--shadow-sm);
+    }
+    .btn-primary:hover{
+      background:var(--color-primary-2);
+      transform:scale(1.03);
+    }
+    .btn-secondary{
+      border:2px solid var(--color-accent);
+      color:var(--color-accent);
+      background:transparent;
+    }
+    .btn-secondary:hover{
+      background:var(--color-accent);
+      color:var(--color-charcoal);
+    }
+    .section{
+      padding:48px 24px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .brand-story{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:24px;
+      align-items:center;
+    }
+    .brand-story img{
+      border-radius:var(--radius-md);
+    }
+    .brand-story .text{
+      max-width:600px;
+    }
+    .values{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:24px;
+      align-items:start;
+    }
+    .value-item{
+      text-align:center;
+    }
+    .value-item svg{
+      width:48px;height:48px;margin-bottom:12px;
+    }
+    .timeline{
+      display:flex;
+      overflow-x:auto;
+      gap:24px;
+      padding:24px 0;
+    }
+    .timeline-item{
+      flex:0 0 auto;
+      text-align:center;
+    }
+    .timeline-badge{
+      width:48px;height:48px;
+      background:var(--color-purple);
+      color:#fff;
+      border-radius:var(--radius-full);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 8px;
+      font-weight:600;
+    }
+    .timeline-line{
+      width:2px;
+      height:40px;
+      background:var(--color-primary-2);
+      margin:0 auto;
+    }
+    .gallery{
+      column-count:1;
+      column-gap:16px;
+    }
+    @media(min-width:768px){
+      .brand-story{grid-template-columns:1fr 1fr;}
+      .hero{min-height:70vh;}
+      .gallery{column-count:2;}
+    }
+    @media(min-width:1024px){
+      nav{justify-content:space-between;max-width:1200px;margin:0 auto;}
+      .gallery{column-count:3;}
+    }
+    .cta-footer{
+      background:var(--color-purple);
+      color:#fff;
+      text-align:center;
+      padding:32px 24px;
+    }
+    .cta-footer .btn-primary{margin-top:16px;}
+    button:focus,a:focus{
+      outline:2px solid var(--color-accent);
+      outline-offset:2px;
+    }
+    .skeleton{
+      background:#e0e0e0;
+      position:relative;
+      overflow:hidden;
+    }
+    .skeleton::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
+      animation:shimmer 1.5s infinite;
+    }
+    @keyframes shimmer{
+      0%{transform:translateX(-100%);}
+      100%{transform:translateX(100%);}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav aria-label="Primary navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link active" aria-current="page">About</a>
+    <a href="products.html" class="nav-link">Products</a>
+    <a href="careers.html" class="nav-link">Careers</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="hero" id="hero_banner">
+    <h1>Our Journey, Your Glow</h1>
+    <p class="hero-subtitle">From sun‑kissed fields to your skincare routine.</p>
+    <div class="cta-group">
+      <a href="#founder_bio" class="btn btn-secondary">Meet the Team</a>
+    </div>
+  </section>
+
+  <!-- Brand Story -->
+  <section class="section brand-story" id="brand_story">
+    <div class="text">
+      <h2>Our Story</h2>
+      <p>
+        Sunflower Organic Skincare was born from a love of nature, science, and the belief that true beauty thrives when it’s nurtured responsibly. Our journey began in a modest garden where we experimented with botanical extracts, and today we share those discoveries with the world.
+      </p>
+      <p>
+        Every product is a tribute to the sun‑filled fields that inspire us, crafted with integrity, transparency, and a relentless pursuit of excellence.
+      </p>
+    </div>
+    <div class="video">
+      <video controls width="100%" preload="metadata" poster="https://picsum.photos/800/450?random=3">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Mission & Values -->
+  <section class="section" id="mission_and_values">
+    <h2>Mission & Values</h2>
+    <div class="values">
+      <div class="value-item">
+        <svg aria-hidden="true" focusable="false" fill="var(--color-primary-1)"><circle cx="24" cy="24" r="20"/></svg>
+        <h3>Sustainability</h3>
+        <p>We source responsibly and minimize waste at every step.</p>
+      </div>
+      <div class="value-item">
+        <svg aria-hidden="true" focusable="false" fill="var(--color-primary-2)"><circle cx="24" cy="24" r="20"/></svg>
+        <h3>Transparency</h3>
+        <p>Open communication about ingredients and processes.</p>
+      </div>
+      <div class="value-item">
+        <svg aria-hidden="true" focusable="false" fill="var(--color-accent)"><circle cx="24" cy="24" r="20"/></svg>
+        <h3>Community</h3>
+        <p>Empowering people to make informed, eco‑friendly choices.</p>
+      </div>
+      <div class="value-item">
+        <svg aria-hidden="true" focusable="false" fill="var(--color-promo)"><circle cx="24" cy="24" r="20"/></svg>
+        <h3>Innovation</h3>
+        <p>Blending nature with science for effective, gentle formulas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sourcing Practices -->
+  <section class="section" id="sourcing_practices">
+    <h2>Ethical Sourcing Practices</h2>
+    <div class="timeline" aria-label="Timeline of sourcing milestones">
+      <div class="timeline-item">
+        <div class="timeline-badge">1</div>
+        <p><strong>Seed Selection</strong></p>
+        <p>Partnering with organic farms certified by USDA.</p>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">2</div>
+        <p><strong>Fair Trade Harvest</strong></p>
+        <p>Ensuring growers receive equitable wages.</p>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">3</div>
+        <p><strong>Eco‑Friendly Extraction</strong></p>
+        <p>Utilising CO₂ and water‑based methods.</p>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">4</div>
+        <p><strong>Zero‑Waste Packaging</strong></p>
+        <p>Recyclable glass, bamboo caps, and biodegradable mailers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Bio -->
+  <section class="section" id="founder_bio">
+    <h2>Founder & Visionary – Maya Sun</h2>
+    <div class="brand-story">
+      <img src="https://picsum.photos/800/500?random=4" alt="Maya Sun portrait" loading="lazy">
+      <div class="text">
+        <p>
+          Maya grew up amidst sunflower fields in California’s Central Valley, where she learned the healing power of plants from her grandmother. After earning a degree in Botanical Sciences, she combined her passion for sustainability with cutting‑edge skincare research.
+        </p>
+        <p>
+          Today, Maya leads a team of ethical innovators, ensuring every bottle reflects her commitment to purity, transparency, and the planet.
+        </p>
+        <blockquote>
+          “Our skin is a reflection of the world we live in. By choosing conscious ingredients, we nurture both ourselves and the earth.”
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section" id="gallery">
+    <h2>Moments Behind the Brand</h2>
+    <div class="gallery">
+      <img src="https://picsum.photos/600/800?random=5" alt="Sunflower field at sunrise" loading="lazy">
+      <img src="https://picsum.photos/600/700?random=6" alt="Lab testing natural extracts" loading="lazy">
+      <img src="https://picsum.photos/600/900?random=7" alt="Team planting seedlings" loading="lazy">
+      <img src="https://picsum.photos/600/650?random=8" alt="Packaging design process" loading="lazy">
+      <img src="https://picsum.photos/600/750?random=9" alt="Community outreach event" loading="lazy">
+      <img src="https://picsum.photos/600/800?random=10" alt="Close‑up of sun‑kissed petals" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Call‑to‑Action Footer -->
+  <section class="cta-footer">
+    <h2>Ready to Experience True Radiance?</h2>
+    <p>Explore our curated collection of natural, effective skincare.</p>
+    <a href="index.html" class="btn btn-primary">Shop Now</a>
+  </section>
+</body>
+</html>
