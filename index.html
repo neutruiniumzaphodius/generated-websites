@@ -1,75 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunny Days Landscaping – Eco‑Friendly Landscaping, Crafted with Care</title>
+<meta name="description" content="Premium eco‑friendly landscaping services in the Bay Area. Transform your yard into a sustainable oasis with seamless online booking.">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#66A691;
+  --color-secondary:#A5D6A7;
+  --color-accent:#455A64;
+  --color-bg:#F5F5DC;
+  --color-white:#ffffff;
+  --font-heading:'Montserrat',sans-serif;
+  --font-body:'Open Sans',sans-serif;
+  --transition:0.3s ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;background:var(--color-bg);}
+body{font-family:var(--font-body);color:var(--color-accent);line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
+ul{list-style:none;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--color-primary);color:#fff;padding:8px 16px;z-index:1000;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{background:var(--color-white);box-shadow:0 2px 4px rgba(0,0,0,.08);position:sticky;top:0;z-index:999;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{font-family:var(--font-body);font-weight:600;letter-spacing:.5px;text-transform:uppercase;font-size:16px;color:var(--color-accent);}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;align-items:center;}
+.hamburger span{display:block;width:100%;height:3px;background:var(--color-accent);border-radius:2px;}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:100%;left:0;background:var(--color-white);flex-direction:column;width:100%;display:none;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+
+/* Hero Carousel */
+.hero{position:relative;height:100vh;overflow:hidden;color:var(--color-white);}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s ease-in-out;}
+.hero-slide.active{opacity:1;}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(102,166,145,.4),rgba(165,214,167,.4));}
+.hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:20vh;}
+.logo{width:120px;height:120px;margin-bottom:16px;}
+.logo svg{width:100%;height:100%;fill:var(--color-white);}
+.hero-tagline{font-family:var(--font-heading);font-size:48px;letter-spacing:-0.4px;margin-bottom:12px;}
+.hero-title{font-family:var(--font-heading);font-size:56px;text-shadow:2px 2px rgba(0,0,0,.5);margin-bottom:12px;}
+.hero-subtitle{font-size:20px;margin-bottom:24px;}
+.hero-buttons{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+.btn{padding:12px 24px;border-radius:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;transition:var(--transition);}
+.btn-primary{background:var(--color-primary);color:var(--color-accent);box-shadow:0 2px 4px rgba(0,0,0,.1);}
+.btn-primary:hover{background:#5B8E80;transform:scale(1.05);}
+.btn-outline{border:2px solid var(--color-accent);color:var(--color-accent);}
+.btn-outline:hover{background:var(--color-accent);color:var(--color-white);transform:scale(1.05);}
+
+/* Sections */
+section{padding:64px 0;}
+.section-title{font-family:var(--font-heading);font-size:44px;text-align:center;margin-bottom:24px;color:var(--color-accent);}
+.section-intro{max-width:720px;margin:auto;text-align:center;font-size:18px;margin-bottom:48px;}
+
+/* Value Proposition */
+.value-prop{background:var(--color-white);}
+.core-icons{display:flex;justify-content:center;gap:48px;margin-top:32px;}
+.core-icon{display:flex;flex-direction:column;align-items:center;}
+.core-icon .icon-bg{background:var(--color-primary);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
+.core-icon span{font-weight:600;font-size:14px;color:var(--color-accent);}
+
+/* Featured Services */
+.services{background:var(--color-bg);}
+.service-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+.service-card{background:#fff;padding:24px;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;position:relative;}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:6px;height:100%;background:var(--color-primary);}
+.service-card h3{font-family:var(--font-heading);font-size:34px;margin-bottom:12px;color:var(--color-accent);}
+.service-card p{flex-grow:1;margin-bottom:16px;}
+.service-card .cta{align-self:flex-start;}
+
+/* Testimonials */
+.testimonials{background:var(--color-white);}
+.testimonial{display:flex;align-items:center;gap:16px;opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+.testimonial.active{opacity:1;transform:none;}
+.testimonial .quote{font-size:24px;color:var(--color-primary);}
+.testimonial .content{font-style:italic;font-size:16px;color:var(--color-accent);}
+.testimonial .author{font-weight:600;color:var(--color-accent);margin-top:4px;}
+.testimonial img{border-radius:50%;width:40px;height:40px;}
+
+/* Project Highlights Slider */
+.project-slider{position:relative;overflow:hidden;}
+.slider-track{display:flex;transition:transform .6s ease;}
+.slider-slide{min-width:100%;position:relative;}
+.slider-slide::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);}
+.slider-caption{position:absolute;bottom:16px;left:16px;background:rgba(0,0,0,.5);color:#fff;padding:8px 12px;border-radius:4px;font-size:14px;}
+.slider-dots{position:absolute;bottom:16px;right:16px;display:flex;gap:8px;}
+.slider-dots button{width:12px;height:12px;border-radius:50%;background:var(--color-primary);opacity:.5;border:none;transition:opacity .3s;}
+.slider-dots button.active{opacity:1;width:12px;height:12px;background:var(--color-primary);}
+
+/* CTA Banner */
+.cta-banner{background:var(--color-secondary);color:var(--color-accent);text-align:center;padding:48px 24px;}
+.cta-banner h2{font-family:var(--font-heading);font-size:36px;margin-bottom:16px;}
+
+/* Footer */
+footer{background:var(--color-accent);color:#fff;padding:32px 0;text-align:center;font-size:14px;}
+footer a{color:#fff;text-decoration:underline;}
+
+/* Social Media Strip */
+.social-strip{position:fixed;top:50%;left:0;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;padding:8px;background:rgba(255,255,255,.8);border-radius:0 8px 8px 0;}
+.social-strip a{width:48px;height:48px;background:var(--color-accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .3s;}
+.social-strip a:hover{background:var(--color-primary);}
+
+/* Accessibility focus */
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="Sunny Days Landscaping logo">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" stroke="none" fill="none"/><!-- placeholder logo --></svg>
+      </a>
+      <button class="hamburger" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Carousel -->
+  <section class="hero" aria-label="Featured projects carousel">
+    <div class="hero-slide active" style="background-image:url('https://picsum.photos/id/1015/1920/1080');" data-index="0"></div>
+    <div class="hero-slide" style="background-image:url('https://picsum.photos/id/1025/1920/1080');" data-index="1"></div>
+    <div class="hero-slide" style="background-image:url('https://picsum.photos/id/1035/1920/1080');" data-index="2"></div>
+    <div class="hero-content">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4L12 60h40L32 4z"/></svg>
+      </div>
+      <div class="hero-tagline">Eco‑Friendly Landscaping, Crafted with Care</div>
+      <h1 class="hero-title">Transform Your Yard into a Sustainable Oasis</h1>
+      <p class="hero-subtitle">Premium eco‑friendly landscaping services for Bay Area homes.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary cta-book" aria-label="Book a consultation">hero_cta_book_now: Book Now</button>
+        <button class="btn btn-outline cta-learn" aria-label="Learn more about our services">hero_cta_learn_more: Learn More</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Value Proposition -->
+  <section class="value-prop" id="value-prop">
+    <div class="container">
+      <h2 class="section-title">Why Choose Sunny Days?</h2>
+      <p class="section-intro">We blend sustainable design with flawless execution, delivering beautiful, water‑wise landscapes that boost your home’s value.</p>
+      <div class="core-icons">
+        <div class="core-icon">
+          <div class="icon-bg"><i data-lucide="leaf"></i></div>
+          <span>Sustainable Design</span>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div class="core-icon">
+          <div class="icon-bg"><i data-lucide="calendar"></i></div>
+          <span>Easy Booking</span>
+        </div>
+        <div class="core-icon">
+          <div class="icon-bg"><i data-lucide="credit-card"></i></div>
+          <span>Transparent Pricing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Services -->
+  <section class="services" id="featured-services">
+    <div class="container">
+      <h2 class="section-title">Our Flagship Services</h2>
+      <div class="service-cards">
+        <div class="service-card">
+          <h3>Landscape Design</h3>
+          <p>Custom designs that prioritize native plants, drought‑tolerance, and aesthetic harmony.</p>
+          <button class="btn btn-primary cta-get-quote" data-cta="cta_get_a_quote">cta_get_a_quote: Get a Quote</button>
+        </div>
+        <div class="service-card">
+          <h3>Irrigation Systems</h3>
+          <p>Smart, water‑wise irrigation solutions that reduce consumption by up to 40%.</p>
+          <button class="btn btn-primary cta-get-quote" data-cta="cta_get_a_quote">cta_get_a_quote: Get a Quote</button>
+        </div>
+        <div class="service-card">
+          <h3>Hardscapes</h3>
+          <p>Patios, walkways, and retaining walls built with sustainable materials and expert craftsmanship.</p>
+          <button class="btn btn-primary cta-get-quote" data-cta="cta_get_a_quote">cta_get_a_quote: Get a Quote</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rotating Testimonials -->
+  <section class="testimonials" id="rotating-testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="testimonial-track">
+        <div class="testimonial active">
+          <div class="quote">“</div>
+          <div class="content">
+            <p class="content">“Sunny Days transformed our backyard into a low‑maintenance oasis. The irrigation system cut our water bill by 35%!”</p>
+            <p class="author">— Maria G., San Jose</p>
+          </div>
+          <img src="https://picsum.photos/seed/author1/40/40" alt="Maria G. portrait">
+        </div>
+        <div class="testimonial">
+          <div class="quote">“</div>
+          <div class="content">
+            <p class="content">“Professional, punctual, and truly green‑focused. Our new patio feels like an extension of our home.”</p>
+            <p class="author">— Alex D., Marin County</p>
+          </div>
+          <img src="https://picsum.photos/seed/author2/40/40" alt="Alex D. portrait">
+        </div>
+        <div class="testimonial">
+          <div class="quote">“</div>
+          <div class="content">
+            <p class="content">“The design team listened to our ideas and delivered a garden that thrives with minimal water.”</p>
+            <p class="author">— Jamie L., Oakland</p>
+          </div>
+          <img src="https://picsum.photos/seed/author3/40/40" alt="Jamie L. portrait">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Highlights Slider -->
+  <section class="project-highlights" id="project-highlights-slider">
+    <div class="container">
+      <h2 class="section-title">Flagship Projects</h2>
+      <div class="project-slider">
+        <div class="slider-track">
+          <div class="slider-slide" style="background-image:url('https://picsum.photos/id/1043/1200/600');">
+            <div class="slider-caption">San Francisco – Modern Patio</div>
+          </div>
+          <div class="slider-slide" style="background-image:url('https://picsum.photos/id/1052/1200/600');">
+            <div class="slider-caption">Oakland – Drought‑Resistant Garden</div>
+          </div>
+          <div class="slider-slide" style="background-image:url('https://picsum.photos/id/1060/1200/600');">
+            <div class="slider-caption">Berkeley – Native Plant Landscape</div>
+          </div>
+        </div>
+        <div class="slider-dots">
+          <button class="dot active" data-index="0" aria-label="Slide 1"></button>
+          <button class="dot" data-index="1" aria-label="Slide 2"></button>
+          <button class="dot" data-index="2" aria-label="Slide 3"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to Start Your Sustainable Landscape?</h2>
+      <button class="btn btn-primary">cta_get_a_quote: Get a Quote</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Sunny Days Landscaping. All rights reserved.</p>
+    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+  </div>
+</footer>
+
+<!-- Social Media Strip -->
+<div class="social-strip" aria-label="Social media links">
+  <a href="https://facebook.com" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+  <a href="https://instagram.com" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+  <a href="https://twitter.com" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+</div>
+
+<script src="https://unpkg.com/lucide@0.263.1"></script>
+<script>
+/* Navigation toggle */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('show');
+});
+
+/* Hero Carousel */
+const heroSlides = document.querySelectorAll('.hero-slide');
+let heroIndex = 0;
+function showHeroSlide(i){
+  heroSlides.forEach((s,idx)=>s.classList.toggle('active', idx===i));
+}
+function nextHero(){
+  heroIndex = (heroIndex+1)%heroSlides.length;
+  showHeroSlide(heroIndex);
+}
+setInterval(nextHero,7000);
+
+/* Testimonials rotation */
+const testimonials = document.querySelectorAll('.testimonial');
+let testimonialIndex = 0;
+function showTestimonial(i){
+  testimonials.forEach((t,idx)=>t.classList.toggle('active', idx===i));
+}
+function nextTestimonial(){
+  testimonialIndex = (testimonialIndex+1)%testimonials.length;
+  showTestimonial(testimonialIndex);
+}
+setInterval(nextTestimonial,5000);
+showTestimonial(0);
+
+/* Project Slider */
+const sliderTrack = document.querySelector('.slider-track');
+const sliderDots = document.querySelectorAll('.slider-dots button');
+let slideIndex = 0;
+function moveSlider(i){
+  sliderTrack.style.transform = `translateX(-${i*100}%)`;
+  sliderDots.forEach(d=>d.classList.toggle('active', d.dataset.index==i));
+}
+function nextSlide(){
+  slideIndex = (slideIndex+1)%sliderDots.length;
+  moveSlider(slideIndex);
+}
+sliderDots.forEach(btn=>btn.addEventListener('click', e=>{
+  slideIndex = Number(e.target.dataset.index);
+  moveSlider(slideIndex);
+}));
+setInterval(nextSlide,5000);
+moveSlider(0);
+
+/* Intersection Observer for fade‑in */
+const faders = document.querySelectorAll('section, .service-card, .core-icon, .testimonial, .slider-slide');
+const appearOptions = {threshold:0.1, rootMargin:"0px 0px -100px 0px"};
+const appearOnScroll = new IntersectionObserver(function(entries,appearOnScroll){
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting){return;}
+    entry.target.classList.add('visible');
+    appearOnScroll.unobserve(entry.target);
+  });
+},appearOptions);
+faders.forEach(fader=>appearOnScroll.observe(fader));
+</script>
+<script>
+/* Initialize Lucide icons */
+lucide.createIcons();
+</script>
+<script>
+// Live chat widget (Tawk.to) - delayed load
+setTimeout(()=>{var s=document.createElement('script');s.async=true;s.src='https://embed.tawk.to/xxxxxxxx/default';document.body.appendChild(s);},5000);
+</script>
 </body>
 </html>

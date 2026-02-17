@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – Sunny Days Landscaping</title>
+<meta name="description" content="Learn about Sunny Days Landscaping’s story, mission, team and sustainability commitments. Eco‑Friendly Landscaping, Crafted with Care.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#66A691;
+  --color-secondary:#A5D6A7;
+  --color-accent:#455A64;
+  --color-bg:#F5F5DC;
+  --color-white:#ffffff;
+  --font-heading:'Montserrat',sans-serif;
+  --font-body:'Open Sans',sans-serif;
+  --transition:0.3s ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;background:var(--color-bg);}
+body{font-family:var(--font-body);color:var(--color-accent);line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
+ul{list-style:none;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+.skip-link{position:absolute;top:-40px;left:0;background:var(--color-primary);color:#fff;padding:8px 16px;z-index:1000;transition:top .3s;}
+.skip-link:focus{top:0;}
+header{background:var(--color-white);box-shadow:0 2px 4px rgba(0,0,0,.08);position:sticky;top:0;z-index:999;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+.logo{width:120px;height:120px;}
+.logo img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{font-family:var(--font-body);font-weight:600;letter-spacing:.5px;text-transform:uppercase;font-size:16px;color:var(--color-accent);}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;align-items:center;}
+.hamburger span{display:block;width:100%;height:3px;background:var(--color-accent);border-radius:2px;}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:100%;left:0;background:var(--color-white);flex-direction:column;width:100%;display:none;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+
+/* Hero */
+.hero-about{
+  position:relative;
+  height:70vh;
+  overflow:hidden;
+  color:var(--color-white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.hero-about::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/seed/about/1200/800') center/cover no-repeat;
+  z-index:-2;
+}
+.hero-about::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(102,166,145,.4),rgba(165,214,167,.4));
+  z-index:-1;
+}
+.hero-about h1{
+  font-family:var(--font-heading);
+  font-size:56px;
+  margin-bottom:12px;
+}
+.hero-about p{
+  font-size:20px;
+}
+
+/* Timeline */
+.timeline{
+  display:flex;
+  overflow-x:auto;
+  padding:2rem 0;
+  position:relative;
+}
+.timeline::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+  height:4px;
+  background:var(--color-primary);
+  transform:translateY(-50%);
+  z-index:1;
+}
+.timeline-item{
+  position:relative;
+  flex:0 0 250px;
+  background:#fff;
+  padding:1.5rem;
+  border-radius:12px;
+  box-shadow:0 2px 4px rgba(0,0,0,.08);
+  margin:0 1rem;
+  z-index:2;
+}
+.timeline-item::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:-20px;
+  width:12px;
+  height:12px;
+  background:var(--color-primary);
+  border-radius:50%;
+  transform:translateY(-50%);
+}
+.timeline-item h4{
+  font-family:var(--font-heading);
+  font-size:20px;
+  margin-bottom:8px;
+  color:var(--color-accent);
+}
+.timeline-item p{
+  font-size:16px;
+}
+
+/* Mission */
+.mission{
+  border:4px solid var(--color-primary);
+  border-radius:12px;
+  padding:2rem;
+  max-width:800px;
+  margin:auto;
+  text-align:center;
+}
+
+/* Team */
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.team-card{
+  background:#fff;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 4px 8px rgba(0,0,0,.08);
+  text-align:center;
+}
+.team-card img{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:16px;
+}
+.team-card h4{
+  font-family:var(--font-heading);
+  font-size:24px;
+  margin-bottom:8px;
+  color:var(--color-accent);
+}
+.team-card p{
+  font-size:16px;
+}
+
+/* Sustainability */
+.sustainability{
+  background:var(--color-bg);
+}
+.sustainability-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.sustainability-card{
+  background:#fff;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 4px 8px rgba(0,0,0,.08);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+.sustainability-card .icon{
+  width:48px;
+  height:48px;
+  color:var(--color-primary);
+  margin-bottom:12px;
+}
+
+/* Sections */
+section{padding:64px 0;opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+section.visible{opacity:1;transform:none;}
+.section-title{
+  font-family:var(--font-heading);
+  font-size:44px;
+  text-align:center;
+  margin-bottom:24px;
+  color:var(--color-accent);
+}
+.section-intro{
+  max-width:720px;
+  margin:auto;
+  text-align:center;
+  font-size:18px;
+  margin-bottom:48px;
+}
+
+/* Footer */
+footer{background:var(--color-accent);color:#fff;padding:32px 0;text-align:center;font-size:14px;}
+footer a{color:#fff;text-decoration:underline;}
+
+/* Social strip */
+.social-strip{position:fixed;top:50%;left:0;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;padding:8px;background:rgba(255,255,255,.8);border-radius:0 8px 8px 0;z-index:1000;}
+.social-strip a{width:48px;height:48px;background:var(--color-accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .3s;}
+.social-strip a:hover{background:var(--color-primary);}
+
+/* Focus */
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><img src="https://picsum.photos/seed/logo/120/120" alt="Sunny Days Landscaping Logo"></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero Banner -->
+  <section class="hero-about" id="hero_banner">
+    <div class="container">
+      <h1>Our Story Grows Here</h1>
+      <p class="hero-subtitle">From a single seed to a thriving landscaping family.</p>
+    </div>
+  </section>
+
+  <!-- Company History Timeline -->
+  <section class="company-history" id="company_history">
+    <div class="container">
+      <h2 class="section-title">Our Journey</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h4>2010</h4>
+          <p>Founded by Jane &amp; Tom Sunny, a passion for sustainable gardens.</p>
+        </div>
+        <div class="timeline-item">
+          <h4>2014</h4>
+          <p>First major municipal contract – revitalizing Golden Gate Park.</p>
+        </div>
+        <div class="timeline-item">
+          <h4>2018</h4>
+          <p>Introduced water‑wise irrigation systems, saving clients up to 35% water.</p>
+        </div>
+        <div class="timeline-item">
+          <h4>2022</h4>
+          <p>Expanded to Bay Area, 50+ projects completed, awards for sustainability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission" id="mission_statement">
+    <div class="container">
+      <h2 class="section-title">Our Mission</h2>
+      <div class="mission">
+        <p>At Sunny Days Landscaping we believe that beautiful outdoor spaces should nurture both people and the planet. Our mission is to create vibrant, sustainable landscapes that enhance community wellbeing while conserving resources.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Grid -->
+  <section class="team" id="team_grid">
+    <div class="container">
+      <h2 class="section-title">Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team1/300/300" alt="Jane Sunny – Founder &amp; CEO">
+          <h4>Jane Sunny</h4>
+          <p>Founder &amp; CEO – Landscape architect with 15 years of eco‑design experience.</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team2/300/300" alt="Tom Sunny – Operations Director">
+          <h4>Tom Sunny</h4>
+          <p>Operations Director – Oversees project delivery and client relations.</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team3/300/300" alt="Lena Green – Senior Designer">
+          <h4>Lena Green</h4>
+          <p>Senior Designer – Specialist in native planting and water‑wise design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sustainability Commitment -->
+  <section class="sustainability" id="sustainability_commitment">
+    <div class="container">
+      <h2 class="section-title">Sustainability Commitment</h2>
+      <div class="sustainability-grid">
+        <div class="sustainability-card">
+          <i data-lucide="leaf" class="icon"></i>
+          <h4>Native Plantings</h4>
+          <p>We prioritize locally sourced, drought‑tolerant species to reduce irrigation needs.</p>
+        </div>
+        <div class="sustainability-card">
+          <i data-lucide="recycle" class="icon"></i>
+          <h4>Zero‑Waste Practices</h4>
+          <p>All green waste is composted or recycled; we minimize landfill contributions.</p>
+        </div>
+        <div class="sustainability-card">
+          <i data-lucide="sun" class="icon"></i>
+          <h4>Renewable Energy</h4>
+          <p>Our equipment fleet runs on electric power where possible, lowering carbon emissions.</p>
+        </div>
+        <div class="sustainability-card">
+          <i data-lucide="droplet" class="icon"></i>
+          <h4>Smart Irrigation</h4>
+          <p>We install sensor‑driven irrigation systems that cut water use by up to 40%.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Social Media Strip -->
+<div class="social-strip">
+  <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+  <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+  <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; <script>document.write(new Date().getFullYear())</script> Sunny Days Landscaping – All Rights Reserved.</p>
+    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+/* Initialize icons */
+lucide.createIcons();
+
+/* Hamburger menu */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  navLinks.classList.toggle('show');
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+});
+
+/* Scroll‑triggered fade‑in */
+const observerOptions = {
+  threshold: 0.1
+};
+const fadeInObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('section').forEach(sec => {
+  fadeInObserver.observe(sec);
+});
+</script>
+</body>
+</html>

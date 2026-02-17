@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact – Sunny Days Landscaping</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#66A691;
+  --color-secondary:#A5D6A7;
+  --color-accent:#455A64;
+  --color-bg:#F5F5DC;
+  --color-white:#ffffff;
+  --font-heading:'Montserrat',sans-serif;
+  --font-body:'Open Sans',sans-serif;
+  --transition:0.3s ease-out;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;background:var(--color-bg);}
+body{font-family:var(--font-body);color:var(--color-accent);line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
+ul{list-style:none;}
+.container{max-width:1200px;margin:auto;padding:0 24px;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--color-primary);color:#fff;padding:8px 16px;z-index:1000;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{background:var(--color-white);box-shadow:0 2px 4px rgba(0,0,0,.08);position:sticky;top:0;z-index:999;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+.logo{width:120px;height:120px;}
+.logo img{width:100%;height:100%;object-fit:cover;}
+.nav-links{display:flex;gap:24px;}
+.nav-link{font-family:var(--font-body);font-weight:600;letter-spacing:.5px;text-transform:uppercase;font-size:16px;color:var(--color-accent);}
+.nav-link.active{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;align-items:center;}
+.hamburger span{display:block;width:100%;height:3px;background:var(--color-accent);border-radius:2px;}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:100%;left:0;background:var(--color-white);flex-direction:column;width:100%;display:none;z-index:10;}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+
+/* Hero Banner */
+.hero{
+  position:relative;
+  height:70vh;
+  background:url('https://picsum.photos/1600/900?random=12') center/cover no-repeat;
+  color:var(--color-white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(102,166,145,.4),rgba(165,214,167,.4));
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+.hero-title{
+  font-family:var(--font-heading);
+  font-size:48px;
+  margin-bottom:12px;
+}
+.hero-subtitle{
+  font-family:var(--font-body);
+  font-size:20px;
+}
+
+/* Sections */
+section{padding:64px 0;background:var(--color-bg);}
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+.fade-in.visible{opacity:1;transform:none;}
+.section-title{
+  font-family:var(--font-heading);
+  font-size:44px;
+  text-align:center;
+  margin-bottom:24px;
+  color:var(--color-accent);
+}
+.address-block{font-size:16px;line-height:1.8;margin-top:16px;}
+.address-block a{color:var(--color-primary);}
+
+/* Form Card */
+.form-card{
+  background:#fff;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 4px 8px rgba(0,0,0,.08);
+  max-width:600px;
+  margin:auto;
+}
+.form-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:16px;
+}
+.form-group label{
+  font-weight:600;
+  margin-bottom:4px;
+  color:var(--color-accent);
+}
+.form-group input,
+.form-group textarea{
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  font-family:var(--font-body);
+}
+.form-group input:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:var(--color-primary);
+}
+.error-msg{
+  color:#c0392b;
+  font-size:14px;
+  margin-top:4px;
+  display:none;
+}
+
+/* Buttons (reuse) */
+.btn{padding:12px 24px;border-radius:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;transition:var(--transition);}
+.btn-primary{background:var(--color-primary);color:var(--color-accent);box-shadow:0 2px 4px rgba(0,0,0,.1);}
+.btn-primary:hover{background:#5B8E80;transform:scale(1.05);}
+.btn-outline{border:2px solid var(--color-accent);color:var(--color-accent);}
+.btn-outline:hover{background:var(--color-accent);color:var(--color-white);transform:scale(1.05);}
+
+/* Map */
+.map-iframe{
+  width:100%;
+  border:0;
+}
+
+/* Feedback Banner */
+.feedback-banner{
+  background:#eaeaea;
+  padding:32px 24px;
+  text-align:center;
+}
+.feedback-banner p{
+  font-style:italic;
+  margin-bottom:16px;
+}
+.feedback-banner input{
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  width:260px;
+  max-width:80%;
+}
+.feedback-banner .btn-outline{
+  margin-left:8px;
+}
+
+/* Footer */
+footer{
+  background:var(--color-accent);
+  color:#fff;
+  padding:32px 0;
+  text-align:center;
+  font-size:14px;
+}
+footer a{color:#fff;text-decoration:underline;}
+
+/* Social Strip */
+.social-strip{
+  position:fixed;
+  top:50%;
+  left:0;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:8px;
+  background:rgba(255,255,255,.8);
+  border-radius:0 8px 8px 0;
+  z-index:1000;
+}
+.social-strip a{
+  width:48px;
+  height:48px;
+  background:var(--color-accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  transition:background .3s;
+}
+.social-strip a:hover{background:var(--color-primary);}
+
+/* Accessibility focus */
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo"><a href="index.html"><img src="https://picsum.photos/120/120?random=1" alt="Sunny Days Logo"></a></div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+      </ul>
+      <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Banner -->
+<section id="hero_banner" class="hero fade-in">
+  <div class="hero-content">
+    <h1 class="hero-title">Get in Touch</h1>
+    <p class="hero-subtitle">We’re here to answer your questions and schedule your project.</p>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section id="contact_form" class="fade-in">
+  <div class="container">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="form-card form-card-wrapper">
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="name"><!--[VERBATIM]contact_form_name_label: Name[/VERBATIM]--></label>
+          <input type="text" id="name" name="name" required>
+          <div class="error-msg" id="error-name">Please enter your name.</div>
+        </div>
+        <div class="form-group">
+          <label for="email"><!--[VERBATIM]contact_form_email_label: Email[/VERBATIM]--></label>
+          <input type="email" id="email" name="email" required>
+          <div class="error-msg" id="error-email">Please enter a valid email.</div>
+        </div>
+        <div class="form-group">
+          <label for="phone"><!--[VERBATIM]contact_form_phone_label: Phone Number[/VERBATIM]--></label>
+          <input type="tel" id="phone" name="phone" required>
+          <div class="error-msg" id="error-phone">Please enter your phone number.</div>
+        </div>
+        <div class="form-group">
+          <label for="message"><!--[VERBATIM]contact_form_message_label: Message[/VERBATIM]--></label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <div class="error-msg" id="error-message">Please write a message.</div>
+        </div>
+        <button type="submit" class="btn btn-primary"><!--[VERBATIM]cta_get_a_quote: Get a Quote[/VERBATIM]--></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section id="map_section" class="fade-in">
+  <div class="container">
+    <div class="map-wrapper">
+      <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019823657921!2d-122.4194150846813!3d37.77492977975971!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808cbb2e2f13%3A0x9a3c8b0d5c2d9e6b!2s123%20Greenway%20Ave%2C%20San%20Francisco%2C%20CA%2094102!5e0!3m2!1sen!2sus!4v1697041234567!5m2!1sen!2sus" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="address-block address-block fade-in" style="margin-top:24px;">
+      <p><strong>Address:</strong> 123 Greenway Ave, San Francisco, CA 94102</p>
+      <p><strong>Phone:</strong> (415) 555‑0123</p>
+      <p><strong>Email:</strong> <a href="mailto:info@sunnydayslandscaping.com">info@sunnydayslandscaping.com</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- Social Links -->
+<section id="social_links" class="fade-in">
+  <div class="container" style="text-align:center;">
+    <a href="https://facebook.com" target="_blank" aria-label="Facebook" class="social-icon"><svg width="24" height="24"><use href="#facebook"/></svg></a>
+    <a href="https://instagram.com" target="_blank" aria-label="Instagram" class="social-icon"><svg width="24" height="24"><use href="#instagram"/></svg></a>
+    <a href="https://twitter.com" target="_blank" aria-label="Twitter" class="social-icon"><svg width="24" height="24"><use href="#twitter"/></svg></a>
+  </div>
+</section>
+
+<!-- Feedback Prompt -->
+<section id="feedback_section" class="feedback-banner fade-in" style="background:#e0e0e0;">
+  <div class="container">
+    <p style="font-style:italic; margin-bottom:16px;">How was your experience? Let us know!</p>
+    <form id="feedbackForm" style="display:flex;justify-content:center;align-items:center;gap:12px;">
+      <input type="text" placeholder="Your feedback…" id="feedbackInput" style="padding:10px;border:1px solid #ccc;border-radius:4px;">
+      <button type="submit" class="btn btn-outline">Submit</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2024 Sunny Days Landscaping. All rights reserved.
+  </div>
+</footer>
+
+<!-- Social Media Strip -->
+<div class="social-strip">
+  <a href="https://facebook.com" aria-label="Facebook"><svg width="24" height="24"><use href="#facebook"/></svg></a>
+  <a href="https://instagram.com" aria-label="Instagram"><svg width="24" height="24"><use href="#instagram"/></svg></a>
+  <a href="https://twitter.com" aria-label="Twitter"><svg width="24" height="24"><use href="#twitter"/></svg></a>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+/* Hamburger toggle */
+document.querySelectorAll('.hamburger').forEach(btn=>{
+  btn.addEventListener('click',()=>{ document.querySelector('.nav-links').classList.toggle('show'); });
+});
+
+/* Intersection Observer for fade‑in */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+/* Simple form validation */
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  let valid=true;
+  const fields = [
+    {id:'name',msg:'error-name'},
+    {id:'email',msg:'error-email'},
+    {id:'phone',msg:'error-phone'},
+    {id:'message',msg:'error-message'}
+  ];
+  fields.forEach(f=>{
+    const input=document.getElementById(f.id);
+    const err=document.getElementById(f.msg);
+    if(!input.value.trim()){
+      err.style.display='block';
+      valid=false;
+    }else{
+      err.style.display='none';
+    }
+  });
+  if(valid){
+    // Here you would normally send the data to HubSpot/Zapier etc.
+    alert('Form submitted! (simulation)');
+    this.reset();
+  }
+});
+
+/* Feedback form (no real backend) */
+document.getElementById('feedbackForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const val=document.getElementById('feedbackInput').value.trim();
+  if(val){
+    alert('Thank you for your feedback!');
+    this.reset();
+  }
+});
+</script>
+</body>
+</html>
