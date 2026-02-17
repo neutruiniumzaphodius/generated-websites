@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials – Alvarez Medicare Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@600&family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#D8BFAA;
+      --color-secondary:#A67C52;
+      --color-accent:#4A6FA5;
+      --color-bg:#FFFFFF;
+      --color-text:#333333;
+      --font-heading:'Merriweather',serif;
+      --font-body:'Source Sans Pro',sans-serif;
+      --radius:12px;
+      --shadow:rgba(0,0,0,0.08) 0 2px 4px;
+      --transition:0.3s ease;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{font-size:100%;scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+    }
+    a{color:var(--color-accent);text-decoration:none;}
+    a:focus{outline:2px solid var(--color-accent);}
+    button, .btn{
+      cursor:pointer;
+      font-family:var(--font-heading);
+      font-weight:600;
+      border:none;
+      border-radius:var(--radius);
+      transition:transform 150ms ease,background-color 200ms ease;
+    }
+    button:focus,.btn:focus{outline:2px solid var(--color-accent);}
+    h1,h2,h3{font-family:var(--font-heading);margin-bottom:24px;line-height:1.2;}
+    h1{font-size:3rem;}
+    h2{font-size:2.25rem;}
+    h3{font-size:1.75rem;}
+    p{margin-bottom:24px;}
+    .container{max-width:1200px;margin:auto;padding:0 16px;}
+    .grid{display:grid;gap:24px;}
+    .flex{display:flex;align-items:center;gap:12px;}
+    .hidden{display:none;}
+    /* Skip link */
+    #skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:#000;
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+    }
+    #skip-link:focus{top:0;}
+    /* Header */
+    header{
+      background:#fff;
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 0;
+    }
+    .nav-links{
+      display:flex;
+      gap:16px;
+    }
+    .nav-links a{
+      font-size:1rem;
+      padding:8px;
+    }
+    .nav-links a.active{color:var(--color-secondary);font-weight:600;}
+    .toggle-btn{
+      display:none;
+      background:none;
+      border:none;
+    }
+    .toggle-btn svg{stroke:var(--color-text);width:24px;height:24px;}
+    @media (max-width:768px){
+      .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;box-shadow:var(--shadow);}
+      .nav-links.show{display:flex;}
+      .toggle-btn{display:block;}
+    }
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:70vh;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/seed/testimonial/1600/900') center/cover no-repeat;
+      filter:blur(4px);
+      transform:scale(1.02);
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+    }
+    .hero-content{
+      position:relative;
+      max-width:800px;
+      margin-left:5%;
+      opacity:0;
+      transform:translateY(15px);
+      transition:opacity .6s ease,transform .6s ease;
+    }
+    .hero h1{
+      font-size:3rem;
+      margin-bottom:16px;
+    }
+    .hero h2{
+      font-size:1.75rem;
+      color:var(--color-primary);
+      margin-bottom:24px;
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:#fff;
+      padding:12px 24px;
+    }
+    .btn-primary:hover{
+      background:#8B5E32;
+      transform:scale(1.05);
+    }
+    /* Quote cards */
+    .quote-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+      text-align:center;
+    }
+    .quote-card blockquote{
+      font-style:italic;
+      margin-bottom:12px;
+    }
+    .quote-card .author{
+      font-weight:600;
+      color:var(--color-accent);
+    }
+    /* Video section */
+    .video-section{
+      padding:80px 0;
+    }
+    .video-thumb{
+      position:relative;
+      cursor:pointer;
+    }
+    .video-thumb img{
+      border-radius:var(--radius);
+    }
+    .video-thumb::after{
+      content:"▶";
+      position:absolute;
+      inset:0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:3rem;
+      color:#fff;
+      background:rgba(0,0,0,0.4);
+      border-radius:var(--radius);
+    }
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+    }
+    .lightbox video{
+      max-width:90%;
+      max-height:80vh;
+      border-radius:var(--radius);
+    }
+    .lightbox button{
+      position:absolute;
+      top:16px;
+      right:16px;
+      background:none;
+      color:#fff;
+      font-size:2rem;
+    }
+    /* Before‑After gallery */
+    .gallery{
+      padding:80px 0;
+    }
+    .gallery img{
+      width:100%;
+      height:auto;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    /* Share CTA */
+    .share-cta{
+      background:var(--color-primary);
+      color:#fff;
+      text-align:center;
+      padding:60px 0;
+    }
+    .share-cta .btn-primary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .share-cta .btn-primary:hover{
+      background:#8B5E32;
+      transform:scale(1.05);
+    }
+    /* Footer – same as home */
+    footer{
+      background:#f9f9f9;
+      padding:40px 0;
+      font-size:.875rem;
+    }
+    footer .quick-links,
+    footer .social{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    footer .social a{
+      width:32px;height:32px;
+      background:var(--color-accent);
+      color:#fff;
+      border-radius:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    footer .social a:hover{background:var(--color-primary);}
+    footer .lang-toggle button{
+      background:none;
+      border:none;
+      padding:4px;
+    }
+    footer .lang-toggle img{width:24px;height:16px;}
+    @media (prefers-reduced-motion:reduce){
+      *, *::before, *::after{transition:none !important;animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" id="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <nav class="container flex">
+      <a href="index.html" class="logo"><strong>Alvarez Medicare</strong></a>
+      <button class="toggle-btn" aria-label="Toggle navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="testimonials.html" class="active">Testimonials</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero – Testimonials -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Real Stories, Real Results</h1>
+        <h2>Hear how we’ve helped Nevada seniors achieve peace of mind.</h2>
+        <a href="#share-story" class="btn-primary">Share Your Story</a>
+      </div>
+    </section>
+
+    <!-- Grid Quotes -->
+    <section class="container">
+      <div class="grid">
+        <article class="quote-card service-card" aria-label="Testimonial">
+          <blockquote>“Patty walked me through every step; I finally feel secure about my health coverage.” – Harold S., 72, Las Vegas</blockquote>
+          <p class="author">Harold S.</p>
+        </article>
+        <article class="quote-card service-card" aria-label="Testimonial">
+          <blockquote>“The savings on my prescriptions were immediate—over $150 a month!” – Rosa M., 69, Henderson</blockquote>
+          <p class="author">Rosa M.</p>
+        </article>
+        <article class="quote-card service-card" aria-label="Testimonial">
+          <blockquote>“I appreciated the patient, Spanish‑language support; it made all the difference.” – Carlos V., 71, Spanish‑speaking, Reno</blockquote>
+          <p class="author">Carlos V.</p>
+        </article>
+        <article class="quote-card service-card" aria-label="Testimonial">
+          <blockquote>“Patty’s personal connection turned a confusing process into a comfortable conversation.” – Linda K., 75, Summerlin</blockquote>
+          <p class="author">Linda K.</p>
+        </article>
+        <article class="quote-card service-card" aria-label="Testimonial">
+          <blockquote>“Thanks to the free consultation, I avoided a costly enrollment mistake.” – Frank D., 70, Pahrump</blockquote>
+          <p class="author">Frank D.</p>
+        </article>
+        <article class="quote-card service-card" aria-label="Testimonial">
+          <blockquote>“The senior guide PDF is my go‑to reference each year.” – Susan T., 68, Boulder City</blockquote>
+          <p class="author">Susan T.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Video Interviews -->
+    <section class="video-section container">
+      <h2 class="h2">Video Interviews</h2>
+      <div class="grid">
+        <div class="video-thumb" tabindex="0" role="button" aria-label="Open video interview 1" data-video="https://www.w3schools.com/html/mov_bbb.mp4">
+          <img src="https://picsum.photos/seed/video1/400/300" alt="Senior female smiling">
+        </div>
+        <div class="video-thumb" tabindex="0" role="button" aria-label="Open video interview 2" data-video="https://www.w3schools.com/html/movie.mp4">
+          <img src="https://picsum.photos/seed/video2/400/300" alt="Senior male confident">
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox for videos -->
+    <div class="lightbox hidden" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player">
+      <button class="btn-close" aria-label="Close video" style="background:none;border:none;color:#fff;font-size:2rem;">✕</button>
+      <video controls></video>
+    </div>
+
+    <!-- Before‑After Gallery -->
+    <section class="gallery container">
+      <h2 class="h2">Before &amp; After</h2>
+      <div class="grid">
+        <figure class="quote-card service-card">
+          <img src="https://picsum.photos/seed/before1/400/300" alt="Senior surrounded by paperwork, looking worried">
+          <figcaption>From paperwork overload to clear coverage – a seamless enrollment experience.</figcaption>
+        </figure>
+        <figure class="quote-card service-card">
+          <img src="https://picsum.photos/seed/after1/400/300" alt="Senior smiling while holding new Medicare card">
+          <figcaption>From paperwork overload to clear coverage – a seamless enrollment experience.</figcaption>
+        </figure>
+        <figure class="quote-card service-card">
+          <img src="https://picsum.photos/seed/before2/400/300" alt="Senior looking stressed over forms">
+          <figcaption>From paperwork overload to clear coverage – a seamless enrollment experience.</figcaption>
+        </figure>
+        <figure class="quote-card service-card">
+          <img src="https://picsum.photos/seed/after2/400/300" alt="Senior happily showing Medicare card">
+          <figcaption>From paperwork overload to clear coverage – a seamless enrollment experience.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Share CTA -->
+    <section class="share-cta" id="share-story">
+      <h2 class="h2">Share Your Story</h2>
+      <p>We love hearing from our clients. Submit your testimonial and help other seniors make confident Medicare choices.</p>
+      <a href="share-story.html" class="btn-primary">Share Your Story</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container">
+    <div class="flex quick-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Me</a>
+      <a href="services.html">Services</a>
+      <a href="resources.html">Resources</a>
+      <a href="testimonials.html">Testimonials</a>
+    </div>
+    <div class="flex social">
+      <a href="https://facebook.com" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.9v-7h-2v-3h2V9a3 3 0 013-3h2v3h-2c-.6 0-1 .4-1 1v2h3l-1 3h-2v7A10 10 0 0022 12z"/></svg></a>
+      <a href="https://linkedin.com" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.2c-1 0-1.8-.8-1.8-1.8S5.5 5.2 6.5 5.2s1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm13.5 10.2h-3v-4.5c0-1.1-.9-2-2-2s-2 .9-2 2V19h-3v-9h3v1.2c.6-.9 1.7-1.5 3-1.5 2.2 0 4 1.8 4 4V19z"/></svg></a>
+    </div>
+    <div class="lang-toggle flex">
+      <button aria-label="Toggle language to Spanish"><img src="https://flagcdn.com/us.svg" alt="English"></button>
+      <button aria-label="Toggle language to English"><img src="https://flagcdn.com/es.svg" alt="Español"></button>
+    </div>
+    <p>© 2024 Alvarez Medicare Solutions. All rights reserved.</p>
+  </footer>
+
+  <!-- Simple scripts for navigation toggle and video lightbox -->
+  <script>
+    // Navigation toggle (mobile)
+    const toggleBtn = document.querySelector('.toggle-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const expanded = toggleBtn.getAttribute('aria-expanded') === 'true' || false;
+        toggleBtn.setAttribute('aria-expanded', !expanded);
+        navLinks.classList.toggle('show');
+      });
+    }
+
+    // Video lightbox
+    const lightbox = document.getElementById('lightbox');
+    const videoEl = lightbox.querySelector('video');
+    const closeBtn = lightbox.querySelector('.btn-close');
+    document.querySelectorAll('.video-thumb').forEach(card => {
+      card.addEventListener('click', () => {
+        const src = card.getAttribute('data-video');
+        videoEl.src = src;
+        lightbox.classList.remove('hidden');
+        videoEl.play();
+      });
+      card.addEventListener('keypress', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+    closeBtn.addEventListener('click', () => {
+      videoEl.pause();
+      videoEl.currentTime = 0;
+      lightbox.classList.add('hidden');
+    });
+    // Close lightbox with Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+        closeBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>

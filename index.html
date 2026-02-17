@@ -1,75 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Alvarez Medicare Solutions – Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@600&family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#D8BFAA;
+  --color-secondary:#A67C52;
+  --color-accent:#4A6FA5;
+  --color-bg:#FFFFFF;
+  --color-text:#333333;
+  --font-heading:'Merriweather',serif;
+  --font-body:'Source Sans Pro',sans-serif;
+  --radius:12px;
+  --shadow:rgba(0,0,0,0.08) 0 2px 4px;
+  --transition:0.3s ease;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:100%;scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+}
+a{color:var(--color-accent);text-decoration:none;}
+a:focus{outline:2px solid var(--color-accent);}
+button, .btn{
+  cursor:pointer;
+  font-family:var(--font-heading);
+  font-weight:600;
+  border:none;
+  border-radius:var(--radius);
+  transition:transform 150ms ease,background-color 200ms ease;
+}
+button:focus,.btn:focus{outline:2px solid var(--color-accent);}
+h1,h2,h3{font-family:var(--font-heading);margin-bottom:24px;line-height:1.2;}
+h1{font-size:3rem;}
+h2{font-size:2.25rem;}
+h3{font-size:1.75rem;}
+p{margin-bottom:24px;}
+.container{max-width:1200px;margin:auto;padding:0 16px;}
+.grid{display:grid;gap:24px;}
+.flex{display:flex;align-items:center;gap:12px;}
+.hidden{display:none;}
+/* Skip link */
+#skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+#skip-link:focus{top:0;}
+/* Header */
+header{
+  background:#fff;
+  box-shadow:var(--shadow);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+}
+.nav-links{
+  display:flex;
+  gap:16px;
+}
+.nav-links a{
+  font-size:1rem;
+  padding:8px;
+}
+.nav-links a.active{color:var(--color-secondary);font-weight:600;}
+.toggle-btn{
+  display:none;
+  background:none;
+  border:none;
+}
+.toggle-btn svg{stroke:var(--color-text);width:24px;height:24px;}
+/* Hero */
+.hero{
+  position:relative;
+  min-height:100vh;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1600/900') center/cover no-repeat;
+  filter:blur(4px);
+  transform:scale(1.02);
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(216,191,170,0.85);
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  margin-left:5%;
+  opacity:0;
+  transform:translateY(15px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.hero h1{
+  font-size:3rem;
+  margin-bottom:16px;
+}
+.hero h2{
+  font-size:1.75rem;
+  color:var(--color-accent);
+  margin-bottom:24px;
+}
+.hero .btn-primary{
+  background:var(--color-secondary);
+  color:#fff;
+  padding:12px 24px;
+}
+.hero .btn-primary:hover{background:#8B5E32;transform:scale(1.05);}
+/* Quick Intro */
+.quick-intro{
+  padding:80px 0;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity var(--transition),transform var(--transition);
+}
+.quick-intro p{font-size:1.125rem;}
+/* Services Preview */
+.services-preview{
+  padding:80px 0;
+}
+.service-card{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+.service-card .icon{
+  width:48px;height:48px;stroke:var(--color-accent);
+}
+.service-card h3{margin-bottom:12px;font-size:1.5rem;color:var(--color-text);}
+.service-card:hover .btn{transform:scale(1.05);}
+.btn-primary{
+  background:var(--color-secondary);
+  color:#fff;
+  padding:12px 24px;
+}
+.btn-primary:hover{background:#8B5E32;}
+/* Testimonials Carousel */
+.testimonials{
+  position:relative;
+  padding:80px 0;
+}
+.carousel{
+  position:relative;
+  overflow:hidden;
+}
+.carousel .slides{
+  display:flex;
+  transition:transform .5s ease;
+}
+.slide{
+  min-width:100%;
+  flex-shrink:0;
+  opacity:0;
+  transform:translateY(10px);
+}
+.slide.active{opacity:1;transform:translateY(0);}
+.slide blockquote{
+  font-style:italic;
+  margin-bottom:12px;
+}
+.slide .author{
+  font-weight:600;
+}
+.carousel .btn-nav{
+  background:rgba(0,0,0,0.3);
+  color:#fff;
+  width:40px;height:40px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.carousel .btn-nav:hover{background:var(--color-accent);}
+.carousel .live-region{
+  position:absolute;
+  left:-9999px;
+  width:1px;height:1px;
+  overflow:hidden;
+}
+/* Appointment CTA */
+.appointment-cta{
+  background:var(--color-secondary);
+  color:#fff;
+  text-align:center;
+  padding:60px 0;
+}
+.appointment-cta .btn-primary{
+  background:#fff;
+  color:var(--color-secondary);
+}
+.appointment-cta .btn-primary:hover{background:#f0f0f0;transform:scale(1.05);}
+/* Footer */
+footer{
+  background:#f9f9f9;
+  padding:40px 0;
+  font-size:.875rem;
+}
+footer .quick-links,
+footer .social{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+footer .social a{
+  width:32px;height:32px;
+  background:var(--color-accent);
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+footer .social a:hover{background:var(--color-primary);}
+footer .lang-toggle button{
+  background:none;
+  border:none;
+  padding:4px;
+}
+footer .lang-toggle img{width:24px;height:16px;}
+/* Responsive */
+@media (max-width:1024px){
+  .hero-content{margin-left:3%;}
+}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;box-shadow:var(--shadow);}
+  .nav-links.show{display:flex;}
+  .toggle-btn{display:block;}
+}
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{transition:none !important;animation:none !important;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main-content" id="skip-link">Skip to main content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="/" class="logo"><strong>Alvarez Medicare</strong></a>
+      <button class="toggle-btn" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav-links" id="primary-navigation">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About Me</a>
+        <a href="services.html">Services</a>
+        <a href="resources.html">Resources</a>
+        <a href="testimonials.html">Testimonials</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main-content">
+  <!-- Hero -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-content" id="hero-text">
+      <h1>Simplify Your Medicare Journey</h1>
+      <h2>Compassionate guidance from Patty Alvarez</h2>
+      <button class="btn-primary" id="hero-cta">Book Your Free Consultation</button>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- Quick Intro -->
+  <section class="quick-intro container" data-observe>
+    <p>Alvarez Medicare Solutions puts you first. We provide clear, jargon‑free guidance so you can confidently choose the right Medicare plan—saving you money and stress.</p>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Services Preview -->
+  <section class="services-preview container" data-observe>
+    <h2 class="visually-hidden">Our Core Services</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+      <article class="service-card flex">
+        <i data-lucide="stethoscope" class="icon"></i>
+        <div>
+          <h3>Medicare Part A</h3>
+          <p>Hospital coverage explained.</p>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </article>
+      <article class="service-card flex">
+        <i data-lucide="book-open" class="icon"></i>
+        <div>
+          <h3>Medicare Part B</h3>
+          <p>Outpatient and preventive care.</p>
+        </div>
+      </article>
+      <article class="service-card flex">
+        <i data-lucide="compass" class="icon"></i>
+        <div>
+          <h3>Senior Guide</h3>
+          <p>Step‑by‑step PDF guide.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Testimonials Carousel -->
+  <section class="testimonials-carousel container" data-observe>
+    <h2 class="visually-hidden">Testimonials</h2>
+    <div class="carousel" aria-roledescription="carousel" aria-label="Client testimonials">
+      <div class="slides" role="region" aria-live="polite" aria-atomic="true">
+        <div class="slide active">
+          <blockquote>"Patty helped me save $150 on prescriptions each month!"</blockquote>
+          <p class="author">Maria R., Henderson</p>
+          <img src="https://picsum.photos/80/80?random=1" alt="Maria portrait" loading="lazy" width="80" height="80" style="border-radius:50%;">
+        </div>
+        <div class="slide">
+          <blockquote>"I finally feel secure about my health coverage."</blockquote>
+          <p class="author">Harold S., Las Vegas</p>
+          <img src="https://picsum.photos/80/80?random=2" alt="Harold portrait" loading="lazy" width="80" height="80" style="border-radius:50%;">
+        </div>
+        <div class="slide">
+          <blockquote>"The Spanish‑language support made all the difference."</blockquote>
+          <p class="author">Carlos V., Reno</p>
+          <img src="https://picsum.photos/80/80?random=3" alt="Carlos portrait" loading="lazy" width="80" height="80" style="border-radius:50%;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appointment CTA -->
+  <section class="appointment-cta" data-observe>
+    <div class="container flex" style="flex-direction:column;align-items:center;">
+      <h2 style="color:#fff;">Ready for a Free Consultation?</h2>
+      <button class="btn-primary">Schedule My Consultation</button>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+      <nav class="quick-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About Me</a>
+        <a href="services.html">Services</a>
+        <a href="resources.html">Resources</a>
+        <a href="testimonials.html">Testimonials</a>
+      </nav>
+      <div class="social flex">
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      </div>
+      <div class="lang-toggle flex">
+        <button aria-label="English" class="lang-btn">🇺🇸</button>
+        <button aria-label="Español" class="lang-btn">🇪🇸</button>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:24px;font-size:.875rem;">© 2024 Alvarez Medicare Solutions. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js"></script>
+<script>
+/* Navigation toggle */
+const toggleBtn=document.querySelector('.toggle-btn');
+const navLinks=document.querySelector('.nav-links');
+toggleBtn?.addEventListener('click',()=>{ 
+  const expanded=toggleBtn.getAttribute('aria-expanded')==='true';
+  toggleBtn.setAttribute('aria-expanded',!expanded);
+  navLinks.classList.toggle('show');
+});
+
+/* Hero entrance */
+window.addEventListener('DOMContentLoaded',()=>{ 
+  const heroContent=document.querySelector('.hero-content');
+  setTimeout(()=>{ heroContent.style.opacity='1'; heroContent.style.transform='translateY(0)'; },100);
+});
+
+/* IntersectionObserver for sections */
+const observer=new IntersectionObserver((entries)=>{ 
+  entries.forEach(entry=>{ 
+    if(entry.isIntersecting){ 
+      entry.target.style.opacity='1';
+      entry.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('[data-observe]').forEach(section=>{ 
+  section.style.opacity='0';
+  section.style.transform='translateY(10px)';
+  observer.observe(section);
+});
+
+/* Testimonials carousel */
+const slides=document.querySelectorAll('.slide');
+let current=0;
+function showSlide(index){
+  slides.forEach((s,i)=>{ s.classList.toggle('active',i===index); });
+}
+setInterval(()=>{
+  current=(current+1)%slides.length;
+  showSlide(current);
+},5000);
+</script>
+<script>
+/* Initialize Lucide icons */
+lucide.createIcons();
+</script>
 </body>
 </html>
