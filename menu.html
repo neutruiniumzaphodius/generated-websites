@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Menu & Specials – Artisan’s Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary-gold:#FFC107;
+  --color-primary-burgundy:#800020;
+  --color-accent-silver:#C0C0C0;
+  --color-bg-beige:#FAF5F0;
+  --color-text-charcoal:#333333;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --radius:4px;
+  --gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text-charcoal);
+  background:var(--color-bg-beige);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;border:none;background:none;font:inherit;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 12px;
+  background:#000;
+  color:#fff;
+  z-index:1000;
+}
+header{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--gap);
+}
+.nav-link{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.75px;
+  font-size:15px;
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-primary-gold);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger div{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-burgundy);
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+  }
+  .hamburger{display:flex;}
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:calc(100vh * 0.618);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  overflow:hidden;
+}
+.hero video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+}
+.hero h1{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom:var(--gap);
+  position:relative;
+  z-index:1;
+}
+.hero p{
+  font-size:clamp(1rem,4vw,1.25rem);
+  margin-bottom:var(--gap);
+  position:relative;
+  z-index:1;
+}
+
+/* TABS & FILTERS */
+.tabs{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  display:flex;
+  gap:var(--gap);
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.tab{
+  padding:8px 16px;
+  border-radius:var(--radius);
+  background:transparent;
+  color:#fff;
+  font-weight:600;
+  border:2px solid var(--color-primary-gold);
+}
+.tab.active{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.filter-chips{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*1) var(--gap);
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.filter-chip{
+  padding:6px 12px;
+  border-radius:var(--radius);
+  background:#fff;
+  border:1px solid var(--color-accent-silver);
+  font-size:0.875rem;
+  transition:background .25s ease, color .25s ease;
+}
+.filter-chip[data-active="true"]{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+
+/* DISH GRID */
+.dish-grid{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:var(--gap);
+}
+.dish-card{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.dish-card:hover,
+.dish-card:focus-within{
+  transform:translateY(-4px);
+  box-shadow:0 6px 12px rgba(0,0,0,.2);
+}
+.dish-card h3{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:1.125rem;
+  margin-bottom:8px;
+}
+.dish-card p{
+  font-size:0.9rem;
+  margin-bottom:8px;
+}
+.dish-card .price{
+  font-weight:600;
+  color:var(--color-primary-gold);
+}
+
+/* DAILY SPECIALS */
+.daily-specials{
+  width:100%;
+  background:#fff8e1;
+  padding:calc(var(--gap)*2) var(--gap);
+  text-align:center;
+  font-family:var(--font-heading);
+  font-size:1.125rem;
+}
+
+/* WINE LIST */
+.wine-list{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:var(--gap);
+}
+.wine-section{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+.wine-section h3{
+  font-family:var(--font-heading);
+  font-weight:700;
+  margin-bottom:var(--gap);
+}
+.wine-section ul{
+  list-style:none;
+}
+.wine-section li{
+  margin-bottom:6px;
+}
+
+/* DOWNLOAD BUTTON */
+.download-pdf{
+  text-align:center;
+  margin:calc(var(--gap)*2) 0;
+}
+.download-pdf .btn-primary{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+
+/* CTA RESERVATION */
+.cta-reservation{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  text-align:center;
+  padding:calc(var(--gap)*2) var(--gap);
+}
+.cta-reservation .btn-primary{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav aria-label="Main navigation">
+    <div class="nav-brand"><a href="index.html" class="nav-link">Artisan’s Table</a></div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="menu.html" class="nav-link active">Menu</a></li>
+      <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Open menu" aria-controls="navigation" aria-expanded="false">
+      <div></div><div></div><div></div>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero" aria-label="Menu hero">
+    <video autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <div style="position:relative; z-index:1;">
+      <h1>Our Menu</h1>
+      <p>Explore flavors, filter by your needs, and discover today’s specials.</p>
+      <button class="btn btn-primary" id="hero-cta">View Full Menu</button>
+    </div>
+  </section>
+
+  <!-- DIETARY FILTER CHIPS -->
+  <section class="filter-chips" aria-label="Dietary filters">
+    <div class="filter-chip" data-filter="all" aria-pressed="true">All</div>
+    <div class="filter-chip" data-filter="vegan" aria-pressed="false">Vegan</div>
+    <div class="filter-chip" data-filter="vegetarian" aria-pressed="false">Vegetarian</div>
+    <div class="filter-chip" data-filter="gluten-free" aria-pressed="false">Gluten‑Free</div>
+  </section>
+
+  <!-- CATEGORY TABS -->
+  <section class="tabs" aria-label="Menu categories">
+    <button class="tab active" data-category="appetizers">Appetizers</button>
+    <button class="tab" data-category="mains">Mains</button>
+    <button class="tab" data-category="desserts">Desserts</button>
+    <button class="tab" data-category="beverages">Beverages</button>
+  </section>
+
+  <!-- DISH CARDS -->
+  <section class="dish-grid" aria-label="Dish cards">
+    <div class="dish-grid">
+      <!-- Example cards (will be filtered via JS) -->
+      <article class="dish-card" data-category="appetizers" data-diet="vegetarian">
+        <h3>Grilled Halloumi</h3>
+        <p>Served with honey‑drizzled figs and toasted pine nuts.</p>
+        <span class="price">$12</span>
+      </article>
+
+      <article class="dish-card" data-category="appetizers" data-diet="vegan">
+        <h3>Marinated Olives</h3>
+        <p>Assorted olives, citrus zest, and rosemary.</p>
+        <span class="price">$9</span>
+      </article>
+
+      <article class="dish-card" data-category="mains" data-diet="gluten-free">
+        <h3>Seared Sea Bass</h3>
+        <p>Lemon‑butter sauce, sautéed greens, and quinoa.</p>
+        <span class="price">$28</span>
+      </article>
+
+      <article class="dish-card" data-category="mains" data-diet="vegetarian">
+        <h3>Wild Mushroom Risotto</h3>
+        <p>Creamy Arborio rice, forest mushrooms, and parmesan.</p>
+        <span class="price">$22</span>
+      </article>
+
+      <article class="dish-card" data-category="desserts" data-diet="vegetarian">
+        <h3>Olive Oil Cake</h3>
+        <p>Light orange‑zest cake with a honey‑cinnamon glaze.</p>
+        <span class="price">$10</span>
+      </article>
+
+      <article class="dish-card" data-category="desserts" data-diet="vegan">
+        <h3>Fig & Walnut Tart</h3>
+        <p>Sweet figs, toasted walnuts, and a almond‑flour crust.</p>
+        <span class="price">$11</span>
+      </article>
+
+      <article class="dish-card" data-category="beverages" data-diet="all">
+        <h3>House Red Wine</h3>
+        <p>Full‑bodied blend of local grapes.</p>
+        <span class="price">$8/glass</span>
+      </article>
+
+      <article class="dish-card" data-category="beverages" data-diet="all">
+        <h3>Fresh Mint Lemonade</h3>
+        <p>Organic lemons, fresh mint, and a touch of honey.</p>
+        <span class="price">$6</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- DAILY SPECIALS -->
+  <section class="daily-specials" aria-label="Daily specials">
+    <div class="special-card">
+      <h3>Chef’s Daily Catch</h3>
+      <p>Pan‑seared Mediterranean snapper with herb‑infused olive oil, served with seasonal vegetables.</p>
+      <span class="price">$34</span>
+    </div>
+    <div class="special-card">
+      <h3>Spiced Lamb Kofta</h3>
+      <p>Herb‑spiced lamb served on a bed of couscous with tzatziki.</p>
+      <span class="price">$29</span>
+    </div>
+  </section>
+
+  <!-- WINE LIST -->
+  <section class="wine-list" aria-label="Wine list">
+    <div class="wine-list">
+      <div class="wine-section">
+        <h3>Red Wines</h3>
+        <ul>
+          <li>Chianti Classico – $45</li>
+          <li>Barolo – $68</li>
+          <li>Syrah – $52</li>
+        </ul>
+      </div>
+      <div class="wine-section">
+        <h3>White Wines</h3>
+        <ul>
+          <li>Pinot Grigio – $38</li>
+          <li>Riesling – $42</li>
+          <li>Sauvignon Blanc – $36</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD PDF -->
+  <section class="download-pdf" aria-label="Download menu PDF">
+    <div class="download-pdf">
+      <a href="/downloads/menu.pdf" class="btn btn-primary" download>
+        <span>Download Full Menu (PDF)</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA RESERVATION -->
+  <section class="cta-reservation" aria-label="Reserve a table">
+    <h2 style="font-family:var(--font-heading);font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);">Ready to Dine?</h2>
+    <a href="reservations.html" class="btn btn-primary">Make a Reservation</a>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Artisan’s Table</h3>
+      <p>123 Mediterranean Lane<br>New York, NY 10001</p>
+    </div>
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <ul class="nav-links" style="flex-direction:column;gap:8px;">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="menu.html" class="nav-link active">Menu</a></li>
+        <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col newsletter">
+      <h3>Newsletter</h3>
+      <form id="footer-newsletter">
+        <input type="email" placeholder="Your email" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <p>
+        <a href="#" aria-label="Instagram">Instagram</a> |
+        <a href="#" aria-label="Facebook">Facebook</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Navigation hamburger */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const expanded = navLinks.classList.contains('open');
+  hamburger.setAttribute('aria-expanded', expanded);
+});
+
+/* Category tabs */
+const tabs = document.querySelectorAll('.tab');
+const dishCards = document.querySelectorAll('.dish-card');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelector('.tab.active')?.classList.remove('active');
+    tab.classList.add('active');
+    const category = tab.dataset.category;
+    filterDishes(category, getActiveDietFilter());
+  });
+});
+
+/* Dietary filter chips */
+const filterChips = document.querySelectorAll('.filter-chip');
+filterChips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelector('.filter-chip[data-active="true"]')?.setAttribute('data-active','false');
+    chip.setAttribute('data-active','true');
+    filterChips.forEach(c => c.setAttribute('aria-pressed','false'));
+    chip.setAttribute('aria-pressed','true');
+    const diet = chip.dataset.filter;
+    filterDishes(getActiveCategory(), diet);
+  });
+});
+
+/* Helper functions */
+function getActiveCategory() {
+  const activeTab = document.querySelector('.tab.active');
+  return activeTab ? activeTab.dataset.category : 'all';
+}
+function getActiveDietFilter() {
+  const activeChip = document.querySelector('.filter-chip[data-active="true"]');
+  return activeChip ? activeChip.dataset.filter : 'all';
+}
+function filterDishes(category, diet) {
+  dishCards.forEach(card => {
+    const matchesCategory = (category === 'all') || card.dataset.category === category;
+    const matchesDiet = (diet === 'all') || card.dataset.diet === diet || card.dataset.diet === 'all';
+    if (matchesCategory && matchesDiet) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+/* Initial filter */
+filterDishes('appetizers', 'all');
+</script>
+</body>
+</html>

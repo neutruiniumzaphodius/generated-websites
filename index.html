@@ -1,75 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Artisan’s Table | Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700;400i;700i&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary-gold:#FFC107;
+  --color-primary-burgundy:#800020;
+  --color-accent-silver:#C0C0C0;
+  --color-bg-beige:#FAF5F0;
+  --color-text-charcoal:#333333;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --radius:4px;
+  --gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text-charcoal);
+  background:var(--color-bg-beige);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;border:none;background:none;font:inherit;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 12px;
+  background:#000;
+  color:#fff;
+  z-index:1000;
+}
+header{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--gap);
+}
+.nav-link{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.75px;
+  font-size:15px;
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-primary-gold);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger div{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-burgundy);
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+  }
+  .hamburger{display:flex;}
+}
+.hero{
+  position:relative;
+  min-height:calc(100vh * 0.618);
+  background:url('https://picsum.photos/1920/1080?random=1') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+}
+.hero h1{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom: var(--gap);
+}
+.hero p{
+  font-family:var(--font-body);
+  font-size:clamp(1rem,4vw,1.25rem);
+  margin-bottom: var(--gap);
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform .3s cubic-bezier(0.4,0,0.2,1),background-color .3s;
+}
+.btn-primary{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.btn-primary:hover,
+.btn-primary:focus{
+  transform:scale(1.05);
+  background:var(--color-primary-gold);
+}
+.btn-secondary{
+  border:2px solid var(--color-primary-gold);
+  color:var(--color-primary-gold);
+}
+.btn-secondary:hover,
+.btn-secondary:focus{
+  transform:scale(1.05);
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.btn-tertiary{
+  color:#fff;
+  text-decoration:underline;
+}
+.btn-tertiary:hover,
+.btn-tertiary:focus{
+  transform:scale(1.05);
+}
+.quick-cta{
+  padding:calc(var(--gap)*2) var(--gap);
+  background:var(--color-bg-beige);
+  display:flex;
+  flex-direction:column;
+  gap:var(--gap);
+  align-items:center;
+}
+.quick-cta a{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 16px;
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  border-radius:999px;
+  font-weight:600;
+}
+.quick-cta a:hover,
+.quick-cta a:focus{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.intro{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  text-align:center;
+}
+.intro h2{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(1.75rem,5vw,2.5rem);
+  margin-bottom:var(--gap);
+}
+.intro p{
+  font-size:clamp(1rem,3vw,1.125rem);
+  max-width:800px;
+  margin:auto;
+}
+.carousel{
+  position:relative;
+  max-width:1200px;
+  margin:auto;
+  overflow:hidden;
+  padding:calc(var(--gap)*2) var(--gap);
+}
+.carousel .slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity .5s ease-out, transform .5s ease-out;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:var(--gap);
+}
+.carousel .slide.active{
+  opacity:1;
+  transform:translateX(0);
+}
+.carousel .slide img{
+  border-radius:var(--radius);
+}
+.carousel .arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.5);
+  color:#fff;
+  padding:8px;
+  border-radius:50%;
+}
+.carousel .arrow.prev{left:16px;}
+.carousel .arrow.next{right:16px;}
+.daily-specials{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:var(--gap);
+}
+.special-card{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.special-card:hover,
+.special-card:focus-within{
+  transform:translateY(-4px);
+  box-shadow:0 6px 12px rgba(0,0,0,.2);
+}
+.testimonials{
+  background:#fff;
+  padding:calc(var(--gap)*2) var(--gap);
+}
+.testimonial-slide{
+  max-width:800px;
+  margin:auto;
+  text-align:center;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.testimonial-slide.active{
+  opacity:1;
+}
+.testimonial-card{
+  background:#fff;
+  padding:var(--gap);
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  margin-top:var(--gap);
+}
+footer{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  padding:calc(var(--gap)*2) var(--gap);
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--gap);
+}
+.footer-col h3{
+  margin-bottom:var(--gap);
+  font-family:var(--font-heading);
+  font-size:1.125rem;
+}
+.newsletter input{
+  padding:8px;
+  border:1px solid var(--color-accent-silver);
+  border-radius:var(--radius);
+  width:70%;
+}
+.newsletter button{
+  padding:8px 16px;
+  background:var(--color-primary-gold);
+  color:#000;
+  border-radius:var(--radius);
+  font-weight:600;
+}
+.newsletter button:hover,
+.newsletter button:focus{
+  background:#e6a800;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="Artisan’s Table Home"><strong>Artisan’s Table</strong></a>
+    <div class="hamburger" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false" role="button" tabindex="0">
+      <div></div><div></div><div></div>
+    </div>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="menu.html" class="nav-link">Menu</a></li>
+      <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+      <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- HERO SECTION -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-content">
+      <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(2rem,6vw,3.5rem);margin-bottom:var(--gap);text-shadow:0 2px 4px rgba(0,0,0,.5);">
+        Experience Mediterranean Elegance
+      </h1>
+      <p style="font-family:var(--font-body);font-size:clamp(1rem,4vw,1.25rem);margin-bottom:calc(var(--gap)*2);text-shadow:0 1px 3px rgba(0,0,0,.4);">
+        A culinary journey through sun‑kissed coasts, crafted with love.
+      </p>
+      <div class="hero-cta" style="display:flex;gap:var(--gap);justify-content:center;flex-wrap:wrap;">
+        <button class="btn-primary" aria-label="Make a Reservation">
+          cta_button_reservation: Make a Reservation
+        </button>
+        <button class="btn-secondary" aria-label="View Menu">
+          cta_button_view_menu: View Menu
+        </button>
+        <button class="btn-tertiary" aria-label="Learn More">
+          cta_button_learn_more: Learn More
+        </button>
+      </div>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- QUICK CTA BUTTONS -->
+  <section class="quick-cta" style="padding:calc(var(--gap)*2) var(--gap);text-align:center;">
+    <a href="#reservation" class="quick-pill" aria-label="Reserve a table">
+      <svg width="20" height="20" fill="currentColor"><path d="M5 3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6l4 4v-4h1a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5z"/></svg>
+      Reserve
+    </a>
+    <a href="#menu" class="quick-pill" aria-label="Explore the menu">
+      <svg width="20" height="20" fill="currentColor"><path d="M4 4h16v2H4V4zm0 6h16v2H4v-2zm0 6h10v2H4v-2z"/></svg>
+      Menu
+    </a>
+    <a href="#about" class="quick-pill" aria-label="Learn about us">
+      <svg width="20" height="20" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      About
+    </a>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <!-- INTRO BLURB -->
+  <section class="intro" style="padding:calc(var(--gap)*2) var(--gap);text-align:center;">
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);">
+      Welcome to Artisan’s Table
+    </h2>
+    <p style="font-size:clamp(1rem,3vw,1.125rem);max-width:800px;margin:auto;">
+      At Artisan’s Table, we blend the flavors of the Mediterranean with the warmth of New York hospitality. From the sizzle of the grill to the delicate aroma of freshly pressed olive oil, every moment is crafted to perfection.
+    </p>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <!-- FEATURED CAROUSEL -->
+  <section class="carousel" aria-label="Featured Dishes Carousel" style="position:relative;padding:calc(var(--gap)*2) var(--gap);">
+    <div class="carousel-track" role="list">
+      <div class="slide active" role="listitem" aria-label="Slide 1">
+        <img src="https://picsum.photos/800/500?random=2" alt="Signature Octopus Carpaccio" loading="lazy">
+        <p style="margin-top:var(--gap);font-family:var(--font-heading);font-size:1.25rem;">Octopus Carpaccio – thinly sliced, citrus‑dressed, with a drizzle of herb oil.</p>
+      </div>
+      <div class="slide" role="listitem" aria-label="Slide 2">
+        <img src="https://picsum.photos/800/500?random=3" alt="Grilled Lamb Chops" loading="lazy">
+        <p style="margin-top:var(--gap);font-family:var(--font-heading);font-size:1.25rem;">Herb‑crusted Lamb Chops – char‑grilled to a perfect pink.</p>
+      </div>
+      <div class="slide" role="listitem" aria-label="Slide 3">
+        <img src="https://picsum.photos/800/500?random=4" alt="Seafood Paella" loading="lazy">
+        <p style="margin-top:var(--gap);font-family:var(--font-heading);font-size:1.25rem;">Seafood Paella – saffron‑infused rice with the freshest catch.</p>
+      </div>
+    </div>
+    <button class="arrow prev" aria-label="Previous slide" style="background:none;">
+      <i data-lucide="chevron-left"></i>
+    </button>
+    <button class="arrow next" aria-label="Next slide" style="background:none;">
+      <i data-lucide="chevron-right"></i>
+    </button>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+  <!-- DAILY SPECIALS PREVIEW -->
+  <section class="daily-specials" aria-label="Daily Specials Preview" style="padding:calc(var(--gap)*2) var(--gap);">
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.5rem,5vw,2rem);text-align:center;margin-bottom:var(--gap);">
+      Today’s Specials
+    </h2>
+    <div class="specials-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--gap);">
+      <div class="special-card" tabindex="0">
+        <h3 style="font-family:var(--font-heading);font-size:1.25rem;margin-bottom:8px;">Grilled Branzino</h3>
+        <p style="font-size:.95rem;">Rosemary‑infused olive oil, served with seasonal vegetables – $28</p>
+      </div>
+      <div class="special-card" tabindex="0">
+        <h3 style="font-family:var(--font-heading);font-size:1.25rem;margin-bottom:8px;">Octopus Carpaccio</h3>
+        <p style="font-size:.95rem;">Thinly sliced, citrus‑dressed, with a drizzle of herb oil – $22</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SNIPPET -->
+  <section class="testimonials" aria-label="Guest Testimonials" style="padding:calc(var(--gap)*2) var(--gap);background:#fff;">
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.5rem,5vw,2rem);text-align:center;margin-bottom:var(--gap);">
+      What Our Guests Say
+    </h2>
+    <div class="testimonial-track" role="list">
+      <div class="testimonial-slide active" role="listitem" aria-label="Testimonial 1">
+        <p style="font-family:var(--font-body);font-size:1rem;max-width:800px;margin:auto;">
+          “The octopus carpaccio was a revelation – tender, flavorful, and beautifully presented. A true taste of the Mediterranean!”
+        </p>
+        <p style="margin-top:8px;font-weight:600;">— Elena M., Food Blogger</p>
+      </div>
+      <div class="testimonial-slide" role="listitem" aria-label="Testimonial 2">
+        <p style="font-family:var(--font-body);font-size:1rem;max-width:800px;margin:auto;">
+          “From the moment we stepped inside, the ambiance whisked us to a sun‑drenched terrace in Greece. The service was impeccable.”
+        </p>
+        <p style="margin-top:8px;font-weight:600;">— Marco R., Travel Writer</p>
+      </div>
+      <div class="testimonial-slide" role="listitem" aria-label="Testimonial 3">
+        <p style="font-family:var(--font-body);font-size:1rem;max-width:800px;margin:auto;">
+          “The branzino, cooked to perfection with rosemary‑infused oil, was the highlight of our dinner. Will definitely return!”
+        </p>
+        <p style="margin-top:8px;font-weight:600;">— Sophia L., Local Chef</p>
+      </div>
+    </div>
+    <button class="arrow prev-testimonial" aria-label="Previous testimonial" style="background:none;">
+      <i data-lucide="chevron-left"></i>
+    </button>
+    <button class="arrow next-testimonial" aria-label="Next testimonial" style="background:none;">
+      <i data-lucide="chevron-right"></i>
+    </button>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="reservations.html">Reservations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <p>Phone: <a href="tel:212-555-0198">212‑555‑0198</a></p>
+      <p>Email: <a href="mailto:info@artisanstablenyc.com">info@artisanstablenyc.com</a></p>
+    </div>
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <p><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a> | <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a></p>
+    </div>
+    <div class="footer-col newsletter">
+      <h3>Newsletter</h3>
+      <form id="newsletter-form" novalidate>
+        <label for="newsletter-email" class="visually-hidden">Email address</label>
+        <input type="email" id="newsletter-email" placeholder="Your email…" required aria-required="true">
+        <button type="submit" class="btn-primary">Subscribe</button>
+      </form>
+      <p id="newsletter-msg" role="alert" style="margin-top:8px;"></p>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:var(--gap);font-size:.85rem;">© 2024 Artisan’s Table. All rights reserved.</p>
+</footer>
+
+<script>
+  // Initialize lucide icons
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+  });
+
+  // Hamburger menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  hamburger.addEventListener('click', toggleMenu);
+  hamburger.addEventListener('keypress', e => { if(e.key === 'Enter') toggleMenu(); });
+  function toggleMenu(){
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+    navMenu.classList.toggle('open');
+  }
+
+  // Hero CTA buttons – simple navigation placeholders
+  document.querySelectorAll('.hero-cta button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const label = btn.textContent.trim();
+      if(label.includes('Reservation')) {
+        // Placeholder: could open reservation modal
+        alert('Reservation flow would start here.');
+      } else if(label.includes('Menu')) {
+        window.location.href = 'menu.html';
+      } else {
+        // Learn more placeholder
+        alert('More information would be shown here.');
+      }
+    });
+  });
+
+  // Carousel functionality
+  const slides = document.querySelectorAll('.carousel .slide');
+  const prevBtn = document.querySelector('.carousel .prev');
+  const nextBtn = document.querySelector('.carousel .next');
+  let currentSlide = 0;
+  const showSlide = index => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (index + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+  };
+  prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+  setInterval(() => showSlide(currentSlide + 1), 6000);
+
+  // Testimonial carousel
+  const testimonials = document.querySelectorAll('.testimonial-slide');
+  const prevTest = document.querySelector('.prev-testimonial');
+  const nextTest = document.querySelector('.next-testimonial');
+  let currentTest = 0;
+  const showTestimonial = idx => {
+    testimonials[currentTest].classList.remove('active');
+    currentTest = (idx + testimonials.length) % testimonials.length;
+    testimonials[currentTest].classList.add('active');
+  };
+  prevTest.addEventListener('click', () => showTestimonial(currentTest - 1));
+  nextTest.addEventListener('click', () => showTestimonial(currentTest + 1));
+  setInterval(() => showTestimonial(currentTest + 1), 8000);
+
+  // Newsletter form handling
+  const newsletterForm = document.getElementById('newsletter-form');
+  const newsletterMsg = document.getElementById('newsletter-msg');
+  newsletterForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('newsletter-email').value;
+    if(email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      newsletterMsg.textContent = 'Thank you for subscribing!';
+      newsletterMsg.style.color = '#4caf50';
+      newsletterForm.reset();
+    } else {
+      newsletterMsg.textContent = 'Please enter a valid email address.';
+      newsletterMsg.style.color = '#f44336';
+    }
+  });
+</script>
 </body>
 </html>

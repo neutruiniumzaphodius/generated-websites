@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – Artisan’s Table</title>
+<style>
+:root{
+  --color-primary-gold:#FFC107;
+  --color-primary-burgundy:#800020;
+  --color-accent-silver:#C0C0C0;
+  --color-bg-beige:#FAF5F0;
+  --color-text-charcoal:#333333;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --radius:4px;
+  --gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text-charcoal);
+  background:var(--color-bg-beige);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;border:none;background:none;font:inherit;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 12px;
+  background:#000;
+  color:#fff;
+  z-index:1000;
+}
+header{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--gap);
+}
+.nav-link{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.75px;
+  font-size:15px;
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-primary-gold);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger div{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-burgundy);
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+  }
+  .hamburger{display:flex;}
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:calc(100vh * 0.618);
+  background:url('https://picsum.photos/1920/1080?random=2') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+}
+.hero h1{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom: var(--gap);
+}
+.hero p{
+  font-size:clamp(1rem,4vw,1.25rem);
+  margin-bottom: var(--gap);
+}
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform .3s cubic-bezier(0.4,0,0.2,1),background-color .3s;
+}
+.btn-primary{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.btn-primary:hover,
+.btn-primary:focus{
+  transform:scale(1.05);
+}
+
+/* QUICK CTA (used for timeline navigation) */
+.quick-cta{
+  padding:calc(var(--gap)*2) var(--gap);
+  background:var(--color-bg-beige);
+  display:flex;
+  flex-direction:column;
+  gap:var(--gap);
+  align-items:center;
+}
+
+/* INTRO */
+.intro{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  text-align:center;
+}
+
+/* TIMELINE */
+.timeline{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  overflow-x:auto;
+  display:flex;
+  gap:calc(var(--gap)*2);
+}
+.timeline-item{
+  min-width:200px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  position:relative;
+}
+.timeline-item::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  right:-calc(var(--gap)/2);
+  width:0;
+  height:0;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  border-left:8px solid #fff;
+  transform:translateY(-50%);
+}
+.timeline-item:last-child::after{display:none;}
+.timeline-item h3{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:1.25rem;
+  margin-bottom:var(--gap);
+}
+.timeline-item p{
+  font-size:.9rem;
+}
+
+/* FOUNDER MESSAGE */
+.founder{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  display:grid;
+  grid-template-columns:1fr;
+  gap:var(--gap);
+  align-items:center;
+}
+@media (min-width:768px){
+  .founder{
+    grid-template-columns:1fr 1fr;
+  }
+}
+.founder img{
+  border-radius:999px;
+  width:200px;
+  height:200px;
+  object-fit:cover;
+  margin:auto;
+}
+
+/* TEAM PROFILES */
+.team{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:var(--gap);
+}
+.team-card{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.team-card:hover,
+.team-card:focus-within{
+  transform:translateY(-4px);
+  box-shadow:0 6px 12px rgba(0,0,0,.2);
+}
+.team-card img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:var(--gap);
+}
+
+/* INGREDIENTS PHILOSOPHY */
+.philosophy{
+  background:var(--color-bg-beige);
+  padding:calc(var(--gap)*2) var(--gap);
+}
+.philosophy h2{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(1.75rem,5vw,2.5rem);
+  text-align:center;
+  margin-bottom:var(--gap);
+}
+.philosophy p{
+  max-width:800px;
+  margin:auto;
+  font-size:clamp(1rem,3vw,1.125rem);
+}
+
+/* GALLERY */
+.gallery{
+  max-width:1200px;
+  margin:auto;
+  padding:calc(var(--gap)*2) var(--gap);
+  column-count:4;
+  column-gap:var(--gap);
+}
+@media (max-width:1024px){
+  .gallery{column-count:3;}
+}
+@media (max-width:768px){
+  .gallery{column-count:2;}
+}
+@media (max-width:480px){
+  .gallery{column-count:1;}
+}
+.gallery-item{
+  break-inside:avoid;
+  margin-bottom:var(--gap);
+}
+.gallery-item img{
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+/* CTA RESERVATION */
+.cta-reserve{
+  text-align:center;
+  padding:calc(var(--gap)*2) var(--gap);
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo"><strong>Artisan’s Table</strong></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link active">About</a></li>
+      <li><a href="menu.html" class="nav-link">Menu</a></li>
+      <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- HERO BANNER -->
+  <section class="hero">
+    <h1>Our Story</h1>
+    <p>From a modest kitchen in 1995 to a celebrated New York destination, discover the heritage that shapes every plate.</p>
+  </section>
+
+  <!-- HISTORY TIMELINE -->
+  <section class="quick-cta" style="background:#fff;">
+    <h2 style="font-family:var(--font-heading);font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);">Our Journey</h2>
+    <div class="timeline" role="region" aria-label="History timeline">
+      <div class="timeline-item">
+        <h3>1995</h3>
+        <p>Alessandro opens a tiny trattoria in Naples, Italy.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>2002</h3>
+        <p>Family emigrates to New York, launching the first Artisan’s Table.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>2008</h3>
+        <p>First location receives a Michelin star.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>2015</h3>
+        <p>Renovated space blends rustic stone with modern design.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>2023</h3>
+        <p>Celebrating 30 years of culinary excellence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER MESSAGE -->
+  <section class="founder">
+    <img src="https://picsum.photos/800/600?random=10" alt="Alessandro, Founder" loading="lazy">
+    <div>
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);">A Vision Rooted in Heritage</h2>
+      <p style="font-size:clamp(1rem,3vw,1.125rem);max-width:800px;margin:auto;">
+        “Cooking is storytelling. Every dish I create carries the memory of my grandmother’s kitchen, the sun‑kissed olive groves of Calabria, and the bustling markets of New York. My dream has always been to share that narrative with every guest, inviting them to sit, savor, and become part of our family.”
+      </p>
+    </div>
+  </section>
+
+  <!-- TEAM PROFILES -->
+  <section class="team">
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);text-align:center;">Meet the Team</h2>
+    <div class="team-card">
+      <img src="https://picsum.photos/200?random=11" alt="Chef Maria" loading="lazy">
+      <h3 style="font-family:var(--font-heading);font-weight:700;">Maria Rossi</h3>
+      <p>Executive Chef – Master of seasonal Mediterranean cuisine.</p>
+    </div>
+    <div class="team-card">
+      <img src="https://picsum.photos/200?random=12" alt="Sous Chef Luca" loading="lazy">
+      <h3 style="font-family:var(--font-heading);font-weight:700;">Luca Bianchi</h3>
+      <p>Sous Chef – Passionate about farm‑to‑table flavors.</p>
+    </div>
+    <div class="team-card">
+      <img src="https://picsum.photos/200?random=13" alt="Pastry Chef Elena" loading="lazy">
+      <h3 style="font-family:var(--font-heading);font-weight:700;">Elena Ferrara</h3>
+      <p>Pastry Chef – Creator of artisanal desserts.</p>
+    </div>
+    <div class="team-card">
+      <img src="https://picsum.photos/200?random=14" alt="Manager Gianni" loading="lazy">
+      <h3 style="font-family:var(--font-heading);font-weight:700;">Gianni Russo</h3>
+      <p>General Manager – Ensuring unforgettable guest experiences.</p>
+    </div>
+  </section>
+
+  <!-- INGREDIENTS PHILOSOPHY -->
+  <section class="philosophy">
+    <h2>Our Commitment to Pure Ingredients</h2>
+    <p>
+      At Artisan’s Table every ingredient is chosen with reverence. We partner with family‑run farms in Tuscany, Kalamata, and the Hudson Valley, selecting heirloom tomatoes, hand‑pressed olive oil, and organically grown herbs. Our philosophy is simple: let the land speak through flavor, and let every plate tell a story of authenticity and care.
+    </p>
+  </section>
+
+  <!-- PHOTO GALLERY -->
+  <section class="gallery">
+    <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);text-align:center;">Our Space & Moments</h2>
+    <div class="gallery-item"><img src="https://picsum.photos/600/800?random=20" alt="Dining area" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://picsum.photos/600/400?random=21" alt="Chef plating" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://picsum.photos/600/700?random=22" alt="Wine cellar" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://picsum.photos/600/500?random=23" alt="Outdoor patio" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://picsum.photos/600/600?random=24" alt="Private event" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://picsum.photos/600/650?random=25" alt="Seasonal decor" loading="lazy"></div>
+  </section>
+
+  <!-- CTA RESERVATION -->
+  <section class="cta-reserve">
+    <button class="btn btn-primary">Make a Reservation</button>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Artisan’s Table</h3>
+      <p>123 Culinary Lane<br>New York, NY 10001</p>
+    </div>
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <p><a href="#" class="nav-link">Instagram</a> | <a href="#" class="nav-link">Facebook</a></p>
+    </div>
+    <div class="footer-col newsletter">
+      <h3>Newsletter</h3>
+      <form action="#" method="post">
+        <input type="email" placeholder="Your email" aria-label="Email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:var(--gap);font-size:0.9rem;">© 2024 Artisan’s Table. All rights reserved.</p>
+</footer>
+
+<script>
+/* Simple mobile menu toggle */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const expanded = navLinks.classList.contains('open');
+  hamburger.setAttribute('aria-expanded', expanded);
+});
+</script>
+</body>
+</html>

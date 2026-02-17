@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog – Artisan's Table NYC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary-gold:#FFC107;
+      --color-primary-burgundy:#800020;
+      --color-accent-silver:#C0C0C0;
+      --color-bg-beige:#FAF5F0;
+      --color-text-charcoal:#333333;
+      --font-heading:"Playfair Display",serif;
+      --font-body:"Open Sans",sans-serif;
+      --radius:4px;
+      --gap:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text-charcoal);
+      background:var(--color-bg-beige);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{cursor:pointer;border:none;background:none;font:inherit;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:0;
+      top:0;
+      width:auto;
+      height:auto;
+      padding:8px 12px;
+      background:#000;
+      color:#fff;
+      z-index:1000;
+    }
+    header{
+      background:var(--color-primary-burgundy);
+      color:#fff;
+      position:sticky;
+      top:0;
+      z-index:999;
+    }
+    nav{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:var(--gap);
+    }
+    .nav-links{
+      display:flex;
+      gap:var(--gap);
+    }
+    .nav-link{
+      color:#fff;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.75px;
+      font-size:15px;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--color-primary-gold);
+    }
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:4px;
+    }
+    .hamburger div{
+      width:24px;
+      height:2px;
+      background:#fff;
+    }
+    @media (max-width:768px){
+      .nav-links{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:var(--color-primary-burgundy);
+        flex-direction:column;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height .3s ease;
+      }
+      .nav-links.open{
+        max-height:300px;
+      }
+      .hamburger{display:flex;}
+    }
+    .hero{
+      position:relative;
+      min-height:calc(100vh * 0.618);
+      background:url('https://picsum.photos/1920/1080?random=5') center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+    }
+    .hero h1{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(2rem,6vw,3.5rem);
+      margin-bottom: var(--gap);
+    }
+    .hero p{
+      font-size:clamp(1rem,4vw,1.25rem);
+      margin-bottom: var(--gap);
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:transform .3s cubic-bezier(0.4,0,0.2,1),background-color .3s;
+    }
+    .btn-primary{
+      background:var(--color-primary-gold);
+      color:#000;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus{
+      transform:scale(1.05);
+      background:var(--color-primary-gold);
+    }
+    .btn-secondary{
+      border:2px solid var(--color-primary-gold);
+      color:var(--color-primary-gold);
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus{
+      transform:scale(1.05);
+      background:var(--color-primary-gold);
+      color:#000;
+    }
+    .btn-tertiary{
+      color:#fff;
+      text-decoration:underline;
+    }
+    .btn-tertiary:hover,
+    .btn-tertiary:focus{
+      transform:scale(1.05);
+    }
+    .search-bar{
+      max-width:1200px;
+      margin:auto;
+      padding:calc(var(--gap)*2) var(--gap);
+      text-align:center;
+    }
+    .search-bar input{
+      width:70%;
+      max-width:400px;
+      padding:8px;
+      border:1px solid var(--color-accent-silver);
+      border-radius:var(--radius);
+      margin-right:8px;
+    }
+    .search-bar button{
+      padding:8px 16px;
+      background:var(--color-primary-gold);
+      color:#000;
+      border-radius:var(--radius);
+      font-weight:600;
+    }
+    .search-bar button:hover,
+    .search-bar button:focus{
+      background:#e6a800;
+    }
+    .post-grid{
+      max-width:1200px;
+      margin:auto;
+      padding:calc(var(--gap)*2) var(--gap);
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:var(--gap);
+    }
+    .post-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:var(--gap);
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+    .post-card:hover,
+    .post-card:focus-within{
+      transform:translateY(-4px);
+      box-shadow:0 6px 12px rgba(0,0,0,.2);
+    }
+    .post-card img{
+      border-radius:var(--radius);
+      margin-bottom:var(--gap);
+    }
+    .post-card h3{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(1.25rem,4vw,1.75rem);
+      margin-bottom:8px;
+    }
+    .post-card p{
+      font-size:0.95rem;
+      margin-bottom:12px;
+    }
+    .post-card a{
+      color:var(--color-primary-burgundy);
+      font-weight:600;
+    }
+    .newsletter{
+      background:#fff;
+      max-width:1200px;
+      margin:auto;
+      padding:calc(var(--gap)*2) var(--gap);
+      text-align:center;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
+    }
+    .newsletter input{
+      padding:8px;
+      border:1px solid var(--color-accent-silver);
+      border-radius:var(--radius);
+      width:70%;
+      max-width:400px;
+      margin-right:8px;
+    }
+    .newsletter button{
+      padding:8px 16px;
+      background:var(--color-primary-gold);
+      color:#000;
+      border-radius:var(--radius);
+      font-weight:600;
+    }
+    .newsletter button:hover,
+    .newsletter button:focus{
+      background:#e6a800;
+    }
+    .cta-view-menu{
+      text-align:center;
+      margin:calc(var(--gap)*2) 0;
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none !important;animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <nav>
+      <div class="logo">
+        <a href="index.html" class="nav-link">Artisan's Table</a>
+      </div>
+      <div class="hamburger" aria-label="Menu" aria-controls="primary-navigation" aria-expanded="false">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="nav-links" id="primary-navigation">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="blog.html" class="nav-link active">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Blog -->
+    <section class="hero">
+      <h1>Stories from the Table</h1>
+      <p>Delicious tales, recipes, and supplier spotlights.</p>
+      <a href="menu.html" class="btn btn-primary">View Menu</a>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="search-bar">
+      <div class="intro">
+        <input type="search" id="blog-search" placeholder="Search recipes, stories, suppliers…" aria-label="Search blog">
+        <button class="btn btn-secondary" type="button">Search</button>
+      </div>
+    </section>
+
+    <!-- Post Grid -->
+    <section class="post-grid">
+      <div class="post-card">
+        <img src="https://picsum.photos/400/250?random=10" alt="Olive Oil Press">
+        <h3>The Secret Behind Our Olive Oil</h3>
+        <p>Discover how we press hand‑picked olives from a family‑run estate in Kalamata, creating a golden elixir that defines our dishes.</p>
+        <a href="#" class="btn btn-tertiary">Read More</a>
+      </div>
+      <div class="post-card">
+        <img src="https://picsum.photos/400/250?random=11" alt="Fresh Herbs">
+        <h3>From Farm to Fork: Our Herb Suppliers</h3>
+        <p>Meet the local growers who supply us with the freshest herbs, and learn how their dedication shapes our seasonal menus.</p>
+        <a href="#" class="btn btn-tertiary">Read More</a>
+      </div>
+      <div class="post-card">
+        <img src="https://picsum.photos/400/250?random=12" alt="Recipe Card">
+        <h3>Chef’s Summer Citrus Salad</h3>
+        <p>A light, vibrant salad featuring citrus fruits, fresh greens, and our house‑made vinaigrette – perfect for warm evenings.</p>
+        <a href="#" class="btn btn-tertiary">Read More</a>
+      </div>
+      <div class="post-card">
+        <img src="https://picsum.photos/400/250?random=13" alt="Event Photo">
+        <h3>Behind the Scenes: Our Weekly Tasting Events</h3>
+        <p>Get an inside look at how we curate tasting events that showcase local wines, cheeses, and culinary creativity.</p>
+        <a href="#" class="btn btn-tertiary">Read More</a>
+      </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);">
+        Join Our Culinary Community
+      </h2>
+      <p>Exclusive recipes, events, and behind‑the‑scenes stories delivered straight to your inbox.</p>
+      <form action="#" method="post">
+        <input type="email" placeholder="Your email address" aria-label="Newsletter email" required>
+        <button type="submit" class="btn-primary">Subscribe</button>
+      </form>
+    </section>
+
+    <!-- CTA View Menu -->
+    <section class="cta-view-menu">
+      <a href="menu.html" class="btn btn-primary">View Menu</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Artisan's Table</h3>
+        <p>123 Culinary Ave, New York, NY 10001</p>
+        <p>Phone: (212) 555‑1234</p>
+        <p>Email: <a href="mailto:info@artisanstablenyc.com">info@artisanstablenyc.com</a></p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul class="nav-links" style="flex-direction:column;gap:8px;">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="menu.html" class="nav-link">Menu</a></li>
+          <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Follow Us</h3>
+        <p>
+          <a href="#" aria-label="Instagram">Instagram</a> |
+          <a href="#" aria-label="Facebook">Facebook</a>
+        </p>
+      </div>
+      <div class="footer-col newsletter">
+        <h3>Newsletter</h3>
+        <form action="#" method="post">
+          <input type="email" placeholder="Your email" aria-label="Newsletter email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:var(--gap);font-size:0.875rem;">
+      © 2024 Artisan's Table NYC. All rights reserved.
+    </p>
+  </footer>
+
+  <!-- Simple script for mobile menu toggle -->
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger?.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+    });
+  </script>
+</body>
+</html>

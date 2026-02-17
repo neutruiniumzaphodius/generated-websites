@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us – Artisan’s Table</title>
+  <style>
+    :root{
+      --color-primary-gold:#FFC107;
+      --color-primary-burgundy:#800020;
+      --color-accent-silver:#C0C0C0;
+      --color-bg-beige:#FAF5F0;
+      --color-text-charcoal:#333333;
+      --font-heading:"Playfair Display",serif;
+      --font-body:"Open Sans",sans-serif;
+      --radius:4px;
+      --gap:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text-charcoal);
+      background:var(--color-bg-beige);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{cursor:pointer;border:none;background:none;font:inherit;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:0;
+      top:0;
+      width:auto;
+      height:auto;
+      padding:8px 12px;
+      background:#000;
+      color:#fff;
+      z-index:1000;
+    }
+    header{
+      background:var(--color-primary-burgundy);
+      color:#fff;
+      position:sticky;
+      top:0;
+      z-index:999;
+    }
+    nav{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:var(--gap);
+    }
+    .nav-links{
+      display:flex;
+      gap:var(--gap);
+    }
+    .nav-link{
+      color:#fff;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.75px;
+      font-size:15px;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--color-primary-gold);
+    }
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:4px;
+    }
+    .hamburger div{
+      width:24px;
+      height:2px;
+      background:#fff;
+    }
+    @media (max-width:768px){
+      .nav-links{
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:var(--color-primary-burgundy);
+        flex-direction:column;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height .3s ease;
+      }
+      .nav-links.open{
+        max-height:300px;
+      }
+      .hamburger{display:flex;}
+    }
+    .hero{
+      position:relative;
+      min-height:calc(100vh * 0.618);
+      background:url('https://picsum.photos/1920/1080?random=2') center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+    }
+    .hero h1{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(2rem,6vw,3.5rem);
+      margin-bottom: var(--gap);
+    }
+    .hero p{
+      font-size:clamp(1rem,4vw,1.25rem);
+      margin-bottom: var(--gap);
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:transform .3s cubic-bezier(0.4,0,0.2,1),background-color .3s;
+    }
+    .btn-primary{
+      background:var(--color-primary-gold);
+      color:#000;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus{
+      transform:scale(1.05);
+    }
+    .section{
+      max-width:1200px;
+      margin:auto;
+      padding:calc(var(--gap)*2) var(--gap);
+    }
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:var(--gap);
+      margin-top:var(--gap);
+    }
+    .info-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:1rem;
+    }
+    .contact-form{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:var(--gap);
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
+      max-width:800px;
+      margin:auto;
+    }
+    .contact-form label{
+      display:block;
+      margin-bottom:4px;
+      font-weight:600;
+    }
+    .contact-form input,
+    .contact-form textarea{
+      width:100%;
+      padding:8px;
+      border:1px solid var(--color-accent-silver);
+      border-radius:var(--radius);
+      margin-bottom:var(--gap);
+    }
+    .contact-form button{
+      width:auto;
+    }
+    .faq{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:var(--gap);
+      max-width:800px;
+      margin:auto;
+    }
+    .faq-item{
+      border-bottom:1px solid var(--color-accent-silver);
+    }
+    .faq-question{
+      background:none;
+      width:100%;
+      text-align:left;
+      padding:12px;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .faq-answer{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .25s ease;
+      padding:0 var(--gap);
+    }
+    .faq-item[open] .faq-answer{
+      max-height:500px; /* enough for content */
+      padding:12px var(--gap);
+    }
+    .map-container{
+      margin-top:var(--gap);
+    }
+    .sticky-cta{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:var(--color-primary-burgundy);
+      color:#fff;
+      text-align:center;
+      padding:var(--gap);
+      z-index:1000;
+    }
+    .sticky-cta .btn-primary{
+      background:var(--color-primary-gold);
+      color:#000;
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none !important;animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <header>
+    <nav>
+      <div class="logo"><a href="index.html" class="nav-link">Artisan’s Table</a></div>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="menu.html" class="nav-link">Menu</a>
+        <a href="reservations.html" class="nav-link">Reservations</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </div>
+      <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Contact Us</h1>
+    <p>We’re here to help – reach out via any channel below.</p>
+  </section>
+
+  <main id="main-content">
+    <section class="intro address-block">
+      <h2 class="section-title" style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem,5vw,2.5rem);margin-bottom:var(--gap);">Our Location</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <svg width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+          <span>123 Mediterranean Way, New York, NY 10001</span>
+        </div>
+        <div class="info-item">
+          <svg width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.11-.21c1.21.5 2.53.78 3.88.78a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 3.5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.28 2.67.78 3.88a1.003 1.003 0 01-.21 1.11l-2.45 2.3z"/></svg>
+          <span>info@artisanstablenyc.com</span>
+        </div>
+        <div class="info-item">
+          <svg width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M6 2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm0 2v16h12V4H6zm2 2h8v2H8V6zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/></svg>
+          <span>reservations@artisanstablenyc.com</span>
+        </div>
+        <div class="info-item">
+          <svg width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.11-.21c1.21.5 2.53.78 3.88.78a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 3.5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.28 2.67.78 3.88a1.003 1.003 0 01-.21 1.11l-2.45 2.3z"/></svg>
+          <span>+1 (212) 555‑1234</span>
+        </div>
+        <div class="info-item">
+          <svg width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M19 7h-1V5a2 2 0 00-2-2h-2V2h-2v1h-2a2 2 0 00-2 2v2H5a2 2 0 00-2 2v2h1v2H3v2h1v2a2 2 0 002 2h2v1h2v-1h2v1h2v-1h2a2 2 0 002-2v-2h1v-2h-1v-2h1V9a2 2 0 00-2-2zM7 5a1 1 0 011-1h2v1h2V4h2a1 1 0 011 1v2H7V5zm10 14a1 1 0 01-1 1h-2v-1h-2v1h-2a1 1 0 01-1-1v-2h8v2z"/></svg>
+          <span>Fax: +1 (212) 555‑5678</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro contact-form-section">
+      <h2>Send Us a Message</h2>
+      <form class="contact-form" id="contactForm" action="#" method="post" novalidate>
+        <label for="name">Name *</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone">
+
+        <label for="message">Message *</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </section>
+
+    <section class="intro faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq">
+        <details class="faq-item">
+          <summary class="faq-question">What are your opening hours?</summary>
+          <div class="faq-answer">
+            <p>Monday‑Friday: 11:00 AM – 10:00 PM<br>Saturday‑Sunday: 9:00 AM – 11:00 PM</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">Do you offer private dining?</summary>
+          <div class="faq-answer">
+            <p>Yes! We have private rooms for events of up to 20 guests. Please contact us for availability.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">Is parking available?</summary>
+          <div class="faq-answer">
+            <p>Street parking is available nearby and we have a valet service for guests.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">Do you accommodate dietary restrictions?</summary>
+          <div class="faq-answer">
+            <p>Absolutely. Please let us know any allergies or preferences when you book or contact us.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="intro map-section">
+      <h2>Find Us on the Map</h2>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.949845774618!2d-74.0059412845941!3d40.71277597933074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a19d1d6b5b9%3A0x2c1e5f8c9c3f9c2f!2sNew%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2s!4v1699999999999"
+          width="100%"
+          height="400"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Artisan’s Table Location">
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <div class="sticky-cta">
+    <button class="btn btn-primary">Make a Reservation</button>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>About Us</h3>
+        <p>Artisan’s Table brings Mediterranean flavors to the heart of New York.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="menu.html" class="nav-link">Menu</a></li>
+          <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <p>info@artisanstablenyc.com</p>
+        <p>+1 (212) 555‑1234</p>
+      </div>
+      <div class="footer-col newsletter">
+        <h3>Newsletter</h3>
+        <form>
+          <input type="email" placeholder="Your email" aria-label="Email">
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        const expanded = navLinks.classList.contains('open');
+        hamburger.setAttribute('aria-expanded', expanded);
+      });
+    }
+
+    // Sticky CTA show/hide on scroll
+    const stickyCta = document.querySelector('.sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    const observer = new IntersectionObserver(
+      ([e]) => e.target.classList.toggle('hide', e.isIntersecting),
+      { threshold: [0] }
+    );
+    observer.observe(heroSection);
+  </script>
+</body>
+</html>
+</analysis>

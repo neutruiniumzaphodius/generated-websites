@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reservations – Artisan’s Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700;900&display=swap" as="style">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary-gold:#FFC107;
+  --color-primary-burgundy:#800020;
+  --color-accent-silver:#C0C0C0;
+  --color-bg-beige:#FAF5F0;
+  --color-text-charcoal:#333333;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --radius:4px;
+  --gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text-charcoal);
+  background:var(--color-bg-beige);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;border:none;background:none;font:inherit;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 12px;
+  background:#000;
+  color:#fff;
+  z-index:1000;
+}
+header{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--gap);
+}
+.nav-link{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.75px;
+  font-size:15px;
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-primary-gold);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger div{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-burgundy);
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+  }
+  .hamburger{display:flex;}
+}
+.hero{
+  position:relative;
+  min-height:calc(100vh * 0.618);
+  background:url('https://picsum.photos/1920/1080?random=2') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+}
+.hero h1{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom:var(--gap);
+}
+.booking-widget{
+  width:100%;
+  max-width:720px;
+  border:none;
+  height:600px;
+}
+form{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  background:rgba(0,0,0,.6);
+  padding:calc(var(--gap)*2) var(--gap);
+  border-radius:var(--radius);
+}
+label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:600;
+}
+textarea{
+  width:100%;
+  min-height:120px;
+  padding:8px;
+  border:1px solid var(--color-accent-silver);
+  border-radius:var(--radius);
+  resize:vertical;
+  font-family:var(--font-body);
+}
+.confirmation{
+  display:none;
+  text-align:center;
+  padding:calc(var(--gap)*2) var(--gap);
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+.confirmation.active{
+  display:block;
+}
+.faq-link{
+  display:block;
+  margin-top:var(--gap);
+  font-size:0.9rem;
+  text-decoration:underline;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform .3s cubic-bezier(0.4,0,0.2,1),background-color .3s;
+}
+.btn-primary{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.btn-primary:hover,
+.btn-primary:focus{
+  transform:scale(1.05);
+  background:var(--color-primary-gold);
+}
+.btn-secondary{
+  border:2px solid var(--color-primary-gold);
+  color:var(--color-primary-gold);
+}
+.btn-secondary:hover,
+.btn-secondary:focus{
+  transform:scale(1.05);
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.btn-tertiary{
+  color:#fff;
+  text-decoration:underline;
+}
+.btn-tertiary:hover,
+.btn-tertiary:focus{
+  transform:scale(1.05);
+}
+footer{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  padding:calc(var(--gap)*2) var(--gap);
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--gap);
+}
+.footer-col h3{
+  margin-bottom:var(--gap);
+  font-family:var(--font-heading);
+  font-size:1.125rem;
+}
+.newsletter input{
+  padding:8px;
+  border:1px solid var(--color-accent-silver);
+  border-radius:var(--radius);
+  width:70%;
+}
+.newsletter button{
+  padding:8px 16px;
+  background:var(--color-primary-gold);
+  color:#000;
+  border-radius:var(--radius);
+  font-weight:600;
+}
+.newsletter button:hover,
+.newsletter button:focus{
+  background:#e6a800;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo" style="font-family:var(--font-heading);font-weight:700;color:#fff;font-size:1.5rem;">Artisan’s Table</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="menu.html" class="nav-link">Menu</a></li>
+      <li><a href="reservations.html" class="nav-link active">Reservations</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="hamburger" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Hero Form Section -->
+  <section class="hero">
+    <h1>Reserve Your Table</h1>
+    <form id="reservationForm" novalidate>
+      <div class="booking-widget" style="margin-bottom:var(--gap);">
+        <!-- Acuity Scheduling embed (replace src with actual widget URL) -->
+        <iframe src="https://example.acuityscheduling.com/embed/calendar" title="Booking widget"
+                style="width:100%;height:600px;border:none;border-radius:var(--radius);" allowfullscreen></iframe>
+      </div>
+
+      <label for="specialRequests">Special Requests (optional)</label>
+      <textarea id="specialRequests" name="specialRequests" placeholder="Any dietary needs, celebration notes, etc."></textarea>
+
+      <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    </form>
+
+    <!-- Confirmation Message -->
+    <div id="confirmationMessage" class="confirmation" role="alert" aria-live="polite">
+      <h2 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(1.5rem,5vw,2rem);margin-bottom:var(--gap);color:var(--color-primary-burgundy);">
+        Your reservation is confirmed!
+      </h2>
+      <p style="margin-bottom:var(--gap);">Thank you for booking with Artisan’s Table. We look forward to serving you.</p>
+      <a href="menu.html" class="btn btn-secondary">View Menu</a>
+    </div>
+
+    <small class="faq-link"><a href="faq.html" class="btn-tertiary">FAQ – How does online booking work?</a></small>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Artisan’s Table</h3>
+      <p>123 Gourmet Lane<br>Foodie City, FC 12345</p>
+    </div>
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <ul class="nav-links" style="display:block;">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col newsletter">
+      <h3>Newsletter</h3>
+      <form action="#" method="post">
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <a href="#" style="margin-right:8px;">Instagram</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Simple demo: show confirmation after form submit */
+document.getElementById('reservationForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('confirmationMessage').classList.add('active');
+});
+</script>
+
+</body>
+</html>

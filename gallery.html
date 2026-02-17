@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gallery – Artisan’s Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" as="style" onload="this.rel='stylesheet'">
+<style>
+:root{
+  --color-primary-gold:#FFC107;
+  --color-primary-burgundy:#800020;
+  --color-accent-silver:#C0C0C0;
+  --color-bg-beige:#FAF5F0;
+  --color-text-charcoal:#333333;
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --radius:4px;
+  --gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text-charcoal);
+  background:var(--color-bg-beige);
+  line-height:1.5;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{cursor:pointer;border:none;background:none;font:inherit;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px 12px;
+  background:#000;
+  color:#fff;
+  z-index:1000;
+}
+header{
+  background:var(--color-primary-burgundy);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--gap);
+}
+.nav-link{
+  color:#fff;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.75px;
+  font-size:15px;
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--color-primary-gold);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger div{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-primary-burgundy);
+    flex-direction:column;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+  }
+  .hamburger{display:flex;}
+}
+.hero_grid{
+  position:relative;
+  min-height:calc(100vh * 0.618);
+  background:url('https://picsum.photos/1920/1080?random=gallery') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero_grid::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(128,0,32,.6),rgba(255,193,7,.4));
+}
+.hero_grid h1{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:clamp(2rem,6vw,3.5rem);
+  margin-bottom:var(--gap);
+  position:relative;
+  z-index:1;
+}
+.filter-tabs{
+  display:flex;
+  gap:var(--gap);
+  justify-content:center;
+  margin:calc(var(--gap)*2) var(--gap);
+}
+.filter-tab{
+  padding:8px 16px;
+  border-radius:var(--radius);
+  background:transparent;
+  color:var(--color-text-charcoal);
+  font-weight:600;
+  cursor:pointer;
+  transition:background-color .3s, color .3s;
+}
+.filter-tab.active{
+  background:var(--color-primary-gold);
+  color:#000;
+}
+.masonry_gallery{
+  max-width:1200px;
+  margin:auto;
+  column-gap:var(--gap);
+  column-count:4;
+  padding:var(--gap);
+}
+@media (max-width:1024px){
+  .masonry_gallery{column-count:3;}
+}
+@media (max-width:768px){
+  .masonry_gallery{column-count:2;}
+}
+@media (max-width:480px){
+  .masonry_gallery{column-count:1;}
+}
+.gallery-item{
+  break-inside:avoid;
+  margin-bottom:var(--gap);
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--radius);
+  transition:transform .2s ease;
+}
+.gallery-item img{
+  width:100%;
+  display:block;
+  transition:transform .2s ease;
+}
+.gallery-item:hover img{
+  transform:scale(1.03);
+}
+.gallery-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,.0);
+  transition:background .3s;
+}
+.gallery-item:hover::after{
+  background:rgba(255,255,255,.2);
+}
+.gallery-item .overlay-icon{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity .3s;
+}
+.gallery-item:hover .overlay-icon{
+  opacity:0.6;
+}
+#lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .35s cubic-bezier(0.33,0.66,0.66,1);
+  z-index:1000;
+}
+#lightbox.active{
+  opacity:1;
+  visibility:visible;
+}
+#lightbox img{
+  max-width:90vw;
+  max-height:90vh;
+  border-radius:var(--radius);
+}
+#lightbox .close,
+#lightbox .prev,
+#lightbox .next{
+  position:absolute;
+  background:rgba(0,0,0,.5);
+  color:#fff;
+  border:none;
+  padding:8px;
+  border-radius:50%;
+  cursor:pointer;
+}
+#lightbox .close{
+  top:16px;
+  right:16px;
+}
+#lightbox .prev{
+  left:32px;
+}
+#lightbox .next{
+  right:32px;
+}
+.cta_reservation{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(255,255,255,.9);
+  padding:var(--gap);
+  text-align:center;
+  z-index:999;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <nav>
+    <div class="logo"><a href="index.html" class="nav-link">Artisan’s Table</a></div>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="menu.html" class="nav-link">Menu</a>
+      <a href="reservations.html" class="nav-link">Reservations</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="gallery.html" class="nav-link active">Gallery</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Hero Grid -->
+  <section class="hero_grid hero_grid">
+    <div class="hero_grid">
+      <h1>Moments &amp; Flavours</h1>
+      <p>Explore our curated collection of food, space, and special events.</p>
+      <button class="btn btn-primary" id="cta-hero">View Menu</button>
+    </div>
+  </section>
+
+  <!-- Filter Tabs -->
+  <section class="filter-tabs">
+    <div class="filter-tab btn btn-secondary active" data-filter="all">All</div>
+    <div class="filter-tab btn btn-secondary" data-filter="food">Food</div>
+    <div class="filter-tab btn btn-secondary" data-filter="space">Space</div>
+    <div class="filter-tab btn btn-secondary" data-filter="events">Events</div>
+  </section>
+
+  <!-- Masonry Gallery -->
+  <section class="masonry_gallery">
+    <div class="masonry_gallery gallery-grid">
+      <!-- Example items (replace with real images) -->
+      <div class="gallery-item" data-category="food"><img src="https://picsum.photos/600/800?random=1" alt="Food 1" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="space"><img src="https://picsum.photos/600/400?random=2" alt="Space 1" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="events"><img src="https://picsum.photos/600/900?random=3" alt="Event 1" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="food"><img src="https://picsum.photos/600/700?random=4" alt="Food 2" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="space"><img src="https://picsum.photos/600/500?random=5" alt="Space 2" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="events"><img src="https://picsum.photos/600/650?random=6" alt="Event 2" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="food"><img src="https://picsum.photos/600/750?random=7" alt="Food 3" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="space"><img src="https://picsum.photos/600/600?random=8" alt="Space 3" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="events"><img src="https://picsum.photos/600/800?random=9" alt="Event 3" class="lightbox-trigger"></div>
+      <div class="gallery-item" data-category="food"><img src="https://picsum.photos/600/550?random=10" alt="Food 4" class="lightbox-trigger"></div>
+    </div>
+  </section>
+
+  <!-- Lightbox View -->
+  <div id="lightbox" aria-hidden="true">
+    <button class="close" aria-label="Close">&times;</button>
+    <button class="prev" aria-label="Previous">&#10094;</button>
+    <img src="" alt="Enlarged view" id="lightbox-img">
+    <button class="next" aria-label="Next">&#10095;</button>
+  </div>
+</main>
+
+<!-- CTA Reservation Fixed Bottom -->
+<div class="cta_reservation">
+  <button class="btn btn-primary" id="cta-reserve">Make a Reservation</button>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <p>123 Flavor Street<br>Gourmet City, GC 12345</p>
+      <p>Phone: (555) 123‑4567</p>
+    </div>
+    <div class="footer-col">
+      <h3>Hours</h3>
+      <p>Mon‑Fri: 11am – 10pm<br>Sat‑Sun: 9am – 11pm</p>
+    </div>
+    <div class="footer-col newsletter">
+      <h3>Newsletter</h3>
+      <form>
+        <input type="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <p>
+        <a href="#" aria-label="Instagram">Instagram</a> |
+        <a href="#" aria-label="Facebook">Facebook</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Hamburger menu */
+document.getElementById('hamburger')?.addEventListener('click', function(){
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+/* Filter tabs */
+const tabs = document.querySelectorAll('.filter-tab');
+const items = document.querySelectorAll('.gallery-item');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const filter = tab.dataset.filter;
+    items.forEach(item => {
+      if (filter === 'all' || item.dataset.category === filter) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+/* Lightbox */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+let currentIndex = -1;
+const galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
+
+function openLightbox(index){
+  currentIndex = index;
+  lightboxImg.src = galleryItems[index].src;
+  lightboxImg.alt = galleryItems[index].alt;
+  lightbox.classList.add('active');
+  lightbox.setAttribute('aria-hidden','false');
+}
+function closeLightbox(){
+  lightbox.classList.remove('active');
+  lightbox.setAttribute('aria-hidden','true');
+}
+function showPrev(){
+  if(currentIndex>0){
+    openLightbox(currentIndex-1);
+  }
+}
+function showNext(){
+  if(currentIndex<galleryItems.length-1){
+    openLightbox(currentIndex+1);
+  }
+}
+galleryItems.forEach((img,i)=>{
+  img.classList.add('lightbox-trigger');
+  img.addEventListener('click',()=>openLightbox(i));
+});
+lightbox.querySelector('.close').addEventListener('click',closeLightbox);
+lightbox.querySelector('.prev').addEventListener('click',showPrev);
+lightbox.querySelector('.next').addEventListener('click',showNext);
+lightbox.addEventListener('click', e=>{ if(e.target===lightbox) closeLightbox(); });
+document.addEventListener('keydown', e=>{
+  if(!lightbox.classList.contains('active')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowLeft') showPrev();
+  if(e.key==='ArrowRight') showNext();
+});
+
+/* CTA reservation button */
+document.getElementById('cta-reserve').addEventListener('click', ()=>{
+  window.location.href = 'reservations.html';
+});
+</script>
+</body>
+</html>
