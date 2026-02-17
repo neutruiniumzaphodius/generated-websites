@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us – FutureTech Inc.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --color-primary:#A3CFFB;
+        --color-secondary:#D4AF37;
+        --color-accent:#A0522D;
+        --color-accent2:#2E8B57;
+        --color-bg:#F7F7F5;
+        --color-text:#212529;
+        --max-width:1440px;
+        --gap:24px;
+        --radius:48px;
+        --transition:0.25s ease-out;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+        font-family:'Montserrat',sans-serif;
+        color:var(--color-text);
+        background:var(--color-bg);
+        line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;cursor:pointer;}
+    h1,h2,h3{font-family:'Playfair Display',serif;margin:0;}
+    h1{font-size:clamp(42px,8vw,64px);font-weight:700;letter-spacing:.2px;line-height:1.2;}
+    h2{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:.2px;}
+    h3{font-size:clamp(24px,5vw,32px);font-weight:700;}
+    p{max-width:720px;margin:0 auto;}
+    .container{padding:0 var(--gap);max-width:var(--max-width);margin:auto;}
+    .skip-link{
+        position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 16px;z-index:100;transition:top .3s;
+    }
+    .skip-link:focus{top:0;}
+    header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);z-index:10;}
+    nav{display:flex;justify-content:center;gap:var(--gap);padding:12px 0;align-items:center;}
+    .nav-link{font-weight:500;padding:8px 12px;border-radius:4px;position:relative;}
+    .nav-link.active{color:var(--color-secondary);}
+    .nav-link::after{
+        content:"";
+        position:absolute;
+        left:0;bottom:0;height:2px;width:100%;
+        background:var(--color-secondary);
+        transform:scaleX(0);
+        transition:transform .3s var(--transition);
+    }
+    .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+    /* Hamburger */
+    .hamburger{display:none;cursor:pointer;flex-direction:column;gap:5px;}
+    .hamburger span{display:block;width:24px;height:3px;background:#333;}
+    @media(max-width:767px){
+        nav{justify-content:space-between;}
+        .nav-links{display:none;flex-direction:column;background:rgba(255,255,255,.95);position:absolute;top:64px;left:0;width:100%;padding:12px 0;}
+        .nav-links.show{display:flex;}
+    }
+    /* Sections */
+    section{padding:48px 0;}
+    .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+    .visible{opacity:1;transform:none;}
+    .form-group{margin-bottom:var(--gap);}
+    input, textarea{
+        width:100%;padding:12px 16px;border:2px solid var(--color-accent2);
+        border-radius:12px;font-family:inherit;font-size:1rem;
+        transition:border-color var(--transition),box-shadow var(--transition);
+    }
+    input:focus, textarea:focus{
+        outline:none;border-color:var(--color-secondary);
+        box-shadow:0 0 0 3px rgba(212,175,55,.4);
+    }
+    .error{border-color:#c00;}
+    .valid{border-color:#0c0;}
+    .error-msg{color:#c00;font-size:.875rem;margin-top:4px;display:none;}
+    .valid-icon{color:#0c0;margin-left:8px;display:none;}
+    .btn{
+        display:inline-flex;align-items:center;justify-content:center;
+        background:var(--color-secondary);color:#fff;border:none;border-radius:var(--radius);
+        height:48px;padding:0 24px;font-weight:500;cursor:pointer;
+        box-shadow:0 4px 8px rgba(0,0,0,.1);transition:background var(--transition),transform .2s;
+    }
+    .btn:hover{background:#B8902D;transform:scale(1.02);}
+    #cta{background:var(--color-accent2);color:#fff;text-align:center;}
+    #cta h2{margin-bottom:24px;}
+    #cta .btn{background:var(--color-secondary);}
+    #cta .btn:hover{background:#B8902D;}
+    footer{background:#222;padding:24px;color:#bbb;text-align:center;font-size:14px;}
+    @media(min-width:640px){.container{padding:0 48px;}}
+    @media(min-width:768px){.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);align-items:start;}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+    <nav class="container">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="team.html" class="nav-link">Our Team</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="contact.html" class="nav-link active">Contact Us</a>
+        <div class="hamburger" aria-label="Menu" aria-controls="nav-menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+</header>
+
+<main id="main">
+    <section id="contact-form" class="container fade-up">
+        <h2>Get in Touch</h2>
+        <form id="leadForm" novalidate>
+            <div class="grid-2">
+                <div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required aria-required="true">
+                        <span class="valid-icon">✔️</span>
+                        <div class="error-msg">Please enter your name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required aria-required="true">
+                        <span class="valid-icon">✔️</span>
+                        <div class="error-msg">Enter a valid email.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" required aria-required="true">
+                        <span class="valid-icon">✔️</span>
+                        <div class="error-msg">Enter a valid phone number.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+                        <span class="valid-icon">✔️</span>
+                        <div class="error-msg">Please write a message.</div>
+                    </div>
+                    <p style="font-size:.875rem;color:#555;margin-top:12px;">
+                        We respect your privacy. Your data is protected under GDPR & CCPA.
+                    </p>
+                    <button type="submit" class="btn" id="depositBtn">[VERBATIM]Submit Deposit[/VERBATIM]</button>
+                </div>
+                <div style="margin-top:var(--gap);">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.086761587618!2d-122.41941528468186!3d37.77492977975981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c5e5c9b57%3A0x5b6a1e2c2c9e3d2f!2sFutureTech%20Inc.!5e0!3m2!1sen!2sus!4v1690000000000"
+                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <div style="background:var(--color-secondary);color:#fff;padding:12px;margin-top:8px;border-radius:8px;text-align:center;">
+                        <strong>FutureTech Inc.</strong><br>
+                        123 Design Avenue, Suite 400<br>
+                        San Francisco, CA 94103
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section id="payment-integration" class="container fade-up">
+        <h2>Secure Deposit Payment</h2>
+        <div id="card-element" style="margin-top:var(--gap);"></div>
+        <div id="card-errors" role="alert" style="color:#c00;margin-top:8px;"></div>
+    </section>
+
+    <section id="project-portal-login" class="container fade-up">
+        <h2>Project Portal Login</h2>
+        <form id="portalForm" novalidate style="margin-top:var(--gap);">
+            <div class="form-group">
+                <label for="portal-email">Email</label>
+                <input type="email" id="portal-email" name="portal-email" required>
+                <div class="error-msg">Enter a valid email.</div>
+            </div>
+            <div class="form-group">
+                <label for="portal-pass">Password</label>
+                <input type="password" id="portal-pass" name="portal-pass" required>
+                <div class="error-msg">Password required.</div>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </section>
+
+    <section id="cta" class="fade-up">
+        <div class="container">
+            <h2>Ready to begin? Let’s create something extraordinary.</h2>
+            <a href="#contact-form" class="btn">[VERBATIM]Request a Deposit & Begin Your Project[/VERBATIM]</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        © 2024 FutureTech Inc. All rights reserved.
+    </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.259.0/dist/lucide.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links') || document.querySelector('nav');
+    hamburger && hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', !expanded);
+    });
+
+    // IntersectionObserver for fade-up
+    const faders = document.querySelectorAll('.fade-up');
+    const appearOptions = {threshold:0.2,rootMargin:"0px 0px -50px 0px"};
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll){
+        entries.forEach(entry => {
+            if(!entry.isIntersecting){return;}
+            entry.target.classList.add('visible');
+            appearOnScroll.unobserve(entry.target);
+        });
+    }, appearOptions);
+    faders.forEach(fader => {
+        fader.classList.add('fade-up');
+        appearOnScroll.observe(fader);
+    });
+
+    // Simple form validation
+    const form = document.getElementById('leadForm');
+    const inputs = form.querySelectorAll('input, textarea');
+    const validateField = (field) => {
+        const value = field.value.trim();
+        const error = field.parentElement.querySelector('.error-msg');
+        if(field.type === 'email'){
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailPattern.test(value)){
+                field.classList.add('error');
+                field.classList.remove('valid');
+                error.style.display = 'block';
+                return false;
+            }
+        } else if(field.type === 'tel'){
+            if(value.length < 7){
+                field.classList.add('error');
+                field.classList.remove('valid');
+                error.style.display = 'block';
+                return false;
+            }
+        } else {
+            if(value === ''){
+                field.classList.add('error');
+                field.classList.remove('valid');
+                error.style.display = 'block';
+                return false;
+            }
+        }
+        field.classList.remove('error');
+        field.classList.add('valid');
+        error.style.display = 'none';
+        return true;
+    };
+    inputs.forEach(input => {
+        input.addEventListener('input', () => validateField(input));
+    });
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let allValid = true;
+        inputs.forEach(input => {
+            if(!validateField(input)) allValid = false;
+        });
+        if(!allValid){
+            form.style.animation = 'shake 0.35s';
+            setTimeout(()=>form.style.animation='none',350);
+            return;
+        }
+        // Stripe token creation (test mode)
+        const stripe = Stripe('pk_test_51Hxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+        const elements = stripe.elements();
+        const card = elements.create('card', {
+            style: {
+                base: {
+                    color: '#212529',
+                    fontFamily: 'Montserrat, sans-serif',
+                    '::placeholder': {color: '#666'},
+                },
+                invalid: {color: '#c00'}
+            }
+        });
+        card.mount('#card-element');
+        const {token, error} = await stripe.createToken(card);
+        if(error){
+            document.getElementById('card-errors').textContent = error.message;
+            return;
+        }
+        // Simulated POST
+        fetch('/api/deposit', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                message: document.getElementById('message').value,
+                token: token.id
+            })
+        }).then(r=>r.json()).then(data=>alert('Deposit submitted!')).catch(()=>alert('Error submitting deposit.'));
+    });
+
+    // Simple portal login placeholder validation
+    const portalForm = document.getElementById('portalForm');
+    portalForm && portalForm.addEventListener('submit', e=>{
+        e.preventDefault();
+        const email = portalForm.querySelector('#portal-email');
+        const pass = portalForm.querySelector('#portal-pass');
+        if(email.value && pass.value){
+            alert('Logged in – portal widget would load here.');
+        }else{
+            alert('Please fill both fields.');
+        }
+    });
+});
+@keyframes shake{
+    0%{transform:translateX(0);}
+    25%{transform:translateX(-5px);}
+    50%{transform:translateX(5px);}
+    75%{transform:translateX(-5px);}
+    100%{transform:translateX(0);}
+}
+form{animation: none;}
+form.shake{animation: shake .35s;}
+</script>
+<script>
+    // Activate navigation active state based on URL
+    const current = location.pathname.split("/").pop();
+    document.querySelectorAll('.nav-link').forEach(link=>{
+        if(link.getAttribute('href')===current) link.classList.add('active');
+    });
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    // Replace icons if any
+    lucide.createIcons();
+</script>
+</body>
+</html>
