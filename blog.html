@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog – Luxury Real Estate Insights | LUXE Estates</title>
+  <meta name="description" content="Insights & Inspiration from the World of Luxury Real Estate – market updates, design trends and success stories.">
+  <style>
+:root{
+  --color-primary:#D4AF37;/* Soft Gold */
+  --color-secondary:#F5F5DC;/* Beige */
+  --color-accent:#333333;/* Black */
+  --color-bg:#FFFFFF;/* White */
+  --color-cta:#006677;/* Deep Teal */
+  --color-gray:#777777;
+  --color-lightgray:#CCCCCC;
+  --transition-ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-accent);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  margin-bottom:1rem;
+}
+h1{font-size:clamp(36px,8vw,72px);line-height:1.2;letter-spacing:-0.5px;}
+h2{font-size:clamp(28px,6vw,48px);line-height:1.3;letter-spacing:-0.3px;}
+h3{font-size:clamp(24px,5vw,32px);line-height:1.4;}
+p{margin-bottom:1rem;font-size:clamp(14px,2.2vw,18px);}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+/* Skip Link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:fixed;top:0;left:0;width:100%;height:80px;background:transparent;display:flex;align-items:center;justify-content:center;z-index:1000;transition:background .3s var(--transition-ease);}
+header.scrolled{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+nav{display:flex;gap:24px;align-items:center;}
+nav a{font-weight:600;color:var(--color-accent);position:relative;padding:8px 0;}
+nav a.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--color-primary);}
+nav a:hover{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:5px;width:30px;height:24px;justify-content:center;cursor:pointer;background:none;}
+.hamburger span{display:block;height:3px;background:var(--color-accent);transition:.3s;}
+/* Mobile Nav */
+@media (max-width:768px){
+  .hamburger{display:flex;}
+  nav{position:fixed;top:0;right:-100%;height:100vh;width:260px;background:#fff;flex-direction:column;padding:80px 24px;gap:24px;transition:right .3s var(--transition-ease);box-shadow:-2px 0 8px rgba(0,0,0,0.1);}
+  nav.open{right:0;}
+  nav a{font-size:1.2rem;}
+}
+/* Hero */
+.hero{position:relative;height:60vh;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),linear-gradient(rgba(212,175,55,0.15),rgba(212,175,55,0.15));z-index:0;}
+.hero-content{text-align:center;max-width:800px;padding:0 24px;z-index:1;opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.hero.visible .hero-content{opacity:1;transform:none;}
+/* Buttons */
+.btn-primary{
+  background:var(--color-cta);
+  color:#fff;
+  padding:12px 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:transform .25s ease-out,box-shadow .25s ease-out;
+}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+.btn-primary:focus{outline:2px solid var(--color-primary);}
+.btn-outline{
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 16px;
+  border-radius:4px;
+  font-weight:600;
+  background:transparent;
+  transition:background .25s ease-out,color .25s ease-out;
+}
+.btn-outline:hover{background:var(--color-primary);color:#fff;}
+/* Category Filters */
+.category-filters{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:32px 0;}
+.category-filters button{
+  border:1px solid var(--color-primary);
+  background:transparent;
+  color:var(--color-accent);
+  padding:8px 16px;
+  border-radius:20px;
+  font-weight:500;
+  transition:background .25s var(--transition-ease),color .25s var(--transition-ease);
+}
+.category-filters button.active{
+  background:var(--color-cta);
+  color:#fff;
+}
+.category-filters button:hover{background:var(--color-primary);color:#fff;}
+/* Article Cards */
+.articles{padding:48px 0;}
+.articles-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:24px;
+}
+.article-card{
+  background:rgba(255,255,255,0.8);
+  border-radius:8px;
+  overflow:hidden;
+  backdrop-filter:blur(6px);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);
+}
+.article-card.visible{opacity:1;transform:none;}
+.article-card img{width:100%;height:200px;object-fit:cover;}
+.article-content{padding:16px;}
+.article-content h3{margin-bottom:.5rem;}
+.article-content p{margin-bottom:.75rem;}
+.read-more{color:var(--color-cta);font-weight:600;}
+.read-more:hover{text-decoration:underline;}
+/* Author Bio */
+.author-bio{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:12px;
+  border-top:1px solid var(--color-lightgray);
+  padding-top:12px;
+}
+.author-bio img{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:2px solid var(--color-primary);
+}
+.author-bio .info{font-size:0.9rem;}
+.author-bio .info span{display:block;}
+.author-bio .social a{margin-right:8px;color:var(--color-gray);}
+.author-bio .social a:hover{color:var(--color-cta);}
+ /* Footer */
+footer{background:var(--color-secondary);padding:48px 0;color:var(--color-accent);}
+footer .footer-container{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;}
+footer .logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--color-primary);}
+footer .social a{margin-right:12px;color:var(--color-accent);font-size:1.5rem;transition:.3s;}
+footer .social a:hover{color:var(--color-primary);}
+@media (max-width:768px){
+  .brand-intro{grid-template-columns:1fr;padding:48px 0;}
+  .hero{height:50vh;}
+}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <header id="site-header">
+    <nav class="container">
+      <div class="logo monogram">LUXE</div>
+      <div class="hamburger" aria-label="Open menu" aria-controls="primary-navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+      <nav id="primary-navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="listings.html">Listings</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="testimonials.html">Testimonials</a>
+      </nav>
+    </nav>
+  </header>
+
+  <main id="main-content" class="container" style="margin-top:100px;">
+    <!-- Blog Header Hero -->
+    <section class="hero blog-header fade-in">
+      <img src="https://picsum.photos/seed/bloghero/1600/900" alt="Designer lounge" style="position:absolute; inset:0; object-fit:cover; z-index:-1;">
+      <div class="hero-content">
+        <h1>Insights &amp; Inspiration from the World of Luxury Real Estate</h1>
+        <p>Stay ahead with market analysis, design foresight, and success stories that define the high‑end property landscape.</p>
+      </div>
+    </section>
+
+    <!-- Category Filters -->
+    <section class="category-filters fade-in mt-4">
+      <button class="active" data-category="all">All</button>
+      <button data-category="market">Market Updates</button>
+      <button data-category="design">Design Trends</button>
+      <button data-category="success">Success Stories</button>
+      <button data-category="tips">Investment Tips</button>
+    </section>
+
+    <!-- Article Cards -->
+    <section class="articles fade-in mt-4">
+      <div class="articles-grid">
+        <!-- Article 1 -->
+        <article class="article-card fade-in" data-category="design">
+          <img src="https://picsum.photos/seed/article1/600/400" alt="Luxury villa interior with biophilic design" loading="lazy">
+          <div class="article-content">
+            <h3>Design Trends Shaping Luxury Villas in 2026</h3>
+            <p>From biophilic interiors to AI‑driven home automation, discover the elements redefining high‑end living.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author1/100" alt="Portrait of Elena Rossi">
+              <div class="info">
+                <strong>Elena Rossi</strong>
+                <span>Senior Design Editor, LUXE Estates</span>
+                <p>Architectural journalist with a focus on sustainable luxury spaces.</p>
+                <div class="social">
+                  <a href="#" aria-label="Elena on LinkedIn"><svg width="16" height="16"><use xlink:href="#linkedin"/></svg></a>
+                  <a href="#" aria-label="Elena on Instagram"><svg width="16" height="16"><use xlink:href="#instagram"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Article 2 -->
+        <article class="article-card fade-in" data-category="market">
+          <img src="https://picsum.photos/seed/article2/600/400" alt="Skyline view of Manhattan luxury condos" loading="lazy">
+          <div class="article-content">
+            <h3>Q2 2026 Market Update: Luxury Condos Reach New Peaks</h3>
+            <p>Analyzing the surge in demand for high‑rise penthouses and the factors driving price appreciation.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author2/100" alt="Portrait of Daniel Kim">
+              <div class="info">
+                <strong>Daniel Kim</strong>
+                <span>Market Analyst, LUXE Estates</span>
+                <p>Specialist in global luxury real‑estate trends and investment strategies.</p>
+                <div class="social">
+                  <a href="#" aria-label="Daniel on LinkedIn"><svg width="16" height="16"><use xlink:href="#linkedin"/></svg></a>
+                  <a href="#" aria-label="Daniel on Twitter"><svg width="16" height="16"><use xlink:href="#twitter"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Article 3 -->
+        <article class="article-card fade-in" data-category="success">
+          <img src="https://picsum.photos/seed/article3/600/400" alt="Elegant living room of a sold villa" loading="lazy">
+          <div class="article-content">
+            <h3>Success Story: Turning a Historic Manhattan Loft into a Multi‑Million Dollar Deal</h3>
+            <p>How a blend of virtual tours, targeted marketing, and concierge service sealed the deal in record time.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author3/100" alt="Portrait of Maya Patel">
+              <div class="info">
+                <strong>Maya Patel</strong>
+                <span>Senior Concierge, LUXE Estates</span>
+                <p>Expert in coordinating seamless transactions for high‑net‑worth clients.</p>
+                <div class="social">
+                  <a href="#" aria-label="Maya on Instagram"><svg width="16" height="16"><use xlink:href="#instagram"/></svg></a>
+                  <a href="#" aria-label="Maya on LinkedIn"><svg width="16" height="16"><use xlink:href="#linkedin"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Article 4 -->
+        <article class="article-card fade-in" data-category="tips">
+          <img src="https://picsum.photos/seed/article4/600/400" alt="Investor reviewing property data on tablet" loading="lazy">
+          <div class="article-content">
+            <h3>Investment Tips: Diversifying Your Portfolio with Luxury Real Estate</h3>
+            <p>Key considerations for investors looking to balance risk and reward in the premium property market.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author4/100" alt="Portrait of Carlos Mendes">
+              <div class="info">
+                <strong>Carlos Mendes</strong>
+                <span>Investment Advisor, LUXE Estates</span>
+                <p>Guiding clients through strategic acquisitions and portfolio optimization.</p>
+                <div class="social">
+                  <a href="#" aria-label="Carlos on LinkedIn"><svg width="16" height="16"><use xlink:href="#linkedin"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Article 4 -->
+        <article class="article-card fade-in" data-category="design">
+          <img src="https://picsum.photos/seed/article4/600/400" alt="Outdoor infinity pool overlooking the sea" loading="lazy">
+          <div class="article-content">
+            <h3>Outdoor Luxury: Integrating Infinity Pools with Natural Landscapes</h3>
+            <p>Exploring how designers are merging architecture with nature to create breathtaking private retreats.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author4/100" alt="Portrait of Luca Bianchi">
+              <div class="info">
+                <strong>Luca Bianchi</strong>
+                <span>Design Correspondent, LUXE Estates</span>
+                <p>Passionate about the intersection of luxury, technology, and sustainability.</p>
+                <div class="social">
+                  <a href="#" aria-label="Luca on Instagram"><svg width="16" height="16"><use xlink:href="#instagram"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Article 5 -->
+        <article class="article-card fade-in" data-category="market">
+          <img src="https://picsum.photos/seed/article5/600/400" alt="Luxury beachfront property with sunrise view" loading="lazy">
+          <div class="article-content">
+            <h3>Coastal Luxury: Emerging Beachfront Markets in the Mediterranean</h3>
+            <p>Spotlight on new hotspots where investors are channeling capital into exclusive seaside estates.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author5/100" alt="Portrait of Sofia Alvarez">
+              <div class="info">
+                <strong>Sofia Alvarez</strong>
+                <span>Regional Manager, LUXE Estates</span>
+                <p>Specializes in Mediterranean luxury properties and market expansion.</p>
+                <div class="social">
+                  <a href="#" aria-label="Sofia on LinkedIn"><svg width="16" height="16"><use xlink:href="#linkedin"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Article 6 -->
+        <article class="article-card fade-in" data-category="tips">
+          <img src="https://picsum.photos/seed/article6/600/400" alt="Modern kitchen with smart appliances" loading="lazy">
+          <div class="article-content">
+            <h3>Smart Homes: How Technology is Elevating Luxury Living</h3>
+            <p>Assessing the impact of AI, IoT, and advanced security systems on buyer expectations.</p>
+            <a href="#" class="read-more">Read More →</a>
+            <div class="author-bio">
+              <img src="https://picsum.photos/seed/author6/100" alt="Portrait of Rajesh Singh">
+              <div class="info">
+                <strong>Rajesh Singh</strong>
+                <span>Technology Analyst, LUXE Estates</span>
+                <p>Explores the role of cutting‑edge tech in shaping premium property experiences.</p>
+                <div class="social">
+                  <a href="#" aria-label="Rajesh on Twitter"><svg width="16" height="16"><use xlink:href="#twitter"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Read More CTA -->
+    <section class="fade-in mt-4">
+      <div class="hero-content" style="text-align:center;">
+        <button class="btn-primary">[VERBATIM]cta_explore_properties: Explore Properties[/VERBATIM]</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-container">
+      <div class="logo">LUXE Estates</div>
+      <div class="social">
+        <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('site-header');
+    const heroSection = document.querySelector('.hero');
+    const heroObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          heroSection.classList.add('visible');
+        }
+      });
+    }, {threshold: 0.3});
+    heroObserver.observe(heroSection);
+
+    // Hamburger menu
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.getElementById('primary-navigation');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('open');
+    });
+
+    // Fade-in on scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.2});
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Category filter
+    const filterButtons = document.querySelectorAll('.category-filters button');
+    const articles = document.querySelectorAll('.article-card');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.getAttribute('data-category');
+        articles.forEach(article => {
+          if(cat === 'all' || article.dataset.category === cat) {
+            article.style.display = '';
+          } else {
+            article.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

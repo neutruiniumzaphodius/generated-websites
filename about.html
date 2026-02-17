@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us | LUXE Estates</title>
+<meta name="description" content="Learn the story of LUXE Estates, our mission, boutique team, and values that set us apart in luxury real estate.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@0.259.0/dist/lucide.min.css">
+<style>
+:root{
+  --color-primary:#D4AF37;/* Soft Gold */
+  --color-secondary:#F5F5DC;/* Beige */
+  --color-accent:#333333;/* Black */
+  --color-bg:#FFFFFF;/* White */
+  --color-cta:#006677;/* Deep Teal */
+  --color-gray:#777777;
+  --color-lightgray:#CCCCCC;
+  --transition-ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-accent);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  margin-bottom:1rem;
+}
+h1{font-size:clamp(36px,8vw,72px);line-height:1.2;letter-spacing:-0.5px;}
+h2{font-size:clamp(28px,6vw,48px);line-height:1.3;letter-spacing:-0.3px;}
+h3{font-size:clamp(24px,5vw,32px);line-height:1.4;}
+p{margin-bottom:1rem;font-size:clamp(14px,2.2vw,18px);}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+/* Skip Link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:fixed;top:0;left:0;width:100%;height:80px;background:transparent;display:flex;align-items:center;justify-content:center;z-index:1000;transition:background .3s var(--transition-ease);}
+header.scrolled{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+nav{display:flex;gap:24px;align-items:center;}
+nav a{font-weight:600;color:var(--color-accent);position:relative;padding:8px 0;}
+nav a.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--color-primary);}
+nav a:hover{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:5px;width:30px;height:24px;justify-content:center;cursor:pointer;background:none;}
+.hamburger span{display:block;height:3px;background:var(--color-accent);transition:.3s;}
+/* Mobile Nav */
+@media (max-width:768px){
+  .hamburger{display:flex;}
+  nav{position:fixed;top:0;right:-100%;height:100vh;width:260px;background:#fff;flex-direction:column;padding:80px 24px;gap:24px;transition:right .3s var(--transition-ease);box-shadow:-2px 0 8px rgba(0,0,0,0.1);}
+  nav.open{right:0;}
+  nav a{font-size:1.2rem;}
+}
+/* Timeline */
+.timeline{
+  position:relative;
+  padding:96px 0;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  width:4px;
+  height:100%;
+  background:var(--color-primary);
+  transform:translateX(-50%);
+}
+.timeline-item{
+  position:relative;
+  width:45%;
+  padding:24px;
+  background:rgba(255,255,255,0.8);
+  border-radius:8px;
+  backdrop-filter:blur(6px);
+  margin-bottom:48px;
+}
+.timeline-item.left{
+  left:0;
+}
+.timeline-item.right{
+  left:55%;
+}
+.timeline-item::after{
+  content:'';
+  position:absolute;
+  top:24px;
+  width:0;
+  height:0;
+  border:8px solid transparent;
+}
+.timeline-item.left::after{
+  right:-16px;
+  border-left-color:rgba(255,255,255,0.8);
+}
+.timeline-item.right::after{
+  left:-16px;
+  border-right-color:rgba(255,255,255,0.8);
+}
+@media (max-width:768px){
+  .timeline::before{left:8px;}
+  .timeline-item{
+    width:100%;
+    left:0 !important;
+    margin-left:24px;
+  }
+  .timeline-item::after{
+    left:-16px;
+    border-right-color:rgba(255,255,255,0.8);
+  }
+}
+/* Mission */
+.mission{
+  text-align:center;
+  padding:96px 0;
+}
+.mission h2{
+  max-width:800px;
+  margin:auto;
+}
+.mission p{
+  max-width:800px;
+  margin:auto;
+  margin-top:1rem;
+}
+/* Team */
+.team-section{
+  padding:96px 0;
+}
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:24px;
+}
+.team-card{
+  background:rgba(255,255,255,0.8);
+  border-radius:8px;
+  overflow:hidden;
+  backdrop-filter:blur(6px);
+  text-align:center;
+  padding:24px;
+}
+.team-card img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:auto;
+  margin-bottom:1rem;
+  border:4px solid var(--color-primary);
+}
+.team-card h3{
+  margin-bottom:0.5rem;
+}
+.team-card p{
+  margin-bottom:0.5rem;
+}
+.team-card .role{
+  font-weight:600;
+  color:var(--color-primary);
+}
+/* Values */
+.values{
+  background:var(--color-secondary);
+  padding:80px 0;
+}
+.values-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
+  text-align:center;
+}
+.values-grid svg{
+  width:48px;
+  height:48px;
+  color:var(--color-primary);
+  margin-bottom:12px;
+}
+.values-grid p{
+  font-weight:500;
+}
+/* Footer */
+footer{
+  background:#f8f8f8;
+  padding:48px 0;
+  text-align:center;
+  font-size:0.9rem;
+}
+footer .social{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin-top:1rem;
+}
+footer .social a{
+  color:var(--color-primary);
+  transition:color .3s;
+}
+footer .social a:hover{
+  color:var(--color-cta);
+}
+/* Fade-in Helper */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.visible .fade-in{opacity:1;transform:none;}
+.mt-4{margin-top:2rem;}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header id="page-header">
+  <div class="container">
+    <div class="logo"><span class="monogram">LUXE</span></div>
+    <button class="hamburger" aria-label="Open navigation menu" aria-controls="primary-navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="primary-navigation" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="listings.html">Listings</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+      <a href="blog.html">Blog</a>
+      <a href="testimonials.html">Testimonials</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+
+  <!-- History Timeline -->
+  <section class="timeline fade-in" id="history_timeline">
+    <h2>Our Story</h2>
+    <div class="timeline-item left fade-in">
+      <h3>2005 – Founded</h3>
+      <p>Founded by visionary real‑estate entrepreneur Jane Doe, LUXE Estates began as a boutique firm dedicated to curating exclusive properties for discerning clients.</p>
+    </div>
+    <div class="timeline-item right fade-in">
+      <h3>2010 – Global Expansion</h3>
+      <p>Opened our first international office in London, establishing a foothold in the European luxury market.</p>
+    </div>
+    <div class="timeline-item left fade-in">
+      <h3>2015 – Technology Integration</h3>
+      <p>Introduced immersive 360° virtual tours, setting a new standard for property marketing.</p>
+    </div>
+    <div class="timeline-item right fade-in">
+      <h3>2020 – Pandemic Resilience</h3>
+      <p>Shifted focus to digital experiences, enabling seamless transactions worldwide.</p>
+    </div>
+    <div class="timeline-item left fade-in">
+      <h3>2023 – Market Leader</h3>
+      <p>Recognized as a top luxury real‑estate boutique, managing over $3 billion in sales annually.</p>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission fade-in mt-4" id="mission_statement">
+    <h2>Our Mission</h2>
+    <p>At LUXE Estates, we aim to redefine luxury real‑estate experiences by delivering personalized, concierge‑level service that blends cutting‑edge technology with timeless elegance.</p>
+  </section>
+
+  <!-- Team Profiles -->
+  <section class="team-section fade-in mt-4" id="team_profiles">
+    <h2>Meet the Team</h2>
+    <div class="team-grid">
+      <div class="team-card fade-in">
+        <img src="https://picsum.photos/seed/jane/200/200" alt="Jane Doe">
+        <h3>Jane Doe</h3>
+        <p class="role">Founder & CEO</p>
+        <p>Over 20 years of experience curating exclusive portfolios for high‑net‑worth individuals.</p>
+      </div>
+      <div class="team-card fade-in">
+        <img src="https://picsum.photos/seed/john/200/200" alt="John Smith">
+        <h3>John Smith</h3>
+        <p class="role">Chief Investment Officer</p>
+        <p>Specialist in luxury asset valuation and strategic acquisition planning.</p>
+      </div>
+      <div class="team-card fade-in">
+        <img src="https://picsum.photos/seed/emma/200/200" alt="Emma Liu">
+        <h3>Emma Liu</h3>
+        <p class="role">Head of Concierge Services</p>
+        <p>Ensures seamless, white‑glove experiences from viewings to closing.</p>
+      </div>
+      <div class="team-card fade-in">
+        <img src="https://picsum.photos/seed/marc/200/200" alt="Marc Alvarez">
+        <h3>Marc Alvarez</h3>
+        <p class="role">Creative Director</p>
+        <p>Leads award‑winning photography and design storytelling for every listing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Icons -->
+  <section class="values mt-4 fade-in" id="values_icons">
+    <h2>Our Core Values</h2>
+    <div class="values-grid">
+      <div class="diff-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z" stroke="currentColor" stroke-width="2"/></svg>
+        <p>Excellence</p>
+      </div>
+      <div class="diff-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M5 12h14" stroke="currentColor" stroke-width="2"/><path d="M12 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+        <p>Integrity</p>
+      </div>
+      <div class="diff-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2"/></svg>
+        <p>Innovation</p>
+      </div>
+      <div class="diff-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2"/></svg>
+        <p>Discretion</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 LUXE Estates. All rights reserved.</p>
+    <div class="social">
+      <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js"></script>
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Mobile navigation toggle
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('nav');
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('open');
+    const expanded = nav.classList.contains('open');
+    hamburger.setAttribute('aria-expanded', expanded);
+  });
+
+  // Header scroll effect
+  const header = document.querySelector('header');
+  const heroHeight = 0; // No hero on about page
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // IntersectionObserver for fade‑in
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll){
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        return;
+      } else {
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+</script>
+</body>
+</html>

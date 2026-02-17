@@ -1,75 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>LUXE Estates – Where Luxury Finds Its Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#D4AF37;/* Soft Gold */
+  --color-secondary:#F5F5DC;/* Beige */
+  --color-accent:#333333;/* Black */
+  --color-bg:#FFFFFF;/* White */
+  --color-cta:#006677;/* Deep Teal */
+  --color-gray:#777777;
+  --color-lightgray:#CCCCCC;
+  --transition-ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-accent);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  margin-bottom:1rem;
+}
+h1{font-size:clamp(36px,8vw,72px);line-height:1.2;letter-spacing:-0.5px;}
+h2{font-size:clamp(28px,6vw,48px);line-height:1.3;letter-spacing:-0.3px;}
+h3{font-size:clamp(24px,5vw,32px);line-height:1.4;}
+p{margin-bottom:1rem;font-size:clamp(14px,2.2vw,18px);}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+/* Skip Link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:fixed;top:0;left:0;width:100%;height:80px;background:transparent;display:flex;align-items:center;justify-content:center;z-index:1000;transition:background .3s var(--transition-ease);}
+header.scrolled{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+nav{display:flex;gap:24px;align-items:center;}
+nav a{font-weight:600;color:var(--color-accent);position:relative;padding:8px 0;}
+nav a.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--color-primary);}
+nav a:hover{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:5px;width:30px;height:24px;justify-content:center;cursor:pointer;background:none;}
+.hamburger span{display:block;height:3px;background:var(--color-accent);transition:.3s;}
+/* Mobile Nav */
+@media (max-width:768px){
+  .hamburger{display:flex;}
+  nav{position:fixed;top:0;right:-100%;height:100vh;width:260px;background:#fff;flex-direction:column;padding:80px 24px;gap:24px;transition:right .3s var(--transition-ease);box-shadow:-2px 0 8px rgba(0,0,0,0.1);}
+  nav.open{right:0;}
+  nav a{font-size:1.2rem;}
+}
+/* Hero */
+.hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;}
+.hero video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),linear-gradient(rgba(212,175,55,0.15),rgba(212,175,55,0.15));z-index:0;}
+.hero-content{text-align:center;max-width:800px;padding:0 24px;z-index:1;opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.hero.visible .hero-content{opacity:1;transform:none;}
+.btn-primary{
+  background:var(--color-cta);
+  color:#fff;
+  padding:12px 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:transform .25s ease-out,box-shadow .25s ease-out;
+}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+.btn-primary:focus{outline:2px solid var(--color-primary);}
+.btn-outline{
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 16px;
+  border-radius:4px;
+  font-weight:600;
+  background:transparent;
+  transition:background .25s ease-out,color .25s ease-out;
+}
+.btn-outline:hover{background:var(--color-primary);color:#fff;}
+/* Brand Intro */
+.brand-intro{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:96px 0;opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.brand-intro.visible{opacity:1;transform:none;}
+.monogram{
+  font-size:4rem;
+  font-weight:700;
+  color:var(--color-primary);
+  font-family:'Playfair Display',serif;
+}
+@media (max-width:768px){
+  .brand-intro{grid-template-columns:1fr;padding:48px 0;}
+}
+/* Featured Properties */
+.features{padding:96px 0;}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:24px;
+}
+.feature-card{
+  background:rgba(255,255,255,0.8);
+  border-radius:8px;
+  overflow:hidden;
+  position:relative;
+  backdrop-filter:blur(6px);
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);
+}
+.feature-card.visible{opacity:1;transform:none;}
+.feature-card img{width:100%;height:200px;object-fit:cover;}
+.feature-info{padding:16px;}
+/* Key Differentiators */
+.diff-section{background:var(--color-secondary);padding:80px 0;}
+.diff-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
+  text-align:center;
+}
+.diff-item svg{width:48px;height:48px;color:var(--color-primary);margin-bottom:12px;}
+.diff-item p{font-weight:500;}
+/* Primary CTA */
+.primary-cta{
+  background:var(--color-cta);
+  color:#fff;
+  text-align:center;
+  padding:64px 24px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);
+}
+.primary-cta.visible{opacity:1;transform:none;}
+/* Fade-in Helper */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.visible .fade-in{opacity:1;transform:none;}
+/* Utilities */
+.mt-4{margin-top:2rem;}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<header id="site-header">
+  <div class="container">
+    <button class="hamburger" aria-label="Open navigation" aria-controls="primary-nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="primary-nav" aria-label="Primary navigation">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="listings.html">Listings</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="blog.html">Blog</a>
+      <a href="testimonials.html">Testimonials</a>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main-content">
+  <!-- Hero Section -->
+  <section class="hero" id="hero_video">
+    <video autoplay muted loop playsinline poster="https://picsum.photos/1920/1080.webp">
+      <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Where Luxury Finds Its Home</h1>
+      <p>Experience the pinnacle of high‑end living with curated listings, immersive tours, and an elite concierge service.</p>
+      <button class="btn-primary">hero_cta: Explore Luxury Properties.</button>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+  <!-- Brand Intro -->
+  <section class="brand-intro container mt-4 fade-in" id="brand_intro">
+    <div class="brand-intro-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+      <div>
+        <h2>Redefining Luxury Real Estate</h2>
+        <p>At LUXE Estates, we blend timeless elegance with cutting‑edge technology to present properties that inspire and sell.</p>
+        <button class="btn-outline">cta_schedule_viewing: Schedule a Viewing</button>
+      </div>
+      <div class="monogram" aria-hidden="true" style="font-size:6rem;line-height:1;color:var(--color-primary);text-align:center;">
+        LE
+      </div>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Featured Properties -->
+  <section class="featured_properties container mt-4 fade-in" id="featured_properties">
+    <h2>Featured Listings</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <img src="https://picsum.photos/600/400.webp?random=1" loading="lazy" alt="Luxury penthouse with city skyline view">
+        <div class="feature-info">
+          <h3>Manhattan Skyline Penthouse</h3>
+          <p>Spacious 5‑bedroom penthouse with private terrace and panoramic city views.</p>
+          <button class="btn-primary">cta_explore_properties: Explore Properties</button>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+      <div class="feature-card">
+        <img src="https://picsum.photos/600/400.webp?random=2" loading="lazy" alt="Modern beachfront villa overlooking ocean">
+        <div class="feature-info">
+          <h3>Malibu Oceanfront Villa</h3>
+          <p>Stunning 4‑bedroom villa with infinity pool and direct beach access.</p>
+          <button class="btn-primary">cta_explore_properties: Explore Properties</button>
+        </div>
+      </div>
+      <div class="feature-card">
+        <img src="https://picsum.photos/600/400.webp?random=3" loading="lazy" alt="Elegant countryside estate with extensive gardens">
+        <div class="feature-info">
+          <h3>Hudson Valley Estate</h3>
+          <p>Historic 10‑acre estate featuring classic architecture and landscaped gardens.</p>
+          <button class="btn-primary">cta_explore_properties: Explore Properties</button>
+        </div>
+      </div>
+      <div class="feature-card">
+        <img src="https://picsum.photos/600/400.webp?random=4" loading="lazy" alt="Luxury ski chalet nestled in alpine setting">
+        <div class="feature-info">
+          <h3>Aspen Alpine Chalet</h3>
+          <p>Cozy 3‑bedroom chalet with ski‑in/ski‑out access and panoramic mountain views.</p>
+          <button class="btn-primary">cta_explore_properties: Explore Properties</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Differentiators -->
+  <section class="key_differentiators container mt-4 fade-in" id="key_differences">
+    <h2>Why Choose LUXE Estates?</h2>
+    <div class="diff-grid">
+      <div class="diff-item">
+        <i data-lucide="globe"></i>
+        <p>Global Reach – Access to an international network of qualified buyers.</p>
+      </div>
+      <div class="diff-item">
+        <i data-lucide="settings"></i>
+        <p>Bespoke Service – Tailored market strategies and concierge assistance.</p>
+      </div>
+      <div class="diff-item">
+        <i data-lucide="eye"></i>
+        <p>Immersive Virtual Tours – State‑of‑the‑art 360° experiences.</p>
+      </div>
+      <div class="diff-item">
+        <i data-lucide="map-pin"></i>
+        <p>Strategic Insight – In‑depth market analysis for optimal positioning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primary CTA -->
+  <section class="primary_cta fade-in" id="primary_cta">
+    <div class="container" style="text-align:center;padding:64px 24px;background:var(--color-cta);color:#fff;">
+      <h2>Ready to Experience Excellence?</h2>
+      <button class="btn-primary mt-4">cta_explore_properties: Explore Properties</button>
+      <button class="btn-outline mt-4" style="margin-left:12px;">cta_contact_us: Contact Us</button>
+    </div>
+  </section>
+</main>
+
+<footer class="container mt-4" style="padding:48px 0;text-align:center;font-size:0.9rem;color:var(--color-gray);">
+  © 2024 LUXE Estates. All rights reserved.
+</footer>
+
+<script>
+/* Initialize Lucide Icons */
+lucide.createIcons();
+
+/* Sticky Nav */
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 100) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+/* Mobile Nav Toggle */
+const hamburger = document.querySelector('.hamburger');
+const nav = document.querySelector('nav');
+hamburger.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  nav.classList.toggle('open');
+});
+
+/* IntersectionObserver for Fade‑In */
+const observerOptions = {
+  threshold: 0.1
+};
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.hero, .brand-intro, .features-grid, .key_differences, .primary_cta').forEach(section => {
+  observer.observe(section);
+});
+</script>
 </body>
 </html>

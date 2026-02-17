@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Luxury Property Listings | LUXE Estates</title>
+<meta name="description" content="Explore all luxury properties with advanced filters and premium lead packages.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#D4AF37;/* Soft Gold */
+  --color-secondary:#F5F5DC;/* Beige */
+  --color-accent:#333333;/* Black */
+  --color-bg:#FFFFFF;/* White */
+  --color-cta:#006677;/* Deep Teal */
+  --color-gray:#777777;
+  --color-lightgray:#CCCCCC;
+  --transition-ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-accent);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  margin-bottom:1rem;
+}
+h1{font-size:clamp(36px,8vw,72px);line-height:1.2;letter-spacing:-0.5px;}
+h2{font-size:clamp(28px,6vw,48px);line-height:1.3;letter-spacing:-0.3px;}
+h3{font-size:clamp(24px,5vw,32px);line-height:1.4;}
+p{margin-bottom:1rem;font-size:clamp(14px,2.2vw,18px);}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+.container{max-width:1440px;margin:auto;padding:0 24px;}
+/* Skip Link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Header & Nav */
+header{position:fixed;top:0;left:0;width:100%;height:80px;background:transparent;display:flex;align-items:center;justify-content:center;z-index:1000;transition:background .3s var(--transition-ease);}
+header.scrolled{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+nav{display:flex;gap:24px;align-items:center;}
+nav a{font-weight:600;color:var(--color-accent);position:relative;padding:8px 0;}
+nav a.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--color-primary);}
+nav a:hover{color:var(--color-primary);}
+.hamburger{display:none;flex-direction:column;gap:5px;width:30px;height:24px;justify-content:center;cursor:pointer;background:none;}
+.hamburger span{display:block;height:3px;background:var(--color-accent);transition:.3s;}
+/* Mobile Nav */
+@media (max-width:768px){
+  .hamburger{display:flex;}
+  nav{position:fixed;top:0;right:-100%;height:100vh;width:260px;background:#fff;flex-direction:column;padding:80px 24px;gap:24px;transition:right .3s var(--transition-ease);box-shadow:-2px 0 8px rgba(0,0,0,0.1);}
+  nav.open{right:0;}
+  nav a{font-size:1.2rem;}
+}
+/* Fade-in Helper */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s var(--transition-ease),transform .6s var(--transition-ease);}
+.visible .fade-in{opacity:1;transform:none;}
+/* Buttons */
+.btn-primary{
+  background:var(--color-cta);
+  color:#fff;
+  padding:12px 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:transform .25s ease-out,box-shadow .25s ease-out;
+}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+.btn-primary:focus{outline:2px solid var(--color-primary);}
+.btn-outline{
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:12px 16px;
+  border-radius:4px;
+  font-weight:600;
+  background:transparent;
+  transition:background .25s ease-out,color .25s ease-out;
+}
+.btn-outline:hover{background:var(--color-primary);color:#fff;}
+/* Listings Page Specific */
+.listings-wrapper{display:flex;gap:24px;padding:120px 0 80px 0;}
+.filter-sidebar{
+  flex:0 0 280px;
+  background:rgba(255,255,255,0.8);
+  border-radius:8px;
+  padding:24px;
+  backdrop-filter:blur(6px);
+  position:sticky;
+  top:100px;
+}
+.filter-sidebar h3{margin-bottom:1rem;}
+.filter-group{margin-bottom:1.5rem;}
+.filter-group h4{margin-bottom:0.5rem;font-size:1rem;font-weight:600;}
+.filter-group label{display:flex;align-items:center;margin-bottom:0.5rem;font-size:0.9rem;}
+.filter-group input{margin-right:8px;}
+.property-grid{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:24px;
+}
+.property-card{
+  background:rgba(255,255,255,0.8);
+  border-radius:8px;
+  overflow:hidden;
+  position:relative;
+  backdrop-filter:blur(6px);
+  transition:transform .25s var(--transition-ease),box-shadow .25s var(--transition-ease);
+}
+.property-card img{width:100%;height:300px;object-fit:cover;}
+.property-info{
+  padding:16px;
+}
+.property-info h3{margin:0 0 0.5rem 0;}
+.property-info p{margin:0;font-size:0.9rem;color:var(--color-gray);}
+.property-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.15);
+  opacity:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  transition:opacity .3s var(--transition-ease);
+}
+.property-card:hover .property-overlay{opacity:1;}
+.property-overlay h3{
+  transform:translateY(20px);
+  opacity:0;
+  transition:transform .3s var(--transition-ease),opacity .3s var(--transition-ease);
+}
+.property-card:hover .property-overlay h3{
+  transform:none;
+  opacity:1;
+}
+.property-overlay .btn-primary{
+  margin-top:12px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .3s var(--transition-ease),transform .3s var(--transition-ease);
+}
+.property-card:hover .property-overlay .btn-primary{
+  opacity:1;
+  transform:none;
+}
+.pagination{
+  text-align:center;
+  margin-top:2rem;
+}
+.pagination a{
+  display:inline-block;
+  margin:0 6px;
+  padding:8px 12px;
+  border-radius:4px;
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  transition:background .25s ease-out,color .25s ease-out;
+}
+.pagination a:hover{background:var(--color-cta);color:#fff;}
+.pagination a.active{background:var(--color-primary);color:#fff;}
+.lead-banner{
+  background:var(--color-secondary);
+  padding:48px 24px;
+  text-align:center;
+  border-radius:8px;
+  margin-bottom:24px;
+}
+.lead-banner h2{margin-bottom:0.5rem;}
+.lead-packages{
+  display:flex;
+  flex-wrap:wrap;
+  gap:24px;
+  justify-content:center;
+  margin-top:1rem;
+}
+.package{
+  background:#fff;
+  border:1px solid var(--color-primary);
+  border-radius:8px;
+  padding:16px;
+  min-width:200px;
+}
+.package h3{margin:0 0 0.5rem 0;color:var(--color-primary);}
+.package p{margin:0.5rem 0;}
+.package .price{font-weight:700;color:var(--color-cta);}
+@media (max-width:1024px){
+  .listings-wrapper{flex-direction:column;}
+  .filter-sidebar{flex:0 0 auto;width:100%;position:relative;top:auto;}
+}
+@media (max-width:768px){
+  .filter-sidebar{display:none;}
+  .hamburger{display:flex;}
+}
+footer{background:var(--color-secondary);padding:40px 0;text-align:center;margin-top:80px;}
+footer p{margin:0;font-size:0.9rem;}
+.social-icons a{margin:0 8px;color:var(--color-primary);font-size:1.5rem;transition:color .25s;}
+.social-icons a:hover{color:var(--color-cta);}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<header id="site-header">
+  <div class="container">
+    <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="listings.html" class="active">Property Listings</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="blog.html">Blog</a>
+      <a href="testimonials.html">Testimonials</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container mt-4">
+  <section class="lead-banner fade-in">
+    <h2>Upgrade your exposure – Premium Listing Promotion</h2>
+    <div class="lead-packages">
+      <div class="package">
+        <h3>Standard</h3>
+        <p>Basic exposure on listings page.</p>
+        <p class="price">$500</p>
+      </div>
+      <div class="package">
+        <h3>Gold</h3>
+        <p>Featured placement + social boost.</p>
+        <p class="price">$1,200</p>
+      </div>
+      <div class="package">
+        <h3>Platinum</h3>
+        <p>Top of page + premium marketing.</p>
+        <p class="price">$2,500</p>
+      </div>
+    </div>
+    <button class="btn-primary mt-4" id="bannerCTA">[VERBATIM]cta_schedule_viewing: Schedule a Viewing[/VERBATIM]</button>
+  </section>
+
+  <div class="listings-section fade-in">
+    <div class="listings-wrapper">
+      <aside class="filter-sidebar">
+        <h3>Filters</h3>
+        <div class="filter-group">
+          <h4>Location</h4>
+          <label><input type="checkbox"> New York</label>
+          <label><input type="checkbox"> Miami</label>
+          <label><input type="checkbox"> Los Angeles</label>
+        </div>
+        <div class="filter-group">
+          <h4>Price Range</h4>
+          <label><input type="checkbox"> $1M - $5M</label>
+          <label><input type="checkbox"> $5M - $10M</label>
+          <label><input type="checkbox"> $10M+</label>
+        </div>
+        <div class="filter-group">
+          <h4>Property Type</h4>
+          <label><input type="checkbox"> Villa</label>
+          <label><input type="checkbox"> Penthouse</label>
+          <label><input type="checkbox"> Commercial</label>
+        </div>
+        <button class="btn-primary mt-4">Apply Filters</button>
+      </aside>
+
+      <section class="property-grid">
+        <article class="property-card fade-in">
+          <img src="https://picsum.photos/seed/1/400/300" alt="Property Image">
+          <div class="property-info">
+            <h3>Modern Villa in Miami</h3>
+            <p>4 Bed • 5 Bath • 8,000 sqft</p>
+            <p>Price: $8,500,000</p>
+          </div>
+          <div class="property-overlay">
+            <h3>Modern Villa in Miami</h3>
+            <button class="btn-primary">[VERBATIM]cta_schedule_viewing: Schedule a Viewing[/VERBATIM]</button>
+          </div>
+        </article>
+        <article class="property-card fade-in">
+          <img src="https://picsum.photos/seed/2/400/300" alt="Property Image">
+          <div class="property-info">
+            <h3>Luxury Penthouse NYC</h3>
+            <p>3 Bed • 4 Bath • 5,200 sqft</p>
+            <p>Price: $12,000,000</p>
+          </div>
+          <div class="property-overlay">
+            <h3>Luxury Penthouse NYC</h3>
+            <button class="btn-primary">[VERBATIM]cta_schedule_viewing: Schedule a Viewing[/VERBATIM]</button>
+          </div>
+        </article>
+        <article class="property-card fade-in">
+          <img src="https://picsum.photos/seed/3/400/300" alt="Property Image">
+          <div class="property-info">
+            <h3>Beachfront Villa LA</h3>
+            <p>5 Bed • 6 Bath • 9,500 sqft</p>
+            <p>Price: $9,800,000</p>
+          </div>
+          <div class="property-overlay">
+            <h3>Beachfront Villa LA</h3>
+            <button class="btn-primary">[VERBATIM]cta_schedule_viewing: Schedule a Viewing[/VERBATIM]</button>
+          </div>
+        </article>
+        <article class="property-card fade-in">
+          <img src="https://picsum.photos/seed/4/400/300" alt="Property Image">
+          <div class="property-info">
+            <h3>Commercial Loft NYC</h3>
+            <p>2 Bed • 2 Bath • 4,000 sqft</p>
+            <p>Price: $6,500,000</p>
+          </div>
+          <div class="property-overlay">
+            <h3>Commercial Loft NYC</h3>
+            <button class="btn-primary">[VERBATIM]cta_schedule_viewing: Schedule a Viewing[/VERBATIM]</button>
+          </div>
+        </article>
+        <!-- Add more property cards as needed -->
+      </section>
+    </div>
+  </section>
+
+  <div class="pagination fade-in">
+    <a href="#" class="page-num active">1</a>
+    <a href="#" class="page-num">2</a>
+    <a href="#" class="page-num">3</a>
+    <a href="#" class="page-num">Next</a>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 LUXE Estates. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#" data-lucide="facebook"></a>
+      <a href="#" data-lucide="instagram"></a>
+      <a href="#" data-lucide="linkedin"></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Header scroll effect
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Hamburger menu toggle
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.getElementById('navigation');
+  hamburger.addEventListener('click', function() {
+    const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+    this.setAttribute('aria-expanded', !expanded);
+    nav.classList.toggle('open');
+  });
+
+  // Intersection Observer for fade‑in sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.1});
+
+  document.querySelectorAll('.fade-in').forEach(section => {
+    observer.observe(section);
+  });
+
+  // Initialize Lucide icons
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>
