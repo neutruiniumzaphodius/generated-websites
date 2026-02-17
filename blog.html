@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vegas Senior Living – Blog & Video Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --color-primary:#002147;
+      --color-secondary:#D4AF37;
+      --color-bg:#F9F9F9;
+      --color-text:#333333;
+      --color-white:#FFFFFF;
+      --font-heading:"Playfair Display", serif;
+      --font-body:"Montserrat", sans-serif;
+      --radius:8px;
+      --shadow-card:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-card-hover:0 4px 8px rgba(0,0,0,0.15);
+      --transition:0.3s ease;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+    }
+    a { color:inherit; text-decoration:none; }
+    img, video { max-width:100%; display:block; }
+    .skip-link {
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:var(--color-white);
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    header {
+      background:var(--color-white);
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .container { max-width:1440px; margin:auto; padding:0 24px; }
+    nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .nav-links {
+      display:flex;
+      gap:24px;
+    }
+    .nav-link {
+      font-family:var(--font-body);
+      font-weight:500;
+      color:var(--color-primary);
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--color-secondary);
+    }
+    .hamburger {
+      display:none;
+      background:none;
+      border:none;
+      cursor:pointer;
+    }
+    .hamburger .icon { color:var(--color-primary); }
+    @media (max-width:768px){
+      .nav-links { 
+        position:absolute; 
+        top:64px; left:0; right:0; 
+        background:var(--color-white); 
+        flex-direction:column; 
+        gap:12px; 
+        padding:12px 24px; 
+        transform:translateY(-100%);
+        transition:transform var(--transition);
+      }
+      .nav-links.open { transform:translateY(0); }
+      .hamburger{display:block;}
+    }
+    .section{
+      padding:80px 0;
+    }
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:clamp(2rem,5vw,2.5rem);
+      text-align:center;
+      margin-bottom:24px;
+      color:var(--color-primary);
+    }
+    .post-grid, .video-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+      max-width:1200px;
+      margin:auto;
+    }
+    .card{
+      background:var(--color-white);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      transition:box-shadow var(--transition), border var(--transition);
+    }
+    .card:hover{
+      box-shadow:var(--shadow-card-hover);
+      border:2px solid var(--color-secondary);
+    }
+    .card h3{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:1.25rem;
+      margin-bottom:12px;
+      color:var(--color-primary);
+    }
+    .card p{
+      margin-bottom:12px;
+      font-size:0.95rem;
+    }
+    .btn-primary,
+    .btn-secondary{
+      display:inline-block;
+      padding:12px 24px;
+      border:none;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-size:1rem;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+    }
+    .btn-primary:hover{
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-secondary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .newsletter-form{
+      max-width:480px;
+      margin:auto;
+      display:flex;
+      gap:12px;
+    }
+    .newsletter-form input{
+      flex:1;
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+      font-size:1rem;
+    }
+    .newsletter-form input:focus{
+      outline:2px solid var(--color-secondary);
+    }
+    .disclaimer{
+      font-size:0.875rem;
+      color:#555;
+      max-width:720px;
+      margin:auto;
+      text-align:center;
+      margin-bottom:24px;
+    }
+    footer{
+      text-align:center;
+      padding:48px 0;
+      background:var(--color-primary);
+      color:var(--color-white);
+    }
+    footer p{margin-top:12px;font-size:0.875rem;}
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    .video-card{
+      position:relative;
+      background:var(--color-white);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow-card);
+      transition:box-shadow var(--transition), border var(--transition);
+    }
+    .video-card:hover{
+      box-shadow:var(--shadow-card-hover);
+      border:2px solid var(--color-secondary);
+    }
+    .video-card .play-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      color:var(--color-white);
+    }
+    .video-card video{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .error-msg{
+      color:#c00;
+      font-size:0.85rem;
+      margin-top:4px;
+    }
+    .success-msg{
+      color:#090;
+      font-size:0.85rem;
+      margin-top:4px;
+    }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="logo"><img src="https://picsum.photos/40/40" alt="Logo" style="border-radius:50%;"></a>
+      <button class="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+        <svg class="icon" data-lucide="menu"></svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="education.html" class="nav-link">Resources</a></li>
+        <li><a href="compare.html" class="nav-link">Comparison</a></li>
+        <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
+        <li><a href="blog.html" class="nav-link active">Blog & Video</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <!-- Blog Category Title -->
+  <section class="section fade-in" id="blog-category">
+    <div class="container">
+      <h2 class="section-title">[VERBATIM]blog_category: Vegas Senior Living[/VERBATIM]</h2>
+    </div>
+  </section>
+
+  <!-- Latest Posts -->
+  <section class="section fade-in" id="latest-posts">
+    <div class="container">
+      <h2 class="section-title">Latest Posts</h2>
+      <div class="post-grid">
+        <article class="card">
+          <img src="https://picsum.photos/seed/post1/600/400" alt="Blog post about senior lifestyle">
+          <h3>Understanding 2026 Medicare Figures</h3>
+          <p>Quick guide to the most recent Medicare updates for Las Vegas seniors.</p>
+          <button class="btn-primary">Read More</button>
+        </article>
+        <article class="card">
+          <img src="https://picsum.photos/seed/post2/600/400" alt="Senior lifestyle tips article">
+          <h3>5 Outdoor Activities Near Red Rock Canyon</h3>
+          <p>Explore safe and enjoyable ways to stay active in the desert.</p>
+          <button class="btn-primary">Read More</button>
+        </article>
+        <article class="card">
+          <img src="https://picsum.photos/seed/post3/600/400" alt="Guide to Medicare Advantage networks">
+          <h3>How to Choose the Right Medicare Advantage Plan</h3>
+          <p>Step‑by‑step advice to match your health needs with the best network.</p>
+          <button class="btn-primary">Read More</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Library -->
+  <section class="section fade-in" id="video-library">
+    <div class="container">
+      <h2 class="section-title">Video Library</h2>
+      <div class="video-grid">
+        <div class="video-card card">
+          <video muted preload="metadata" poster="https://picsum.photos/seed/video1/600/400" data-poster="https://picsum.photos/seed/video1/600/400">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          </video>
+          <svg class="play-overlay icon" data-lucide="play-circle" style="position:absolute; inset:0; margin:auto; width:48px; height:48px; opacity:0.8;"></svg>
+        </div>
+        <div class="video-card card">
+          <video muted preload="metadata" poster="https://picsum.photos/seed/video2/600/400" data-poster="https://picsum.photos/seed/video2/600/400">
+            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+          </video>
+          <svg class="play-overlay icon" data-lucide="play-circle" style="position:absolute; inset:0; margin:auto; width:48px; height:48px; opacity:0.8;"></svg>
+        </div>
+        <div class="video-card card">
+          <video muted preload="metadata" poster="https://picsum.photos/seed/video3/600/400" data-poster="https://picsum.photos/seed/video3/600/400">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          </video>
+          <svg class="play-overlay icon" data-lucide="play-circle" style="position:absolute; inset:0; margin:auto; width:48px; height:48px; opacity:0.8;"></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="section fade-in" id="newsletter-signup">
+    <div class="container">
+      <h2 class="section-title">Stay Updated</h2>
+      <p style="text-align:center; max-width:720px; margin:auto; margin-bottom:24px;">
+        Stay informed with monthly updates on Medicare changes and senior lifestyle tips.
+      </p>
+      <form class="newsletter-form" novalidate>
+        <input type="email" id="email" name="email" placeholder="Your email address" required aria-label="Email address">
+        <button type="submit" class="btn-primary">Subscribe</button>
+        <div id="form-message" role="alert" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="section fade-in" id="disclaimer-section">
+    <div class="container">
+      <p class="disclaimer">[VERBATIM]disclaimer: We do not offer every plan available in your area...[/VERBATIM]</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2024 Las Vegas Medicare Agent – All Rights Reserved</p>
+    <p>Designed with care for senior communities.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js"></script>
+<script>
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger?.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+  });
+
+  // IntersectionObserver for fade‑in sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Video hover autoplay
+  document.querySelectorAll('.video-card video').forEach(v => {
+    v.parentElement.addEventListener('mouseenter', () => {
+      v.play();
+    });
+    v.parentElement.addEventListener('mouseleave', () => {
+      v.pause();
+      v.currentTime = 0;
+    });
+  });
+
+  // Simple email validation
+  const form = document.querySelector('.newsletter-form');
+  const emailInput = document.getElementById('email');
+  const messageDiv = document.getElementById('form-message');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(emailPattern.test(email)){
+      messageDiv.textContent = 'Thank you for subscribing!';
+      messageDiv.className = 'success-msg';
+      // Here you would normally POST to your endpoint
+      form.reset();
+    } else {
+      messageDiv.textContent = 'Please enter a valid email address.';
+      messageDiv.className = 'error-msg';
+    }
+  });
+</script>
+</body>
+</html>

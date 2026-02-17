@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patty's Promise – Testimonials</title>
+  <style>
+    :root {
+      --color-primary:#002147;
+      --color-secondary:#D4AF37;
+      --color-bg:#F9F9F9;
+      --color-text:#333333;
+      --color-white:#FFFFFF;
+      --font-heading:"Playfair Display", serif;
+      --font-body:"Montserrat", sans-serif;
+      --radius:8px;
+      --shadow-card:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-card-hover:0 4px 8px rgba(0,0,0,0.15);
+      --transition:0.3s ease;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+    }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+    .skip-link {
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:var(--color-white);
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    header {
+      background:var(--color-white);
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .container { max-width:1440px; margin:auto; padding:0 24px; }
+    nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .nav-links {
+      display:flex;
+      gap:24px;
+    }
+    .nav-link {
+      font-family:var(--font-body);
+      font-weight:500;
+      color:var(--color-primary);
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--color-secondary);
+    }
+    .hamburger {
+      display:none;
+      background:none;
+      border:none;
+      cursor:pointer;
+    }
+    .hamburger .icon { color:var(--color-primary); }
+    @media (max-width:768px){
+      .nav-links { 
+        position:absolute; 
+        top:64px; left:0; right:0; 
+        background:var(--color-white); 
+        flex-direction:column; 
+        gap:12px; 
+        padding:12px 24px; 
+        transform:translateY(-100%);
+        transition:transform var(--transition);
+      }
+      .nav-links.open { transform:translateY(0); }
+      .hamburger{display:block;}
+    }
+    .section{
+      padding:80px 0;
+    }
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:clamp(2rem,5vw,2.5rem);
+      text-align:center;
+      margin-bottom:24px;
+      color:var(--color-primary);
+    }
+    .section p{max-width:720px;margin:auto;margin-bottom:16px;}
+    .btn-primary,
+    .btn-secondary{
+      display:inline-block;
+      padding:12px 24px;
+      border:none;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-size:1rem;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+    }
+    .btn-primary:hover{
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-secondary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .section{
+      padding:80px 0;
+    }
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:clamp(2rem,5vw,2.5rem);
+      text-align:center;
+      margin-bottom:24px;
+      color:var(--color-primary);
+    }
+    .promise {
+      border-left:4px solid var(--color-secondary);
+      padding-left:16px;
+      margin:40px auto;
+      max-width:720px;
+      font-style:italic;
+    }
+    .promise::before{
+      content:"“";
+      font-size:2rem;
+      color:var(--color-secondary);
+      margin-right:4px;
+    }
+    .promise::after{
+      content:"”";
+      font-size:2rem;
+      color:var(--color-secondary);
+      margin-left:4px;
+    }
+    .testimonial-gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+      max-width:1200px;
+      margin:auto;
+    }
+    .testimonial-card{
+      background:var(--color-white);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      transition:box-shadow var(--transition),border var(--transition);
+    }
+    .testimonial-card:hover{
+      box-shadow:var(--shadow-card-hover);
+      border:2px solid var(--color-secondary);
+    }
+    .testimonial-photo{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:var(--radius);
+      margin-bottom:12px;
+    }
+    .testimonial-name{
+      font-weight:500;
+      margin-top:8px;
+      color:var(--color-primary);
+    }
+    .testimonial-quote{
+      font-style:italic;
+      margin-top:8px;
+      color:var(--color-text);
+    }
+    .disclaimer{
+      font-size:0.875rem;
+      color:#555;
+      max-width:720px;
+      margin:auto;
+      text-align:center;
+    }
+    footer{
+      text-align:center;
+      padding:48px 0;
+      background:var(--color-primary);
+      color:var(--color-white);
+    }
+    footer p{margin-top:12px;font-size:0.875rem;}
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    @media (max-width:1024px){
+      .section{padding:60px 0;}
+    }
+    @media (max-width:640px){
+      .section{padding:40px 0;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header>
+    <div class="container">
+      <nav aria-label="Primary navigation">
+        <a href="index.html" class="logo"><strong>Patty Alvarez Medicare</strong></a>
+        <button class="hamburger" aria-label="Toggle navigation" aria-controls="nav-menu" aria-expanded="false">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="testimonials.html" class="nav-link active">Testimonials</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Patty's Promise Section -->
+    <section class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">Patty's Promise</h2>
+        <blockquote class="promise">
+          I am your agent for life. If your plan changes next year, we sit down and find a new one. You will never call a 1-800 number and wait on hold.
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Testimonial Gallery -->
+    <section class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="testimonial-gallery">
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/1/400/300" srcset="https://picsum.photos/seed/1/800/600 2x" alt="Senior couple walking on a desert trail" class="testimonial-photo">
+            <div class="testimonial-name">Margaret H. – Las Vegas</div>
+            <div class="testimonial-quote">Patty helped us navigate the new 2026 changes with ease.</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/2/400/300" srcset="https://picsum.photos/seed/2/800/600 2x" alt="Smiling elderly man with a cane" class="testimonial-photo">
+            <div class="testimonial-name">John D. – Henderson</div>
+            <div class="testimonial-quote">I finally feel secure knowing I have a lifelong partner.</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/3/400/300" srcset="https://picsum.photos/seed/3/800/600 2x" alt="Grandmother reading a book on a porch" class="testimonial-photo">
+            <div class="testimonial-name">Evelyn S. – Summerlin</div>
+            <div class="testimonial-quote">Her promise isn’t just words – it’s real support.</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/4/400/300" srcset="https://picsum.photos/seed/4/800/600 2x" alt="Older couple holding hands at sunset" class="testimonial-photo">
+            <div class="testimonial-name">Carlos M. – North Las Vegas</div>
+            <div class="testimonial-quote">Never had to wait on a hold line again!</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/5/400/300" srcset="https://picsum.photos/seed/5/800/600 2x" alt="Senior woman with a warm smile" class="testimonial-photo">
+            <div class="testimonial-name">Linda K. – Paradise</div>
+            <div class="testimonial-quote">Patty’s guidance made my retirement peace of mind possible.</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/6/400/300" srcset="https://picsum.photos/seed/6/800/600 2x" alt="Elderly man reviewing papers at a kitchen table" class="testimonial-photo">
+            <div class="testimonial-name">Frank L. – Boulder City</div>
+            <div class="testimonial-quote">She sat down with me and explained everything.</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/7/400/300" srcset="https://picsum.photos/seed/7/800/600 2x" alt="Senior couple laughing together" class="testimonial-photo">
+            <div class="testimonial-name">Gloria &amp; Raymond T. – Winchester</div>
+            <div class="testimonial-quote">Our lifelong partnership with Patty means we’re never alone.</div>
+          </div>
+          <div class="testimonial-card fade-in">
+            <img src="https://picsum.photos/seed/8/400/300" srcset="https://picsum.photos/seed/8/800/600 2x" alt="Older gentleman with a gentle smile" class="testimonial-photo">
+            <div class="testimonial-name">Samuel P. – Enterprise</div>
+            <div class="testimonial-quote">Finally, a Medicare agent who truly cares.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section fade-in">
+      <div class="container">
+        <div style="text-align:center;">
+          <button class="btn-primary">Schedule Your 2026 Medicare Review.</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="section fade-in">
+      <div class="container">
+        <p class="disclaimer">We do not offer every plan available in your area...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Patty Alvarez Medicare Services. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger?.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('open');
+    });
+
+    // IntersectionObserver for fade‑in
+    const observer = new IntersectionObserver((entries)=> {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+
+    document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+  </script>
+</body>
+</html>

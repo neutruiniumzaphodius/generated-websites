@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Educational Resource Hub – Patty Alvarez Medicare Services</title>
+  <meta name="description" content="Stay ahead of the 2026 Medicare changes with our searchable library of articles, videos, and downloadable guides.">
+  <style>
+    :root {
+      --color-primary:#002147;
+      --color-secondary:#D4AF37;
+      --color-bg:#F9F9F9;
+      --color-text:#333333;
+      --color-white:#FFFFFF;
+      --font-heading:"Playfair Display", serif;
+      --font-body:"Montserrat", sans-serif;
+      --radius:8px;
+      --shadow-card:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-card-hover:0 4px 8px rgba(0,0,0,0.15);
+      --transition:0.3s ease;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+    }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+    .skip-link {
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:var(--color-white);
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    header {
+      background:var(--color-white);
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .container { max-width:1440px; margin:auto; padding:0 24px; }
+    nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .nav-links {
+      display:flex;
+      gap:24px;
+    }
+    .nav-link {
+      font-family:var(--font-body);
+      font-weight:500;
+      color:var(--color-primary);
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--color-secondary);
+    }
+    .hamburger {
+      display:none;
+      background:none;
+      border:none;
+      cursor:pointer;
+    }
+    .hamburger .icon { color:var(--color-primary); }
+    @media (max-width:768px){
+      .nav-links { 
+        position:absolute; 
+        top:64px; left:0; right:0; 
+        background:var(--color-white); 
+        flex-direction:column; 
+        gap:12px; 
+        padding:12px 24px; 
+        transform:translateY(-100%);
+        transition:transform var(--transition);
+      }
+      .nav-links.open { transform:translateY(0); }
+      .hamburger{display:block;}
+    }
+    .section{
+      padding:80px 0;
+    }
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:clamp(2rem,5vw,2.5rem);
+      text-align:center;
+      margin-bottom:24px;
+      color:var(--color-primary);
+    }
+    .section p{
+      max-width:720px;
+      margin:auto;
+      margin-bottom:16px;
+    }
+    .btn-primary,
+    .btn-secondary{
+      display:inline-block;
+      padding:12px 24px;
+      border:none;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-size:1rem;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+    }
+    .btn-primary:hover{
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-secondary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .card{
+      background:var(--color-white);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      transition:box-shadow var(--transition), border var(--transition);
+    }
+    .card:hover{
+      box-shadow:var(--shadow-card-hover);
+      border:2px solid var(--color-secondary);
+    }
+    .card h3{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:1.25rem;
+      margin-bottom:12px;
+      color:var(--color-primary);
+    }
+    .plan-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+      margin-top:24px;
+    }
+    .disclaimer{
+      font-size:0.875rem;
+      color:#555;
+      max-width:720px;
+      margin:auto;
+      text-align:center;
+    }
+    footer{
+      text-align:center;
+      padding:48px 0;
+      background:var(--color-primary);
+      color:var(--color-white);
+    }
+    footer p{margin-top:12px;font-size:0.875rem;}
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    @media (max-width:1024px){ .section{padding:60px 0;} }
+    @media (max-width:640px){ .section{padding:40px 0;} }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="container">
+      <nav aria-label="Main navigation">
+        <div class="logo"><strong>Patty Alvarez Medicare Services</strong></div>
+        <button class="hamburger" aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+        <ul class="nav-links" id="primary-nav">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="services.html" class="nav-link">Services</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="education.html" class="nav-link active">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Heading -->
+    <section class="section fade-in">
+      <h2 class="section-title">Educational Resource Hub</h2>
+      <p class="section">Your trusted source for clear, up‑to‑date information on the 2026 Medicare changes. Browse guides, download PDFs, and explore local network details—all designed to help Las Vegas seniors make confident decisions.</p>
+    </section>
+
+    <!-- Part A -->
+    <section class="section fade-in">
+      <h3 class="section-title">Part A – Hospital Insurance</h3>
+      <p>Part A covers inpatient hospital stays, skilled‑nursing facility care, hospice, and some home health services. In 2026 the deductible remains $1,600, and there are no monthly premiums for most beneficiaries who have paid Medicare taxes.</p>
+      <a href="#" class="btn-primary" download>Download Part A Guide (PDF)</a>
+    </section>
+
+    <!-- Part B -->
+    <section class="section fade-in">
+      <h3 class="section-title">Part B – Medical Insurance</h3>
+      <p>Part B helps cover doctors’ services, outpatient care, preventive services, and medical supplies. The standard monthly premium for 2026 is $164.90. Enroll online, by phone, or at your local Social Security office.</p>
+      <a href="#" class="btn-primary" download>Download Part B Guide (PDF)</a>
+    </section>
+
+    <!-- Part D -->
+    <section class="section fade-in">
+      <h3 class="section-title">Part D – Prescription Drug Coverage</h3>
+      <p>Part D provides prescription drug coverage through private plans. In 2026 the standard benefit includes a $5,000 deductible and a $5,000 coverage gap limit. Compare plans to find the best fit for your medication needs.</p>
+      <a href="#" class="btn-primary" download>Download Part D Guide (PDF)</a>
+    </section>
+
+    <!-- Vegas Network Guide -->
+    <section class="section fade-in">
+      <h2 class="section-title">Vegas Hospital Network Guide</h2>
+      <p>Understanding which hospitals participate in Medicare Advantage networks can save you time and money. Below is a curated list of top facilities in the Las Vegas area.</p>
+    </section>
+
+    <!-- Hospital Cards -->
+    <section class="section fade-in">
+      <div class="plan-grid">
+        <div class="card">
+          <h3>Sunrise Hospital</h3>
+          <img src="https://picsum.photos/400/300?random=1" alt="Sunrise Hospital exterior">
+          <p>Located near the Strip, offers full Medicare Advantage network access.</p>
+        </div>
+        <div class="card">
+          <h3>Desert Valley Medical Center</h3>
+          <img src="https://picsum.photos/400/300?random=2" alt="Desert Valley Medical Center exterior">
+          <p>Specializes in cardiac care and accepts most Medicare Advantage plans.</p>
+        </div>
+        <div class="card">
+          <h3>Red Rock Regional Hospital</h3>
+          <img src="https://picsum.photos/400/300?random=3" alt="Red Rock Regional Hospital exterior">
+          <p>Family‑focused facility with extensive outpatient services.</p>
+        </div>
+        <div class="card">
+          <h3>Mountain View Health</h3>
+          <img src="https://picsum.photos/400/300?random=4" alt="Mountain View Health exterior">
+          <p>Offers both Part A/Part B services and participates in several Medicare Advantage networks.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloadable Resources -->
+    <section class="section fade-in">
+      <h2 class="section-title">Downloadable Resources</h2>
+      <ul class="benefits" style="list-style:none;">
+        <li><a href="#" class="btn-secondary" download>FAQ – 2026 Medicare Changes (PDF)</a></li>
+        <li><a href="#" class="btn-secondary" download>Medicare Glossary (PDF)</a></li>
+        <li><a href="#" class="btn-secondary" download>Step‑by‑Step Enrollment Guide (PDF)</a></li>
+      </ul>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="section fade-in">
+      <p class="disclaimer">[VERBATIM]disclaimer: We do not offer every plan available in your area...[/VERBATIM]</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Patty Alvarez Medicare Services &copy; 2024</p>
+      <p>All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger?.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('open');
+    });
+
+    // Intersection Observer for fade‑in
+    const observerOptions = {
+      threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

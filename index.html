@@ -1,75 +1,483 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patty Alvarez Medicare Services – Your Local Medicare Expert in Las Vegas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --color-primary:#002147;
+      --color-secondary:#D4AF37;
+      --color-bg:#F9F9F9;
+      --color-text:#333333;
+      --color-white:#FFFFFF;
+      --font-heading:"Playfair Display", serif;
+      --font-body:"Montserrat", sans-serif;
+      --radius:8px;
+      --shadow-card:0 2px 4px rgba(0,0,0,0.1);
+      --shadow-card-hover:0 4px 8px rgba(0,0,0,0.15);
+      --transition:0.3s ease;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+    }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+    .skip-link {
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:var(--color-primary);
+      color:var(--color-white);
+      padding:8px 12px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    header {
+      background:var(--color-white);
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .container { max-width:1440px; margin:auto; padding:0 24px; }
+    nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .nav-links {
+      display:flex;
+      gap:24px;
+    }
+    .nav-link {
+      font-family:var(--font-body);
+      font-weight:500;
+      color:var(--color-primary);
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--color-secondary);
+    }
+    .hamburger {
+      display:none;
+      background:none;
+      border:none;
+      cursor:pointer;
+    }
+    .hamburger .icon { color:var(--color-primary); }
+    @media (max-width:768px){
+      .nav-links { 
+        position:absolute; 
+        top:64px; left:0; right:0; 
+        background:var(--color-white); 
+        flex-direction:column; 
+        gap:12px; 
+        padding:12px 24px; 
+        transform:translateY(-100%);
+        transition:transform var(--transition);
+      }
+      .nav-links.open { transform:translateY(0); }
+      .hamburger{display:block;}
+    }
+    /* Hero */
+    .hero {
+      position:relative;
+      min-height:80vh;
+      background:url('https://picsum.photos/1920/1080') center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--color-white);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(0,33,71,0.6), rgba(0,33,71,0.6));
+    }
+    .hero-overlay {
+      position:relative;
+      max-width:800px;
+      text-align:center;
+      animation:heroFade 0.8s ease-out forwards;
+      opacity:0;
+      transform:translateY(30px);
+    }
+    @keyframes heroFade{
+      to{opacity:1;transform:translateY(0);}
+    }
+    h1{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:clamp(2.5rem,6vw,3rem);
+      margin-bottom:16px;
+      color:var(--color-white);
+    }
+    h2{
+      font-family:var(--font-body);
+      font-size:clamp(1.2rem,4vw,1.5rem);
+      margin-bottom:24px;
+      color:var(--color-bg);
+    }
+    .hero-support{
+      font-size:1rem;
+      margin-bottom:32px;
+    }
+    .btn-primary,
+    .btn-secondary{
+      display:inline-block;
+      padding:12px 24px;
+      border:none;
+      border-radius:var(--radius);
+      font-family:var(--font-heading);
+      font-size:1rem;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+    }
+    .btn-primary:hover{
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-secondary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-secondary);
+      color:var(--color-primary);
+      box-shadow:0 0 12px rgba(255,215,0,0.4);
+    }
+    .section{
+      padding:80px 0;
+    }
+    .section-title{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:clamp(2rem,5vw,2.5rem);
+      text-align:center;
+      margin-bottom:24px;
+      color:var(--color-primary);
+    }
+    .section p{max-width:720px;margin:auto;margin-bottom:16px;}
+    .benefits{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      max-width:720px;
+      margin:auto;
+    }
+    .benefits li{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:1rem;
+    }
+    .benefits .icon{
+      color:var(--color-secondary);
+      width:20px;
+      height:20px;
+    }
+    .plan-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+      margin-top:24px;
+    }
+    .card{
+      background:var(--color-white);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      transition:box-shadow var(--transition), border var(--transition);
+    }
+    .card:hover{
+      box-shadow:var(--shadow-card-hover);
+      border:2px solid var(--color-secondary);
+    }
+    .card h3{
+      font-family:var(--font-heading);
+      font-weight:500;
+      font-size:1.25rem;
+      margin-bottom:12px;
+      color:var(--color-primary);
+    }
+    .carousel{
+      overflow:hidden;
+      max-width:800px;
+      margin:auto;
+      position:relative;
+    }
+    .carousel-track{
+      display:flex;
+      transition:transform 0.5s ease;
+    }
+    .testimonial{
+      flex:0 0 100%;
+      padding:24px;
+      font-style:italic;
+      font-size:1rem;
+      text-align:center;
+    }
+    .testimonial cite{
+      display:block;
+      margin-top:8px;
+      font-style:normal;
+      font-weight:500;
+    }
+    .weather-widget{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:var(--color-primary);
+      color:var(--color-white);
+      padding:12px 24px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      font-family:var(--font-body);
+    }
+    .weather-header{
+      font-weight:500;
+      font-size:1rem;
+    }
+    .weather-body{
+      font-size:1.2rem;
+      display:flex;
+      gap:12px;
+    }
+    .news-link{
+      color:var(--color-secondary);
+      font-weight:500;
+    }
+    .disclaimer{
+      font-size:0.875rem;
+      color:#555;
+      max-width:720px;
+      margin:auto;
+      text-align:center;
+    }
+    footer{
+      text-align:center;
+      padding:48px 0;
+      background:var(--color-primary);
+      color:var(--color-white);
+    }
+    footer p{margin-top:12px;font-size:0.875rem;}
+    /* Fade-in */
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+    /* Icons */
+    .icon{width:20px;height:20px;vertical-align:middle;}
+    @media (max-width:1024px){
+      .section{padding:60px 0;}
+    }
+    @media (max-width:640px){
+      .section{padding:40px 0;}
+    }
+  </style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header>
+    <div class="container">
+      <nav aria-label="Primary Navigation">
+        <a href="index.html" class="logo" aria-label="Home">
+          <svg class="icon" data-icon="home" width="24" height="24"></svg>
+        </a>
+        <button class="hamburger" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle menu">
+          <svg class="icon" data-icon="menu" width="24" height="24"></svg>
+        </button>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="education.html" class="nav-link">Education</a></li>
+          <li><a href="compare.html" class="nav-link">Plan Comparison</a></li>
+          <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+  <main id="main">
+    <section id="hero" class="hero" role="region" aria-label="Hero">
+      <div class="hero-overlay">
+        <h1>Your Local Medicare Expert in Las Vegas</h1>
+        <h2>Independent, personalized Medicare guidance with the latest 2026 updates – because you deserve a neighbor you can trust.</h2>
+        <p class="hero-support">Get a free, no‑obligation review and discover the plan that fits your lifestyle.</p>
+        <button class="btn-primary">hero_cta: Schedule Your 2026 Medicare Review.</button>
+      </div>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+    <section id="local-authority" class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">Local Authority Strategy</h2>
+        <p>Patty lives and works right here in Clark County, attending community events, partnering with local hospitals, and staying ahead of every CMS change. When you call, you’re speaking to a neighbor, not a call‑center.</p>
+      </div>
+    </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+    <section id="turning-65" class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">Turning 65 Gateway</h2>
+        <p>Turning 65? Navigate the enrollment period with confidence. Our step‑by‑step checklist walks you through Part A, B, C, and D, ensuring you never miss a deadline.</p>
+        <a href="education.html" class="btn-secondary">Learn More</a>
+      </div>
+    </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+    <section id="why-patty" class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">Why Patty?</h2>
+        <ul class="benefits">
+          <li><svg class="icon" data-icon="map-pin" width="20" height="20"></svg>Local expertise you can see and feel – Patty’s office is a stone’s throw from your home.</li>
+          <li><svg class="icon" data-icon="heart" width="20" height="20"></svg>Premium service without the clinical coldness – Warm, one‑on‑one consultations.</li>
+          <li><svg class="icon" data-icon="user-check" width="20" height="20"></svg>Lifetime support – we’re with you every step of the way – Ongoing annual reviews.</li>
+        </ul>
+      </div>
+    </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+    <section id="plan-preview" class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">Plan Comparison Preview</h2>
+        <div class="plan-grid">
+          <article class="card">
+            <h3>Medigap</h3>
+            <p>Part A Deductible: $1,736</p>
+            <p>Part B Premium: $202.90</p>
+            <p>Part B Deductible: $283</p>
+            <button class="btn-primary">Explore</button>
+          </article>
+          <article class="card">
+            <h3>Medicare Advantage</h3>
+            <p>Part A Deductible: $1,736</p>
+            <p>Part B Premium: $202.90</p>
+            <p>Part B Deductible: $283</p>
+            <button class="btn-primary">Explore</button>
+          </article>
+          <article class="card">
+            <h3>Part D</h3>
+            <p>Out‑of‑Pocket Cap: $2,100</p>
+            <button class="btn-primary">Explore</button>
+          </article>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section fade-in">
+      <div class="container">
+        <h2 class="section-title">What Seniors Say</h2>
+        <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Testimonials">
+          <div class="carousel-track" aria-live="polite">
+            <blockquote class="testimonial">
+              “Patty walked my mom through every option—no jargon, just kindness.” – <cite>Linda R., Henderson</cite>
+            </blockquote>
+            <blockquote class="testimonial">
+              “I finally understand my Part D cap. The $2,100 limit saved me $500 last year!” – <cite>James K., Summerlin</cite>
+            </blockquote>
+            <blockquote class="testimonial">
+              “She’s literally my Medicare lifeline—always a call away.” – <cite>Maria S., North Las Vegas</cite>
+            </blockquote>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top:24px;">hero_cta: Schedule Your 2026 Medicare Review.</button>
+      </div>
+    </section>
+
+    <section id="disclaimer" class="section fade-in">
+      <div class="container">
+        <p class="disclaimer">We do not offer every plan available in your area...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="weather-widget" role="region" aria-label="Local Weather and News">
+      <div class="weather-header">Las Vegas Weather</div>
+      <div class="weather-body">
+        <span class="temp">72°F</span>
+        <span class="forecast">Sunny</span>
+      </div>
+      <div class="news">
+        <a href="#" class="news-link">New Senior Center Opens in Summerlin</a>
+      </div>
+    </div>
+    <p style="margin-top:12px;color:var(--color-white);">&copy; 2026 Patty Alvarez Medicare Services</p>
+  </footer>
+
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+
+    // Mobile navigation toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+        hamburger.setAttribute('aria-expanded', !expanded);
+        navLinks.classList.toggle('open');
+      });
+    }
+
+    // Intersection Observer for fade‑in sections
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {threshold: 0.1, rootMargin: "0px 0px -50px 0px"};
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+    faders.forEach(fader => appearOnScroll.observe(fader));
+
+    // Carousel auto‑rotate
+    const carousel = document.querySelector('.carousel-track');
+    const testimonials = document.querySelectorAll('.testimonial');
+    let currentIdx = 0;
+    const total = testimonials.length;
+    const rotate = () => {
+      currentIdx = (currentIdx + 1) % total;
+      carousel.style.transform = `translateX(-${currentIdx * 100}%)`;
+    };
+    let carouselInterval = setInterval(rotate, 7000);
+    const carouselContainer = document.querySelector('.carousel');
+    carouselContainer.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+    carouselContainer.addEventListener('mouseleave', () => carouselInterval = setInterval(rotate, 7000));
+
+    // Simple weather widget (static placeholder – replace with real API)
+    async function fetchWeather() {
+      // Placeholder data; in production fetch from a weather API.
+      const tempEl = document.querySelector('.temp');
+      const forecastEl = document.querySelector('.forecast');
+      tempEl.textContent = '72°F';
+      forecastEl.textContent = 'Sunny';
+    }
+    fetchWeather();
+    setInterval(fetchWeather, 600000); // every 10 minutes
+  </script>
 </body>
 </html>
