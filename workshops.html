@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Workshops – Culinary Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lucide.min.css">
+<style>
+    :root {
+      --color-primary:#A16234;
+      --color-secondary:#4B2E2A;
+      --color-accent:#D9A44C;
+      --color-bg:#F7F3EF;
+      --color-text:#2C2C2C;
+      --color-white:#FFFFFF;
+      --max-width:1440px;
+      --gutter:24px;
+      --radius:8px;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Montserrat',sans-serif;
+      background:var(--color-bg);
+      color:var(--color-text);
+      line-height:1.5;
+    }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+    button { font-family:inherit; cursor:pointer; border:none; }
+    .skip-link {
+      position:absolute;
+      left:-999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus {
+      left:1rem;
+      top:1rem;
+      width:auto;
+      height:auto;
+      background:#000;
+      color:#fff;
+      padding:.5rem 1rem;
+      z-index:1000;
+    }
+    header {
+      background:var(--color-white);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .container {
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 var(--gutter);
+    }
+    nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .nav-links {
+      display:flex;
+      gap:var(--gutter);
+    }
+    .nav-link {
+      font-weight:600;
+      color:var(--color-secondary);
+      position:relative;
+    }
+    .nav-link.active::after {
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-4px;
+      height:2px;
+      background:var(--color-primary);
+    }
+    .nav-toggle {
+      display:none;
+      background:none;
+    }
+    /* Mega menu */
+    .mega-menu {
+      background:var(--color-bg);
+      padding:var(--gutter) 0;
+      border-top:1px solid rgba(0,0,0,0.05);
+    }
+    .mega-grid {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:var(--gutter);
+    }
+    .mega-col h4 {
+      font-family:'Playfair Display',serif;
+      font-weight:700;
+      color:var(--color-primary);
+      margin-bottom:0.5rem;
+    }
+    .mega-col a {
+      display:block;
+      margin-bottom:0.25rem;
+      color:var(--color-text);
+    }
+    /* Category filter */
+    .filter-bar {
+      background:var(--color-white);
+      position:sticky;
+      top:64px;
+      z-index:9;
+      padding: var(--gutter) 0;
+    }
+    .filter-buttons {
+      display:flex;
+      gap:var(--gutter);
+      flex-wrap:wrap;
+    }
+    .filter-btn {
+      background:var(--color-primary);
+      color:#fff;
+      padding:8px 16px;
+      border-radius:var(--radius);
+      font-weight:600;
+      position:relative;
+    }
+    .filter-dropdown {
+      position:absolute;
+      top:100%;
+      left:0;
+      background:var(--color-white);
+      border:1px solid rgba(0,0,0,0.1);
+      border-radius:var(--radius);
+      padding:var(--gutter);
+      display:none;
+      min-width:200px;
+      z-index:5;
+    }
+    .filter-btn.active .filter-dropdown { display:block; }
+    .filter-chip {
+      background:var(--color-accent);
+      color:#fff;
+      padding:4px 8px;
+      border-radius:12px;
+      margin-right:8px;
+      display:inline-flex;
+      align-items:center;
+    }
+    .filter-chip .remove {
+      margin-left:4px;
+      cursor:pointer;
+    }
+    /* Cards */
+    .grid {
+      display:grid;
+      gap:var(--gutter);
+    }
+    .grid-3 { grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+    .card {
+      background:var(--color-white);
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      overflow:hidden;
+      transform:translateY(20px);
+      opacity:0;
+      transition:transform .4s ease-out, opacity .4s ease-out;
+    }
+    .card img { width:100%; height:180px; object-fit:cover; }
+    .card-content { padding:16px; }
+    .card h3 {
+      font-family:'Playfair Display',serif;
+      font-weight:700;
+      font-size:1.2rem;
+      color:var(--color-primary);
+      margin-bottom:.5rem;
+    }
+    .price-badge {
+      background:var(--color-accent);
+      color:#fff;
+      padding:4px 8px;
+      border-radius:12px;
+      font-weight:600;
+      display:inline-block;
+      margin-bottom:0.5rem;
+    }
+    .btn-cta {
+      background:var(--color-accent);
+      color:var(--color-white);
+      padding:10px 20px;
+      border-radius:var(--radius);
+      font-weight:600;
+      width:100%;
+      transition:transform .15s ease-out;
+    }
+    .btn-cta:hover { transform:scale(1.05); }
+    /* Modal */
+    .modal {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .2s ease;
+    }
+    .modal.open {
+      opacity:1;
+      visibility:visible;
+    }
+    .modal-content {
+      background:#fff;
+      border-radius:12px;
+      max-width:800px;
+      width:90%;
+      padding:var(--gutter);
+      position:relative;
+      transform:scale(0.95);
+      transition:transform .2s ease;
+    }
+    .modal.open .modal-content { transform:scale(1); }
+    .modal-close {
+      position:absolute;
+      top:8px;
+      right:8px;
+      background:none;
+      font-size:1.5rem;
+    }
+    /* Pricing tiers */
+    .pricing {
+      background:var(--color-white);
+      padding:var(--gutter);
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    }
+    .pricing-grid {
+      display:grid;
+      gap:var(--gutter);
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .pricing-tier {
+      text-align:center;
+      padding:var(--gutter);
+    }
+    .pricing-tier h4 {
+      font-family:'Playfair Display',serif;
+      font-weight:700;
+      color:var(--color-primary);
+      margin-bottom:0.5rem;
+    }
+    .pricing-tier p { margin-bottom:0.5rem; }
+    .booking-cta {
+      background:var(--color-primary);
+      color:#fff;
+      text-align:center;
+      padding:var(--gutter);
+    }
+    .booking-cta h2 {
+      font-family:'Playfair Display',serif;
+      font-weight:700;
+      font-size:clamp(24px,5vw,32px);
+      margin-bottom:1rem;
+    }
+    .booking-cta .btn-primary { max-width:200px; margin:auto; }
+    /* Footer */
+    footer { background:var(--color-white); padding:var(--gutter) 0; text-align:center; font-size:.9rem; }
+    /* Responsive Nav */
+    @media (max-width:768px) {
+      .nav-links { display:none; flex-direction:column; background:var(--color-white); position:absolute; top:64px; left:0; right:0; padding:var(--gutter); }
+      .nav-links.show { display:flex; }
+      .nav-toggle { display:block; }
+    }
+    .fade-in-visible { transform:translateY(0); opacity:1; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <div class="logo"><strong>CulinaryCanvas</strong></div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="workshops.html" class="nav-link active">Workshops</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu"><i data-lucide="menu"></i></button>
+    </nav>
+  </div>
+</header>
+
+<!-- Mega Menu -->
+<div class="mega-menu">
+  <div class="container">
+    <div class="mega-grid">
+      <div class="mega-col">
+        <h4>Skill Level</h4>
+        <a href="#">Beginner</a>
+        <a href="#">Intermediate</a>
+        <a href="#">Advanced</a>
+      </div>
+      <div class="mega-col">
+        <h4>Chef</h4>
+        <a href="#">Chef Lina</a>
+        <a href="#">Chef Marco</a>
+        <a href="#">Chef Ana</a>
+      </div>
+      <div class="mega-col">
+        <h4>Cuisine</h4>
+        <a href="#">Italian</a>
+        <a href="#">Japanese</a>
+        <a href="#">Mexican</a>
+      </div>
+      <div class="mega-col">
+        <h4>Other</h4>
+        <a href="#">Upcoming</a>
+        <a href="#">Popular</a>
+        <a href="#">All Workshops</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category Filter -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-buttons">
+      <div class="filter-group">
+        <button class="filter-btn" data-filter="skill">Skill Level <i data-lucide="chevron-down" class="chevron"></i></button>
+        <div class="filter-dropdown">
+          <label><input type="checkbox" value="Beginner"> Beginner</label><br>
+          <label><input type="checkbox" value="Intermediate"> Intermediate</label><br>
+          <label><input type="checkbox" value="Advanced"> Advanced</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn" data-filter="chef">Chef <i data-lucide="chevron-down" class="chevron"></i></button>
+        <div class="filter-dropdown">
+          <label><input type="checkbox" value="Lina"> Lina</label><br>
+          <label><input type="checkbox" value="Marco"> Marco</label><br>
+          <label><input type="checkbox" value="Ana"> Ana</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn" data-filter="cuisine">Cuisine <i data-lucide="chevron-down" class="chevron"></i></button>
+        <div class="filter-dropdown">
+          <label><input type="checkbox" value="Italian"> Italian</label><br>
+          <label><input type="checkbox" value="Japanese"> Japanese</label><br>
+          <label><input type="checkbox" value="Mexican"> Mexican</label>
+        </div>
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn" data-filter="date">Date <i data-lucide="chevron-down" class="chevron"></i></button>
+        <div class="filter-dropdown">
+          <input type="date">
+        </div>
+      </div>
+    </div>
+    <div class="active-chips" style="margin-top:var(--gutter);"></div>
+  </div>
+</div>
+
+<main id="main">
+  <section class="section-title fade-in">
+    <h2 class="section-title">Workshops</h2>
+  </section>
+
+  <!-- Workshop Grid -->
+  <section class="workshop-grid section">
+    <div class="container grid grid-3">
+      <!-- Example Card 1 -->
+      <div class="card fade-in">
+        <img src="https://picsum.photos/seed/w1/400/300" alt="Workshop Image">
+        <div class="card-content">
+          <h3>Italian Pasta Mastery</h3>
+          <p>Learn to craft authentic Italian pasta from scratch.</p>
+          <div class="price">From $120</div>
+          <button class="btn-cta">cta_button: Book Now</button>
+        </div>
+      </div>
+      <!-- Example Card 2 -->
+      <div class="card fade-in">
+        <img src="https://picsum.photos/seed/w2/400/300" alt="Workshop Image">
+        <div class="card-content">
+          <h3>Sushi Rolling Basics</h3>
+          <p>Hands‑on sushi rolling techniques for beginners.</p>
+          <div class="price">From $150</div>
+          <button class="btn-cta">cta_button: Book Now</button>
+        </div>
+      </div>
+      <!-- Example Card 3 -->
+      <div class="card fade-in">
+        <img src="https://picsum.photos/seed/w3/400/300" alt="Workshop Image">
+        <div class="card-content">
+          <h3>Advanced Pastry Art</h3>
+          <p>Elevate your pastry skills with intricate designs.</p>
+          <div class="price">From $200</div>
+          <button class="btn-cta">cta_button: Book Now</button>
+        </div>
+      </div>
+      <!-- Add more cards as needed -->
+    </div>
+  </section>
+
+  <!-- Pricing Tiers -->
+  <section class="pricing-tiers section">
+    <div class="container">
+      <h2 class="section-title">Pricing Tiers</h2>
+      <div class="grid grid-3 pricing-grid">
+        <div class="pricing-tier pricing">
+          <h4>Standard</h4>
+          <p>Access to live workshop session.</p>
+          <p><strong>$99</strong></p>
+        </div>
+        <div class="pricing-tier pricing">
+          <h4>Premium</h4>
+          <p>Includes recording and recipe booklet.</p>
+          <p><strong>$149</strong></p>
+        </div>
+        <div class="pricing-tier pricing">
+          <h4>VIP</h4>
+          <p>One‑on‑one coaching plus all materials.</p>
+          <p><strong>$199</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA Banner -->
+  <section class="booking-cta cta-band">
+    <div class="container">
+      <h2>Ready to Cook?</h2>
+      <button class="btn-primary">hero_cta: Explore Workshops.</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    © 2024 Culinary Canvas. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle?.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('fade-in-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Filter dropdowns
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dropdown = btn.nextElementSibling;
+      dropdown.classList.toggle('show');
+      btn.classList.toggle('active');
+    });
+  });
+
+  // Simple modal handling (placeholder for future)
+  // (No modals content added for brevity)
+</script>
+</body>
+</html>
