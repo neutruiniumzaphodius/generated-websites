@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Indoor Plants – Green Roots Boutique Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/lucide.min.css">
+<style>
+:root{
+  --color-primary:#386641;
+  --color-secondary:#A89971;
+  --color-accent:#F5F5DC;
+  --color-bg:#ffffff;
+  --color-text:#2C2C2C;
+  --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.07);
+  --transition-fast:.25s ease-out;
+  --radius:8px;
+  --max-width:1440px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Open Sans",sans-serif;
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+header{
+  background:var(--color-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  position:sticky;top:0;z-index:1000;
+}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+}
+.nav-links{
+  display:flex;gap:24px;
+}
+.nav-link{
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+  color:var(--color-primary);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+}
+.hamburger{
+  display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+}
+.hamburger span{display:block;height:2px;background:#000;}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.skip-link{
+  position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+}
+.skip-link:focus{top:0;}
+h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:0.5px;}
+h1{font-size:clamp(32px,5vw,48px);}
+h2{font-size:clamp(28px,4vw,36px);}
+h3{font-size:clamp(22px,3vw,28px);}
+button.primary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  transition:var(--transition-fast);
+}
+button.primary:hover{background:#2E5236;}
+button.secondary{
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  background:transparent;
+  transition:var(--transition-fast);
+}
+button.secondary:hover{background:#F0F8F0;}
+section{padding:48px 0;}
+.fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.25,0.8,0.25,1),transform .6s cubic-bezier(0.25,0.8,0.25,1);}
+.fade-section.visible{opacity:1;transform:none;}
+.hero{
+  position:relative;height:80vh;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.35);
+}
+.hero .hero-content{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 16px;max-width:var(--max-width);margin:auto;color:#fff;z-index:1;
+}
+.hero .hero-content h1{color:#fff;}
+.hero .hero-content h3{color:#fff;margin-bottom:24px;}
+.carousel{
+  overflow:hidden;position:relative;
+}
+.carousel .inner{
+  display:flex;gap:24px;transition:transform .5s ease;
+}
+.carousel .card{
+  flex:0 0 calc(33.333% - 16px);
+  background:var(--color-bg);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.carousel .card img{border-radius:var(--radius);}
+.carousel:hover .inner{animation-play-state:paused;}
+.carousel .arrows{
+  position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px;
+}
+.carousel .arrow{
+  background:rgba(255,255,255,0.8);
+  border-radius:50%;
+  width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition-fast);
+}
+.carousel .arrow:hover{animation:pulse 0.5s infinite;}
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+.quick-nav{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+}
+.quick-nav a{
+  background:var(--color-primary);
+  color:#fff;
+  padding:32px;
+  border-radius:var(--radius);
+  text-align:center;
+  transition:transform .3s ease-out-back;
+}
+.quick-nav a:hover{
+  transform:scale(1.08) rotate(2deg);
+}
+.quick-nav .icon{margin-bottom:12px;}
+@media (min-width:768px){
+  .quick-nav{grid-template-columns:repeat(4,1fr);}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html"><img src="https://via.placeholder.com/150x40?text=Green+Roots" alt="Green Roots Boutique Garden"></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="products.html" class="nav-link">Products</a></li>
+        <li><a href="tools-accessories.html" class="nav-link">Tools &amp; Accessories</a></li>
+        <li><a href="indoor-plants.html" class="nav-link">Indoor Plants</a></li>
+        <li><a href="care-guides.html" class="nav-link">Care Guides</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero Image -->
+  <section class="hero fade-section" id="hero">
+    <img src="https://picsum.photos/seed/indoor1/1600/900" alt="Modern loft with lush houseplants" style="width:100%;height:100%;object-fit:cover;">
+    <div class="hero-content">
+      <h1>Bring Nature Inside.</h1>
+    </div>
+  </section>
+
+  <!-- Style Lookbook Carousel -->
+  <section class="fade-section" id="lookbook">
+    <div class="container">
+      <h2>Style Lookbook</h2>
+      <div class="carousel" aria-label="Style lookbook carousel">
+        <div class="inner" id="lookbook-inner">
+          <div class="card">
+            <img src="https://picsum.photos/seed/look1/800/600" alt="Scandinavian Minimalist">
+            <h3>Scandinavian Minimalist</h3>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/look2/800/600" alt="Boho Jungle">
+            <h3>Boho Jungle</h3>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/look3/800/600" alt="Industrial Green">
+            <h3>Industrial Green</h3>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/look4/800/600" alt="Mid‑Century Modern">
+            <h3>Mid‑Century Modern</h3>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/look5/800/600" alt="Urban Jungle">
+            <h3>Urban Jungle</h3>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/look6/800/600" alt="Coastal Calm">
+            <h3>Coastal Calm</h3>
+          </div>
+        </div>
+        <div class="arrows">
+          <button class="arrow" id="lookbook-prev" aria-label="Previous slide"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="arrow" id="lookbook-next" aria-label="Next slide"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plant Grid -->
+  <section class="fade-section" id="plant-grid">
+    <div class="container">
+      <h2>Our Indoor Collection</h2>
+      <div class="plant-grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant1/400/500" alt="Snake Plant">
+          <h3>Snake Plant</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Low</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant2/400/500" alt="Monstera Deliciosa">
+          <h3>Monstera Deliciosa</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Bright</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant3/400/500" alt="ZZ Plant">
+          <h3>ZZ Plant</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Low</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant4/400/500" alt="Fiddle Leaf Fig">
+          <h3>Fiddle Leaf Fig</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Bright</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant4/400/500" alt="Pothos">
+          <h3>Pothos</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Medium</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant5/400/500" alt="Peace Lily">
+          <h3>Peace Lily</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Bright</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/plant6/400/500" alt="Rubber Plant">
+          <h3>Rubber Plant</h3>
+          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="7.07" y2="7.07"/><line x1="16.93" y1="16.93" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="7.07" y2="16.93"/><line x1="16.93" y1="7.07" x2="19.78" y2="4.22"/></svg> Light: Medium</div>
+          <button class="secondary">View Care Guide</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Care Guide CTA -->
+  <section class="fade-section" id="care-cta">
+    <div class="container">
+      <h2>Need More Help?</h2>
+      <p>Download our comprehensive indoor plant care guide and keep your green friends thriving.</p>
+      <a href="https://example.com/indoor-care-guide.pdf" class="primary" download>Download Guide</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container" style="text-align:center;padding:24px 0;">
+    <p>&copy; 2024 Green Roots Boutique Garden. All rights reserved.</p>
+    <div style="margin-top:12px;">
+      <i data-lucide="facebook" style="margin:0 8px;"></i>
+      <i data-lucide="twitter" style="margin:0 8px;"></i>
+      <i data-lucide="instagram" style="margin:0 8px;"></i>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest/dist/lucide.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', function() {
+    const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+    this.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('show');
+  });
+
+  // IntersectionObserver for fade sections
+  const faders = document.querySelectorAll('.fade-section');
+  const appearOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        return;
+      } else {
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+
+  // Lookbook carousel functionality
+  const lookbookInner = document.getElementById('lookbook-inner');
+  const lookbookCards = lookbookInner.children;
+  const lookbookPrev = document.getElementById('lookbook-prev');
+  const lookbookNext = document.getElementById('lookbook-next');
+  let lookbookIndex = 0;
+  const slidesToShow = 3;
+
+  function updateLookbook() {
+    const slideWidth = lookbookCards[0].offsetWidth + 24; // card width + gap
+    lookbookInner.style.transform = `translateX(-${lookbookIndex * slideWidth}px)`;
+  }
+
+  lookbookPrev.addEventListener('click', function() {
+    if (lookbookIndex > 0) {
+      lookbookIndex--;
+      updateLookbook();
+    }
+  });
+  lookbookNext.addEventListener('click', function() {
+    if (lookbookIndex < lookbookCards.length - slidesToShow) {
+      lookbookIndex++;
+      updateLookbook();
+    }
+  });
+
+  // Initialize icons (Lucide)
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+});
+</script>
+</body>
+</html>

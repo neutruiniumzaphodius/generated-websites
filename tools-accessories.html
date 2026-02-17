@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tools & Accessories – Green Roots Boutique Garden</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lucide@0.259.0/dist/lucide.min.css">
+<style>
+:root{
+  --color-primary:#386641;
+  --color-secondary:#A89971;
+  --color-accent:#F5F5DC;
+  --color-bg:#ffffff;
+  --color-text:#2C2C2C;
+  --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+  --shadow-card:0 4px 12px rgba(0,0,0,.07);
+  --transition-fast:.25s ease-out;
+  --radius:8px;
+  --max-width:1440px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Open Sans",sans-serif;
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+header{
+  background:var(--color-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+  position:sticky;top:0;z-index:1000;
+}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+}
+.nav-links{
+  display:flex;gap:24px;
+}
+.nav-link{
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+  color:var(--color-primary);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+}
+.hamburger{
+  display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+}
+.hamburger span{display:block;height:2px;background:#000;}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.skip-link{
+  position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+}
+.skip-link:focus{top:0;}
+h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:.5px;}
+h1{font-size:clamp(32px,5vw,48px);}
+h2{font-size:clamp(28px,4vw,36px);}
+h3{font-size:clamp(22px,3vw,28px);}
+button.primary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  transition:var(--transition-fast);
+}
+button.primary:hover{background:#2E5236;}
+button.secondary{
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  background:transparent;
+  transition:var(--transition-fast);
+}
+button.secondary:hover{background:#F0F8F0;}
+section{padding:48px 0;}
+.fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.25,.8,.25,1),transform .6s cubic-bezier(.25,.8,.25,1);}
+.fade-section.visible{opacity:1;transform:none;}
+.hero{
+  position:relative;height:80vh;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);
+}
+.hero .hero-content{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 16px;max-width:var(--max-width);margin:auto;color:#fff;z-index:1;
+}
+.subcategory-tiles{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;
+}
+.tile{
+  background:var(--color-primary);
+  color:#fff;
+  padding:32px;
+  border-radius:var(--radius);
+  text-align:center;
+  transition:transform .3s ease-out-back;
+}
+.tile:hover{
+  transform:scale(1.08) rotate(2deg);
+}
+.tile .icon{margin-bottom:12px;}
+.product-listing{
+  display:flex;flex-direction:column;gap:24px;
+}
+.product-item{
+  display:flex;flex-direction:column;background:var(--color-bg);border-radius:var(--radius);box-shadow:var(--shadow-card);overflow:hidden;
+}
+@media (min-width:600px){
+  .product-item{flex-direction:row;}
+}
+.product-item img{
+  width:100%;height:auto;object-fit:cover;
+}
+@media (min-width:600px){
+  .product-item img{width:250px;flex-shrink:0;}
+}
+.product-info{
+  padding:16px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.product-info h3{margin:0 0 8px;}
+.product-info p{margin-bottom:12px;}
+.bundle-suggestions{
+  background:#e8f5e9;
+  text-align:center;
+}
+.bundle-card{
+  background:var(--color-bg);
+  padding:24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  max-width:400px;
+  margin:auto;
+}
+footer{
+  background:var(--color-bg);
+  padding:24px 0;
+  text-align:center;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav>
+      <a href="index.html" class="logo"><strong>Green Roots</strong></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="products.html" class="nav-link">Products</a></li>
+        <li><a href="tools-accessories.html" class="nav-link active">Tools & Accessories</a></li>
+        <li><a href="indoor-plants.html" class="nav-link">Indoor Plants</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero Banner -->
+  <section class="hero fade-section" id="hero_banner">
+    <img src="https://picsum.photos/seed/toolshero/1600/900" alt="Close‑up of gardening tools arranged on a wooden table" loading="lazy">
+    <div class="hero-content">
+      <h1>Tools & Accessories for Every Garden</h1>
+      <h3>Durable, ergonomic, and eco‑friendly solutions</h3>
+      <button class="primary">Shop Now</button>
+    </div>
+  </section>
+
+  <!-- Subcategory Tiles -->
+  <section class="fade-section" id="subcategory_tiles">
+    <div class="container">
+      <h2>Shop by Category</h2>
+      <div class="subcategory-tiles">
+        <a href="#" class="tile">
+          <div class="icon"><i data-lucide="hammer"></i></div>
+          <h3>Hand Tools</h3>
+        </a>
+        <a href="#" class="tile">
+          <div class="icon"><i data-lucide="pot"></i></div>
+          <h3>Pots & Planters</h3>
+        </a>
+        <a href="#" class="tile">
+          <div class="icon"><i data-lucide="layers"></i></div>
+          <h3>Soils & Fertilizers</h3>
+        </a>
+        <a href="#" class="tile">
+          <div class="icon"><i data-lucide="droplet"></i></div>
+          <h3>Plant Care</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Listing -->
+  <section class="fade-section" id="product_listing">
+    <div class="container">
+      <h2>Featured Tools</h2>
+      <div class="product-listing">
+        <article class="product-item">
+          <img src="https://picsum.photos/seed/handtrowel/400/300" alt="Stainless steel hand trowel with wooden handle">
+          <div class="product-info">
+            <h3>Ergonomic Hand Trowel</h3>
+            <p>Stainless steel blade with a sustainably sourced wooden handle. Perfect for transplanting seedlings.</p>
+            <p><strong>Price:</strong> $12.99</p>
+            <button class="primary">Add to Cart</button>
+          </div>
+        </article>
+        <article class="product-item">
+          <img src="https://picsum.photos/seed/pruning/400/300" alt="Sharp pruning shears with anti‑slip grip">
+          <div class="product-info">
+            <h3>Precision Pruning Shears</h3>
+            <p>High‑carbon steel blades, anti‑slip grip, and a safety lock for clean cuts.</p>
+            <p><strong>Price:</strong> $18.50</p>
+            <button class="primary">Add to Cart</button>
+          </div>
+        </article>
+        <article class="product-item">
+          <img src="https://picsum.photos/seed/wateringcan/400/300" alt="Ceramic watering can with green leaf logo">
+          <div class="product-info">
+            <h3>Ceramic Watering Can</h4>
+            <p>Elegant ceramic finish with a comfortable rose‑type spout for gentle watering.</p>
+            <p><strong>Price:</strong> $22.00</p>
+            <button class="primary">Add to Cart</button>
+          </div>
+        </article>
+        <article class="product-item">
+          <img src="https://picsum.photos/seed/soilbag/400/300" alt="Bag of organic potting soil with green label">
+          <div class="product-info">
+            <h3>Organic Potting Soil – 20 L</h3>
+            <p>Rich in nutrients, peat‑free, and perfect for indoor and outdoor plants.</p>
+            <p><strong>Price:</strong> $15.75</p>
+            <button class="primary">Add to Cart</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bundle Suggestions -->
+  <section class="fade-section bundle-suggestions" id="bundle_suggestions">
+    <div class="container">
+      <h2>Bundle & Save</h2>
+      <div class="bundle-card">
+        <h3>Starter Gardening Kit</h3>
+        <p>Includes a hand trowel, pruning shears, a 20 L bag of organic soil, and a set of 3 decorative terracotta pots.</p>
+        <p><strong>Bundle Price:</strong> $58.99 <span style="text-decoration:line-through; color:#777;">$78.99</span></p>
+        <button class="secondary">Bundle & Save →</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Green Roots Boutique Garden. All rights reserved.</p>
+    <p>123 Green Lane, Portland, OR 97201 | <a href="tel:+15551234567">+1 (555) 123‑4567</a></p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.259.0/dist/lucide.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  // Navigation toggle
+  const hamburger=document.querySelector('.hamburger');
+  const navLinks=document.querySelector('.nav-links');
+  hamburger.addEventListener('click',()=>navLinks.classList.toggle('show'));
+
+  // Fade‑in on scroll
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.fade-section').forEach(el=>observer.observe(el));
+  
+  // Initialize Lucide icons
+  if(window.lucide){lucide.createIcons();}
+});
+</script>
+</body>
+</html>

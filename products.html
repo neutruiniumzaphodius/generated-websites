@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products – Green Roots Boutique Garden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.259.0"></script>
+  <style>
+    :root{
+      --color-primary:#386641;
+      --color-secondary:#A89971;
+      --color-accent:#F5F5DC;
+      --color-bg:#ffffff;
+      --color-text:#2C2C2C;
+      --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+      --shadow-card:0 4px 12px rgba(0,0,0,0.07);
+      --transition-fast:.25s ease-out;
+      --radius:8px;
+      --max-width:1440px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:"Open Sans",sans-serif;
+      color:var(--color-text);
+      background:var(--gradient-bg);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:2px solid var(--color-primary);}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    header{
+      background:var(--color-bg);
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      position:sticky;top:0;z-index:1000;
+    }
+    .container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+    nav{
+      display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+    }
+    .nav-links{
+      display:flex;gap:24px;
+    }
+    .nav-link{
+      font-family:"Montserrat",sans-serif;
+      font-weight:600;
+      color:var(--color-primary);
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+    }
+    .hamburger{
+      display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+    }
+    .hamburger span{display:block;height:2px;background:#000;}
+    @media (max-width:768px){
+      .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+      .nav-links.show{display:flex;}
+      .hamburger{display:flex;}
+    }
+    .skip-link{
+      position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:0.5px;}
+    h1{font-size:clamp(32px,5vw,48px);}
+    h2{font-size:clamp(28px,4vw,36px);}
+    h3{font-size:clamp(22px,3vw,28px);}
+    button.primary{
+      background:var(--color-primary);
+      color:#fff;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      transition:var(--transition-fast);
+    }
+    button.primary:hover{background:#2E5236;}
+    button.secondary{
+      border:2px solid var(--color-primary);
+      color:var(--color-primary);
+      padding:10px 22px;
+      border-radius:var(--radius);
+      background:transparent;
+      transition:var(--transition-fast);
+    }
+    button.secondary:hover{background:#F0F8F0;}
+    section{padding:48px 0;}
+    .fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.25,0.8,0.25,1),transform .6s cubic-bezier(0.25,0.8,0.25,1);}
+    .fade-section.visible{opacity:1;transform:none;}
+    .category-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:24px;
+    }
+    .category-tile{
+      background:var(--color-primary);
+      color:#fff;
+      padding:32px;
+      border-radius:var(--radius);
+      text-align:center;
+      transition:transform .3s ease-out-back;
+    }
+    .category-tile:hover{
+      transform:scale(1.08) rotate(2deg);
+    }
+    .filter-sidebar{
+      background:var(--color-bg);
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      position:sticky;
+      top:100px;
+      height:max-content;
+    }
+    .filter-group{margin-bottom:24px;}
+    .filter-group label{display:block;margin-bottom:8px;font-weight:600;}
+    .sort-container{display:flex;justify-content:flex-end;gap:12px;margin-bottom:24px;}
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:24px;
+    }
+    .product-card{
+      background:var(--color-bg);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .product-card img{border-radius:var(--radius);}
+    .quick-view{
+      position:absolute;
+      top:8px;
+      right:8px;
+      background:rgba(255,255,255,0.8);
+      border-radius:50%;
+      width:32px;
+      height:32px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:var(--transition-fast);
+    }
+    .quick-view:hover{
+      transform:scale(1.2) rotate(2deg);
+    }
+    .pagination{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      margin-top:24px;
+    }
+    .pagination button{
+      background:transparent;
+      color:var(--color-primary);
+      padding:8px 12px;
+      border-radius:var(--radius);
+      border:1px solid var(--color-primary);
+      transition:var(--transition-fast);
+    }
+    .pagination button:hover{
+      background:#F0F8F0;
+    }
+    footer{
+      background:var(--color-bg);
+      padding:24px 0;
+      text-align:center;
+      font-size:14px;
+      color:var(--color-secondary);
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none !important;animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <header>
+    <div class="container">
+      <nav aria-label="Main navigation">
+        <a href="index.html" class="logo"><strong>Green Roots Boutique Garden</strong></a>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="products.html" class="nav-link active">Products</a></li>
+          <li><a href="tools-accessories.html" class="nav-link">Tools & Accessories</a></li>
+          <li><a href="indoor-plants.html" class="nav-link">Indoor Plants</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <button class="hamburger" aria-label="Toggle menu" aria-controls="nav-links" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    <!-- Category Grid -->
+    <section class="fade-section" id="category_grid">
+      <h2>Shop by Category</h2>
+      <div class="category-grid">
+        <a href="indoor-plants.html" class="category-tile">Indoor Plants</a>
+        <a href="tools-accessories.html" class="category-tile">Tools & Accessories</a>
+        <a href="care-guides.html" class="category-tile">Care Guides</a>
+        <a href="blog.html" class="category-tile">Blog & Tips</a>
+      </div>
+    </section>
+
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start;">
+      <!-- Filter Sidebar -->
+      <section class="fade-section" id="filter_sidebar" style="order:2;">
+        <aside class="filter-sidebar" aria-label="Product filters">
+          <h3>Filter</h3>
+          <div class="filter-group">
+            <label for="filter-light">Light Requirement</label>
+            <select id="filter-light">
+              <option value="">All</option>
+              <option>Full Sun</option>
+              <option>Partial Shade</option>
+              <option>Shade</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-water">Water Needs</label>
+            <select id="filter-water">
+              <option value="">All</option>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-size">Size</label>
+            <select id="filter-size">
+              <option value="">All</option>
+              <option>Small</option>
+              <option>Medium</option>
+              <option>Large</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filter-price">Price Range</label>
+            <input type="range" id="filter-price" min="0" max="200" step="5">
+          </div>
+          <button class="primary" type="button">Apply Filters</button>
+        </aside>
+      </section>
+
+      <!-- Main Product Area -->
+      <section style="order:1;">
+        <!-- Sort Dropdown -->
+        <div class="sort-container fade-section" id="sort_dropdown">
+          <label for="sort-select" class="visually-hidden">Sort products</label>
+          <select id="sort-select" class="secondary">
+            <option value="popularity">Sort by Popularity</option>
+            <option value="price-asc">Price – Low to High</option>
+            <option value="price-desc">Price – High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid fade-section" id="product_grid">
+          <!-- Example product cards -->
+          <article class="product-card">
+            <img src="https://picsum.photos/seed/p1/400/300" alt="Product Image">
+            <h3>Sunshine Succulent</h3>
+            <p>Light: Full Sun • Water: Low</p>
+            <button class="secondary">Add to Cart</button>
+            <button class="quick-view" aria-label="Quick view" title="Quick view">
+              <svg width="24" height="24"><use xlink:href="#leaf"></use></svg>
+            </button>
+          </article>
+          <article class="product-card">
+            <img src="https://picsum.photos/seed/p2/400/300" alt="Product Image">
+            <h3>Fern Delight</h3>
+            <p>Light: Shade • Water: Medium</p>
+            <button class="secondary">Add to Cart</button>
+            <button class="quick-view" aria-label="Quick view" title="Quick view">
+              <svg width="24" height="24"><use xlink:href="#leaf"></use></svg>
+            </button>
+          </article>
+          <article class="product-card">
+            <img src="https://picsum.photos/seed/p3/400/300" alt="Product Image">
+            <h3>Ruby Rose</h3>
+            <p>Light: Partial Sun • Water: High</p>
+            <button class="secondary">Add to Cart</button>
+            <button class="quick-view" aria-label="Quick view" title="Quick view">
+              <svg width="24" height="24"><use xlink:href="#leaf"></use></svg>
+            </button>
+          </article>
+          <article class="product-card">
+            <img src="https://picsum.photos/seed/p4/400/300" alt="Product Image">
+            <h3>Azure Orchid</h3>
+            <p>Light: Partial Sun • Water: Medium</p>
+            <button class="secondary">Add to Cart</button>
+            <button class="quick-view" aria-label="Quick view" title="Quick view">
+              <svg width="24" height="24"><use xlink:href="#leaf"></use></svg>
+            </button>
+          </article>
+          <article class="product-card">
+            <img src="https://picsum.photos/seed/p5/400/300" alt="Product Image">
+            <h3>Golden Pothos</h3>
+            <p>Light: Low Light • Water: Low</p>
+            <button class="secondary">Add to Cart</button>
+            <button class="quick-view" aria-label="Quick view" title="Quick view">
+              <svg width="24" height="24"><use xlink:href="#leaf"></use></svg>
+            </button>
+          </article>
+          <article class="product-card">
+            <img src="https://picsum.photos/seed/p6/400/300" alt="Product Image">
+            <h3>Crimson Coleus</h3>
+            <p>Light: Partial Sun • Water: High</p>
+            <button class="secondary">Add to Cart</button>
+            <button class="quick-view" aria-label="Quick view" title="Quick view">
+              <svg width="24" height="24"><use xlink:href="#leaf"></use></svg>
+            </button>
+          </article>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="pagination fade-section" id="pagination" aria-label="Product pagination">
+          <button class="secondary" aria-label="Previous page">Prev</button>
+          <button class="secondary" aria-label="Page 1">1</button>
+          <button class="secondary" aria-label="Page 2">2</button>
+          <button class="secondary" aria-label="Page 3">3</button>
+          <button class="secondary" aria-label="Next page">Next</button>
+        </nav>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Green Roots Boutique Garden. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger?.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Fade-in sections on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+    document.querySelectorAll('.fade-section').forEach(sec => observer.observe(sec));
+  </script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FAQ - Green Roots Boutique Garden</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --color-primary:#386641;
+  --color-secondary:#A89971;
+  --color-accent:#F5F5FDC;
+  --color-bg:#ffffff;
+  --color-text:#2C2C2C;
+  --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.07);
+  --transition-fast:.25s ease-out;
+  --radius:8px;
+  --max-width:1440px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Open Sans",sans-serif;
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+header{
+  background:var(--color-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  position:sticky;top:0;z-index:1000;
+}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+}
+.nav-links{
+  display:flex;align-items:center;gap:24px;
+}
+.nav-link{
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+  color:var(--color-primary);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+}
+.hamburger{
+  display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+}
+.hamburger span{display:block;height:2px;background:#000;}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.skip-link{
+  position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+}
+.skip-link:focus{top:0;}
+h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:0.5px;}
+h1{font-size:clamp(32px,5vw,48px);}
+h2{font-size:clamp(28px,4vw,36px);}
+h3{font-size:clamp(22px,3vw,28px);}
+button.primary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  transition:var(--transition-fast);
+}
+button.primary:hover{background:#2E5236;}
+button.secondary{
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  background:transparent;
+  transition:var(--transition-fast);
+}
+button.secondary:hover{background:#F0F8F0;}
+section{padding:48px 0;}
+.fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.25,0.8,0.25,1),transform .6s cubic-bezier(0.25,0.8,0.25,1);}
+.fade-section.visible{opacity:1;transform:none;}
+.accordion-item{border-bottom:1px solid #ddd;padding:12px 0;}
+.accordion-question{
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.accordion-question:hover{color:var(--color-primary);}
+.accordion-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s var(--transition-fast);
+}
+.accordion-answer p{margin-top:12px;}
+.accordion-answer a{color:var(--color-primary);font-weight:600;}
+.accordion-answer.show{max-height:500px;}
+.search-faq input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+}
+.search-faq button{
+  margin-top:12px;
+  padding:12px 24px;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo"><a href="index.html"><strong>Green Roots</strong></a></div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="products.html" class="nav-link">Products</a>
+        <a href="tools-accessories.html" class="nav-link">Tools &amp; Accessories</a>
+        <a href="indoor-plants.html" class="nav-link">Indoor Plants</a>
+        <a href="care-guides.html" class="nav-link">Care Guides</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="faq.html" class="nav-link active">FAQ</a>
+      </div>
+      <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="container">
+  <section id="search_faq" class="fade-section">
+    <h2>Search FAQ</h2>
+    <div class="search-faq">
+      <input type="text" id="faq-search" placeholder="What can we help you with?" aria-label="Search FAQ">
+      <button class="primary" id="search-button"><i data-lucide="search"></i> Search</button>
+    </div>
+  </section>
+
+  <section id="accordion_questions" class="fade-section">
+    <h2>Common Questions</h2>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-question" role="button" aria-expanded="false" aria-controls="answer1" id="question1">
+          How do I know which light level is right for my plant?
+          <i data-lucide="sun" class="icon-inline"></i>
+        </div>
+        <div class="accordion-answer" id="answer1" aria-labelledby="question1">
+          <p>Check the plant’s label; our icons indicate Sun (full), Partial, or Shade. For indoor plants, a bright north‑facing window usually provides partial light.</p>
+          <p><a href="blog.html#lighting">Read our guide to indoor lighting →</a></p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-question" role="button" aria-expanded="false" aria-controls="answer2" id="question2">
+          Do you ship plants outside the state?
+        </div>
+        <div class="accordion-answer" id="answer2" aria-labelledby="question2">
+          <p>Currently we ship within the contiguous United States using eco‑friendly packaging. Out‑of‑state shipping is coming soon!</p>
+          <p><a href="blog.html#shipping">Read our guide to plant shipping →</a></p>
+        </div>
+      </div>
+      <!-- Additional Q&A can be added here following the same structure -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2023 Green Roots Boutique Garden. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+  });
+
+  // Fade-in sections
+  const faders = document.querySelectorAll('.fade-section');
+  const appearOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        return;
+      } else {
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+
+  // Accordion functionality
+  const accordionItems = document.querySelectorAll('.accordion-question');
+  accordionItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const expanded = item.getAttribute('aria-expanded') === 'true';
+      item.setAttribute('aria-expanded', !expanded);
+      const answer = document.getElementById(item.getAttribute('aria-controls'));
+      answer.classList.toggle('show');
+    });
+  });
+
+  // Simple FAQ search (filter by question text)
+  const searchInput = document.getElementById('faq-search');
+  const searchBtn = document.getElementById('search-button');
+  const filterFAQ = () => {
+    const term = searchInput.value.toLowerCase().trim();
+    document.querySelectorAll('.accordion-item').forEach(item => {
+      const question = item.querySelector('.accordion-question').textContent.toLowerCase();
+      if (question.includes(term) || term === '') {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  };
+  searchBtn.addEventListener('click', filterFAQ);
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      filterFAQ();
+    }
+  });
+});
+lucide.createIcons();
+</script>
+</body>
+</html>

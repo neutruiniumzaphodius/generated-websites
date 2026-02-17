@@ -1,75 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Green Roots Boutique Garden Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#386641;
+  --color-secondary:#A89971;
+  --color-accent:#F5F5DC;
+  --color-bg:#ffffff;
+  --color-text:#2C2C2C;
+  --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.07);
+  --transition-fast:.25s ease-out;
+  --radius:8px;
+  --max-width:1440px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Open Sans",sans-serif;
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+header{
+  background:var(--color-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  position:sticky;top:0;z-index:1000;
+}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+}
+.nav-links{
+  display:flex;gap:24px;
+}
+.nav-link{
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+  color:var(--color-primary);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+}
+.hamburger{
+  display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+}
+.hamburger span{display:block;height:2px;background:#000;}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.skip-link{
+  position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+}
+.skip-link:focus{top:0;}
+h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:0.5px;}
+h1{font-size:clamp(32px,5vw,48px);}
+h2{font-size:clamp(28px,4vw,36px);}
+h3{font-size:clamp(22px,3vw,28px);}
+button.primary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  transition:var(--transition-fast);
+}
+button.primary:hover{background:#2E5236;}
+button.secondary{
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  background:transparent;
+  transition:var(--transition-fast);
+}
+button.secondary:hover{background:#F0F8F0;}
+section{padding:48px 0;}
+.fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.25,0.8,0.25,1),transform .6s cubic-bezier(0.25,0.8,0.25,1);}
+.fade-section.visible{opacity:1;transform:none;}
+.hero{
+  position:relative;height:80vh;overflow:hidden;
+}
+.hero video{
+  width:100%;height:100%;object-fit:cover;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.35);
+}
+.hero .hero-content{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 16px;max-width:var(--max-width);margin:auto;color:#fff;z-index:1;
+}
+.hero .hero-content h1{color:#fff;}
+.hero .hero-content h3{color:#fff;margin-bottom:24px;}
+.carousel{
+  overflow:hidden;position:relative;
+}
+.carousel .inner{
+  display:flex;gap:24px;transition:transform .5s ease;
+}
+.carousel .card{
+  flex:0 0 calc(33.333% - 16px);
+  background:var(--color-bg);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.carousel .card img{border-radius:var(--radius);}
+.carousel:hover .inner{animation-play-state:paused;}
+.carousel .arrows{
+  position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px;
+}
+.carousel .arrow{
+  background:rgba(255,255,255,0.8);
+  border-radius:50%;
+  width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition-fast);
+}
+.carousel .arrow:hover{animation:pulse 0.5s infinite;}
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+.seasonal{
+  background:#e8f5e9;
+  text-align:center;
+}
+.newsletter{
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(0);
+  border-radius:var(--radius);
+  padding:32px;
+  max-width:600px;
+  margin:auto;
+  transition:.4s ease;
+}
+.newsletter.visible{backdrop-filter:blur(8px);}
+.newsletter input{
+  width:100%;padding:12px;border:1px solid #ccc;border-radius:var(--radius);margin-bottom:12px;
+}
+.newsletter button{width:100%;}
+.quick-nav{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+}
+.quick-nav a{
+  background:var(--color-primary);
+  color:#fff;
+  padding:32px;
+  border-radius:var(--radius);
+  text-align:center;
+  transition:transform .3s ease-out-back;
+}
+.quick-nav a:hover{
+  transform:scale(1.08) rotate(2deg);
+}
+.quick-nav .icon{margin-bottom:12px;}
+@media (min-width:768px){
+  .quick-nav{grid-template-columns:repeat(4,1fr);}
+}
+.newsletter-card{
+  background:rgba(255,255,255,0.4);
+  border-radius:var(--radius);
+  padding:32px;
+  box-shadow:var(--shadow-card);
+}
+.newsletter-card button{width:100%;}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="logo"><strong>Green Roots</strong></a>
+      <button class="hamburger" aria-label="Open menu" aria-controls="nav-menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="products.html" class="nav-link">Products</a></li>
+        <li><a href="tools-accessories.html" class="nav-link">Tools</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Video Section -->
+  <section id="hero_video" class="hero fade-section">
+    <video autoplay muted loop playsinline poster="https://picsum.photos/seed/hero/1920/1080">
+      <source src="https://cdn.pixabay.com/vimeo/2022/04/08/165726_540p.mp4?download=true" type="video/mp4">
+    </video>
+    <div class="hero-content container">
+      <h1>Green Roots Boutique Garden Center</h1>
+      <h3>Where every plant finds a home</h3>
+      <div style="display:flex;gap:12px;margin-top:24px;">
+        <button class="primary">Shop Now</button>
+        <button class="secondary">Learn More</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Featured Products Carousel -->
+  <section id="featured_products_carousel" class="fade-section">
+    <div class="container">
+      <h2>Featured Products</h2>
+      <div class="carousel" data-autoplay="5000">
+        <div class="inner">
+          <div class="card" style="box-shadow:var(--shadow-card);">
+            <img src="https://picsum.photos/seed/p1/400/300" alt="Sunflower">
+            <h3>Sunflower</h3>
+            <p>Bright, sunny, and cheerful.</p>
+            <button class="secondary leaf-unfurl"><i data-lucide="shopping-cart"></i> Add to Cart</button>
+          </div>
+          <div class="card" style="box-shadow:var(--shadow-card);">
+            <img src="https://picsum.photos/seed/p2/400/300" alt="Lavender">
+            <h3>Lavender</h3>
+            <p>Fragrant and soothing.</p>
+            <button class="secondary leaf-unfurl"><i data-lucide="shopping-cart"></i> Add to Cart</button>
+          </div>
+          <div class="card" style="box-shadow:var(--shadow-card);">
+            <img src="https://picsum.photos/seed/p3/400/300" alt="Rose">
+            <h3>Rose</h3>
+            <p>Classic beauty in every shade.</p>
+            <button class="secondary leaf-unfurl"><i data-lucide="shopping-cart"></i> Add to Cart</button>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div class="arrows">
+          <button class="arrow left" aria-label="Previous slide"><i data-lucide="chevron-left"></i></button>
+          <button class="arrow right" aria-label="Next slide"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seasonal Promotion Banner -->
+  <section id="seasonal_promotion_banner" class="fade-section" style="background:#e8f5e9;text-align:center;">
+    <div class="container">
+      <h2>Spring Bloom Sale – Up to 30% Off!</h2>
+      <p>Refresh your garden with our hand‑picked spring selections.</p>
+      <button class="primary">Shop Promotion</button>
+    </div>
+  </section>
+
+  <!-- Brand Story Snippet -->
+  <section id="brand_story_snippet" class="fade-section">
+    <div class="container" style="display:grid;grid-template-columns:1fr;gap:32px;">
+      <div style="order:2;">
+        <h2>Our Story</h2>
+        <p>Founded by passionate horticulturists, Green Roots blends sustainable practices with curated plant collections. We believe every garden—big or small—deserves love, expertise, and a touch of beauty.</p>
+        <button class="secondary">Read More</button>
+      </div>
+      <div style="order:1;">
+        <img src="https://picsum.photos/seed/story/800/600" alt="Boutique garden interior">
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section id="newsletter_signup" class="fade-section">
+    <div class="container">
+      <div class="newsletter-card">
+        <h2>Stay Updated</h2>
+        <p>Join our community for exclusive offers, care tips, and the latest garden trends.</p>
+        <form id="newsletter-form" novalidate>
+          <input type="email" id="news-email" placeholder="Enter your email" required aria-label="Email address">
+          <button type="submit" class="primary">Subscribe</button>
+        </form>
+        <p id="news-feedback" style="margin-top:8px;color:var(--color-primary);display:none;">Thank you for subscribing!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Navigation Links -->
+  <section id="quick_nav_links" class="fade-section">
+    <div class="container">
+      <div class="quick-nav">
+        <a href="products.html" class="nav-quick" aria-label="Shop Plants">
+          <i data-lucide="leaf"></i>
+          <span>Shop Plants</span>
+        </a>
+        <a href="care-guides.html" class="nav-quick" aria-label="Plant Care Guides">
+          <i data-lucide="book-open"></i>
+          <span>Care Guides</span>
+        </a>
+        <a href="contact.html" class="nav-quick" aria-label="Contact Us">
+          <i data-lucide="mail"></i>
+          <span>Contact</span>
+        </a>
+        <a href="blog.html" class="nav-quick" aria-label="Read Our Blog">
+          <i data-lucide="pen-tool"></i>
+          <span>Blog</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="background:var(--color-bg);padding:24px 0;">
+  <div class="container" style="text-align:center;font-size:14px;">
+    © 2024 Green Roots Boutique Garden Center
+  </div>
+</footer>
+
+<script>
+/* Init Lucide icons */
+lucide.createIcons();
+
+/* Mobile navigation toggle */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('show');
+});
+
+/* Carousel logic */
+const carousel = document.querySelector('.carousel');
+if (carousel) {
+  const inner = carousel.querySelector('.inner');
+  const slides = inner.children;
+  let index = 0;
+  const total = slides.length;
+  const slideWidth = slides[0].getBoundingClientRect().width + 24; // include gap
+  const move = () => {
+    index = (index + 1) % total;
+    inner.style.transform = `translateX(-${index * slideWidth}px)`;
+  };
+  const interval = setInterval(move, 5000);
+  carousel.addEventListener('mouseenter', () => clearInterval(interval));
+  carousel.addEventListener('mouseleave', () => setInterval(move, 5000));
+}
+
+/* IntersectionObserver for fade-in */
+const faders = document.querySelectorAll('.fade-section');
+const observerOptions = {
+  threshold: 0.1
+};
+const appearOnScroll = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+faders.forEach(section => appearOnScroll.observe(section));
+
+/* Newsletter form validation */
+const newsForm = document.getElementById('newsletter-form');
+newsForm?.addEventListener('submit', e => {
+  e.preventDefault();
+  const email = document.getElementById('news-email');
+  if (!email.value || !email.checkValidity()) {
+    email.style.borderColor = 'red';
+    return;
+  }
+  // Simulate successful subscription
+  document.getElementById('news-feedback').style.display = 'block';
+  email.value = '';
+});
+</script>
 </body>
 </html>

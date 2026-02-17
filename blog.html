@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Green Roots Blog – Green Roots Boutique Garden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#386641;
+      --color-secondary:#A89971;
+      --color-accent:#F5F5DC;
+      --color-bg:#ffffff;
+      --color-text:#2C2C2C;
+      --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+      --shadow-card:0 4px 12px rgba(0,0,0,0.07);
+      --transition-fast:.25s ease-out;
+      --radius:8px;
+      --max-width:1440px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:"Open Sans",sans-serif;
+      color:var(--color-text);
+      background:var(--gradient-bg);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    a:focus{outline:2px solid var(--color-primary);}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    header{
+      background:var(--color-bg);
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      position:sticky;top:0;z-index:1000;
+    }
+    .container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+    nav{
+      display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+    }
+    .nav-links{
+      display:flex;gap:24px;
+    }
+    .nav-link{
+      font-family:"Montserrat",sans-serif;
+      font-weight:600;
+      color:var(--color-primary);
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+    }
+    .hamburger{
+      display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+    }
+    .hamburger span{display:block;height:2px;background:#000;}
+    @media (max-width:768px){
+      .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+      .nav-links.show{display:flex;}
+      .hamburger{display:flex;}
+    }
+    .skip-link{
+      position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:0.5px;}
+    h1{font-size:clamp(32px,5vw,48px);}
+    h2{font-size:clamp(28px,4vw,36px);}
+    h3{font-size:clamp(22px,3vw,28px);}
+    button.primary{
+      background:var(--color-primary);
+      color:#fff;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      transition:var(--transition-fast);
+    }
+    button.primary:hover{background:#2E5236;}
+    button.secondary{
+      border:2px solid var(--color-primary);
+      color:var(--color-primary);
+      padding:10px 22px;
+      border-radius:var(--radius);
+      background:transparent;
+      transition:var(--transition-fast);
+    }
+    button.secondary:hover{background:#F0F8F0;}
+    section{padding:48px 0;}
+    .fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.25,0.8,0.25,1),transform .6s cubic-bezier(0.25,0.8,0.25,1);}
+    .fade-section.visible{opacity:1;transform:none;}
+    .hero{
+      position:relative;height:60vh;overflow:hidden;
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;background:rgba(0,0,0,0.35);
+    }
+    .hero .hero-content{
+      position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 16px;max-width:var(--max-width);margin:auto;color:#fff;z-index:1;
+    }
+    .post-grid{
+      display:grid;
+      gap:24px;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    }
+    .post-card{
+      background:var(--color-bg);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .post-card img{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+    }
+    .post-card .content{
+      padding:16px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+    }
+    .post-card h3{
+      margin:0 0 12px;
+    }
+    .post-card p{
+      margin-bottom:12px;
+      flex:1;
+    }
+    .post-card a{
+      margin-top:auto;
+      color:var(--color-primary);
+      font-weight:600;
+    }
+    .chip-list{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .chip{
+      background:#e0e0e0;
+      border:none;
+      border-radius:var(--radius);
+      padding:8px 16px;
+      cursor:pointer;
+      transition:var(--transition-fast);
+    }
+    .chip.active{
+      background:var(--color-primary);
+      color:#fff;
+    }
+    .newsletter-cta{
+      background:rgba(255,255,255,0.6);
+      backdrop-filter:blur(0);
+      border-radius:var(--radius);
+      padding:32px;
+      max-width:600px;
+      margin:auto;
+      text-align:center;
+      transition:.4s ease;
+    }
+    .newsletter-cta.visible{backdrop-filter:blur(8px);}
+    .newsletter-cta input{
+      width:100%;
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+      margin-bottom:12px;
+    }
+    .newsletter-cta button{
+      width:100%;
+    }
+    footer{
+      background:var(--color-bg);
+      padding:24px 0;
+      text-align:center;
+      font-size:14px;
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{transition:none !important;animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="index.html" class="logo"><strong>Green Roots</strong></a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About Us</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="blog.html" class="nav-link active">Blog</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Banner -->
+    <section class="hero fade-section" id="hero_banner">
+      <img src="https://picsum.photos/id/1025/1920/1080" alt="Sunrise over garden beds" style="width:100%;height:100%;object-fit:cover;">
+      <div class="hero-content">
+        <h1>Green Roots Blog</h1>
+        <h3>Inspiration, tips, and stories for every gardener.</h3>
+      </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="fade-section" id="category_filter">
+      <div class="container">
+        <div class="chip-list">
+          <button class="chip active">All</button>
+          <button class="chip">Seasonal</button>
+          <button class="chip">Indoor</button>
+          <button class="chip">DIY</button>
+          <button class="chip">Sustainability</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Post Grid -->
+    <section class="fade-section" id="post_grid">
+      <div class="container">
+        <div class="post-grid">
+          <div class="post-card">
+            <img src="https://picsum.photos/id/103/600/400" alt="Perennials">
+            <div class="content">
+              <h3>5 Easy Perennials for a Low‑Maintenance Spring Garden</h3>
+              <p>Discover hardy perennials that bloom year after year with minimal care, perfect for a vibrant spring display.</p>
+              <a href="#">Read More →</a>
+            </div>
+          </div>
+          <div class="post-card">
+            <img src="https://picsum.photos/id/104/600/400" alt="Indoor Pot">
+            <div class="content">
+              <h3>How to Choose the Perfect Pot for Your Indoor Oasis</h3>
+              <p>Learn the factors to consider when selecting pots, from size and material to drainage and style.</p>
+              <a href="#">Read More →</a>
+            </div>
+          </div>
+          <div class="post-card">
+            <img src="https://picsum.photos/id/105/600/400" alt="Composting">
+            <div class="content">
+              <h3>DIY Composting: Turn Kitchen Scraps into Black Gold</h3>
+              <p>Step‑by‑step guide to start composting at home, turning waste into nutrient‑rich soil for your garden.</p>
+              <a href="#">Read More →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="fade-section" id="newsletter_cta">
+      <div class="container">
+        <div class="newsletter-card">
+          <h2>Stay Green – Subscribe for Monthly Tips & Exclusive Offers.</h2>
+          <form id="newsletter-form">
+            <input type="email" placeholder="Your email address" required>
+            <button class="primary" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Green Roots Boutique Garden. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Hamburger menu
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger?.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+
+    document.querySelectorAll('.fade-section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Category chip interaction
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+    // Newsletter card blur activation
+    const newsletterCard = document.querySelector('.newsletter-card');
+    const newsletterObserver = new IntersectionObserver((entries)=> {
+      entries.forEach(entry=> {
+        if(entry.isIntersecting){
+          newsletterCard.classList.add('visible');
+          newsletterObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.5});
+    newsletterObserver.observe(newsletterCard);
+  </script>
+</body>
+</html>

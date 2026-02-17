@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us - Green Roots Boutique Garden</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#386641;
+  --color-secondary:#A89971;
+  --color-accent:#F5F5DC;
+  --color-bg:#ffffff;
+  --color-text:#2C2C2C;
+  --gradient-bg:linear-gradient(180deg,#F5F5DC 0%,#FFFFFF 100%);
+  --shadow-card:0 4px 12px rgba(0,0,0,0.07);
+  --transition-fast:.25s ease-out;
+  --radius:8px;
+  --max-width:1440px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Open Sans",sans-serif;
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+a:focus{outline:2px solid var(--color-primary);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+img{max-width:100%;display:block;}
+header{
+  background:var(--color-bg);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  position:sticky;top:0;z-index:1000;
+}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 0;
+}
+.nav-links{
+  display:flex;gap:24px;
+}
+.nav-link{
+  font-family:"Montserrat",sans-serif;
+  font-weight:600;
+  color:var(--color-primary);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-primary);
+}
+.hamburger{
+  display:none;flex-direction:column;gap:4px;width:24px;height:24px;justify-content:center;
+}
+.hamburger span{display:block;height:2px;background:#000;}
+@media (max-width:768px){
+  .nav-links{display:none;flex-direction:column;background:var(--color-bg);position:absolute;top:100%;right:0;width:200px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+  .nav-links.show{display:flex;}
+  .hamburger{display:flex;}
+}
+.skip-link{
+  position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;
+}
+.skip-link:focus{top:0;}
+h1,h2,h3{font-family:"Montserrat",sans-serif;color:var(--color-primary);margin-bottom:16px;line-height:1.2;letter-spacing:0.5px;}
+h1{font-size:clamp(32px,5vw,48px);}
+h2{font-size:clamp(28px,4vw,36px);}
+h3{font-size:clamp(22px,3vw,28px);}
+button.primary{
+  background:var(--color-primary);
+  color:#fff;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  transition:var(--transition-fast);
+}
+button.primary:hover{background:#2E5236;}
+button.secondary{
+  border:2px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:10px 22px;
+  border-radius:var(--radius);
+  background:transparent;
+  transition:var(--transition-fast);
+}
+button.secondary:hover{background:#F0F8F0;}
+section{padding:48px 0;}
+.fade-section{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(0.25,0.8,0.25,1),transform .6s cubic-bezier(0.25,0.8,0.25,1);}
+.fade-section.visible{opacity:1;transform:none;}
+.hero{
+  position:relative;height:80vh;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.35);
+}
+.hero .hero-content{
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 16px;max-width:var(--max-width);margin:auto;color:#fff;z-index:1;
+}
+.hero .hero-content h1{color:#fff;}
+.hero .hero-content h3{color:#fff;margin-bottom:24px;}
+.timeline{
+  display:flex;
+  overflow-x:auto;
+  gap:24px;
+  padding-bottom:16px;
+}
+.timeline::after{
+  content:"";flex:0 0 24px;
+}
+.timeline-item{
+  flex:0 0 250px;
+  background:var(--color-bg);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+}
+.timeline-item h3{
+  margin-bottom:8px;
+}
+.sustainability{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:24px;
+}
+.sustainability .icon-box{
+  background:var(--color-bg);
+  padding:24px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:24px;
+}
+.team-card{
+  background:var(--color-bg);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.team-card img{
+  border-radius:50%;
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  margin:auto;
+}
+.cta-visit{
+  text-align:center;
+  background:var(--color-accent);
+  padding:48px 16px;
+}
+footer{
+  background:var(--color-bg);
+  padding:24px 0;
+  text-align:center;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo"><strong>Green Roots Boutique Garden</strong></div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link active">About Us</a></li>
+        <li><a href="products.html" class="nav-link">Products</a></li>
+        <li><a href="tools-accessories.html" class="nav-link">Tools &amp; Accessories</a></li>
+        <li><a href="indoor-plants.html" class="nav-link">Indoor Plants</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero Image Section -->
+  <section class="hero fade-section" id="hero_image">
+    <img src="https://picsum.photos/seed/abouthero/1600/900" alt="Green Roots boutique storefront at sunset" style="width:100%;height:100%;object-fit:cover;">
+    <div class="hero-content">
+      <h1>Our Story, Our Roots</h1>
+      <h3>From humble beginnings to a thriving community garden hub</h3>
+    </div>
+  </section>
+
+  <!-- History Timeline -->
+  <section class="fade-section" id="history_timeline">
+    <div class="container">
+      <h2>Our Journey</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>2010</h3>
+          <p>Founded in a modest backyard garden, planting the first 20 seedlings.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2013</h3>
+          <p>Opened our first storefront in the historic downtown district.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2016</h3>
+          <p>Launched the sustainability program, introducing eco‑friendly packaging.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2019</h3>
+          <p>Expanded product line to include tools, accessories, and indoor collections.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>2022</h3>
+          <p>Reached 10,000 happy customers and opened a community workshop space.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="fade-section" id="mission_statement">
+    <div class="container">
+      <h2>Our Mission</h2>
+      <p>We strive to bring the joy of gardening to every home while fostering a sustainable future. Our commitment is to provide high‑quality plants, expert guidance, and environmentally responsible practices that nurture both people and the planet.</p>
+    </div>
+  </section>
+
+  <!-- Sustainability Icons -->
+  <section class="fade-section" id="sustainability_icons">
+    <div class="container">
+      <h2>Our Commitment to Sustainability</h2>
+      <div class="sustainability">
+        <div class="icon-box">
+          <i data-lucide="leaf" class="icon" style="width:48px;height:48px;color:var(--color-primary);margin-bottom:12px;"></i>
+          <h3>Eco‑Friendly Packaging</h3>
+          <p>All shipments use recyclable, biodegradable materials.</p>
+        </div>
+        <div class="icon-box">
+          <i data-lucide="droplet" class="icon" style="width:48px;height:48px;color:var(--color-primary);margin-bottom:12px;"></i>
+          <h3>Water Conservation</h3>
+          <p>Our on‑site composting reduces water usage and enriches soil.</p>
+        </div>
+        <div class="icon-box">
+          <i data-lucide="sunrise" class="icon" style="width:48px;height:48px;color:var(--color-primary);margin-bottom:12px;"></i>
+          <h3>Solar Powered Store</h3>
+          <p>Roof‑top solar panels offset a majority of our electricity needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Photos -->
+  <section class="fade-section" id="team_photos">
+    <div class="container">
+      <h2>Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team1/300/300" alt="Emma – Founder &amp; CEO">
+          <h3>Emma Rivera</h3>
+          <p>Founder &amp; CEO</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team2/300/300" alt="Liam – Head of Horticulture">
+          <h3>Liam Chen</h3>
+          <p>Head of Horticulture</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team3/300/300" alt="Sofia – Sustainability Lead">
+          <h3>Sofia Patel</h3>
+          <p>Sustainability Lead</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/seed/team4/300/300" alt="Noah – Community Manager">
+          <h3>Noah Brooks</h3>
+          <p>Community Manager</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Visit Store -->
+  <section class="fade-section" id="call_to_action_visit_store">
+    <div class="container cta-visit">
+      <h2>Experience Green Roots In Person</h2>
+      <p>Visit our boutique for personalized plant advice, exclusive workshops, and a chance to explore our garden oasis.</p>
+      <button class="primary">Plan Your Visit →</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Green Roots Boutique Garden. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Initialize lucide icons
+  lucide.createIcons();
+
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+  });
+
+  // Fade-in on scroll using IntersectionObserver
+  const faders = document.querySelectorAll('.fade-section');
+  const observerOptions = {
+    threshold: 0.1
+  };
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  faders.forEach(section => {
+    observer.observe(section);
+  });
+</script>
+</body>
+</html>
