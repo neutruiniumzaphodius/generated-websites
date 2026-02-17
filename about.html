@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | GreenSprout Organic Farm Market</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+:root{
+  --color-primary:#228B22;
+  --color-secondary:#FFDA63;
+  --color-accent:#A0522D;
+  --color-bg:#F5F9F4;
+  --color-bg-gradient-start:#FFFFFF;
+  --color-bg-gradient-end:#F5F9F4;
+  --color-text:#2E2E2E;
+  --gap:24px;
+  --radius:12px;
+  --radius-sm:6px;
+  --transition:0.3s ease-out;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+  line-height:1.6;
+  overflow-x:hidden;
+  opacity:0;
+  animation:fadeIn 0.8s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{font-family:'Raleway',sans-serif; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5em;}
+h1{font-size:clamp(32px,5vw,48px); font-weight:700; color:var(--color-primary);}
+h2{font-size:clamp(24px,4vw,36px); font-weight:600; color:var(--color-primary);}
+h3{font-size:clamp(20px,3.5vw,28px); font-weight:600;}
+p{margin-bottom:1em;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:'Open Sans',sans-serif;
+  font-weight:600;
+  padding:0.75rem 1.5rem;
+  border-radius:var(--radius-sm);
+  transition:transform 0.15s ease-in-out,var(--transition);
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+}
+.btn-primary:hover{background:#1A6E1A;}
+.btn-secondary{
+  background:transparent;
+  color:var(--color-text);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:var(--color-secondary);
+  color:#fff;
+}
+.btn-outline{
+  background:transparent;
+  color:var(--color-accent);
+  border:2px solid var(--color-accent);
+}
+.btn-outline:hover{
+  background:var(--color-accent);
+  color:#fff;
+}
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem var(--gap);
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 6px rgba(0,0,0,0.07);
+}
+nav .logo{font-size:1.2rem;font-weight:700;color:var(--color-primary);}
+nav .nav-links{
+  display:flex;
+  gap:1rem;
+}
+nav .nav-link{
+  position:relative;
+  padding:0.5rem;
+  color:var(--color-text);
+}
+nav .nav-link.active{color:var(--color-primary);}
+nav .nav-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:2px;
+  width:0;
+  background:var(--color-primary);
+  transition:width 0.3s;
+}
+nav .nav-link:hover::after{width:100%;}
+nav .hamburger{display:none;cursor:pointer;}
+@media (max-width:768px){
+  nav .nav-links{
+    display:none;
+    flex-direction:column;
+    background:#fff;
+    position:absolute;
+    top:100%;
+    right:0;
+    width:200px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  }
+  nav .nav-links.show{display:flex;}
+  nav .hamburger{display:block;}
+}
+section{padding:calc(var(--gap)*2) var(--gap);}
+.hero{
+  position:relative;
+  height:calc(100vh*0.618);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(34,139,34,0.45),transparent);
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  animation:bounceIn 0.6s ease-out;
+}
+@keyframes bounceIn{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+.grid{
+  display:grid;
+  gap:var(--gap);
+}
+.grid-2{
+  grid-template-columns:1fr;
+}
+@media (min-width:640px){
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+}
+.values{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  box-shadow:0 4px 12px rgba(0,0,0,0.07);
+}
+.values .value-item{
+  text-align:center;
+  padding:var(--gap);
+}
+.values .value-item svg{
+  width:48px;
+  height:48px;
+  color:var(--color-primary);
+  margin-bottom:0.5rem;
+}
+.team{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:var(--gap);
+  box-shadow:0 4px 12px rgba(0,0,0,0.07);
+}
+.team .card{
+  text-align:center;
+}
+.team .card img{
+  border-radius:50%;
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  margin-bottom:0.5rem;
+}
+.map-container{
+  background:#fff;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.07);
+}
+footer{
+  background:var(--color-accent);
+  color:#fff;
+  text-align:center;
+  padding:2rem var(--gap);
+}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#fff;
+  color:#000;
+  padding:0.5rem 1rem;
+  z-index:10000;
+}
+[data-animate]{opacity:0;transform:translateY(20px);transition:opacity .6s ease-out,transform .6s ease-out;}
+.in-view{opacity:1;transform:none;}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <nav aria-label="Main navigation">
+    <div class="logo">GreenSprout</div>
+    <div class="hamburger" aria-label="Menu" tabindex="0">
+      <svg width="24" height="24"><use href="#menu"/></svg>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link active">About Us</a></li>
+      <li><a href="products.html" class="nav-link">Products &amp; Services</a></li>
+      <li><a href="shipping.html" class="nav-link">Shipping</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+      <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <!-- Hero Image -->
+    <section class="hero" data-animate>
+      <img src="https://picsum.photos/seed/abouthero/1600/900" alt="Sunrise over GreenSprout farm" loading="lazy">
+      <div class="hero-content">
+        <h1>Our Story</h1>
+        <h3 style="font-weight:500; font-size:clamp(20px,4vw,28px); color:#fff;">GreenSprout Organic Farm Market</h3>
+        <p style="color:#fff; font-size:clamp(16px,3vw,20px); max-width:600px; margin:auto;">
+          From the first seed planted to the bustling market today, our journey is rooted in sustainability, community, and pure love for the land.
+        </p>
+        <div class="hero .cta-group" style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+          <button class="btn-secondary">[VERBATIM]cta_learn_more: Learn More About Us[/VERBATIM]</button>
+          <button class="btn-outline">[VERBATIM]cta_signup_newsletter: Sign Up for Newsletter[/VERBATIM]</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="our-story" data-animate>
+      <div class="grid grid-2" style="align-items:center;">
+        <div class="story-image" style="position:relative;">
+          <img src="https://picsum.photos/seed/founders/800/600" alt="Founders of GreenSprout standing in the field" loading="lazy" style="width:100%;border-radius:var(--radius);box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+        </div>
+        <div class="story-text">
+          <h2>Our Story</h2>
+          <p>Founded in 2015 by a family of passionate growers, GreenSprout began as a modest 5‑acre farm in Sonoma County. Guided by the belief that food should be wholesome, honest, and sustainably produced, we expanded our fields, embraced regenerative farming practices, and opened our market to share the bounty with our community.</p>
+          <p>Every leaf, fruit, and jar of honey carries the dedication of our team and the richness of our terroir. Transparency, stewardship, and connection are at the heart of everything we do.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Values -->
+    <section class="our-values" data-animate style="background:#fff;">
+      <h2>Our Values</h2>
+      <div class="grid grid-4" style="grid-template-columns:repeat(auto-fit, minmax(200px,1fr));">
+        <div class="value-item" style="text-align:center;">
+          <svg data-lucide="leaf" width="48" height="48"></svg>
+          <h3>Sustainability</h3>
+          <p>Regenerative practices that nurture soil health, water conservation, and biodiversity.</p>
+        </div>
+        <div class="value-item" style="text-align:center;">
+          <svg data-lucide="heart" width="48" height="48"></svg>
+          <h3>Community</h3>
+          <p>Building strong local ties through farm tours, markets, and educational workshops.</p>
+        </div>
+        <div class="value-item" style="text-align:center;">
+          <svg data-lucide="star" width="48" height="48"></svg>
+          <h3>Quality</h3>
+          <p>Hand‑picked, organically grown produce harvested at peak flavor.</p>
+        </div>
+        <div class="value-item" style="text-align:center;">
+          <svg data-lucide="award" width="48" height="48"></svg>
+          <h3>Transparency</h3>
+          <p>Open farms, honest labeling, and clear communication with our customers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Grid -->
+    <section class="team" data-animate>
+      <h2>Our Team</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <img src="https://picsum.photos/seed/team1/400/400" alt="Team member – Sarah, farm manager" loading="lazy">
+          <div class="card-content" style="padding:1rem;">
+            <h3 style="font-size:clamp(20px,3vw,28px);font-weight:600;color:var(--color-primary);">Sarah Miller</h3>
+            <p>Farm Manager – Oversees daily operations, crop rotation, and sustainable practices.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/team2/400/400" alt="Team member – James, lead horticulturist" loading="lazy">
+          <div class="card-content" style="padding:1rem;">
+            <h3 style="font-size:clamp(20px,3vw,28px);font-weight:600;color:var(--color-primary);">James Patel</h3>
+            <p>Lead Horticulturist – Crafts our seasonal planting schedules and ensures plant health.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/team3/400/400" alt="Team member – Maya, community outreach coordinator" loading="lazy">
+          <div class="card-content" style="padding:1rem;">
+            <h3 style="font-size:clamp(20px,3vw,28px);font-weight:600;color:var(--color-primary);">Maya Lee</h3>
+            <p>Community Outreach – Connects the farm with schools, events, and local partners.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Farm Location Map -->
+    <section class="farm-location" data-animate>
+      <h2>Visit Our Farm</h2>
+      <div class="map-container" style="height:400px;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019938862331!2d-122.456789!3d38.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f7c5d7b5e9b7b%3A0x2f9c8b7c6a2d5e0!2sSonoma%20County%2C%20CA!5e0!3m2!1sen!2sus!4v1699999999999"
+          width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="GreenSprout Farm Location"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 GreenSprout Organic Farm Market. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger?.addEventListener('click', () => navLinks.classList.toggle('show'));
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

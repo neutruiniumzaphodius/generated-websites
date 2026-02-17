@@ -1,75 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>GreenSprout Organic Farm Market</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#228B22;
+  --color-secondary:#FFDA63;
+  --color-accent:#A0522D;
+  --color-bg:#F5F9F4;
+  --color-bg-gradient-start:#FFFFFF;
+  --color-bg-gradient-end:#F5F9F4;
+  --color-text:#2E2E2E;
+  --gap:24px;
+  --radius:12px;
+  --radius-sm:6px;
+  --transition:0.3s ease-out;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+  line-height:1.6;
+  overflow-x:hidden;
+  opacity:0;
+  animation:fadeIn 0.8s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{font-family:'Raleway',sans-serif; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5em;}
+h1{font-size:clamp(32px,5vw,48px); font-weight:700; color:var(--color-primary);}
+h2{font-size:clamp(24px,4vw,36px); font-weight:600; color:var(--color-primary);}
+h3{font-size:clamp(20px,3.5vw,28px); font-weight:600;}
+p{margin-bottom:1em;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:'Open Sans',sans-serif;
+  font-weight:600;
+  padding:0.75rem 1.5rem;
+  border-radius:var(--radius-sm);
+  transition:transform 0.15s ease-in-out,var(--transition);
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+}
+.btn-primary:hover{background:#1A6E1A;}
+.btn-secondary{
+  background:transparent;
+  color:var(--color-text);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:var(--color-secondary);
+  color:#fff;
+}
+.btn-outline{
+  background:transparent;
+  color:var(--color-accent);
+  border:2px solid var(--color-accent);
+}
+.btn-outline:hover{
+  background:var(--color-accent);
+  color:#fff;
+}
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1rem var(--gap);
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 6px rgba(0,0,0,0.07);
+}
+nav .logo{font-size:1.2rem;font-weight:700;color:var(--color-primary);}
+nav .nav-links{
+  display:flex;
+  gap:1rem;
+}
+nav .nav-link{
+  position:relative;
+  padding:0.5rem;
+  color:var(--color-text);
+}
+nav .nav-link.active{color:var(--color-primary);}
+nav .nav-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:2px;
+  width:0;
+  background:var(--color-primary);
+  transition:width 0.3s;
+}
+nav .nav-link:hover::after{width:100%;}
+nav .hamburger{display:none;cursor:pointer;}
+@media (max-width:768px){
+  nav .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;right:0;width:200px;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  nav .nav-links.show{display:flex;}
+  nav .hamburger{display:block;}
+}
+section{padding:calc(var(--gap)*2) var(--gap);}
+.hero{
+  position:relative;
+  height:calc(100vh*0.618);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero video{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;object-fit:cover;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(34,139,34,0.45),transparent);
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  animation:bounceIn 0.6s ease-out;
+}
+@keyframes bounceIn{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+.hero .cta-group{
+  display:flex;
+  gap:1.5rem;
+  justify-content:center;
+  margin-top:1.5rem;
+  flex-wrap:wrap;
+}
+.carousel{
+  position:relative;
+  overflow:hidden;
+}
+.carousel .slides{
+  display:flex;
+  transition:transform 0.5s ease;
+}
+.carousel .slide{
+  min-width:100%;
+  position:relative;
+}
+.carousel .caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(34,139,34,0.85);
+  color:#fff;
+  padding:1rem;
+}
+.carousel .arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,0.8);
+  border-radius:50%;
+  padding:0.5rem;
+  cursor:pointer;
+}
+.carousel .arrow:hover{background:#fff;}
+.carousel .arrow-left{left:1rem;}
+.carousel .arrow-right{right:1rem;}
+.card{
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:0 4px 12px rgba(0,0,0,0.07);
+  overflow:hidden;
+  transition:transform 0.2s,var(--transition);
+}
+.card:hover{transform:translateY(-2px);}
+.card img{width:100%;display:block;}
+.card .badge{
+  position:absolute;
+  top:0.5rem;
+  right:0.5rem;
+  background:var(--color-secondary);
+  color:#fff;
+  padding:0.25rem 0.5rem;
+  border-radius:var(--radius-sm);
+  font-size:0.75rem;
+}
+.grid{
+  display:grid;
+  gap:var(--gap);
+}
+@media (min-width:640px){
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+}
+.testimonial{
+  background:#fff;
+  padding:2rem;
+  border-radius:var(--radius);
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  text-align:center;
+}
+.testimonial .stars{
+  color:var(--color-secondary);
+  margin-top:0.5rem;
+}
+.cta-strip{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  background:#fff;
+  padding:2rem var(--gap);
+}
+.cta-strip button{
+  flex:1 1 200px;
+}
+.instagram-grid{
+  display:grid;
+  gap:4px;
+}
+@media (min-width:640px){
+  .instagram-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (min-width:1024px){
+  .instagram-grid{grid-template-columns:repeat(6,1fr);}
+}
+footer{
+  background:var(--color-accent);
+  color:#fff;
+  text-align:center;
+  padding:2rem var(--gap);
+}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#fff;
+  color:#000;
+  padding:0.5rem 1rem;
+  z-index:10000;
+}
+.in-view{opacity:1;transform:none;transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+[data-animate]{opacity:0;transform:translateY(20px);}
+</style>
+<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <nav aria-label="Main navigation">
+    <div class="logo">GreenSprout</div>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="products.html" class="nav-link">Products</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <i data-lucide="menu"></i>
+    </div>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero" id="hero_video">
+    <video autoplay muted loop playsinline poster="https://picsum.photos/1920/1080">
+      <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content" data-animate>
+      <h1 class="hero-title">From Our Fields to Your Table</h1>
+      <p class="hero-tagline">Fresh, certified‑organic produce harvested sustainably and delivered straight from our Northern California farms to your kitchen.</p>
+      <div class="cta-group">
+        <button class="btn-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+        <button class="btn-secondary">[VERBATIM]cta_learn_more: Learn More About Us[/VERBATIM]</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Featured Products Carousel -->
+  <section class="featured-products" data-animate>
+    <div class="carousel" id="featured_products_carousel">
+      <div class="arrow arrow-left" id="prevSlide"><i data-lucide="chevron-left"></i></div>
+      <div class="arrow arrow-right" id="nextSlide"><i data-lucide="chevron-right"></i></div>
+      <div class="slides">
+        <div class="slide card" style="position:relative;">
+          <img src="https://picsum.photos/800/400?random=1" alt="Featured product 1">
+          <div class="caption">
+            <h3>Organic Apples</h3>
+            <button class="btn-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <div class="slide card" style="position:relative;">
+          <img src="https://picsum.photos/800/400?random=2" alt="Featured product 2">
+          <div class="caption">
+            <h3>Raw Honey</h3>
+            <button class="btn-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+          </div>
+        </div>
+        <div class="slide card" style="position:relative;">
+          <img src="https://picsum.photos/800/400?random=3" alt="Featured product 3">
+          <div class="caption">
+            <h3>Fresh Kale</h3>
+            <button class="btn-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission_statement" data-animate>
+    <div class="grid" style="max-width:800px;margin:auto;">
+      <h2>Our Mission</h2>
+      <p>At GreenSprout we believe in nurturing the land, supporting local growers, and delivering the freshest organic foods directly to families.</p>
+    </div>
+  </section>
+
+  <!-- Seasonal Highlights -->
+  <section class="seasonal_highlights" data-animate>
+    <h2>Seasonal Highlights</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <img src="https://picsum.photos/400/300?random=4" alt="Seasonal fruit">
+        <div class="badge">Fall</div>
+        <div class="content" style="padding:1rem;">
+          <h3>Apple Harvest</h3>
+          <p>Sweet, crisp apples at peak flavor.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/400/300?random=5" alt="Seasonal vegetable">
+        <div class="badge">Winter</div>
+        <div class="content" style="padding:1rem;">
+          <h3>Root Veggies</h3>
+          <p>Hearty carrots, beets, and turnips.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://picsum.photos/400/300?random=6" alt="Seasonal honey">
+        <div class="badge">Spring</div>
+        <div class="content" style="padding:1rem;">
+          <h3>Golden Honey</h3>
+          <p>Pure, raw honey harvested from our hives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Excerpt -->
+  <section class="testimonials_excerpt" data-animate>
+    <h2>What Our Customers Say</h2>
+    <div class="carousel" id="testimonialsCarousel">
+      <div class="slides">
+        <div class="slide testimonial">
+          <p>“The produce is always fresh and bursting with flavor.” – <strong>Emily R.</strong></p>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="slide testimonial">
+          <p>“I love the farm tours, they’re educational and fun!” – <strong>Jacob M.</strong></p>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="slide testimonial">
+          <p>“Their seasonal boxes are a delightful surprise each month.” – <strong>Sara K.</strong></p>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primary CTAs Strip -->
+  <section class="cta-strip" data-animate>
+    <button class="btn-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+    <button class="btn-secondary">Explore Recipes</button>
+    <button class="btn-outline">[VERBATIM]cta_signup_newsletter: Sign Up for Newsletter[/VERBATIM]</button>
+  </section>
+
+  <!-- Instagram Feed Placeholder -->
+  <section class="instagram_feed" data-animate>
+    <h2>Follow Us on Instagram</h2>
+    <div class="instagram-grid">
+      <img src="https://picsum.photos/300/300?random=7" alt="Instagram post 1">
+      <img src="https://picsum.photos/300/300?random=8" alt="Instagram post 2">
+      <img src="https://picsum.photos/300/300?random=9" alt="Instagram post 3">
+      <img src="https://picsum.photos/300/300?random=10" alt="Instagram post 4">
+      <img src="https://picsum.photos/300/300?random=11" alt="Instagram post 5">
+      <img src="https://picsum.photos/300/300?random=12" alt="Instagram post 6">
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2024 GreenSprout Organic Farm Market</p>
+</footer>
+
+<script>
+/* Mobile Nav Toggle */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+hamburger.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('show');
+});
+
+/* Simple Carousel Logic */
+function initCarousel(carouselId){
+  const carousel = document.getElementById(carouselId);
+  if(!carousel) return;
+  const slidesContainer = carousel.querySelector('.slides');
+  const slides = carousel.querySelectorAll('.slide');
+  let index = 0;
+  const total = slides.length;
+  const next = carousel.querySelector('.arrow-right');
+  const prev = carousel.querySelector('.arrow-left');
+
+  function goTo(i){
+    index = (i+total)%total;
+    slidesContainer.style.transform = `translateX(-${index*100}%)`;
+  }
+  if(next) next.addEventListener('click',()=>goTo(index+1));
+  if(prev) prev.addEventListener('click',()=>goTo(index-1));
+  // Auto rotate
+  setInterval(()=>goTo(index+1),5000);
+}
+initCarousel('featured_products_carousel');
+
+/* Featured Products Carousel auto init */
+document.addEventListener('DOMContentLoaded',()=>{
+  const slides = document.querySelectorAll('#featured_products_carousel .slide');
+  const container = document.querySelector('#featured_products_carousel .slides');
+  let current = 0;
+  function update(){
+    container.style.transform = `translateX(-${current*100}%)`;
+  }
+  document.getElementById('nextSlide')?.addEventListener('click',()=>{current=(current+1)%slides.length;update();});
+  document.getElementById('prevSlide')?.addEventListener('click',()=>{current=(current-1+slides.length)%slides.length;update();});
+  setInterval(()=>{current=(current+1)%slides.length;update();},4000);
+});
+
+/* Testimonials Carousel */
+document.addEventListener('DOMContentLoaded',()=>{
+  const tSlides = document.querySelectorAll('#testimonials_excerpt .slide');
+  const tContainer = document.querySelector('#testimonials_excerpt .slides');
+  let tIndex = 0;
+  function tUpdate(){
+    tContainer.style.transform = `translateX(-${tIndex*100}%)`;
+  }
+  setInterval(()=>{tIndex=(tIndex+1)%tSlides.length;tUpdate();},6000);
+});
+
+/* IntersectionObserver for animations */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('[data-animate]').forEach(el=>observer.observe(el));
+
+/* Initialize Lucide Icons */
+lucide.createIcons();
+</script>
 </body>
 </html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – GreenSprout Organic Farm Market</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --color-primary:#228B22;
+      --color-secondary:#FFDA63;
+      --color-accent:#A0522D;
+      --color-bg:#F5F9F4;
+      --color-bg-gradient-start:#FFFFFF;
+      --color-bg-gradient-end:#F5F9F4;
+      --color-text:#2E2E2E;
+      --gap:24px;
+      --radius:12px;
+      --radius-sm:6px;
+      --transition:0.3s ease-out;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-bg-gradient-start),var(--color-bg-gradient-end));
+      line-height:1.6;
+      overflow-x:hidden;
+      opacity:0;
+      animation:fadeIn 0.8s forwards;
+    }
+    @keyframes fadeIn{to{opacity:1}}
+    a{color:inherit;text-decoration:none;}
+    h1,h2,h3{font-family:'Raleway',sans-serif; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5em;}
+    h1{font-size:clamp(32px,5vw,48px); font-weight:700; color:var(--color-primary);}
+    h2{font-size:clamp(24px,4vw,36px); font-weight:600; color:var(--color-primary);}
+    h3{font-size:clamp(20px,3.5vw,28px); font-weight:600;}
+    p{margin-bottom:1em;}
+    button{
+      cursor:pointer;
+      border:none;
+      font-family:'Open Sans',sans-serif;
+      font-weight:600;
+      padding:0.75rem 1.5rem;
+      border-radius:var(--radius-sm);
+      transition:transform 0.15s ease-in-out,var(--transition);
+    }
+    .btn-primary{
+      background:var(--color-primary);
+      color:#fff;
+    }
+    .btn-primary:hover{background:#1A6E1A;}
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-text);
+      border:2px solid var(--color-secondary);
+    }
+    .btn-primary:active,.btn-secondary:active{transform:scale(0.97);}
+    .btn-secondary:hover{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-outline{
+      background:transparent;
+      color:var(--color-accent);
+      border:2px solid var(--color-accent);
+    }
+    .btn-outline:hover{
+      background:var(--color-accent);
+      color:#fff;
+    }
+    nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:1rem var(--gap);
+      background:#fff;
+      position:sticky;
+      top:0;
+      z-index:1000;
+      box-shadow:0 2px 6px rgba(0,0,0,0.07);
+    }
+    nav .logo{font-size:1.2rem;font-weight:700;color:var(--color-primary);}
+    nav .nav-links{
+      display:flex;
+      gap:1rem;
+    }
+    nav .nav-link{
+      position:relative;
+      padding:0.5rem;
+      color:var(--color-text);
+    }
+    nav .nav-link.active{color:var(--color-primary);}
+    nav .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      height:2px;
+      width:0;
+      background:var(--color-primary);
+      transition:width 0.3s;
+    }
+    nav .nav-link:hover::after{width:100%;}
+    nav .hamburger{display:none;cursor:pointer;}
+    @media (max-width:768px){
+      nav .nav-links{
+        display:none;
+        flex-direction:column;
+        background:#fff;
+        position:absolute;
+        top:100%;
+        right:0;
+        width:200px;
+        box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      }
+      nav .nav-links.show{display:flex;}
+      nav .hamburger{display:block;}
+    }
+    section{padding:calc(var(--gap)*2) var(--gap);}
+    .form-group{margin-bottom:1.5rem;}
+    .form-group label{
+      display:block;
+      margin-bottom:0.25rem;
+      font-weight:600;
+    }
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+      padding:0.5rem;
+      border:2px solid #ccc;
+      border-radius:var(--radius-sm);
+      font-size:1rem;
+      transition:var(--transition);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus{
+      outline:none;
+      border-color:var(--color-secondary);
+      box-shadow:0 0 0 3px rgba(255,214,99,0.3);
+    }
+    .error{
+      color:#c00;
+      font-size:0.85rem;
+      margin-top:0.25rem;
+    }
+    .toast{
+      position:fixed;
+      bottom:1rem;
+      left:50%;
+      transform:translateX(-50%);
+      background:var(--color-primary);
+      color:#fff;
+      padding:1rem 2rem;
+      border-radius:var(--radius);
+      display:none;
+      align-items:center;
+      gap:0.5rem;
+      z-index:2000;
+    }
+    .toast.show{display:flex;animation:toastIn 0.5s forwards;}
+    @keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .leaf-confetti{
+      position:absolute;
+      width:8px;
+      height:8px;
+      background:var(--color-primary);
+      border-radius:50%;
+      opacity:0;
+      animation:confetti 0.6s forwards;
+    }
+    @keyframes confetti{
+      0%{opacity:1;transform:translateY(0) scale(1);}
+      100%{opacity:0;transform:translateY(-100px) scale(0.5);}
+    }
+    .address-block{
+      font-family:'Raleway',sans-serif;
+      font-size:clamp(20px,3vw,24px);
+      color:var(--color-text);
+    }
+    .contact-section{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:0 4px 12px rgba(0,0,0,0.07);
+      padding:var(--gap);
+    }
+    .contact-section[data-animate]{opacity:0;transform:translateY(20px);}
+    .contact-section.in-view{opacity:1;transform:none;transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    footer{
+      background:var(--color-accent);
+      color:#fff;
+      text-align:center;
+      padding:2rem var(--gap);
+    }
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:0;
+      top:0;
+      width:auto;
+      height:auto;
+      background:#fff;
+      color:#000;
+      padding:0.5rem 1rem;
+      z-index:10000;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <nav aria-label="Main navigation">
+    <div class="logo">GreenSprout</div>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="products.html" class="nav-link">Products</a>
+      <a href="shipping.html" class="nav-link">Shipping</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="testimonials.html" class="nav-link">Testimonials</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
+      <svg width="24" height="24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="contact-form-section contact_form" data-animate>
+      <h2>Get in Touch</h2>
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="name">Name <span aria-hidden="true" style="color:var(--color-secondary);">*</span></label>
+          <input type="text" id="name" name="name" required aria-required="true">
+          <div class="error" id="error-name"></div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email <span aria-hidden="true" style="color:var(--color-secondary);">*</span></label>
+          <input type="email" id="email" name="email" required aria-required="true">
+          <div class="error" id="error-email"></div>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject">
+        </div>
+        <div class="form-group">
+          <label for="message">Message <span aria-hidden="true" style="color:var(--color-secondary);">*</span></label>
+          <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+          <div class="error" id="error-message"></div>
+        </div>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </section>
+
+    <section class="address-block-section address_block" data-animate>
+      <h2>Our Farm</h2>
+      <div class="address-block">
+        <p class="address-block">GreenSprout Organic Farm Market<br>123 Harvest Lane<br>Sonoma County, CA 95476</p>
+      </div>
+    </section>
+
+    <section class="phone-email-section phone_email" data-animate>
+      <h2>Contact Details</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+        <div class="contact-item">
+          <svg class="lucide" data-lucide="phone" style="stroke:var(--color-accent); width:24px; height:24px;"></svg>
+          <p>Call us: (707) 555‑0123</p>
+        </div>
+        <div class="contact-item">
+          <svg class="lucide" data-lucide="mail" style="stroke:var(--color-accent); width:24px; height:24px;"></svg>
+          <p>Email: hello@greensproutfarm.com</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="map-section embedded_google_map" data-animate>
+      <h2>Find Us</h2>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019388331842!2d-122.47020728468188!3d38.57827447958153!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085b6cbd9e5a6a3%3A0x3b9b5f0e1e123456!2sSonoma%20County%2C%20CA!5e0!3m2!1sen!2sus!4v1697047200000!5m2!1sen!2sus"
+        width="100%" height="400" style="border:0; border-radius:var(--radius);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <section class="calendly-section calendly_widget" data-animate>
+      <h2>Schedule a Farm Tour</h2>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/your-calendly-link?primary_color=228B22" style="min-width:320px;height:630px;"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="lucide" data-lucide="leaf" style="stroke:#fff; width:20px; height:20px;"></svg>
+    <span>Thank you! We’ll get back to you shortly.</span>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 GreenSprout Organic Farm Market. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('show');
+    });
+
+    // Intersection Observer for scroll animations
+    const animateElems = document.querySelectorAll('[data-animate]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+    animateElems.forEach(el => observer.observe(el));
+
+    // Form validation
+    const form = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      let valid = true;
+
+      // Helper to set error
+      const setError = (field, msg) => {
+        const errorEl = document.getElementById('error-' + field.id);
+        errorEl.textContent = msg;
+        field.style.borderColor = '#c00';
+        valid = false;
+      };
+      const clearError = (field) => {
+        const errorEl = document.getElementById('error-' + field.id);
+        errorEl.textContent = '';
+        field.style.borderColor = '#ccc';
+      };
+
+      // Name
+      if(!form.name.value.trim()){
+        setError(form.name, 'Please enter your name.');
+      } else { clearError(form.name); }
+
+      // Email
+      const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if(!form.email.value.trim()){
+        setError(form.email, 'Please enter your email.');
+      } else if(!emailPattern.test(form.email.value)){
+        setError(form.email, 'Please enter a valid email address.');
+      } else { clearError(form.email); }
+
+      // Message
+      if(!form.message.value.trim()){
+        setError(form.message, 'Please write a message.');
+      } else { clearError(form.message); }
+
+      if(valid){
+        // Simulate successful send
+        toast.classList.add('show');
+        setTimeout(()=>{ toast.classList.remove('show'); }, 3000);
+        form.reset();
+      }
+    });
+
+    // Toast animation
+    const toastStyle = document.createElement('style');
+    toastStyle.innerHTML = `
+      .toast{
+        opacity:0;
+        transform:translateY(20px);
+        transition:opacity 0.4s ease-out, transform 0.4s ease-out;
+      }
+      .toast.show{
+        opacity:1;
+        transform:translateY(0);
+      }
+      .toast::before{
+        content:"";
+        position:absolute;
+        left:50%;
+        top:0;
+        width:8px;
+        height:8px;
+        background:var(--color-secondary);
+        border-radius:50%;
+        transform:translateX(-50%);
+        animation:leafConfetti 0.6s forwards;
+      }
+      @keyframes leafConfetti{
+        0%{opacity:1;transform:translateY(0) scale(1);}
+        100%{opacity:0;transform:translateY(-80px) scale(0.3);}
+      }
+    `;
+    document.head.appendChild(toastStyle);
+  </script>
+</body>
+</html>
