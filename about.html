@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Us – Fashion Forward</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#228B22;
+  --color-secondary:#F5F5DC;
+  --color-accent:#FFD700;
+  --color-bg:#FAFAFA;
+  --color-text:#222222;
+  --color-muted:#555555;
+  --transition-fast:150ms;
+  --transition-medium:300ms;
+  --radius:4px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-hover:0 8px 20px rgba(0,0,0,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+}
+h1,h2,h3,h4{
+  font-family:'Raleway',sans-serif;
+  line-height:1.2;
+  color:var(--color-text);
+}
+h1{font-size:clamp(2.5rem,8vw,4rem);font-weight:700;letter-spacing:-0.5px;}
+h2{font-size:clamp(2rem,6vw,3rem);font-weight:700;letter-spacing:-0.3px;}
+h3{font-size:2rem;font-weight:600;}
+h4{font-size:1.5rem;font-weight:600;}
+p{font-size:1rem;color:var(--color-text);}
+.container{width:90%;max-width:1200px;margin:auto;}
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+.skip-link:focus{top:0;}
+header{background:var(--color-bg);box-shadow:0 2px 6px rgba(0,0,0,0.1);position:sticky;top:0;z-index:50;}
+nav{display:flex;justify-content:center;gap:2rem;padding:1rem 0;}
+nav a{font-weight:600;color:var(--color-primary);position:relative;}
+nav a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-accent);}
+nav a:hover{color:var(--color-accent);}
+nav .nav-toggle{display:none;background:none;font-size:1.5rem;color:var(--color-primary);}
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:500px;
+  background:url('https://picsum.photos/1920/1080?random=2') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero::before{
+  content:"";
+  position:absolute;inset:0;
+  background:rgba(34,139,34,0.35);
+}
+.hero-content{
+  position:relative;
+  max-width:720px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity var(--transition-medium) ease-out,transform var(--transition-medium) ease-out;
+}
+.hero.visible .hero-content{opacity:1;transform:translateY(0);}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform var(--transition-fast) ease,box-shadow var(--transition-fast) ease;
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+  border:2px solid var(--color-accent);
+}
+.btn-primary:hover{
+  background:#1E7A1E;
+  transform:scale(1.05);
+  box-shadow:0 0 8px var(--color-accent);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--color-accent);
+  border:2px solid var(--color-primary);
+}
+.btn-secondary:hover{
+  background:var(--color-primary);
+  color:#fff;
+  transform:scale(1.05);
+  box-shadow:0 0 8px var(--color-accent);
+}
+.btn-gold{
+  background:transparent;
+  color:var(--color-text);
+  border:2px solid var(--color-accent);
+}
+.btn-gold:hover{
+  background:var(--color-accent);
+  color:#222;
+  transform:scale(1.05);
+  box-shadow:0 0 8px var(--color-accent);
+}
+.btn + .btn{margin-left:1rem;}
+/* Sections */
+.fade-section{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity var(--transition-medium) ease-out,transform var(--transition-medium) ease-out;
+}
+.fade-section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.mission{
+  padding:4rem 0;
+  background:var(--color-secondary);
+  background-image:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.mission .content{
+  max-width:800px;
+  margin:auto;
+  text-align:center;
+}
+.values{
+  padding:4rem 0;
+  background:var(--color-bg);
+}
+.values-grid{
+  display:grid;
+  gap:2rem;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+}
+.value-item{
+  background:var(--color-secondary);
+  padding:2rem;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.value-item h4{
+  margin-top:1rem;
+  color:var(--color-primary);
+}
+.team{
+  padding:4rem 0;
+  background:var(--color-bg);
+}
+.team-grid{
+  display:grid;
+  gap:2rem;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+.team-card{
+  background:#fff;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  transition:var(--transition-medium) ease;
+}
+.team-card img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+}
+.team-card h4{
+  margin:1rem;
+  font-size:1.25rem;
+}
+.team-card p{
+  margin:0 1rem 1rem;
+  font-size:0.9rem;
+  color:var(--color-muted);
+}
+.process{
+  padding:4rem 0;
+  background:var(--color-secondary);
+}
+.process-grid{
+  display:grid;
+  gap:1rem;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+.process-grid img{
+  width:100%;
+  height:auto;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:6px;
+}
+@media (max-width:1024px){
+  .values-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:640){
+  .values-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <nav aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-toggle" aria-label="Toggle navigation" onclick="toggleNav(event)"><svg id="menu-icon" width="24" height="24"></svg></a>
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Hero Banner -->
+  <section class="hero hero-banner fade-section" id="hero_banner">
+    <div class="hero-content">
+      <h1>Our Story</h1>
+      <p>From the hands of artisans to the hearts of our customers, discover the soul behind Fashion Forward.</p>
+      <a href="index.html" class="btn btn-primary">Shop Now</a>
+      <a href="index.html" class="btn btn-secondary">Explore Our Collection</a>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission fade-section" id="mission_statement">
+    <div class="container">
+      <div class="content">
+        <h2>Our Mission</h2>
+        <p>We exist to empower conscious consumers with timeless, responsibly‑crafted fashion that tells a story of heritage, sustainability, and artistry.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Grid -->
+  <section class="values fade-section" id="values_grid">
+    <div class="container">
+      <h2>Our Core Values</h2>
+      <div class="values-grid">
+        <div class="value-item">
+          <svg data-lucide="leaf" width="48" height="48" stroke="var(--color-accent)"></svg>
+          <h4>Craftsmanship</h4>
+          <p>Every stitch is a testament to skill and dedication.</p>
+        </div>
+        <div class="value-item">
+          <svg data-lucide="leaf" width="48" height="48" stroke="var(--color-accent)"></svg>
+          <h4>Sustainability</h4>
+          <p>We source responsibly, minimizing our ecological footprint.</p>
+        </div>
+        <div class="value-item">
+          <svg data-lucide="leaf" width="48" height="48" stroke="var(--color-accent)"></svg>
+          <h4>Transparency</h4>
+          <p>Our processes are open, honest, and traceable.</p>
+        </div>
+        <div class="value-item">
+          <svg data-lucide="leaf" width="48" height="48" stroke="var(--color-accent)"></svg>
+          <h4>Community</h4>
+          <p>We give back, fostering growth for artisans and customers alike.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Photos Carousel -->
+  <section class="team fade-section" id="team_photos">
+    <div class="container">
+      <h2>Meet the Makers</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <img src="https://picsum.photos/400/400?random=10" alt="Artisan Maya Patel">
+          <h4>Maya Patel</h4>
+          <p>Lead Textile Designer – weaving stories into every fabric.</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/400/400?random=11" alt="Artisan Luis Alvarez">
+          <h4>Luis Alvarez</h4>
+          <p>Master Leather Artisan – shaping sustainable luxury.</p>
+        </div>
+        <div class="team-card">
+          <img src="https://picsum.photos/400/400?random=12" alt="Artisan Sofia Russo">
+          <h4>Sofia Russo</h4>
+          <p>Embroidery Specialist – stitching heritage into modern silhouettes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Photography -->
+  <section class="process fade-section" id="process_photography">
+    <div class="container">
+      <h2>From Fiber to Fashion</h2>
+      <div class="process-grid">
+        <img src="https://picsum.photos/600/400?random=20" alt="Organic cotton harvested">
+        <img src="https://picsum.photos/600/400?random=21" alt="Artisan hand‑spinning yarn">
+        <img src="https://picsum.photos/600/400?random=22" alt="Finished sustainable garment">
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Favorites CTA -->
+  <section class="call-to-fav fade-section" id="call_to_favorites">
+    <div class="container" style="text-align:center; padding:4rem 0;">
+      <a href="index.html" class="btn btn-primary">Shop Now</a>
+      <a href="index.html" class="btn btn-secondary">Explore Our Collection</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <h4>Company</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="contact.html">Contact</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a href="#">FAQ</a>
+      <a href="#">Shipping & Returns</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>123 Sustainable Lane<br>Eco City, EC 12345</p>
+      <p>Phone: <a href="tel:+15551234567">+1 (555) 123‑4567</a></p>
+    </div>
+    <div class="social-icons">
+      <a href="#" aria-label="Instagram"><svg></svg></a>
+      <a href="#" aria-label="Facebook"><svg></svg></a>
+      <a href="#" aria-label="Twitter"><svg></svg></a>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:2rem;">© 2024 Fashion Forward. All rights reserved.</p>
+</footer>
+
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Mobile navigation toggle
+  const nav = document.getElementById('main-nav');
+  const toggleBtn = document.querySelector('.nav-toggle');
+  function toggleNav(e){
+    e.preventDefault();
+    nav.classList.toggle('show');
+  }
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleNav);
+  }
+
+  // IntersectionObserver for scroll fade‑in
+  const observerOptions = {
+    threshold: 0.1
+  };
+  const fadeSections = document.querySelectorAll('.fade-section');
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  fadeSections.forEach(section => observer.observe(section));
+
+  // Hero visibility on load
+  window.addEventListener('load', () => {
+    document.querySelector('.hero').classList.add('visible');
+  });
+</script>
+</body>
+</html>

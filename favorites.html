@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Favorites – Fashion Forward</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --color-primary:#228B22;
+      --color-secondary:#F5F5DC;
+      --color-accent:#FFD700;
+      --color-bg:#FAFAFA;
+      --color-text:#222222;
+      --color-muted:#555555;
+      --transition-fast:150ms;
+      --transition-medium:300ms;
+      --radius:4px;
+      --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover:0 8px 20px rgba(0,0,0,0.12);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-text);
+      background:var(--color-bg);
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{
+      cursor:pointer;
+      border:none;
+      font-family:inherit;
+    }
+    h1,h2,h3,h4{
+      font-family:'Raleway',sans-serif;
+      line-height:1.2;
+      color:var(--color-text);
+    }
+    h1{font-size:clamp(2.5rem,8vw,4rem);font-weight:700;letter-spacing:-0.5px;}
+    h2{font-size:clamp(2rem,6vw,3rem);font-weight:700;letter-spacing:-0.3px;}
+    h3{font-size:2rem;font-weight:600;}
+    h4{font-size:1.5rem;font-weight:600;}
+    p{font-size:1rem;color:var(--color-text);}
+    .container{width:90%;max-width:1200px;margin:auto;padding:0 1rem;}
+    .skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+    .skip-link:focus{top:0;}
+    header{background:var(--color-bg);box-shadow:0 2px 6px rgba(0,0,0,0.1);position:sticky;top:0;z-index:50;}
+    nav{display:flex;justify-content:center;gap:2rem;padding:1rem 0;}
+    nav a{font-weight:600;color:var(--color-primary);position:relative;}
+    nav a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-accent);}
+    nav a:hover{color:var(--color-accent);}
+    .nav-toggle{display:none;background:none;font-size:1.5rem;color:var(--color-primary);margin-left:auto;cursor:pointer;}
+    @media (max-width:640px){
+      nav{flex-direction:column;display:none;background:#fff;padding:1rem;}
+      nav.show{display:flex;}
+      .nav-toggle{display:block;}
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:transform var(--transition-fast) ease,box-shadow var(--transition-fast) ease;
+    }
+    .btn-primary{
+      background:var(--color-primary);
+      color:#fff;
+      border:2px solid var(--color-accent);
+    }
+    .btn-primary:hover{
+      background:#1E7A1E;
+      transform:scale(1.05);
+      box-shadow:0 0 8px var(--color-accent);
+    }
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-accent);
+      border:2px solid var(--color-primary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-primary);
+      color:#fff;
+      transform:scale(1.05);
+      box-shadow:0 0 8px var(--color-accent);
+    }
+    .btn + .btn{margin-left:1rem;}
+    .fade-section{
+      opacity:0;
+      transform:translateY(20px);
+      transition:opacity var(--transition-medium) ease-out,transform var(--transition-medium) ease-out;
+    }
+    .fade-section.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .favorites-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+      gap:2rem;
+      padding:4rem 0;
+    }
+    .product-card{
+      background:#fff;
+      border-radius:6px;
+      box-shadow:var(--shadow-card);
+      overflow:hidden;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+    }
+    .product-card img{
+      width:100%;
+      height:auto;
+      transition:opacity .25s ease;
+    }
+    .product-card .info{
+      padding:1rem;
+      flex-grow:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .product-card h3{
+      font-size:1.5rem;
+      margin:0.5rem 0;
+    }
+    .price-badge{
+      background:var(--color-accent);
+      color:#222;
+      padding:0.25rem 0.5rem;
+      border-radius:9999px;
+      font-weight:600;
+      align-self:flex-start;
+    }
+    .remove-icon{
+      position:absolute;
+      top:0.5rem;
+      right:0.5rem;
+      background:#fff;
+      border-radius:50%;
+      padding:0.2rem;
+      cursor:pointer;
+      transition:background var(--transition-fast);
+    }
+    .remove-icon:hover{
+      background:#f8d7da;
+    }
+    .join-banner{
+      background:var(--color-primary);
+      color:#fff;
+      text-align:center;
+      padding:3rem 1rem;
+    }
+    .join-banner p{
+      margin:1rem 0;
+    }
+    .btn-gold{
+      background:transparent;
+      color:var(--color-accent);
+      border:2px solid var(--color-accent);
+    }
+    .btn-gold:hover{
+      background:var(--color-accent);
+      color:#222;
+      transform:scale(1.05);
+      box-shadow:0 0 8px var(--color-accent);
+    }
+    footer{
+      background:var(--color-primary);
+      color:#fff;
+      padding:3rem 0;
+      font-size:0.875rem;
+    }
+    footer .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:2rem;
+    }
+    footer h4{
+      color:var(--color-accent);
+      margin-bottom:1rem;
+      text-transform:uppercase;
+    }
+    footer a{
+      color:#fff;
+      display:block;
+      margin:0.25rem 0;
+    }
+    footer a:hover{color:var(--color-accent);}
+    footer .social-icons{
+      display:flex;
+      gap:0.5rem;
+    }
+    footer .social-icons svg{
+      stroke:var(--color-accent);
+      width:24px;
+      height:24px;
+      transition:fill .2s;
+    }
+    footer .social-icons a:hover svg{
+      fill:var(--color-primary);
+      stroke:var(--color-primary);
+    }
+    @media (max-width:1024px){
+      .favorites-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+    }
+    @media (max-width:640px){
+      nav{flex-direction:column;display:none;}
+      nav.show{display:flex;background:#fff;padding:1rem;}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <nav class="container">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="favorites.html" class="active">My Favorites</a>
+      <a href="contact.html">Contact</a>
+      <a href="blog.html">Blog</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <i data-lucide="menu"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main" class="container fade-section">
+    <h1 class="h2" style="margin-top:2rem;text-align:center;">My Favorites</h1>
+
+    <section class="favorites-grid fade-section">
+      <div class="product-card">
+        <button class="remove-icon" aria-label="Remove item">
+          <i data-lucide="trash-2" color="#D32F2F"></i>
+        </button>
+        <img src="https://picsum.photos/400/300?random=21" alt="Sustainable leather jacket">
+        <div class="info">
+          <h3>Eco Leather Jacket</h3>
+          <span class="price-badge">$199</span>
+          <button class="btn btn-primary" style="margin-top:1rem;">Move to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <button class="remove-icon" aria-label="Remove item">
+          <i data-lucide="trash-2" color="#D32F2F"></i>
+        </button>
+        <img src="https://picsum.photos/400/300?random=22" alt="Hand‑woven silk scarf">
+        <div class="info">
+          <h3>Silk Scarf</h3>
+          <span class="price-badge">$89</span>
+          <button class="btn btn-primary" style="margin-top:1rem;">Move to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <button class="remove-icon" aria-label="Remove item">
+          <i data-lucide="trash-2" color="#D32F2F"></i>
+        </button>
+        <img src="https://picsum.photos/400/300?random=23" alt="Organic cotton tee">
+        <div class="info">
+          <h3>Cotton Tee</h3>
+          <span class="price-badge">$45</span>
+          <button class="btn btn-primary" style="margin-top:1rem;">Move to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="join-banner fade-section" style="margin:4rem 0;padding:3rem;background:#e8f5e9;text-align:center;">
+      <p class="h3" style="margin-bottom:1rem;color:var(--color-primary);">Ready to start saving even more?</p>
+      <button class="btn btn-secondary">Join Now</button>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>Explore</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="shop.html">Shop</a>
+        <a href="favorites.html">My Favorites</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html">Blog</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>123 Greenway Blvd,<br>Portland, OR 97201</p>
+        <p>Phone: (555) 123‑4567</p>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;">© 2024 Fashion Forward. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('nav');
+    if (navToggle) {
+      navToggle.addEventListener('click', () => {
+        nav.classList.toggle('show');
+        const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+        navToggle.setAttribute('aria-expanded', !expanded);
+      });
+    }
+
+    // Scroll fade‑in
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.1});
+    document.querySelectorAll('.fade-section').forEach(sec=>observer.observe(sec));
+
+    // Remove favorite item (demo only)
+    document.querySelectorAll('.remove-icon').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const card = btn.closest('.product-card');
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        setTimeout(()=>card.remove(),300);
+        e.stopPropagation();
+      });
+    });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

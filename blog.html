@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fashion Forward Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+:root{
+  --color-primary:#228B22;
+  --color-secondary:#F5F5DC;
+  --color-accent:#FFD700;
+  --color-bg:#FAFAFA;
+  --color-text:#222222;
+  --color-muted:#555555;
+  --transition-fast:150ms;
+  --transition-medium:300ms;
+  --radius:4px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --shadow-hover:0 8px 20px rgba(0,0,0,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+}
+h1,h2,h3,h4{
+  font-family:'Raleway',sans-serif;
+  line-height:1.2;
+  color:var(--color-text);
+}
+h1{font-size:clamp(2.5rem,8vw,4rem);font-weight:700;letter-spacing:-0.5px;}
+h2{font-size:clamp(2rem,6vw,3rem);font-weight:700;letter-spacing:-0.3px;}
+h3{font-size:2rem;font-weight:600;}
+h4{font-size:1.5rem;font-weight:600;}
+p{font-size:1rem;color:var(--color-text);}
+.container{width:90%;max-width:1200px;margin:auto;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;}
+.skip-link:focus{top:0;}
+/* Navigation */
+header{background:var(--color-bg);box-shadow:0 2px 6px rgba(0,0,0,0.1);position:sticky;top:0;z-index:50;}
+nav{display:flex;justify-content:center;gap:2rem;padding:1rem 0;}
+nav a{font-weight:600;color:var(--color-primary);position:relative;}
+nav a.active::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:2px;background:var(--color-accent);}
+nav a:hover{color:var(--color-accent);}
+nav .nav-toggle{display:none;}
+/* Hero Blog */
+.hero-blog{
+  position:relative;
+  height:70vh;
+  min-height:400px;
+  background:url('https://picsum.photos/1920/1080?random=2') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+}
+.hero-blog::before{
+  content:"";
+  position:absolute;inset:0;
+  background:rgba(34,139,34,0.35);
+}
+.hero-blog .hero-content{
+  position:relative;
+  max-width:720px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity var(--transition-medium) ease-out,transform var(--transition-medium) ease-out;
+}
+.hero-blog.visible .hero-content{opacity:1;transform:translateY(0);}
+.hero-blog h1{font-size:clamp(2rem,8vw,3rem);margin-bottom:1rem;}
+.hero-blog .btn-gold{
+  background:var(--color-accent);
+  color:var(--color-primary);
+  border:2px solid var(--color-accent);
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform var(--transition-fast) ease,box-shadow var(--transition-fast) ease;
+}
+.hero-blog .btn-gold:hover{
+  background:#fff;
+  color:var(--color-primary);
+  transform:scale(1.05);
+  box-shadow:0 0 8px var(--color-accent);
+}
+
+/* Category chips */
+.chip{
+  display:inline-block;
+  padding:0.4rem 0.8rem;
+  background:var(--color-accent);
+  color:var(--color-primary);
+  border-radius:9999px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background var(--transition-fast) ease, color var(--transition-fast) ease;
+}
+.chip:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+
+/* Search bar */
+.search-bar{
+  width:100%;
+  max-width:600px;
+  margin:2rem auto;
+}
+.search-bar input{
+  width:100%;
+  padding:0.75rem 1rem;
+  border:2px solid var(--color-primary);
+  border-radius:var(--radius);
+  font-size:1rem;
+}
+
+/* Blog list */
+.blog-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:2rem;
+  padding:4rem 0;
+}
+.blog-card{
+  background:#fff;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity var(--transition-medium) ease-out,transform var(--transition-medium) ease-out;
+}
+.blog-card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.blog-card img{
+  width:100%;
+  height:auto;
+}
+.blog-card .overlay{
+  position:absolute;
+  inset:0;
+  background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');
+  background-size:cover;
+  opacity:0.15;
+}
+.blog-card-content{
+  padding:1rem;
+  flex-grow:1;
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+.blog-card h3{
+  font-size:1.5rem;
+  margin:0;
+}
+.blog-card p{
+  font-size:1rem;
+  color:var(--color-muted);
+}
+.read-more{
+  margin-top:auto;
+  display:inline-flex;
+  align-items:center;
+  gap:0.3rem;
+  color:var(--color-primary);
+  font-weight:600;
+}
+.read-more:hover{
+  color:var(--color-accent);
+}
+
+/* Mobile nav */
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  font-size:1.5rem;
+  color:var(--color-primary);
+  margin-left:auto;
+}
+@media (max-width:1024px){
+  .blog-list{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));}
+}
+@media (max-width:640px){
+  nav{flex-direction:column;display:none;}
+  nav.show{display:flex;background:#fff;padding:1rem;}
+  .nav-toggle{display:block;}
+  .hero-blog{height:60vh;}
+}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <nav class="container">
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-controls="nav-menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="shop.html">Shop</a>
+      <a href="favorites.html">My Favorites</a>
+      <a href="contact.html">Contact</a>
+      <a href="blog.html" class="active">Blog</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Featured Post Banner -->
+    <section class="hero-blog fade-section">
+      <div class="hero-blog" style="background:url('https://picsum.photos/1920/1080?random=3') center/cover no-repeat;">
+        <div class="hero-overlay" style="position:absolute;inset:0;background:rgba(34,139,34,0.35);"></div>
+        <div class="hero-content" style="position:relative;max-width:720px;color:#fff;">
+          <h1>Eco-Fabric Trends: The Rise of Regenerative Textiles</h1>
+          <a href="#" class="btn btn-primary" style="background:var(--color-accent);color:var(--color-primary);border:2px solid var(--color-primary);margin-top:1rem;">Read More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="search-bar fade-section container">
+      <input type="text" placeholder="Search articles…" aria-label="Search articles">
+    </section>
+
+    <!-- Category Filter -->
+    <section class="category-filter fade-section container" style="margin:2rem 0;display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <button class="chip">Style Guides</button>
+      <button class="chip">Meet the Maker</button>
+      <button class="chip">Caring for Handmade</button>
+      <button class="chip">Eco-Fabric Trends</button>
+      <button class="chip">Behind the Scenes</button>
+    </section>
+
+    <!-- Blog List -->
+    <section class="blog-list container fade-section">
+      <article class="blog-card">
+        <div style="position:relative;">
+          <img src="https://picsum.photos/600/400?random=10" alt="Sustainable Denim" loading="lazy">
+          <div class="overlay" style="position:absolute;inset:0;background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');opacity:0.15;"></div>
+        </div>
+        <div class="blog-card-content">
+          <h3>5 Ways to Style Sustainable Denim This Summer</h3>
+          <p>Discover fresh outfit ideas that highlight eco‑friendly denim while keeping you cool and stylish all season long.</p>
+          <a href="#" class="read-more">Read More <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="blog-card">
+        <div style="position:relative;">
+          <img src="https://picsum.photos/600/400?random=11" alt="Artisan Maya Patel" loading="lazy">
+          <div class="overlay" style="position:absolute;inset:0;background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');opacity:0.15;"></div>
+        </div>
+        <div class="blog-card-content">
+          <h3>A Day in the Life of Artisan Maya Patel</h3>
+          <p>Step inside Maya’s studio to see how traditional techniques blend with modern sustainability practices.</p>
+          <a href="#" class="read-more">Read More <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="blog-card">
+        <div style="position:relative;">
+          <img src="https://picsum.photos/600/400?random=12" alt="Organic Cotton Care" loading="lazy">
+          <div class="overlay" style="position:absolute;inset:0;background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');opacity:0.15;"></div>
+        </div>
+        <div class="blog-card-content">
+          <h3>Gentle Wash Techniques for Organic Cotton</h3>
+          <p>Learn how to extend the life of your handmade pieces with eco‑friendly washing methods.</p>
+          <a href="#" class="read-more">Read More <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="blog-card">
+        <div style="position:relative;">
+          <img src="https://picsum.photos/600/400?random=13" alt="Regenerative Wool" loading="lazy">
+          <div class="overlay" style="position:absolute;inset:0;background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');opacity:0.15;"></div>
+        </div>
+        <div class="blog-card-content">
+          <h3>Regenerative Wool: The Future of Warmth</h3>
+          <p>Explore how regenerative wool production reduces carbon footprints while delivering premium insulation.</p>
+          <a href="#" class="read-more">Read More <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+
+      <article class="blog-card">
+        <div style="position:relative;">
+          <img src="https://picsum.photos/600/400?random=14" alt="Production Journey" loading="lazy">
+          <div class="overlay" style="position:absolute;inset:0;background:url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==');opacity:0.15;"></div>
+        </div>
+        <div class="blog-card-content">
+          <h3>From Fiber to Fashion: Our Production Journey</h3>
+          <p>Take a behind‑the‑scenes look at how each piece is crafted from sustainable fibers to final runway.</p>
+          <a href="#" class="read-more">Read More <i data-lucide="arrow-right"></i></a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h4>Shop</h4>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About Us</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>123 Fashion Ave<br>Los Angeles, CA 90001</p>
+        <p>Phone: (555) 123‑4567</p>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+
+    // Mobile navigation toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('nav');
+    navToggle.addEventListener('click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+      navToggle.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('show');
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.1});
+
+    document.querySelectorAll('.fade-section').forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
+</analysis<|message|><|start|>assistant<|channel|>analysis<|message|>User wants to create an HTML page for a women's fashion brand with focus on sustainability, using the content provided. The user wants the page to be "visually appealing and professional". We need to create a complete HTML page. The content includes:
+
+- Title: Should be appealing and related to brand.
+- Logo: Should reflect brand ethos.
+- Navigation links: Home, About Us, Shop, Blog, Contact.
+- Header image with tagline: "Elevate Your Style, Embrace Sustainability".
+- Promotional banner: "Introducing EcoChic Collection – Where Fashion Meets Sustainability!"
+- Features: Sustainable Materials (Eco-friendly fabrics), Ethical Production (Fair trade), Timeless Designs (Classic and versatile), Customer Testimonials (quotes, rating 5 stars etc.)
+- Footer: Social media icons (Instagram, Facebook, Twitter), newsletter signup.
+
+Also need to ensure the page is responsive and modern. Must use HTML5 and CSS (likely internal style). Use icons maybe from Font Awesome or similar. Use responsive grid. Use accessible alt attributes. Use a color palette: maybe earthy tones, #2c7a7b (teal), #ffd700 (gold) for accent? Use simple fonts.
+
+Add interactive elements: hover effects.
+
+Maybe include some placeholder images from unsplash or picsum.
+
+We can embed CSS in <style> tags. Use @media queries for responsiveness.
+
+Add scripts for icons (lucide). Use simple JS for newsletter form.
+
+Make sure to reference content exactly.
+
+Will deliver a full HTML page with head, meta tags, title, style, body.
+
+Will include placeholder images.
+
+We'll add a "Subscribe to Newsletter" form with email input.
+
+Will ensure the page is valid HTML5.
+
+Will not use external CSS files (except maybe icons). Use internal style for simplicity. Provide comments in HTML.
+
+We should keep the design minimal but elegant. Use container class for max width.
+
+Will implement a CSS grid for features.
+
+Will include star rating icons.
+
+Will include sections: header (nav), hero, banner, features, testimonials, footer.
+
+Will ensure proper alt text.
+
+We'll also include responsive breakpoints for mobile.
+
+Will include meta viewport.
+
+Will ensure that the tagline appears overlay over hero image.
+
+Will use CSS variables for colors.
+
+Will use a nice font: maybe Google Fonts "Montserrat" and "Playfair Display". Could link to Google Fonts.
+
+Will ensure final answer is just the HTML code block.
+
+We should not add extra explanation; just output the HTML page.
+
+Now produce the final answer.```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoChic – Sustainable Women’s Fashion</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ==== CSS Variables ==== */
+    :root {
+      --clr-primary:#2c7a7b;          /* Teal – main brand colour */
+      --clr-accent:#ffd700;           /* Gold – highlight colour */
+      --clr-dark:#1a202c;             /* Dark text */
+      --clr-light:#f8fafc;           /* Light background */
+      --clr-gray:#718096;            /* Gray for secondary text */
+      --font-primary:'Montserrat',sans-serif;
+      --font-heading:'Playfair Display',serif;
+    }
+
+    /* ==== Reset & Base ==== */
+    *, *::before, *::after {margin:0;padding:0;box-sizing:border-box;}
+    html {scroll-behavior:smooth;}
+    body {
+      font-family: var(--font-primary);
+      color: var(--clr-dark);
+      background: var(--clr-light);
+      line-height: 1.6;
+    }
+    a {color:inherit;text-decoration:none;}
+    img {max-width:100%;display:block;}
+    button {cursor:pointer;font-family:inherit;}
+
+    /* ==== Layout ==== */
+    .container {max-width:1200px;margin:auto;padding:0 1rem;}
+    .flex {display:flex;align-items:center;gap:1rem;}
+    .grid {display:grid;gap:2rem;}
+
+    /* ==== Header & Navigation ==== */
+    header {background:var(--clr-light);box-shadow:0 2px 6px rgba(0,0,0,0.1);position:sticky;top:0;z-index:10;}
+    nav {display:flex;justify-content:center;align-items:center;gap:2rem;padding:1rem 0;}
+    nav a {font-weight:600;color:var(--clr-primary);position:relative;}
+    nav a.active::after{content:'';position:absolute;bottom:-6px;left:0;width:100%;height:2px;background:var(--clr-accent);}
+    nav a:hover{color:var(--clr-accent);}
+    .nav-toggle {display:none;background:none;border:none;font-size:1.5rem;color:var(--clr-primary);}
+    @media (max-width:768px){
+      nav {flex-direction:column;display:none;}
+      nav.show {display:flex;background:#fff;padding:1rem;}
+      .nav-toggle {display:block;}
+    }
+
+    /* ==== Hero Section ==== */
+    .hero {
+      position:relative;
+      height:70vh;
+      min-height:400px;
+      background:url('https://picsum.photos/1920/1080?random=5') center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-align:center;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;inset:0;
+      background:rgba(44,122,123,0.6);
+    }
+    .hero .hero-content {position:relative;max-width:800px;}
+    .hero h1 {font-family:var(--font-heading);font-size:clamp(2rem,8vw,3.5rem);margin-bottom:.5rem;}
+    .hero p {font-size:1.2rem;margin-bottom:1.5rem;}
+    .hero .cta {background:var(--clr-accent);color:var(--clr-primary);border:2px solid var(--clr-primary);padding:.8rem 1.5rem;border-radius:4px;font-weight:600;transition:transform .2s;}
+    .hero .cta:hover{transform:scale(1.05);background:#fff;color:var(--clr-primary);}
+
+    /* ==== Promotional Banner ==== */
+    .promo {
+      background:var(--clr-primary);
+      color:#fff;
+      text-align:center;
+      padding:2rem 1rem;
+    }
+    .promo h2 {font-size:1.8rem;margin-bottom:.5rem;}
+    .promo p {font-size:1rem;}
+
+    /* ==== Features ==== */
+    .features {padding:4rem 0;}
+    .features .grid {grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+    .feature-card {
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 4px 8px rgba(0,0,0,.07);
+      padding:2rem 1.5rem;
+      text-align:center;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .feature-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 24px rgba(0,0,0,.12);
+    }
+    .feature-card i {font-size:2rem;color:var(--clr-primary);margin-bottom:.5rem;}
+
+    /* ==== Testimonials ==== */
+    .testimonials {background:var(--clr-light);padding:4rem 0;}
+    .testimonials .grid {grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+    .testimonial-card {
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 4px 8px rgba(0,0,0,.07);
+      padding:2rem;
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+    }
+    .testimonial-card .quote {font-style:italic;color:var(--clr-gray);}
+    .testimonial-card .author {font-weight:600;}
+    .stars {color:#f6b01e;}
+
+    /* ==== Footer ==== */
+    footer {background:#1a202c;color:#fff;padding:3rem 0;}
+    .footer-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;}
+    .footer-grid h4 {margin-bottom:.5rem;}
+    .social-icons a {margin-right:.8rem;color:#fff;transition:color .2s;}
+    .social-icons a:hover{color:var(--clr-accent);}
+    .newsletter input[type="email"]{padding:.6rem 1rem;border:none;border-radius:4px;margin-right:.5rem;width:70%;}
+    .newsletter button{padding:.6rem 1rem;background:var(--clr-accent);color:var(--clr-primary);border:none;border-radius:4px;font-weight:600;cursor:pointer;}
+    .newsletter button:hover{background:#fff;color:var(--clr-primary);}
+
+    /* ==== Responsive ==== */
+    @media (max-width:600px){
+      .hero {height:50vh;}
+      .hero h1{font-size:2rem;}
+      .promo h2{font-size:1.5rem;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip to Content (Accessibility) -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ==== Header / Navigation ==== -->
+  <header>
+    <nav class="container">
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-controls="main-nav" aria-expanded="false">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="shop.html">Shop</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ==== Main Content ==== -->
+  <main id="main">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Elevate Your Style, Embrace Sustainability</h1>
+        <p>Timeless collections crafted with love for the planet.</p>
+        <a href="shop.html" class="cta">Shop The Collection</a>
+      </div>
+    </section>
+
+    <!-- Promotional Banner -->
+    <section class="promo">
+      <h2>Introducing EcoChic Collection – Where Fashion Meets Sustainability!</h2>
+      <p>Explore our newest line of eco‑friendly designs, created with responsibly sourced fabrics and ethical production.</p>
+    </section>
+
+    <!-- Features -->
+    <section class="features container">
+      <h2 class="sr-only">Our Core Values</h2>
+      <div class="grid">
+        <div class="feature-card flex flex-col">
+          <i data-lucide="leaf"></i>
+          <h3>Sustainable Materials</h3>
+          <p>Eco‑friendly fabrics that reduce environmental impact without compromising style.</p>
+        </div>
+        <div class="feature-card flex flex-col">
+          <i data-lucide="users"></i>
+          <h3>Ethical Production</h3>
+          <p>Fair‑trade manufacturing practices ensuring safe, dignified work environments.</p>
+        </div>
+        <div class="feature-card flex flex-col">
+          <i data-lucide="gift"></i>
+          <h3>Timeless Designs</h3>
+          <p>Classic, versatile pieces that stay in style season after season.</p>
+        </div>
+        <div class="feature-card flex flex-col">
+          <i data-lucide="star"></i>
+          <h3>Customer Testimonials</h3>
+          <p>Our community loves the quality and sustainability of our collections.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials container">
+      <h2 class="sr-only">Customer Testimonials</h2>
+      <div class="grid">
+        <div class="testimonial-card">
+          <div class="quote">“The fabrics feel amazing and I love knowing my purchase supports ethical workers.”</div>
+          <div class="author">— Maya L.</div>
+          <div class="stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote">“Stylish, comfortable, and sustainable – finally a brand that aligns with my values.”</div>
+          <div class="author">— Jordan K.</div>
+          <div class="stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="quote">“The timeless designs are perfect for a capsule wardrobe that lasts.”</div>
+          <div class="author">— Sophia R.</div>
+          <div class="stars">
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+            <i data-lucide="star"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==== Footer ==== -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a><br>
+        <a href="about.html">About Us</a><br>
+        <a href="shop.html">Shop</a><br>
+        <a href="blog.html">Blog</a><br>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Stay Updated</h4>
+        <form class="newsletter" action="#" method="post">
+          <input type="email" name="email" placeholder="Enter your email" required aria-label="Email address">
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:.9rem;">© 2024 EcoChic. All rights reserved.</p>
+  </footer>
+
+  <!-- ==== Scripts ==== -->
+  <script>
+    // Initialise Lucide icons
+    lucide.createIcons();
+
+    // Mobile navigation toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('nav');
+    navToggle.addEventListener('click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('show');
+    });
+
+    // Fade‑in sections on scroll
+    const fadeEls = document.querySelectorAll('.fade-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.1});
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
