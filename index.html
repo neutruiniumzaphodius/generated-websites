@@ -1,75 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Sweet Dough Bakery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#E07363;
+  --color-secondary:#D4C495;
+  --color-accent:#333333;
+  --color-bg:#F9F3EA;
+  --color-text:#333333;
+  --font-heading:'Playfair Display',serif;
+  --font-body:'Open Sans',sans-serif;
+  --max-width:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.container{
+  max-width:var(--max-width);
+  margin:auto;
+  padding:0 24px;
+}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{
+  top:0;
+}
+header{
+  position:sticky;
+  top:0;
+  width:100%;
+  z-index:10;
+  transition:background .3s,box-shadow .3s;
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 0;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-family:var(--font-heading);
+  font-size:0.875rem;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--color-accent);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-primary);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
+.hamburger span{
+  width:24px;
+  height:2px;
+  background:#333;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-bg);
+    flex-direction:column;
+    align-items:center;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  }
+  .hamburger{display:flex;}
+}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:var(--font-body);
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  height:48px;
+  padding:0 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:transform .35s ease-out,background .3s;
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+}
+.btn-secondary{
+  background:var(--color-secondary);
+  color:#333;
+}
+.btn:hover{
+  transform:scale(1.05);
+}
+section{
+  padding:64px 0;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease-out,transform .5s ease-out;
+}
+section.visible{
+  opacity:1;
+  transform:none;
+}
+#hero-slider{
+  position:relative;
+  height:80vh;
+  overflow:hidden;
+}
+.slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transition:opacity .8s ease;
+}
+.slide.active{opacity:1;}
+.slide::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/seed/flour/1600/900') center/cover;
+  mix-blend-mode:multiply;
+  opacity:0.07;
+}
+.slide-content{
+  position:absolute;
+  bottom:20%;
+  left:5%;
+  color:#fff;
+  max-width:600px;
+}
+.slide-title{
+  font-family:var(--font-heading);
+  font-size:clamp(2rem,5vw,3rem);
+  line-height:1.2;
+  margin-bottom:16px;
+}
+.slide-title .gold-leaf{
+  position:relative;
+}
+.slide-title .gold-leaf::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,215,0,0.12);
+  pointer-events:none;
+}
+.slide-sub{
+  font-size:1.125rem;
+  margin-bottom:24px;
+}
+.hero-buttons .btn{
+  margin-right:12px;
+}
+.wheat-stalk{
+  position:absolute;
+  opacity:0.05;
+  pointer-events:none;
+}
+.wheat-stalk.top-left{
+  top:5%;
+  left:5%;
+  width:120px;
+  transform:rotate(-15deg);
+}
+.wheat-stalk.bottom-right{
+  bottom:5%;
+  right:5%;
+  width:150px;
+  transform:rotate(10deg);
+}
+.value-props{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
+  text-align:center;
+}
+.value-props i{
+  font-size:2rem;
+  color:var(--color-primary);
+  margin-bottom:12px;
+}
+.featured-carousel{
+  position:relative;
+  overflow:hidden;
+}
+.featured-track{
+  display:flex;
+  transition:transform .5s ease;
+}
+.featured-card{
+  min-width:calc(100% / 3 - 21px);
+  margin-right:32px;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  padding-bottom:16px;
+}
+.featured-card img{
+  border-top-left-radius:8px;
+  border-top-right-radius:8px;
+}
+.featured-card h3{
+  font-family:var(--font-heading);
+  font-size:1.5rem;
+  margin:12px;
+}
+.featured-card p{
+  margin:0 12px 12px;
+  font-size:0.95rem;
+}
+.featured-card .price{
+  font-weight:600;
+  color:var(--color-primary);
+  margin-left:12px;
+}
+.carousel-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.3);
+  color:#fff;
+  border:none;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.carousel-nav.prev{left:8px;}
+.carousel-nav.next{right:8px;}
+.seasonal-banner{
+  background:var(--color-primary);
+  color:#fff;
+  text-align:center;
+  padding:24px;
+  font-size:1.25rem;
+}
+.seasonal-banner .btn{
+  background:#fff;
+  color:var(--color-primary);
+  border:2px solid #fff;
+}
+.testimonial-slider{
+  position:relative;
+  overflow:hidden;
+}
+.testimonial-track{
+  display:flex;
+  transition:transform .5s ease;
+}
+.testimonial{
+  min-width:100%;
+  padding:32px;
+  text-align:center;
+}
+.testimonial p{
+  font-style:italic;
+  margin-bottom:12px;
+}
+.testimonial .author{
+  font-weight:600;
+}
+.sticky-cta{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#fff;
+  box-shadow:0 -2px 8px rgba(0,0,0,0.1);
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  padding:12px;
+  z-index:100;
+}
+@media (max-width:1024px){
+  .featured-card{min-width:calc(100% / 2 - 16px);}
+}
+@media (max-width:640px){
+  .featured-card{min-width:100%;}
+  .hero-buttons .btn{margin-bottom:8px;}
+  .sticky-cta{flex-direction:column;}
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header id="site-header">
+  <nav class="container">
+    <a href="index.html" class="logo" aria-label="Sweet Dough Bakery Home">
+      <strong>Sweet Dough</strong>
+    </a>
+    <div class="hamburger" aria-label="Menu" aria-controls="primary-navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links" id="primary-navigation">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="menu.html" class="nav-link">Menu</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+<main id="main">
+  <!-- Hero Slider -->
+  <section id="hero_slider" class="section">
+    <div id="hero-slider">
+      <div class="slide active" style="background-image:url('https://picsum.photos/seed/croissant/1600/900');">
+        <img src="https://picsum.photos/seed/flour/1600/900" alt="" aria-hidden="true" class="wheat-stalk top-left">
+        <div class="slide-content">
+          <h1 class="slide-title"><span class="gold-leaf">Taste</span> the Tradition</h1>
+          <p class="slide-sub">Hand‑crafted pastries made with premium ingredients, served in a warm, community‑focused bakery that feels like home.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary btn-primary-cta"><span data-lucide="menu"></span>cta_view_menu</button>
+            <button class="btn btn-secondary btn-secondary-cta"><span data-lucide="shopping-cart"></span>cta_order_online</button>
+          </div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+      <div class="slide" style="background-image:url('https://picsum.photos/seed/bread/1600/900');">
+        <img src="https://picsum.photos/seed/flour/1600/900" alt="" aria-hidden="true" class="wheat-stalk bottom-right">
+        <div class="slide-content">
+          <h1 class="slide-title"><span class="gold-leaf">Taste</span> the Tradition</h1>
+          <p class="slide-sub">Hand‑crafted pastries made with premium ingredients, served in a warm, community‑focused bakery that feels like home.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary btn-primary-cta"><span data-lucide="menu"></span>cta_view_menu</button>
+            <button class="btn btn-secondary btn-secondary-cta"><span data-lucide="shopping-cart"></span>cta_order_online</button>
+          </div>
+        </div>
+      </div>
+      <div class="slide" style="background-image:url('https://picsum.photos/seed/bagel/1600/900');">
+        <img src="https://picsum.photos/seed/flour/1600/900" alt="" aria-hidden="true" class="wheat-stalk top-left">
+        <div class="slide-content">
+          <h1 class="slide-title"><span class="gold-leaf">Taste</span> the Tradition</h1>
+          <p class="slide-sub">Hand‑crafted pastries made with premium ingredients, served in a warm, community‑focused bakery that feels like home.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary btn-primary-cta"><span data-lucide="menu"></span>cta_view_menu</button>
+            <button class="btn btn-secondary btn-secondary-cta"><span data-lucide="shopping-cart"></span>cta_order_online</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Welcome Message -->
+  <section id="welcome_message" class="section container">
+    <h2 class="slide-title">Welcome to Sweet Dough Bakery</h2>
+    <p class="slide-sub">Our bakery blends tradition with innovation, delivering unforgettable flavors straight from our ovens to your table.</p>
+  </section>
+
+  <!-- Value Propositions -->
+  <section id="value_propositions" class="section container">
+    <div class="value-props">
+      <div>
+        <i data-lucide="leaf"></i>
+        <h3>Artisan Quality</h3>
+        <p>Every loaf and pastry is crafted with premium, locally‑sourced ingredients.</p>
+      </div>
+      <div>
+        <i data-lucide="heart"></i>
+        <h3>Community Focus</h3>
+        <p>We support local farmers and give back to our neighborhood.</p>
+      </div>
+      <div>
+        <i data-lucide="coffee"></i>
+        <h3>Cozy Atmosphere</h3>
+        <p>A warm, inviting space where friends and families gather.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Items -->
+  <section id="featured_items" class="section container">
+    <h2 class="slide-title">Signature Items</h2>
+    <div class="featured-carousel">
+      <button class="carousel-nav prev" aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+      <button class="carousel-nav next" aria-label="Next"><i data-lucide="chevron-right"></i></button>
+      <div class="featured-track">
+        <div class="featured-card">
+          <img src="https://picsum.photos/seed/signature1/400/300" alt="Signature Item 1">
+          <h3>Signature Sourdough</h3>
+          <p>Crusty on the outside, soft and airy inside.</p>
+          <div class="price">$5.99</div>
+        </div>
+        <div class="featured-card">
+          <img src="https://picsum.photos/seed/signature2/400/300" alt="Signature Item 2">
+          <h3>Almond Croissant</h3>
+          <p>Flaky butter croissant filled with almond paste.</p>
+          <div class="price">$4.49</div>
+        </div>
+        <div class="featured-card">
+          <img src="https://picsum.photos/seed/signature3/400/300" alt="Signature Item 3">
+          <h3>Blueberry Muffin</h3>
+          <p>Fresh blueberries baked into a tender muffin.</p>
+          <div class="price">$3.99</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seasonal Promotion -->
+  <section id="seasonal_promotions" class="section seasonal-banner">
+    <p>Enjoy our limited‑time Spring Berry Tart! <button class="btn btn-secondary"><span data-lucide="gift"></span>Shop Now</button></p>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="section container">
+    <h2 class="slide-title">What Our Customers Say</h2>
+    <div class="testimonial-slider">
+      <div class="testimonial-track">
+        <div class="testimonial">
+          <p>“The sourdough is simply the best I’ve ever tasted – crisp, flavorful, and perfect every time.”</p>
+          <div class="author">— Emma L.</div>
+        </div>
+        <div class="testimonial">
+          <p>“I love the cozy vibe and the friendly staff. Their almond croissant is a must‑try!”</p>
+          <div class="author">— Michael S.</div>
+        </div>
+        <div class="testimonial">
+          <p>“Every visit feels like coming home. The bakery stories they share are wonderful.”</p>
+          <div class="author">— Sofia K.</div>
+        </div>
+      </div>
+      <button class="carousel-nav prev" aria-label="Previous testimonial"><i data-lucide="chevron-left"></i></button>
+      <button class="carousel-nav next" aria-label="Next testimonial"><i data-lucide="chevron-right"></i></button>
+    </div>
+  </section>
+</main>
+
+<!-- Sticky Primary CTAs -->
+<div class="sticky-cta" aria-label="Primary actions">
+  <button class="btn btn-primary"><span data-lucide="menu"></span>cta_view_menu</button>
+  <button class="btn btn-secondary"><span data-lucide="shopping-cart"></span>cta_order_online</button>
+</div>
+
+<footer class="container" style="padding:32px 0;text-align:center;font-size:0.9rem;">
+  &copy; 2024 Sweet Dough Bakery – All Rights Reserved.
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Navigation toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+    hamburger.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('open');
+  });
+
+  // Hero Slider
+  const slides = document.querySelectorAll('#hero-slider .slide');
+  let currentSlide = 0;
+  const heroInterval = setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }, 5000);
+
+  // Intersection Observer for sections
+  const observerOptions = {threshold:0.1};
+  const sectionObserver = new IntersectionObserver((entries,obs)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  },observerOptions);
+  document.querySelectorAll('section').forEach(sec=>sectionObserver.observe(sec));
+
+  // Featured Items Carousel
+  const track = document.querySelector('.featured-track');
+  const prevBtn = document.querySelector('.carousel-nav.prev');
+  const nextBtn = document.querySelector('.carousel-nav.next');
+  let index = 0;
+  const slideWidth = () => document.querySelector('.featured-card').offsetWidth + 32;
+  const updateCarousel = () => {
+    track.style.transform = `translateX(-${index * slideWidth()}px)`;
+  };
+  prevBtn.addEventListener('click',()=>{ if(index>0){ index--; updateCarousel(); } });
+  nextBtn.addEventListener('click',()=>{ if(index < track.children.length-3){ index++; updateCarousel(); } });
+
+  // Testimonial Slider
+  const testimonialTrack = document.querySelector('.testimonial-track');
+  const testimonialPrev = document.querySelector('.testimonial-slider .carousel-nav.prev');
+  const testimonialNext = document.querySelector('.testimonial-slider .carousel-nav.next');
+  let testimonialIndex = 0;
+  const updateTestimonial = () => {
+    testimonialTrack.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+  };
+  testimonialPrev && testimonialPrev.addEventListener('click',()=>{ if(testimonialIndex>0){ testimonialIndex--; updateTestimonial(); } });
+  testimonialNext && testimonialNext.addEventListener('click',()=>{ if(testimonialIndex<testimonialTrack.children.length-1){ testimonialIndex++; updateTestimonial(); } });
+  setInterval(()=>{ testimonialIndex = (testimonialIndex+1)%testimonialTrack.children.length; updateTestimonial(); },7000);
+});
+lucide.createIcons();
+</script>
 </body>
 </html>

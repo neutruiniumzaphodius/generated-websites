@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sweet Dough Bakery – Newsletter Signup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#E07363;
+  --color-secondary:#D4C495;
+  --color-accent:#333333;
+  --color-bg:#F9F3EA;
+  --color-text:#333333;
+  --font-heading:'Playfair Display',serif;
+  --font-body:'Open Sans',sans-serif;
+  --max-width:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text);
+  background:var(--color-bg);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.container{
+  max-width:var(--max-width);
+  margin:auto;
+  padding:0 24px;
+}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#000;
+  color:#fff;
+  padding:8px 16px;
+  z-index:100;
+}
+.skip-link:focus{
+  top:0;
+}
+header{
+  position:sticky;
+  top:0;
+  width:100%;
+  z-index:10;
+  background:rgba(255,255,255,0.9);
+  transition:background .3s,box-shadow .3s;
+  box-shadow:0 2px 4px rgba(0,0,0,0.1);
+}
+nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 0;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-family:var(--font-heading);
+  font-size:0.875rem;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--color-accent);
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-primary);
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
+.hamburger span{
+  width:24px;
+  height:2px;
+  background:#333;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:var(--color-bg);
+    flex-direction:column;
+    align-items:center;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .nav-links.open{
+    max-height:300px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  }
+  .hamburger{display:flex;}
+}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:var(--font-body);
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  height:48px;
+  padding:0 16px;
+  border-radius:4px;
+  font-weight:600;
+  transition:transform .35s ease-out,background .3s;
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+}
+.btn-secondary{
+  background:var(--color-secondary);
+  color:#333;
+}
+.btn:hover{
+  transform:scale(1.05);
+}
+section{
+  padding:64px 0;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .5s ease-out,transform .5s ease-out;
+}
+section.visible{
+  opacity:1;
+  transform:none;
+}
+h1{
+  font-family:var(--font-heading);
+  font-size:2rem;
+  margin-bottom:24px;
+  text-align:center;
+}
+form{
+  background:#fff;
+  padding:32px;
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+form .field{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:16px;
+}
+form input{
+  height:48px;
+  padding:0 12px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  font-size:1rem;
+}
+form .error{
+  color:var(--color-primary);
+  font-size:0.9rem;
+  margin-top:4px;
+}
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  50%{transform:translateX(5px);}
+  75%{transform:translateX(-5px);}
+  100%{transform:translateX(0);}
+}
+.shake{
+  animation:shake .15s cubic-bezier(.36,.07,.19,.97);
+}
+.benefits{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+  margin-top:32px;
+}
+.benefits li{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:1rem;
+}
+footer{
+  background:#fff;
+  padding:32px 0;
+  text-align:center;
+  font-size:0.9rem;
+}
+footer .nav-links{
+  justify-content:center;
+  margin-bottom:12px;
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a href="index.html" class="logo"><strong>Sweet Dough</strong></a>
+      <div class="hamburger" aria-label="Menu" aria-controls="navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links" id="navigation">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="location.html" class="nav-link">Location</a></li>
+        <li><a href="newsletter.html" class="nav-link active">Newsletter</a></li>
+        <li><a href="neighbors.html" class="nav-link">Neighbors</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <section class="visible" id="signup_form">
+    <div class="container">
+      <h1 class="text-center">Stay Fresh – Join Our Newsletter</h1>
+      <form id="newsletter-form" novalidate>
+        <div class="field">
+          <label for="email" class="visually-hidden">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@domain.com" required aria-required="true" aria-describedby="email-error">
+          <p id="email-error" class="error" role="alert" aria-live="assertive"></p>
+        </div>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="benefits_list">
+    <div class="container">
+      <h2 class="text-center" style="font-family:var(--font-heading);font-size:1.75rem;margin-bottom:24px;">Why Subscribe?</h2>
+      <ul class="benefits">
+        <li><i data-lucide="check" class="icon-primary"></i>New product alerts.</li>
+        <li><i data-lucide="check" class="icon-primary"></i>Exclusive special offers.</li>
+        <li><i data-lucide="check" class="icon-primary"></i>Behind‑the‑scenes bakery stories.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <nav aria-label="Footer navigation">
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="location.html" class="nav-link">Location</a></li>
+        <li><a href="newsletter.html" class="nav-link active">Newsletter</a></li>
+        <li><a href="neighbors.html" class="nav-link">Neighbors</a></li>
+      </ul>
+    </nav>
+    <p style="margin-top:24px;text-align:center;font-size:0.9rem;">© 2024 Sweet Dough Bakery. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Navigation toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', navLinks.classList.contains('open'));
+  });
+
+  // IntersectionObserver for sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.1});
+  document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+  // Form validation
+  const form = document.getElementById('newsletter-form');
+  const emailInput = document.getElementById('email');
+  const errorMsg = document.getElementById('email-error');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    if(!email){
+      showError('Please enter your email address.');
+    } else if(!emailPattern.test(email)){
+      showError('Please enter a valid email address.');
+    } else {
+      // Placeholder for Mailchimp integration
+      // fetch('https://<dc>.api.mailchimp.com/3.0/lists/<list-id>/members', { ... })
+      console.log('Subscribed:', email);
+      form.reset();
+      errorMsg.textContent = '';
+      alert('Thank you for subscribing!');
+    }
+  });
+
+  function showError(message){
+    errorMsg.textContent = message;
+    emailInput.classList.add('shake');
+    setTimeout(()=> emailInput.classList.remove('shake'), 300);
+  }
+});
+</script>
+</body>
+</html>
