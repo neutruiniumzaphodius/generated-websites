@@ -1,75 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>PurelyFresh – Fresh, Local, Organic – Delivered to Your Door.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --color-primary:#2E7D32;
+  --color-primary-dark:#1B5E20;
+  --color-secondary:#8B4513;
+  --color-accent:#D84315;
+  --color-bg-grad:linear-gradient(135deg,#F5F5F5 0%,#E8F5E9 100%);
+  --color-text:#212121;
+  --color-muted:#F5F5F5;
+  --color-white:#FFFFFF;
+  --gutter:24px;
+  --radius:4px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --transition-fast:200ms ease-out;
+  --transition-medium:300ms ease;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-700.woff2') format('woff2');
+  font-weight:700;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-600.woff2') format('woff2');
+  font-weight:600;
+  font-style:normal;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  background:var(--color-bg-grad);
+  color:var(--color-text);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+}
+.container{max-width:1200px;margin:auto;padding:0 var(--gutter);}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  line-height:1.2;
+  margin-bottom:0.5em;
+}
+h1{font-size:clamp(32px,5vw,48px);font-weight:700;}
+h2{font-size:clamp(24px,4vw,36px);font-weight:700;}
+h3{font-size:clamp(20px,3vw,28px);font-weight:400;}
+p{margin-bottom:1em;}
+/* Skip link */
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+/* Navigation */
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);height:64px;display:flex;align-items:center;}
+nav{display:flex;gap:var(--gutter);margin-left:auto;}
+nav a{
+  font-weight:600;
+  padding:8px;
+  border-radius:var(--radius);
+}
+nav a.active,nav a:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  margin-left:auto;
+}
+.menu-toggle svg{stroke:var(--color-text);}
+@media(max-width:768px){
+  .menu-toggle{display:block;}
+  nav{position:fixed;top:64px;right:-100%;width:250px;height:calc(100% - 64px);background:#fff;flex-direction:column;padding:var(--gutter);gap:1rem;transition:right .3s;}
+  nav.open{right:0;}
+}
+/* Hero */
+.hero{
+  position:relative;
+  min-height:62vh;
+  color:var(--color-white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1920/1080?blur=2') center/cover fixed;
+  transform:scale(1.05);
+  z-index:-2;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  z-index:-1;
+}
+.hero-content{max-width:800px;padding:var(--gutter);}
+.hero-tagline{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:48px;
+  letter-spacing:-0.5px;
+  margin-bottom:0.5em;
+}
+.hero-sub{
+  font-size:18px;
+  color:var(--color-muted);
+  margin-bottom:1.5em;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--color-primary);
+  color:#fff;
+  padding:16px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition-fast),transform var(--transition-fast);
+}
+.btn:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.05);
+}
+.btn svg{transition:transform var(--transition-fast);}
+.btn:hover svg{transform:translateX(4px);}
+.section{padding:4rem var(--gutter);}
+.section-title{font-size:2rem;margin-bottom:2rem;text-align:center;}
+/* Carousel */
+.carousel{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  gap:var(--gutter);
+  -webkit-overflow-scrolling:touch;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel-item{
+  flex:0 0 calc(25% - var(--gutter));
+  scroll-snap-align:start;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  position:relative;
+  transition:transform .3s;
+}
+.carousel-item:hover{transform:translateY(-4px);}
+.product-img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity var(--transition-medium);
+}
+.product-info{
+  padding:1rem;
+}
+.product-name{font-weight:600;margin-bottom:0.5rem;}
+.product-price{color:var(--color-accent);font-weight:600;}
+.product-rating{color:#FFB400;margin-bottom:0.5rem;}
+.add-to-cart{
+  position:absolute;
+  bottom:8px;
+  right:8px;
+  background:var(--color-primary);
+  color:#fff;
+  padding:6px 12px;
+  border-radius:var(--radius);
+  font-size:0.9rem;
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeIn .3s forwards;
+}
+.carousel-item:hover .add-to-cart{opacity:1;transform:translateY(0);}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+/* Brand Story */
+.brand{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--gutter);
+  align-items:center;
+}
+.brand video{
+  width:100%;
+  border-radius:8px;
+  object-fit:cover;
+}
+.brand h2{font-size:2rem;margin-bottom:0.5rem;}
+.brand p{font-size:1rem;}
+/* Testimonials */
+.testimonials{position:relative;}
+.testimonial-carousel{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  gap:var(--gutter);
+  -webkit-overflow-scrolling:touch;
+}
+.testimonial-carousel::-webkit-scrollbar{display:none;}
+.testimonial-card{
+  flex:0 0 calc(33.333% - var(--gutter));
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  padding:1.5rem;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+.testimonial-quote{font-style:italic;flex-grow:1;}
+.testimonial-author{font-weight:600;text-align:right;}
+/* Newsletter */
+.newsletter{
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  max-width:600px;
+  margin:auto;
+  padding:2rem;
+  text-align:center;
+}
+.newsletter h2{margin-bottom:1rem;}
+.newsletter form{display:flex;gap:8px;flex-wrap:wrap;justify:center;}
+.newsletter input[type=email]{
+  flex:1 1 250px;
+  padding:0.75rem;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+}
+.newsletter button{
+  background:var(--color-primary);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:var(--radius);
+  transition:background var(--transition-fast);
+}
+.newsletter button:hover{background:var(--color-primary-dark);}
+/* Footer */
+footer{
+  background:var(--color-secondary);
+  color:#fff;
+  padding:3rem var(--gutter);
+}
+footer .footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--gutter);
+}
+footer a{color:#fff;}
+footer .footer-brand{font-weight:600;margin-bottom:1rem;}
+footer .social-icons button{
+  background:none;
+  color:#fff;
+  font-size:1.5rem;
+}
+footer .social-icons button:hover svg{stroke:var(--color-accent);}
+@media(max-width:992px){
+  .carousel-item{flex:0 0 calc(50% - var(--gutter));}
+  .testimonial-card{flex:0 0 calc(50% - var(--gutter));}
+}
+@media(max-width:576px){
+  .brand{grid-template-columns:1fr;}
+  .brand video{order:-1;}
+  .testimonial-card{flex:0 0 calc(80% - var(--gutter));}
+}
+.animate{
+  opacity:1;
+  transform:none;
+}
+[data-animate]{opacity:0;transform:translateY(30px);transition:opacity var(--transition-medium),transform var(--transition-medium);}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <a href="index.html" class="logo" aria-label="PurelyFresh Home"><strong>PurelyFresh</strong></a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-controls="nav" aria-expanded="false">
+      <svg id="icon-menu" width="24" height="24"><use href="#menu"></use></svg>
+    </button>
+    <nav id="nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="farmers.html">Farmers</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Primary banner">
+    <div class="hero-content" data-animate>
+      <h1 class="hero-tagline">hero, featured_products, brand_story_snippet, customer_testimonials, newsletter_signup, footer</h1>
+      <p class="hero-sub">PurelyFresh delivers the freshest organic produce straight from the farms to your table, with a commitment to sustainability and carbon‑neutral delivery.</p>
+      <button class="btn" id="cta-shop">
+        <span>Shop Now</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <!-- Featured Products -->
+  <section class="section" id="featured_products">
+    <h2 class="section-title">Featured Products</h2>
+    <div class="carousel" data-animate>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/300/200?random=1" alt="Featured product 1" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Organic Apples</div>
+          <div class="product-price">₹ 199</div>
+          <div class="product-rating">★★★★☆</div>
         </div>
-    </footer>
-    <script src="script.js"></script>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/300/200?random=2" alt="Featured product 2" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Fresh Basil</div>
+          <div class="product-price">₹ 89</div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/300/200?random=3" alt="Featured product 3" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Quinoa Pack</div>
+          <div class="product-price">₹ 299</div>
+          <div class="product-rating">★★★★☆</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/300/200?random=4" alt="Featured product 4" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Free‑Range Eggs</div>
+          <div class="product-price">₹ 149</div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Story Snippet -->
+  <section class="section brand" id="brand_story_snippet" data-animate>
+    <div>
+      <h2>Our Story</h2>
+      <p>From seed to plate, we partner with dedicated farmers who practice regenerative agriculture. Our mission is to bring you wholesome, chemical‑free food while preserving the planet.</p>
+      <button class="btn" id="cta-story">
+        Learn More
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <video autoplay muted loop playsinline>
+      <source src="https://picsum.photos/600/400?random=5" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- Customer Testimonials -->
+  <section class="section testimonials" id="customer_testimonials" data-animate>
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="testimonial-carousel">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">“PurelyFresh’s produce is always fresh and the delivery is super fast. I love the story behind each farmer!”</div>
+        <div class="testimonial-author">— Ananya K.</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">“I switched to PurelyFresh and never looked back. The quality and sustainability commitment are unmatched.”</div>
+        <div class="testimonial-author">— Rohan S.</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">“The packaging is eco‑friendly and the flavors are just as nature intended. Highly recommended!”</div>
+        <div class="testimonial-author">— Priya M.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="section newsletter" id="newsletter_signup" data-animate>
+    <h2>Stay Fresh</h2>
+    <p>Subscribe to get the latest offers, recipes, and farm stories.</p>
+    <form id="newsletter-form" novalidate>
+      <input type="email" id="newsletter-email" placeholder="Your email address" required aria-required="true">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+    <p id="newsletter-msg" role="alert" style="margin-top:1rem;color:var(--color-primary-dark);display:none;">Thank you for subscribing!</p>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">PurelyFresh</div>
+        <p>Connecting you to the freshest organic produce directly from trusted Indian farmers.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <ul style="list-style:none;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow Us</h3>
+        <div class="social-icons" style="display:flex;gap:12px;">
+          <button aria-label="Instagram"><i data-lucide="instagram"></i></button>
+          <button aria-label="Facebook"><i data-lucide="facebook"></i></button>
+          <button aria-label="Twitter"><i data-lucide="twitter"></i></button>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;">© 2024 PurelyFresh. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* Initialize Lucide icons */
+lucide.createIcons();
+
+/* Mobile navigation toggle */
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav');
+menuToggle.addEventListener('click', () => {
+  const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+  menuToggle.setAttribute('aria-expanded', !expanded);
+  nav.classList.toggle('open');
+});
+
+/* Lazy‑load images with fade‑in */
+const lazyImages = document.querySelectorAll('img.lazy, .product-img.lazy');
+const imgObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const img = entry.target;
+      const src = img.dataset.src;
+      if(src){
+        img.src = src;
+        img.onload = () => img.style.opacity = '1';
+      }
+      observer.unobserve(img);
+    }
+  });
+}, {threshold:0.1});
+lazyImages.forEach(img => imgObserver.observe(img));
+
+/* Parallax hero background */
+function parallax(){
+  const hero = document.querySelector('.hero::before');
+}
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  const hero = document.querySelector('.hero');
+  if(hero){
+    hero.style.backgroundPositionY = `${scrolled * 0.3}px`;
+  }
+});
+
+/* Simple carousel arrow controls (optional) */
+function initCarousel(carouselSelector){
+  const carousel = document.querySelector(carouselSelector);
+  if(!carousel) return;
+  carousel.addEventListener('wheel', (e)=> {
+    e.preventDefault();
+    carousel.scrollBy({left:e.deltaY < 0 ? -200 : 200, behavior:'smooth'});
+  });
+}
+initCarousel('.carousel');
+
+/* Newsletter form validation */
+document.getElementById('newsletter-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('newsletter-email');
+  const msg = document.getElementById('newsletter-msg');
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(re.test(email.value)){
+    msg.textContent = 'Thank you for subscribing!';
+    msg.style.display = 'block';
+    email.value = '';
+  }else{
+    msg.textContent = 'Please enter a valid email address.';
+    msg.style.display = 'block';
+  }
+});
+
+/* Scroll‑triggered animations */
+const animatable = document.querySelectorAll('[data-animate]');
+const animObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('animate');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.15});
+animatable.forEach(el=>animObserver.observe(el));
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header>
+  <div class="container">
+    <a href="index.html" class="logo"><strong>PurelyFresh</strong></a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-controls="nav" aria-expanded="false">
+      <svg width="24" height="24"><use href="#menu"></use></svg>
+    </button>
+    <nav id="nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="farmers.html">Farmers</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Main hero">
+    <div class="hero-content">
+      <h1 class="hero-tagline">hero, featured_products, brand_story_snippet, customer_testimonials, newsletter_signup, footer</h1>
+      <p class="hero-sub">PurelyFresh delivers the freshest organic produce straight from the farms to your table, with a commitment to sustainability and carbon‑neutral delivery.</p>
+      <button class="btn" id="cta-shop" aria-label="Shop now">
+        Shop Now
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Featured Products Carousel -->
+  <section class="section" id="featured_products">
+    <h2 class="section-title">Featured Products</h2>
+    <div class="carousel" aria-label="Featured products">
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/400/300?random=11" alt="Organic Apples" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Organic Apples</div>
+          <div class="product-price">₹ 199</div>
+          <div class="product-rating">★★★★☆</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/400/300?random=12" alt="Fresh Basil" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Fresh Basil</div>
+          <div class="product-price">₹ 89</div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/400/300?random=13" alt="Quinoa Pack" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Quinoa Pack</div>
+          <div class="product-price">₹ 299</div>
+          <div class="product-rating">★★★★☆</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <div class="carousel-item">
+        <img data-src="https://picsum.photos/400/300?random=14" alt="Free‑Range Eggs" class="product-img lazy">
+        <div class="product-info">
+          <div class="product-name">Free‑Range Eggs</div>
+          <div class="product-price">₹ 149</div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Story Snippet -->
+  <section class="section brand" id="brand_story_snippet">
+    <div>
+      <h2>Our Story</h2>
+      <p>From seed to plate, we partner with dedicated farmers who practice regenerative agriculture. Our mission is to bring you wholesome, chemical‑free food while preserving the planet.</p>
+      <button class="btn" id="cta-story">
+        Learn More
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <video autoplay muted loop playsinline>
+      <source src="https://picsum.photos/600/400?random=21" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- Customer Testimonials -->
+  <section class="section testimonials" id="customer_testimonials">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="testimonial-carousel" aria-label="Customer testimonials">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">“PurelyFresh’s produce is always fresh and the delivery is super fast. I love the story behind each farmer!”</p>
+        <p class="testimonial-author">— Ananya K.</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">“I switched to PurelyFresh and never looked back. The quality and sustainability commitment are unmatched.”</p>
+        <p class="testimonial-author">— Rohan S.</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">“The packaging is eco‑friendly and the flavors are just as nature intended. Highly recommended!”</p>
+        <p class="testimonial-author">— Priya M.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="section newsletter" id="newsletter_signup">
+    <h2>Stay Fresh</h2>
+    <p>Subscribe to get the latest offers, recipes, and farm stories.</p>
+    <form id="newsletter-form" novalidate>
+      <input type="email" id="newsletter-email" placeholder="Your email address" required aria-required="true">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+    <p id="newsletter-msg" role="alert" style="display:none;color:var(--color-primary-dark);margin-top:1rem;"></p>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">PurelyFresh</div>
+        <p>Connecting you to the freshest organic produce directly from trusted Indian farmers.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <ul style="list-style:none;">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow Us</h3>
+        <div class="social-icons" style="display:flex;gap:12px;">
+          <button aria-label="Instagram"><i data-lucide="instagram"></i></button>
+          <button aria-label="Facebook"><i data-lucide="facebook"></i></button>
+          <button aria-label="Twitter"><i data-lucide="twitter"></i></button>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;">© 2024 PurelyFresh. All rights reserved.</p>
+  </div>
+</footer>
 </body>
 </html>

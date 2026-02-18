@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shop - PurelyFresh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/lucide.css">
+<style>
+:root{
+  --color-primary:#2E7D32;
+  --color-primary-dark:#1B5E20;
+  --color-secondary:#8B4513;
+  --color-accent:#D84315;
+  --color-bg-grad:linear-gradient(135deg,#F5F5F5 0%,#E8F5E9 100%);
+  --color-text:#212121;
+  --color-muted:#F5F5F5;
+  --color-white:#FFFFFF;
+  --gutter:24px;
+  --radius:4px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --transition-fast:200ms ease-out;
+  --transition-medium:300ms ease;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-700.woff2') format('woff2');
+  font-weight:700;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-600.woff2') format('woff2');
+  font-weight:600;
+  font-style:normal;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  background:var(--color-bg-grad);
+  color:var(--color-text);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+}
+.container{max-width:1200px;margin:auto;padding:0 var(--gutter);}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  line-height:1.2;
+  margin-bottom:0.5em;
+}
+h1{font-size:clamp(32px,5vw,48px);font-weight:700;}
+h2{font-size:clamp(24px,4vw,36px);font-weight:700;}
+h3{font-size:clamp(20px,3vw,28px);font-weight:400;}
+p{margin-bottom:1em;}
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);height:64px;display:flex;align-items:center;}
+nav{display:flex;gap:var(--gutter);margin-left:auto;}
+nav a{
+  font-weight:600;
+  padding:8px;
+  border-radius:var(--radius);
+}
+nav a.active,nav a:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  margin-left:auto;
+}
+.menu-toggle svg{stroke:var(--color-text);}
+@media(max-width:768px){
+  .menu-toggle{display:block;}
+  nav{
+    position:fixed;
+    top:64px;
+    right:-100%;
+    width:250px;
+    height:calc(100% - 64px);
+    background:#fff;
+    flex-direction:column;
+    padding:var(--gutter);
+    gap:1rem;
+    transition:right .3s;
+  }
+  nav.open{right:0;}
+}
+.hero{
+  position:relative;
+  min-height:62vh;
+  color:var(--color-white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1920/1080?blur=2') center/cover fixed;
+  transform:scale(1.05);
+  z-index:-2;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  z-index:-1;
+}
+.hero-content{max-width:800px;padding:var(--gutter);}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:48px;
+  letter-spacing:-0.5px;
+  margin-bottom:0.5em;
+}
+.hero-sub{
+  font-size:18px;
+  color:var(--color-muted);
+  margin-bottom:1.5em;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--color-primary);
+  color:#fff;
+  padding:16px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition-fast),transform var(--transition-fast);
+}
+.btn:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.05);
+}
+.btn svg{transition:transform var(--transition-fast);}
+.btn:hover svg{transform:translateX(4px);}
+.section{padding:4rem var(--gutter);}
+.section-title{font-size:2rem;margin-bottom:2rem;text-align:center;}
+.carousel{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  gap:var(--gutter);
+  -webkit-overflow-scrolling:touch;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.carousel-item{
+  flex:0 0 calc(25% - var(--gutter));
+  scroll-snap-align:start;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  position:relative;
+  transition:transform .3s;
+}
+.carousel-item:hover{transform:translateY(-4px);}
+.product-img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity var(--transition-medium);
+}
+.product-info{
+  padding:1rem;
+}
+.product-name{font-weight:600;margin-bottom:0.5rem;}
+.product-price{color:var(--color-accent);font-weight:600;}
+.product-rating{color:#FFB400;margin-bottom:0.5rem;}
+.add-to-cart{
+  position:absolute;
+  bottom:8px;
+  right:8px;
+  background:var(--color-primary);
+  color:#fff;
+  padding:6px 12px;
+  border-radius:var(--radius);
+  font-size:0.9rem;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity var(--transition-fast),transform var(--transition-fast);
+}
+.carousel-item:hover .add-to-cart{opacity:1;transform:translateY(0);}
+.category-nav{
+  display:flex;
+  gap:0.5rem;
+  overflow-x:auto;
+  padding-bottom:0.5rem;
+  margin-bottom:2rem;
+}
+.category-nav button{
+  background:transparent;
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:0.5rem 1rem;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition-fast),color var(--transition-fast);
+}
+.category-nav button.active,
+.category-nav button:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+.filter-sidebar{
+  background:#fff;
+  padding:1rem;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+}
+.filter-group{
+  margin-bottom:1.5rem;
+}
+.filter-group h4{
+  margin-bottom:0.5rem;
+  font-size:1rem;
+}
+.filter-group label{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  margin-bottom:0.5rem;
+}
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:var(--gutter);
+}
+.product-card{
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  overflow:hidden;
+  position:relative;
+}
+.product-card img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+}
+.product-card .info{
+  padding:1rem;
+}
+.pagination{
+  display:flex;
+  justify-content:center;
+  gap:0.5rem;
+  margin-top:2rem;
+}
+.pagination button{
+  background:transparent;
+  border:1px solid var(--color-primary);
+  color:var(--color-primary);
+  padding:0.5rem 0.75rem;
+  border-radius:var(--radius);
+  transition:background var(--transition-fast),color var(--transition-fast);
+}
+.pagination button.active,
+.pagination button:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+.mobile-cta{
+  display:none;
+}
+@media(max-width:768px){
+  .filter-sidebar{
+    position:fixed;
+    top:64px;
+    left:-100%;
+    width:250px;
+    height:calc(100% - 64px);
+    background:#fff;
+    overflow-y:auto;
+    transition:left var(--transition-fast);
+    z-index:999;
+    padding:var(--gutter);
+  }
+  .filter-sidebar.open{left:0;}
+  .filter-toggle{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--color-primary);
+    color:#fff;
+    padding:0.5rem 1rem;
+    border-radius:var(--radius);
+    font-weight:600;
+    margin-bottom:1rem;
+  }
+  .product-grid{
+    margin-bottom:4rem;
+  }
+  .mobile-cta{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:var(--color-primary);
+    color:#fff;
+    padding:0.75rem;
+    font-weight:600;
+    z-index:1000;
+  }
+}
+[data-animate]{opacity:0;transform:translateY(30px);transition:opacity var(--transition-medium),transform var(--transition-medium);}
+.animate{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container" style="display:flex;align-items:center;width:100%;">
+    <a href="#" class="footer-brand">PurelyFresh</a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <nav aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="farmers.html">Farmers</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" data-animate>
+    <div class="hero-content">
+      <h1 class="hero-title">Shop Our Fresh Catalog</h1>
+      <p class="hero-sub">Explore organic produce, sustainable pantry staples, and seasonal delights.</p>
+      <a href="#categories" class="btn" aria-label="Browse categories">
+        Browse <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="categories" data-animate>
+    <div class="container">
+      <div class="category-nav" role="tablist" aria-label="Product categories">
+        <button role="tab" aria-selected="true" class="active">All</button>
+        <button role="tab">Fruits</button>
+        <button role="tab">Vegetables</button>
+        <button role="tab">Dairy</button>
+        <button role="tab">Pantry</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-animate>
+    <div class="container" style="display:grid;grid-template-columns:250px 1fr;gap:var(--gutter);">
+      <!-- Filter Sidebar -->
+      <aside class="filter-sidebar" aria-label="Filters">
+        <button class="filter-toggle btn" aria-controls="filter-options" aria-expanded="false">
+          Filters <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="filter-options">
+          <div class="filter-group">
+            <h4>Price</h4>
+            <label><input type="checkbox" value="0-5"> $0 - $5</label>
+            <label><input type="checkbox" value="5-10"> $5 - $10</label>
+            <label><input type="checkbox" value="10-20"> $10 - $20</label>
+          </div>
+          <div class="filter-group">
+            <h4>Rating</h4>
+            <label><input type="checkbox" value="4"> ★★★★+ </label>
+            <label><input type="checkbox" value="3"> ★★★+ </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Product Grid -->
+      <div class="product-grid">
+        <div class="product-grid-inner">
+          <div class="product-card">
+            <img data-src="https://picsum.photos/300/200?random=1" alt="Product 1" class="product-img lazy">
+            <div class="info">
+              <h3 class="product-name">Organic Apples</h3>
+              <p class="product-price"><span class="price">$4.99</span></p>
+              <p class="product-rating">★★★★☆</p>
+              <button class="add-to-cart btn" aria-label="Add to cart"><span data-verbatim>Add to Cart</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1" fill="#fff"/><circle cx="20" cy="21" r="1" fill="#fff"/></svg></button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <img data-src="https://picsum.photos/300/200?random=2" alt="Product 2" class="product-img lazy">
+            <div class="info">
+              <h3 class="product-name">Free-range Eggs</h3>
+              <p class="product-price"><span class="price">$3.20</span></p>
+              <p class="product-rating">★★★★★</p>
+              <button class="add-to-cart btn" aria-label="Add to cart"><span data-verbatim>Add to Cart</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1" fill="#fff"/><circle cx="20" cy="21" r="1" fill="#fff"/></svg></button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <img data-src="https://picsum.photos/300/200?random=3" alt="Product 3" class="product-img lazy">
+            <div class="info">
+              <h3 class="product-name">Raw Honey</h3>
+              <p class="product-price"><span class="price">$7.80</span></p>
+              <p class="product-rating">★★★★☆</p>
+              <button class="add-to-cart btn" aria-label="Add to cart"><span data-verbatim>Add to Cart</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1" fill="#fff"/><circle cx="20" cy="21" r="1" fill="#fff"/></svg></button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <img data-src="https://picsum.photos/300/200?random=4" alt="Product 4" class="product-img lazy">
+            <div class="info">
+              <h3 class="product-name">Almond Milk</h3>
+              <p class="product-price"><span class="price">$2.99</span></p>
+              <p class="product-rating">★★★☆☆</p>
+              <button class="add-to-cart btn" aria-label="Add to cart"><span data-verbatim>Add to Cart</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1" fill="#fff"/><circle cx="20" cy="21" r="1" fill="#fff"/></svg></button>
+            </div>
+          </div>
+
+          <!-- Add more product cards as needed -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-animate>
+    <div class="container">
+      <div class="pagination" aria-label="Pagination">
+        <button class="prev" aria-label="Previous page">&laquo; Prev</button>
+        <button class="page-number active" aria-label="Page 1">1</button>
+        <button class="page-number" aria-label="Page 2">2</button>
+        <button class="page-number" aria-label="Page 3">3</button>
+        <button class="next" aria-label="Next page">Next &raquo;</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="mobile-cta" aria-live="polite">
+  <span data-verbatim>Proceed to Checkout</span>
+</div>
+
+<footer class="section" data-animate>
+  <div class="container">
+    <p>&copy; 2024 PurelyFresh. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Menu toggle
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+  toggleBtn.addEventListener('click', function(){
+    const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+    this.setAttribute('aria-expanded', !expanded);
+    nav.classList.toggle('open');
+  });
+
+  // Filter sidebar toggle (mobile)
+  const filterToggle = document.querySelector('.filter-toggle');
+  const filterSidebar = document.querySelector('.filter-sidebar');
+  filterToggle.addEventListener('click', function(){
+    const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+    this.setAttribute('aria-expanded', !expanded);
+    filterSidebar.classList.toggle('open');
+  });
+
+  // Lazy load images
+  const lazyImages = document.querySelectorAll('img.lazy');
+  const lazyLoad = (entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.onload = () => img.style.opacity = '1';
+        observer.unobserve(img);
+      }
+    });
+  };
+  const imgObserver = new IntersectionObserver(lazyLoad, {rootMargin: '50px'});
+  lazyImages.forEach(img => imgObserver.observe(img));
+
+  // Category navigation mock (no real filtering)
+  const categoryButtons = document.querySelectorAll('.category-nav button');
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      categoryButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Simple cart feedback animation
+  const cartButtons = document.querySelectorAll('.add-to-cart');
+  cartButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      btn.classList.add('animate');
+      setTimeout(()=> btn.classList.remove('animate'), 800);
+    });
+  });
+
+  // Intersection observer for animate-on-scroll
+  const animateElems = document.querySelectorAll('[data-animate]');
+  const animateObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('animate');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.1});
+  animateElems.forEach(el => animateObserver.observe(el));
+});
+</script>
+</body>
+</html>

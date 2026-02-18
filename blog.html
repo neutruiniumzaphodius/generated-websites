@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog - PurelyFresh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{
+      --color-primary:#2E7D32;
+      --color-primary-dark:#1B5E20;
+      --color-secondary:#8B4513;
+      --color-accent:#D84315;
+      --color-bg-grad:linear-gradient(135deg,#F5F5F5 0%,#E8F5E9 100%);
+      --color-text:#212121;
+      --color-muted:#F5F5F5;
+      --color-white:#FFFFFF;
+      --gutter:24px;
+      --radius:4px;
+      --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+      --transition-fast:200ms ease-out;
+      --transition-medium:300ms ease;
+    }
+    @font-face{
+      font-family:'Playfair Display';
+      src:url('fonts/PlayfairDisplay-700.woff2') format('woff2');
+      font-weight:700;
+      font-style:normal;
+    }
+    @font-face{
+      font-family:'Playfair Display';
+      src:url('fonts/PlayfairDisplay-400.woff2') format('woff2');
+      font-weight:400;
+      font-style:normal;
+    }
+    @font-face{
+      font-family:'Open Sans';
+      src:url('fonts/OpenSans-400.woff2') format('woff2');
+      font-weight:400;
+      font-style:normal;
+    }
+    @font-face{
+      font-family:'Open Sans';
+      src:url('fonts/OpenSans-600.woff2') format('woff2');
+      font-weight:600;
+      font-style:normal;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Open Sans',sans-serif;
+      background:var(--color-bg-grad);
+      color:var(--color-text);
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    button{
+      cursor:pointer;
+      border:none;
+      font-family:inherit;
+    }
+    .container{max-width:1200px;margin:auto;padding:0 var(--gutter);}
+    h1,h2,h3{
+      font-family:'Playfair Display',serif;
+      line-height:1.2;
+      margin-bottom:0.5em;
+    }
+    h1{font-size:clamp(32px,5vw,48px);font-weight:700;}
+    h2{font-size:clamp(24px,4vw,36px);font-weight:700;}
+    h3{font-size:clamp(20px,3vw,28px);font-weight:400;}
+    p{margin-bottom:1em;}
+    .skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+    .skip-link:focus{top:0;}
+    header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);height:64px;display:flex;align-items:center;padding:0 var(--gutter);}
+    .logo{font-weight:600;font-size:1.2rem;}
+    nav{display:flex;gap:var(--gutter);margin-left:auto;}
+    nav a{
+      font-weight:600;
+      padding:8px;
+      border-radius:var(--radius);
+    }
+    nav a.active,nav a:hover{
+      background:var(--color-primary);
+      color:#fff;
+    }
+    .menu-toggle{
+      display:none;
+      background:none;
+      border:none;
+      margin-left:auto;
+    }
+    .menu-toggle svg{stroke:var(--color-text);}
+    @media(max-width:768px){
+      .menu-toggle{display:block;}
+      nav{
+        position:fixed;
+        top:64px;
+        right:-100%;
+        width:250px;
+        height:calc(100% - 64px);
+        background:#fff;
+        flex-direction:column;
+        padding:var(--gutter);
+        gap:1rem;
+        transition:right .3s;
+      }
+      nav.open{right:0;}
+    }
+    .hero{
+      position:relative;
+      min-height:62vh;
+      color:var(--color-white);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1920/1080?blur=2') center/cover fixed;
+      transform:scale(1.05);
+      z-index:-2;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.35);
+      z-index:-1;
+    }
+    .hero-content{max-width:800px;padding:var(--gutter);}
+    .section{padding:4rem var(--gutter);}
+    .section-title{font-size:2rem;margin-bottom:2rem;text-align:center;}
+    .post-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:var(--gutter);
+    }
+    .post-card{
+      background:#fff;
+      border-radius:8px;
+      box-shadow:var(--shadow-card);
+      overflow:hidden;
+      transition:transform .3s;
+    }
+    .post-card:hover{transform:translateY(-4px);}
+    .post-img{
+      width:100%;
+      aspect-ratio:3/2;
+      object-fit:cover;
+      opacity:0;
+      transition:opacity var(--transition-medium);
+    }
+    .post-content{padding:1rem;}
+    .post-title{
+      font-family:'Playfair Display',serif;
+      font-weight:400;
+      font-size:20px;
+      margin-bottom:0.5em;
+    }
+    .post-excerpt{font-size:14px;margin-bottom:1em;}
+    .read-more{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:var(--color-primary);
+      color:#fff;
+      padding:8px 12px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:background var(--transition-fast),transform var(--transition-fast);
+    }
+    .read-more:hover{
+      background:var(--color-primary-dark);
+      transform:scale(1.05);
+    }
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify:center;
+      margin-bottom:2rem;
+    }
+    .chip{
+      background:#fff;
+      color:var(--color-text);
+      padding:6px 12px;
+      border-radius:16px;
+      font-size:0.9rem;
+      cursor:pointer;
+      transition:background var(--transition-fast),color var(--transition-fast);
+    }
+    .chip.active,.chip:hover{
+      background:var(--color-primary);
+      color:#fff;
+    }
+    .search-bar{
+      max-width:600px;
+      margin:auto;
+      display:flex;
+      gap:8px;
+      margin-bottom:2rem;
+    }
+    .search-bar input{
+      flex:1;
+      padding:0.75rem;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+    }
+    .search-bar button{
+      background:var(--color-primary);
+      color:#fff;
+      padding:0.75rem 1rem;
+      border-radius:var(--radius);
+      transition:background var(--transition-fast);
+    }
+    .search-bar button:hover{
+      background:var(--color-primary-dark);
+    }
+    .newsletter{
+      background:#fff;
+      border-radius:8px;
+      box-shadow:var(--shadow-card);
+      max-width:600px;
+      margin:auto;
+      padding:2rem;
+      text-align:center;
+    }
+    .newsletter h2{margin-bottom:1rem;}
+    .newsletter form{display:flex;gap:8px;flex-wrap:wrap;justify:center;}
+    .newsletter input[type=email]{
+      flex:1 1 250px;
+      padding:0.75rem;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+    }
+    .newsletter button{
+      background:var(--color-primary);
+      color:#fff;
+      padding:0.75rem 1.5rem;
+      border-radius:var(--radius);
+      transition:background var(--transition-fast);
+    }
+    .newsletter button:hover{background:var(--color-primary-dark);}
+    footer{
+      background:var(--color-secondary);
+      color:#fff;
+      padding:3rem var(--gutter);
+    }
+    footer .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:var(--gutter);
+    }
+    footer a{color:#fff;}
+    footer .footer-brand{font-weight:600;margin-bottom:1rem;}
+    footer .social-icons button{
+      background:none;
+      color:#fff;
+      font-size:1.5rem;
+    }
+    footer .social-icons button:hover svg{stroke:var(--color-accent);}
+    [data-animate]{opacity:0;transform:translateY(30px);transition:opacity var(--transition-medium),transform var(--transition-medium);}
+    .animate{opacity:1;transform:none;}
+    @media(max-width:992px){
+      .post-card{grid-column:span 2;}
+    }
+    @media(max-width:576px){
+      .post-card{grid-column:span 1;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">PurelyFresh</a>
+      <button class="menu-toggle" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="shop.html">Shop</a>
+        <a href="farmers.html">Farmers</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero" data-animate>
+      <div class="hero-content">
+        <h1 class="hero-tagline">Fresh Ideas, Healthy Living</h1>
+      </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="section" data-animate>
+      <div class="container">
+        <div class="chips">
+          <div class="chip active">Recipes</div>
+          <div class="chip">Health Tips</div>
+          <div class="chip">Sustainability</div>
+          <div class="chip">Farmer Stories</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="section" data-animate>
+      <div class="container">
+        <form class="search-bar" role="search" aria-label="Search blog posts">
+          <input type="search" placeholder="Search posts..." aria-label="Search posts">
+          <button type="submit" class="btn">
+            Search
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Post Grid -->
+    <section class="section" data-animate>
+      <div class="container">
+        <h2 class="section-title">Latest Posts</h2>
+        <div class="post-grid">
+          <article class="post-card">
+            <img data-src="https://picsum.photos/600/400?random=1" alt="Blog post image 1" class="post-img lazy">
+            <div class="post-content">
+              <h3 class="post-title">5 Easy Summer Salads</h3>
+              <p class="post-excerpt">Discover fresh, quick, and nutritious salads perfect for hot days. Packed with seasonal veggies and vibrant flavors.</p>
+              <a href="post1.html" class="read-more btn">
+                [VERBATIM]cta_learn_more: Learn More[/VERBATIM]
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="post-card">
+            <img data-src="https://picsum.photos/600/400?random=2" alt="Blog post image 2" class="post-img lazy">
+            <div class="post-content">
+              <h3 class="post-title">Mindful Eating: Tips & Tricks</h3>
+              <p class="post-excerpt">Learn how to connect with your food, improve digestion, and enjoy every bite with these mindful eating practices.</p>
+              <a href="post2.html" class="read-more btn">
+                [VERBATIM]cta_learn_more: Learn More[/VERBATIM]
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="post-card">
+            <img data-src="https://picsum.photos/600/400?random=3" alt="Blog post image 3" class="post-img lazy">
+            <div class="post-content">
+              <h3 class="post-title">Zero-Waste Kitchen Hacks</h3>
+              <p class="post-excerpt">Transform your kitchen into a sustainable space with simple zero-waste habits that save money and the planet.</p>
+              <a href="post3.html" class="read-more btn">
+                [VERBATIM]cta_learn_more: Learn More[/VERBATIM]
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="post-card">
+            <img data-src="https://picsum.photos/600/400?random=4" alt="Blog post image 4" class="post-img lazy">
+            <div class="post-content">
+              <h3 class="post-title">Seasonal Produce Guide 2024</h3>
+              <p class="post-excerpt">A comprehensive guide to what’s in season this year, how to select the best produce, and delicious recipe ideas.</p>
+              <a href="post4.html" class="read-more btn">
+                [VERBATIM]cta_learn_more: Learn More[/VERBATIM]
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="post-card">
+            <img data-src="https://picsum.photos/600/400?random=5" alt="Blog post image 5" class="post-img lazy">
+            <div class="post-content">
+              <h3 class="post-title">Herb Gardening for Beginners</h3>
+              <p class="post-excerpt">Start your own herb garden with these beginner-friendly steps, and learn how fresh herbs can elevate any dish.</p>
+              <a href="post5.html" class="read-more btn">
+                [VERBATIM]cta_learn_more: Learn More[/VERBATIM]
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="section" data-animate>
+      <div class="container">
+        <div class="newsletter">
+          <h2>Stay Updated!</h2>
+          <form>
+            <input type="email" placeholder="Your email address" aria-label="Email address">
+            <button type="submit" class="btn">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">PurelyFresh</div>
+          <p>Connecting you with fresh, sustainable food choices.</p>
+        </div>
+        <div>
+          <div class="footer-brand">Quick Links</div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-brand">Contact</div>
+          <p>Email: info@purelyfresh.com</p>
+          <p>Phone: +1 234 567 890</p>
+        </div>
+        <div class="social-icons">
+          <button aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M9 8h3V6c0-1.1.9-2 2-2h2v4h-2c-.55 0-1 .45-1 1v2h3l-1 4h-2v8h-4v-8H9l1-4h2V9c0-1.1.9-2 2-2h1V3h-1c-3.31 0-6 2.69-6 6v1H5v4h2v8h4v-8h2l1-4h-3V9c0-.55-.45-1-1-1z" fill="currentColor"/></svg>
+          </button>
+          <button aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/><path d="M16 11.37a4 4 0 1 1-7.9 1.26 4 4 0 0 1 7.9-1.26z" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <button aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M22 4.01c-.77.34-1.6.57-2.46.68a4.27 4.27 0 0 0 1.88-2.37 8.48 8.48 0 0 1-2.71 1.04 4.24 4.24 0 0 0-7.24 3.86 12.04 12.04 0 0 1-8.74-4.44 4.24 4.24 0 0 0 1.31 5.66c-.66-.02-1.28-.2-1.82-.5v.05c0 2.02 1.44 3.71 3.35 4.09-.35.1-.73.15-1.12.15-.27 0-.53-.03-.78-.07.53 1.65 2.07 2.85 3.9 2.89a8.51 8.51 0 0 1-5.27 1.81c-.34 0-.68-.02-1.01-.06a12.03 12.03 0 0 0 6.5 1.91c7.8 0 12.07-6.46 12.07-12.07 0-.18-.01-.36-.02-.54A8.6 8.6 0 0 0 22 4.01z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.263.1/dist/lucide.min.js"></script>
+  <script>
+    // Menu toggle
+    const toggleBtn = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    toggleBtn.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // Lazy loading images
+    const lazyImages = document.querySelectorAll('img.lazy');
+    const imgObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.onload = () => img.classList.add('animate');
+          observer.unobserve(img);
+        }
+      });
+    }, {rootMargin: '0px 0px 200px 0px'});
+
+    lazyImages.forEach(img => imgObserver.observe(img));
+
+    // Animate on scroll
+    const animElements = document.querySelectorAll('[data-animate]');
+    const animObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.1});
+
+    animElements.forEach(el => animObserver.observe(el));
+
+    // Chip filter toggle (demo purpose)
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

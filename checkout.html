@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Checkout - PurelyFresh</title>
+<style>
+:root{
+  --color-primary:#2E7D32;
+  --color-primary-dark:#1B5E20;
+  --color-secondary:#8B4513;
+  --color-accent:#D84315;
+  --color-bg-grad:linear-gradient(135deg,#F5F5F5 0%,#E8F5E9 100%);
+  --color-text:#212121;
+  --color-muted:#F5F5F5;
+  --color-white:#FFFFFF;
+  --gutter:24px;
+  --radius:4px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --transition-fast:200ms ease-out;
+  --transition-medium:300ms ease;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-700.woff2') format('woff2');
+  font-weight:700;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-600.woff2') format('woff2');
+  font-weight:600;
+  font-style:normal;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  background:var(--color-bg-grad);
+  color:var(--color-text);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+}
+.container{max-width:1200px;margin:auto;padding:0 var(--gutter);}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  line-height:1.2;
+  margin-bottom:0.5em;
+}
+h1{font-size:clamp(32px,5vw,48px);font-weight:700;}
+h2{font-size:clamp(24px,4vw,36px);font-weight:700;}
+h3{font-size:clamp(20px,3vw,28px);font-weight:400;}
+p{margin-bottom:1em;}
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);height:64px;display:flex;align-items:center;padding:0 var(--gutter);}
+nav{display:flex;gap:var(--gutter);margin-left:auto;}
+nav a{
+  font-weight:600;
+  padding:8px;
+  border-radius:var(--radius);
+}
+nav a.active,nav a:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  margin-left:auto;
+}
+.menu-toggle svg{stroke:var(--color-text);}
+@media(max-width:768px){
+  .menu-toggle{display:block;}
+  nav{
+    position:fixed;
+    top:64px;
+    right:-100%;
+    width:250px;
+    height:calc(100% - 64px);
+    background:#fff;
+    flex-direction:column;
+    padding:var(--gutter);
+    gap:1rem;
+    transition:right .3s;
+  }
+  nav.open{right:0;}
+}
+.section{padding:4rem var(--gutter);}
+.section-title{font-size:2rem;margin-bottom:2rem;text-align:center;}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--color-primary);
+  color:#fff;
+  padding:16px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition-fast),transform var(--transition-fast);
+}
+.btn:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.05);
+}
+.btn svg{transition:transform var(--transition-fast);}
+.btn:hover svg{transform:translateX(4px);}
+.progress-bar{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:2rem;
+  counter-reset:step;
+}
+.progress-step{
+  flex:1;
+  text-align:center;
+  position:relative;
+}
+.progress-step::before{
+  content:counter(step);
+  counter-increment:step;
+  width:30px;
+  height:30px;
+  line-height:30px;
+  border:2px solid var(--color-primary);
+  border-radius:50%;
+  display:inline-block;
+  background:#fff;
+  color:var(--color-primary);
+  font-weight:600;
+  margin-bottom:0.5rem;
+}
+.progress-step.active::before{
+  background:var(--color-primary);
+  color:#fff;
+}
+.progress-step::after{
+  content:"";
+  position:absolute;
+  top:15px;
+  left:50%;
+  width:100%;
+  height:2px;
+  background:#ccc;
+  z-index:-1;
+}
+.progress-step:last-child::after{display:none;}
+.progress-step.active~.progress-step::after{background:#ccc;}
+.progress-step.active::after{background:var(--color-primary);}
+.summary{
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  padding:1.5rem;
+}
+.summary-item{
+  display:flex;
+  gap:1rem;
+  align-items:center;
+  margin-bottom:1rem;
+}
+.summary-item img{
+  width:60px;
+  height:60px;
+  object-fit:cover;
+  border-radius:4px;
+}
+.summary-item-details{flex:1;}
+.item-name{font-weight:600;}
+.quantity-selector{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-top:0.5rem;
+}
+.quantity-selector button{
+  background:var(--color-primary);
+  color:#fff;
+  width:24px;
+  height:24px;
+  border-radius:var(--radius);
+  font-size:0.9rem;
+}
+.quantity-selector input{
+  width:40px;
+  text-align:center;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+  padding:2px;
+}
+.total{
+  font-weight:600;
+  text-align:right;
+  margin-top:1rem;
+}
+.form-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:1rem;
+}
+.form-group label{
+  margin-bottom:0.3rem;
+  font-weight:600;
+}
+.form-group input,
+.form-group textarea{
+  padding:0.75rem;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+}
+.form-group input:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:var(--color-primary);
+}
+.checkbox-group{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  margin-bottom:1rem;
+}
+.payment-methods{
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+.payment-methods label{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  font-weight:600;
+}
+.coupon{
+  display:flex;
+  gap:8px;
+  margin-top:1rem;
+}
+.coupon input{
+  flex:1;
+  padding:0.75rem;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+}
+.coupon button{
+  background:var(--color-accent);
+  color:#fff;
+  padding:0.75rem 1rem;
+  border-radius:var(--radius);
+  transition:background var(--transition-fast);
+}
+.coupon button:hover{
+  background:var(--color-primary-dark);
+}
+.confirmation{
+  text-align:center;
+  padding:2rem;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+}
+.confirmation svg{
+  width:64px;
+  height:64px;
+  color:var(--color-primary);
+  animation:scaleIn 0.5s forwards;
+}
+@keyframes scaleIn{
+  from{transform:scale(0);}
+  to{transform:scale(1);}
+}
+[data-animate]{opacity:0;transform:translateY(30px);transition:opacity var(--transition-medium),transform var(--transition-medium);}
+.animate{opacity:1;transform:none;}
+</style>
+<link rel="preload" href="fonts/PlayfairDisplay-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/PlayfairDisplay-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/OpenSans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/OpenSans-600.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header>
+  <div class="container">
+    <a href="#" class="logo" style="font-weight:600;">PurelyFresh</a>
+    <button class="menu-toggle" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="farmers.html">Farmers</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+      <a href="checkout.html" class="active">Checkout</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="container">
+  <section class="section" data-animate>
+    <div class="progress-bar">
+      <div class="progress-step active">Cart</div>
+      <div class="progress-step">Details</div>
+      <div class="progress-step">Payment</div>
+      <div class="progress-step">Confirmation</div>
+    </div>
+  </section>
+
+  <section class="section" data-animate id="details-section">
+    <h2 class="section-title">Billing & Shipping Details</h2>
+    <div class="grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--gutter);">
+      <div>
+        <form id="billing-form" novalidate>
+          <div class="form-group">
+            <label for="billing-name">Full Name</label>
+            <input type="text" id="billing-name" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="billing-email">Email</label>
+            <input type="email" id="billing-email" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="billing-address">Address</label>
+            <input type="text" id="billing-address" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="billing-city">City</label>
+            <input type="text" id="billing-city" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="billing-zip">ZIP / Postal Code</label>
+            <input type="text" id="billing-zip" required aria-required="true">
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="same-address">
+            <label for="same-address">Shipping address same as billing</label>
+          </div>
+        </form>
+      </div>
+      <div>
+        <form id="shipping-form" novalidate>
+          <div class="form-group">
+            <label for="shipping-name">Recipient Name</label>
+            <input type="text" id="shipping-name" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="shipping-address">Address</label>
+            <input type="text" id="shipping-address" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="shipping-city">City</label>
+            <input type="text" id="shipping-city" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="shipping-zip">ZIP / Postal Code</label>
+            <input type="text" id="shipping-zip" required aria-required="true">
+          </div>
+        </form>
+      </div>
+    </div>
+    <button class="btn" id="to-payment" style="margin-top:1rem;">Continue to Payment</button>
+  </section>
+
+  <section class="section" data-animate id="payment-section" style="display:none;">
+    <h2 class="section-title">Payment Method</h2>
+    <div class="payment-methods">
+      <label><input type="radio" name="payment" value="card" checked> Credit / Debit Card</label>
+      <label><input type="radio" name="payment" value="upi"> UPI</label>
+      <label><input type="radio" name="payment" value="netbanking"> Net Banking</label>
+    </div>
+    <div class="coupon">
+      <input type="text" id="coupon-code" placeholder="Enter coupon code">
+      <button class="btn" id="apply-coupon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12l10-10M12 12L2 2"/></svg>Apply</button>
+    </div>
+    <div style="margin-top:1rem;display:flex;align-items:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--color-primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span style="margin-left:0.5rem;">Secure Payment</span>
+    </div>
+    <button class="btn" id="pay-now" style="margin-top:1.5rem;">
+      Pay Now
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5-5 5 5"/></svg>
+    </button>
+  </section>
+
+  <section class="section" data-animate id="order-summary-section">
+    <h2 class="section-title">Order Summary</h2>
+    <div class="summary">
+      <div class="summary-item">
+        <div class="summary-item">
+          <div class="summary-item">
+            <div class="summary-item">
+              <div class="summary-item">
+                <div class="summary-item">
+                  <div class="summary-item">
+                    <div class="summary-item">
+                      <div class="summary-item">
+                        <div class="summary-item">
+                          <div class="summary-item">
+                            <div class="summary-item">
+                              <!-- Placeholder for item list -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-items">
+        <div class="summary-item">
+          <img src="https://picsum.photos/80/80?random=1" alt="Product Image">
+          <div class="summary-item-details">
+            <div class="item-name">Organic Apples</div>
+            <div class="quantity-selector">
+              <button type="button" class="qty-minus">-</button>
+              <input type="number" value="1" min="1" class="qty-input">
+              <button type="button" class="qty-plus">+</button>
+            </div>
+            <div class="price">₹120</div>
+          </div>
+        </div>
+        <div class="summary-item">
+          <img src="https://picsum.photos/80/80?random=2" alt="Product Image">
+          <div class="summary-item-details">
+            <div class="item-name">Fresh Kale</div>
+            <div class="price">₹80</div>
+          </div>
+        </div>
+      </div>
+      <div class="total">Total: ₹200</div>
+    </div>
+  </section>
+
+  <section class="section" id="confirmation-section" style="display:none;">
+    <div class="confirmation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      <h2>Thank you, <span id="customer-name"></span>!</h2>
+      <p>Your order has been placed successfully.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="section" style="background:#fff;">
+  <div class="container" style="text-align:center;">
+    <p>&copy; 2024 PurelyFresh. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  // Navigation toggle
+  const menuToggle=document.querySelector('.menu-toggle');
+  const nav=document.querySelector('nav');
+  menuToggle.addEventListener('click',()=>nav.classList.toggle('open'));
+
+  // Animate on scroll
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.2});
+  document.querySelectorAll('[data-animate]').forEach(el=>observer.observe(el));
+
+  // Quantity selector logic
+  document.querySelectorAll('.quantity-selector button').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      const input=e.target.parentNode.querySelector('input');
+      let val=parseInt(input.value)||1;
+      if(e.target.textContent==='-'){
+        val=Math.max(1,val-1);
+      }else{
+        val+=1;
+      }
+      input.value=val;
+    });
+  });
+
+  // Continue to payment
+  document.getElementById('to-payment').addEventListener('click',()=>{
+    document.getElementById('details-section').style.display='none';
+    document.getElementById('payment-section').style.display='block';
+    document.querySelectorAll('.progress-step')[1].classList.add('active');
+  });
+
+  // Pay now simulation
+  document.getElementById('pay-now').addEventListener('click',()=>{
+    document.getElementById('payment-section').style.display='none';
+    document.getElementById('order-summary-section').style.display='none';
+    document.getElementById('details-section').style.display='none';
+    document.getElementById('confirmation-section').style.display='block';
+    const name=document.getElementById('billing-name').value || 'Customer';
+    document.getElementById('customer-name').textContent=name;
+    document.querySelectorAll('.progress-step')[3].classList.add('active');
+  });
+});
+</script>
+<script src="https://embed.tawk.to/5f9c1e2b4f9c2e1e2c1f0b1a/default"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>feather.replace()</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact – PurelyFresh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="fonts/PlayfairDisplay-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/PlayfairDisplay-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/OpenSans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/OpenSans-600.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+:root{
+  --color-primary:#2E7D32;
+  --color-primary-dark:#1B5E20;
+  --color-secondary:#8B4513;
+  --color-accent:#D84315;
+  --color-bg-grad:linear-gradient(135deg,#F5F5F5 0%,#E8F5E9 100%);
+  --color-text:#212121;
+  --color-muted:#F5F5F5;
+  --color-white:#FFFFFF;
+  --gutter:24px;
+  --radius:4px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --transition-fast:200ms ease-out;
+  --transition-medium:300ms ease;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-700.woff2') format('woff2');
+  font-weight:700;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:url('fonts/PlayfairDisplay-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-400.woff2') format('woff2');
+  font-weight:400;
+  font-style:normal;
+}
+@font-face{
+  font-family:'Open Sans';
+  src:url('fonts/OpenSans-600.woff2') format('woff2');
+  font-weight:600;
+  font-style:normal;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Open Sans',sans-serif;
+  background:var(--color-bg-grad);
+  color:var(--color-text);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+}
+.container{max-width:1200px;margin:auto;padding:0 var(--gutter);}
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  line-height:1.2;
+  margin-bottom:0.5em;
+}
+h1{font-size:clamp(32px,5vw,48px);font-weight:700;}
+h2{font-size:clamp(24px,4vw,36px);font-weight:700;}
+h3{font-size:clamp(20px,3vw,28px);font-weight:400;}
+p{margin-bottom:1em;}
+.skip-link{position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px;z-index:100;transition:top .3s;}
+.skip-link:focus{top:0;}
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);height:64px;display:flex;align-items:center;padding:0 var(--gutter);}
+nav{display:flex;gap:var(--gutter);margin-left:auto;}
+nav a{
+  font-weight:600;
+  padding:8px;
+  border-radius:var(--radius);
+}
+nav a.active,nav a:hover{
+  background:var(--color-primary);
+  color:#fff;
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  margin-left:auto;
+}
+.menu-toggle svg{stroke:var(--color-text);}
+@media(max-width:768px){
+  .menu-toggle{display:block;}
+  nav{
+    position:fixed;
+    top:64px;
+    right:-100%;
+    width:250px;
+    height:calc(100% - 64px);
+    background:#fff;
+    flex-direction:column;
+    padding:var(--gutter);
+    gap:1rem;
+    transition:right .3s;
+  }
+  nav.open{right:0;}
+}
+.hero{
+  position:relative;
+  min-height:62vh;
+  color:var(--color-white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1920/1080?blur=2') center/cover fixed;
+  transform:scale(1.05);
+  z-index:-2;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  z-index:-1;
+}
+.hero-content{max-width:800px;padding:var(--gutter);}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:48px;
+  letter-spacing:-0.5px;
+  margin-bottom:0.5em;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--color-primary);
+  color:#fff;
+  padding:16px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:background var(--transition-fast),transform var(--transition-fast);
+}
+.btn:hover{
+  background:var(--color-primary-dark);
+  transform:scale(1.05);
+}
+.btn svg{transition:transform var(--transition-fast);}
+.btn:hover svg{transform:translateX(4px);}
+.section{padding:4rem var(--gutter);}
+.section-title{font-size:2rem;margin-bottom:2rem;text-align:center;}
+.contact-form{
+  background:#fff;
+  border-radius:8px;
+  box-shadow:var(--shadow-card);
+  max-width:700px;
+  margin:auto;
+  padding:2rem;
+}
+.contact-form label{
+  display:block;
+  margin-bottom:0.5rem;
+  font-weight:600;
+}
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:0.75rem;
+  border:1px solid #ccc;
+  border-radius:var(--radius);
+  margin-bottom:1rem;
+}
+.contact-form button{
+  background:var(--color-primary);
+  color:#fff;
+  padding:0.75rem 1.5rem;
+  border-radius:var(--radius);
+  transition:background var(--transition-fast);
+}
+.contact-form button:hover{
+  background:var(--color-primary-dark);
+}
+.map{
+  width:100%;
+  height:400px;
+  border:0;
+}
+.faq-item{
+  border-bottom:1px solid #ddd;
+}
+.faq-question{
+  padding:1rem;
+  cursor:pointer;
+  font-weight:600;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height var(--transition-medium) ease;
+  padding:0 1rem;
+}
+.faq-answer p{margin:0.5rem 0;}
+.faq-item.active .faq-answer{
+  max-height:200px;
+}
+footer{
+  background:var(--color-secondary);
+  color:#fff;
+  padding:3rem var(--gutter);
+}
+footer .footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--gutter);
+}
+footer a{color:#fff;}
+footer .footer-brand{font-weight:600;margin-bottom:1rem;}
+footer .social-icons button{
+  background:none;
+  color:#fff;
+  font-size:1.5rem;
+}
+footer .social-icons button:hover svg{stroke:var(--color-accent);}
+[data-animate]{opacity:0;transform:translateY(30px);transition:opacity var(--transition-medium),transform var(--transition-medium);}
+.animate{opacity:1;transform:none;}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/lucide.min.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="container" id="top">
+  <div class="footer-brand">PurelyFresh</div>
+  <button class="menu-toggle" aria-label="Toggle menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="shop.html">Shop</a>
+    <a href="farmers.html">Farmers</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="hero" data-animate>
+    <div class="hero-content container">
+      <h1 class="hero-title">We’re Here to Help</h1>
+    </div>
+  </section>
+
+  <section class="section" id="contact-form-section" data-animate>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-form container">
+      <form id="contactForm" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required aria-required="true">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required aria-required="true">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required aria-required="true">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+        <button type="submit" class="btn">Send Message <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5-5-5-5"/></svg></button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" id="map-section" data-animate>
+    <h2 class="section-title">Our Location</h2>
+    <div class="container">
+      <iframe class="map" src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=PurelyFresh+Warehouse" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <section class="section" id="social-section" data-animate>
+    <h2 class="section-title">Connect With Us</h2>
+    <div class="container" style="display:flex;gap:1.5rem;justify-content:center;">
+      <button aria-label="Instagram"><i data-lucide="instagram"></i></button>
+      <button aria-label="Facebook"><i data-lucide="facebook"></i></button>
+      <button aria-label="Twitter"><i data-lucide="twitter"></i></button>
+      <button aria-label="LinkedIn"><i data-lucide="linkedin"></i></button>
+    </div>
+  </section>
+
+  <section class="section" id="faq-section" data-animate>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="container">
+      <div class="faq-item" data-animate>
+        <div class="faq-question"><span>What are your shipping times?</span><i data-lucide="chevron-down"></i></div>
+        <div class="faq-answer"><p>Orders are typically delivered within 3-5 business days.</p></div>
+      </div>
+      <div class="faq-item" data-animate>
+        <div class="faq-question"><span>What is your return policy?</span><i data-lucide="chevron-down"></i></div>
+        <div class="faq-answer"><p>You can return any product within 30 days of receipt.</p></div>
+      </div>
+      <div class="faq-item" data-animate>
+        <div class="faq-question"><span>Are your products organically certified?</span><i data-lucide="chevron-down"></i></div>
+        <div class="faq-answer"><p>All our produce holds USDA Organic certification.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">PurelyFresh</div>
+      <p>Bringing the farm to your table.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>Email: support@purelyfresh.com</p>
+      <p>Phone: +1 800 123 4567</p>
+    </div>
+    <div class="social-icons">
+      <h4>Follow Us</h4>
+      <button aria-label="Instagram"><i data-lucide="instagram"></i></button>
+      <button aria-label="Facebook"><i data-lucide="facebook"></i></button>
+      <button aria-label="Twitter"><i data-lucide="twitter"></i></button>
+      <button aria-label="LinkedIn"><i data-lucide="linkedin"></i></button>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest/dist/lucide.min.js"></script>
+<script>
+  lucide.createIcons();
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+  });
+  // Form validation
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const fields = ['name','email','subject','message'];
+    let valid = true;
+    fields.forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el.value.trim()){
+        valid = false;
+        el.style.borderColor = 'red';
+      } else {
+        el.style.borderColor = '#ccc';
+      }
+    });
+    if(valid){
+      // Placeholder for actual submit (e.g., AJAX)
+      alert('Message sent! Thank you.');
+      form.reset();
+    }
+  });
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(q=>{
+    q.addEventListener('click',()=>{
+      const item = q.parentElement;
+      item.classList.toggle('active');
+    });
+  });
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('[data-animate]').forEach(el=>observer.observe(el));
+  // Tawk.to live chat (placeholder)
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/PLACEHOLDER_ID/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+</script>
+</body>
+</html>
