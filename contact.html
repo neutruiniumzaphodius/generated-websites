@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact | Artisan Crafts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Helvetica+Neue:wght@700&display=swap" as="style" onload="this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&family=Helvetica+Neue:wght@700&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --color-primary:#558B2F;
+  --color-secondary:#A0522D;
+  --color-bg:#F5F5DC;
+  --color-bg2:#FFFFFF;
+  --color-text:#333333;
+  --color-muted:#555555;
+  --radius:4px;
+  --gap:8px;
+  --max-width:1200px;
+  --transition:0.2s ease-out;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:100%;}
+body{
+  font-family:"Open Sans",sans-serif;
+  color:var(--color-text);
+  background:linear-gradient(135deg,var(--color-bg) 0%,var(--color-bg2) 100%);
+  background-image:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grain' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 20 L20 0' stroke='%23000000' stroke-opacity='0.04' stroke-width='1'/%3E%3C/path%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grain)'/%3E%3C/svg%3E");
+  background-blend-mode:multiply;
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;cursor:pointer;background:none;border:none;}
+img{max-width:100%;display:block;}
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:8px;
+  background:#fff;
+  z-index:1000;
+}
+/* Header & Nav */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:transparent;
+  transition:background var(--transition);
+  z-index:100;
+}
+header.scrolled{
+  background:var(--color-secondary);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+nav{
+  max-width:var(--max-width);
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--gap) var(--gap);
+}
+.nav-links{
+  display:flex;
+  gap:calc(var(--gap)*2);
+}
+.nav-link{
+  color:var(--color-bg2);
+  font-weight:700;
+  font-size:1rem;
+  position:relative;
+}
+.nav-link.active,
+.nav-link:hover{
+  color:var(--color-primary);
+}
+.nav-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-2px;
+  height:2px;
+  width:0;
+  background:var(--color-primary);
+  transition:width var(--transition);
+}
+.nav-link:hover::after,
+.nav-link.active::after{
+  width:100%;
+}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+}
+.hamburger span{
+  width:24px;
+  height:2px;
+  background:#fff;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:fixed;
+    top:0;
+    right:-100%;
+    height:100vh;
+    width:250px;
+    background:var(--color-secondary);
+    flex-direction:column;
+    padding-top:80px;
+    transition:right var(--transition);
+  }
+  .nav-links.open{right:0;}
+  .hamburger{display:flex;}
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  min-height:80vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1600/900?random=2') center/cover no-repeat;
+  background-attachment:fixed;
+  opacity:0;
+  animation:fadeInImg 1.2s ease-out forwards;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.15);
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  animation:slideUp 0.8s ease-out forwards;
+  opacity:0;
+}
+.hero-title{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:700;
+  font-size:56px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  line-height:1.2;
+  margin-bottom:16px;
+}
+.hero-sub{
+  font-size:1.125rem;
+  margin-bottom:24px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:700;
+  font-size:1rem;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  transition:transform 0.12s cubic-bezier(0.4,0,0.2,1),background var(--transition),box-shadow var(--transition);
+  cursor:pointer;
+}
+.btn-primary{
+  background:var(--color-primary);
+  color:#fff;
+}
+.btn-primary:hover{background:#447135;}
+.btn-primary:active{transform:scale(0.97);}
+.btn-secondary{
+  background:transparent;
+  color:var(--color-secondary);
+  border:2px solid var(--color-secondary);
+}
+.btn-secondary:hover{
+  background:var(--color-secondary);
+  color:#fff;
+}
+
+/* Animations */
+@keyframes fadeInImg{to{opacity:1;}}
+@keyframes slideUp{to{opacity:1;transform:translateY(0);}}
+
+/* Contact specific */
+.contact-section{
+  max-width:var(--max-width);
+  margin:auto;
+  padding:calc(var(--gap)*6) var(--gap);
+  display:grid;
+  gap:calc(var(--gap)*4);
+}
+.contact-form{
+  background:#fff;
+  padding:calc(var(--gap)*3);
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.contact-form h2{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:700;
+  font-size:2rem;
+  margin-bottom:calc(var(--gap)*2);
+  text-align:center;
+}
+.form-grid{
+  display:grid;
+  gap:calc(var(--gap)*2);
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+}
+.form-group{
+  display:flex;
+  flex-direction:column;
+}
+label{
+  margin-bottom:4px;
+  font-weight:600;
+}
+input,
+textarea{
+  padding:8px;
+  border:1px solid #ddd;
+  border-radius:var(--radius);
+  font:inherit;
+}
+textarea{
+  resize:vertical;
+  min-height:120px;
+}
+.error{
+  color:var(--color-secondary);
+  font-size:0.875rem;
+  margin-top:4px;
+}
+.address-map{
+  display:grid;
+  gap:calc(var(--gap)*4);
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+}
+.map-wrapper{
+  width:100%;
+  height:0;
+  padding-bottom:56.25%;
+  position:relative;
+}
+.map-wrapper iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+.social-links{
+  text-align:center;
+  margin-top:calc(var(--gap)*4);
+}
+.social-links a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  margin:0 calc(var(--gap)*1);
+  border-radius:50%;
+  background:var(--color-primary);
+  color:#fff;
+  transition:background var(--transition);
+}
+.social-links a:hover{
+  background:var(--color-secondary);
+}
+
+/* Footer (same as home) */
+footer{
+  background:var(--color-secondary);
+  color:#fff;
+  padding:calc(var(--gap)*6) var(--gap);
+}
+.footer-inner{
+  max-width:var(--max-width);
+  margin:auto;
+  display:grid;
+  gap:calc(var(--gap)*4);
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+}
+.footer-col h4{
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.footer-col ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.footer-col a{color:#fff;}
+.footer-col a:hover{color:var(--color-primary);}
+.newsletter input{
+  padding:8px;
+  border:none;
+  border-radius:var(--radius);
+  margin-right:4px;
+}
+.newsletter button{
+  background:var(--color-primary);
+  color:#fff;
+  border:none;
+  border-radius:var(--radius);
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="site-header">
+  <nav>
+    <a href="index.html" class="logo"><strong>Artisan Crafts</strong></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="shop.html" class="nav-link">Shop</a></li>
+      <li><a href="blog.html" class="nav-link">Blog</a></li>
+      <li><a href="contact.html" class="nav-link active">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Open menu" aria-controls="nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Contact</h1>
+      <p class="hero-sub">We’d love to hear from you. Reach out with any questions, comments, or just to say hello.</p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="contact-section reveal">
+    <div class="contact-form">
+      <h2>Get in Touch</h2>
+      <form id="contactForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">First Name<span aria-hidden="true">*</span></label>
+            <input type="text" id="firstName" name="firstName" required aria-required="true">
+            <p class="error" hidden>Please enter your first name.</p>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name<span aria-hidden="true">*</span></label>
+            <input type="text" id="lastName" name="lastName" required aria-required="true">
+            <p class="error" hidden>Please enter your last name.</p>
+          </div>
+          <div class="form-group">
+            <label for="email">Email<span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required aria-required="true">
+            <p class="error" hidden>Please enter a valid email.</p>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label for="message">Message<span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" required aria-required="true"></textarea>
+            <p class="error" hidden>Please enter a message.</p>
+          </div>
+        </div>
+        <div style="margin-top:calc(var(--gap)*3);text-align:center;">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Address & Map -->
+  <section class="address-map reveal">
+    <div class="contact-section" style="max-width:var(--max-width);margin:auto;padding:calc(var(--gap)*4) var(--gap);display:grid;gap:calc(var(--gap)*4);grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+      <div>
+        <h2>Our Studio</h2>
+        <address style="font-style:normal;line-height:1.6;">
+          <p>Artisan Crafts<br>
+          123 Forest Lane<br>
+          Portland, OR 97201<br>
+          United States</p>
+          <p>Phone: <a href="tel:+15551234567">+1 (555) 123‑4567</a><br>
+          Email: <a href="mailto:info@artisancrafts.com">info@artisancrafts.com</a></p>
+        </address>
+      </div>
+      <div class="map-wrapper">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019845896274!2d-122.41941528468188!3d37.77492977975966!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!3s0x8085808c6c7c0f5b%3A0x8b6d8f1c2e0d5f4d!2sPortland%2C%20OR%2C%20USA!5e0!3m2!1sen!2s!4v1690000000000!5m2!1sen!2s"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Artisan Crafts location on Google Maps"
+                aria-label="Map showing Artisan Crafts location"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <section class="social-links reveal" style="text-align:center;padding:calc(var(--gap)*4) var(--gap);">
+    <h2>Follow Us</h2>
+    <div class="social-links" style="display:flex;justify-content:center;gap:calc(var(--gap)*2);margin-top:calc(var(--gap)*2);">
+      <a href="https://www.instagram.com/artisancrafts" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-primary)" xmlns="http://www.w3.org/2000/svg"><path d="M7 2C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2H7ZM12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7ZM18.5 5.5C19.3284 5.5 20 6.17157 20 7C20 7.82843 19.3284 8.5 18.5 8.5C17.6716 8.5 17 7.82843 17 7C17 6.17157 17.6716 5.5 18.5 5.5Z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/artisancrafts" aria-label="Facebook" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-primary)" xmlns="http://www.w3.org/2000/svg"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.0193 5.65686 21.1285 10.4375 21.8789V14.8906H7.89844V12H10.4375V9.79688C10.4375 7.29102 11.9307 5.90625 14.2158 5.90625C15.3125 5.90625 16.4531 6.125 16.4531 6.125V8.59375H15.1328C13.8281 8.59375 13.5625 9.36328 13.5625 10.1523V12H16.3359L15.8828 14.8906H13.5625V21.8789C18.3431 21.1285 22 17.0193 22 12Z"/></svg>
+      </a>
+      <a href="https://twitter.com/artisancrafts" aria-label="Twitter" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-primary)" xmlns="http://www.w3.org/2000/svg"><path d="M22.46 6.011c-.77.342-1.6.574-2.46.678a4.27 4.27 0 0 0 1.88-2.357 8.59 8.59 0 0 1-2.71 1.036 4.25 4.25 0 0 0-7.24 3.878 12.07 12.07 0 0 1-8.76-4.44 4.24 4.24 0 0 0 1.32 5.66 4.16 4.16 0 0 1-1.92-.53v.05c0 2.03 1.44 3.73 3.35 4.12-.35.095-.72.145-1.11.145-.27 0-.54-.025-.8-.074a4.26 4.26 0 0 0 3.97 2.96 8.54 8.54 0 0 1-5.3 1.83c-.34 0-.68-.02-1.01-.06a12.07 12.07 0 0 0 6.55 1.92c7.86 0 12.166-6.5 12.166-12.14 0-.185-.004-.37-.012-.555a8.68 8.68 0 0 0 2.13-2.207z"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+      </ul>
+    </div>
+    <div class="footer-col newsletter">
+      <h4>Newsletter</h4>
+      <form>
+        <input type="email" placeholder="Your email">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Simple menu toggle for demonstration
+document.querySelector('.hamburger').addEventListener('click', function(){
+  const nav = document.querySelector('.nav-links');
+  const expanded = this.getAttribute('aria-expanded') === 'true' || false;
+  this.setAttribute('aria-expanded', !expanded);
+  nav.classList.toggle('open');
+});
+
+// Add scroll listener for header background change
+window.addEventListener('scroll', function(){
+  const header = document.getElementById('site-header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Reveal animation
+const revealElements = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=> {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.1});
+revealElements.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Artisan Crafts</title>
+  <style>
+    :root{
+      --color-primary:#558B2F;
+      --color-secondary:#A0522D;
+      --color-bg:#F5F5DC;
+      --color-bg2:#FFFFFF;
+      --color-text:#333333;
+      --color-muted:#555555;
+      --radius:4px;
+      --gap:8px;
+      --max-width:1200px;
+      --transition:0.2s ease-out;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;font-size:100%;}
+    body{
+      font-family:"Open Sans",sans-serif;
+      color:var(--color-text);
+      background:linear-gradient(135deg,var(--color-bg) 0%,var(--color-bg2) 100%);
+      background-image:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grain' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 20 L20 0' stroke='%23000000' stroke-opacity='0.04' stroke-width='1'/%3E%3C/path%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grain)'/%3E%3C/svg%3E");
+      background-blend-mode:multiply;
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    button{font:inherit;cursor:pointer;background:none;border:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+    }
+    .skip-link:focus{
+      left:0;
+      top:0;
+      width:auto;
+      height:auto;
+      padding:8px;
+      background:#fff;
+      z-index:1000;
+    }
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      background:transparent;
+      transition:background var(--transition);
+      z-index:100;
+    }
+    header.scrolled{
+      background:var(--color-secondary);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    nav{
+      max-width:var(--max-width);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:var(--gap) var(--gap);
+    }
+    .nav-links{
+      display:flex;
+      gap:calc(var(--gap)*2);
+    }
+    .nav-link{
+      color:var(--color-bg2);
+      font-weight:700;
+      font-size:1rem;
+      position:relative;
+    }
+    .nav-link.active,
+    .nav-link:hover{
+      color:var(--color-primary);
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-2px;
+      height:2px;
+      width:0;
+      background:var(--color-primary);
+      transition:width var(--transition);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      width:100%;
+    }
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:4px;
+    }
+    .hamburger span{
+      width:24px;
+      height:2px;
+      background:#fff;
+    }
+    @media (max-width:768px){
+      .nav-links{
+        position:fixed;
+        top:0;
+        right:-100%;
+        height:100vh;
+        width:250px;
+        background:var(--color-secondary);
+        flex-direction:column;
+        padding-top:80px;
+        transition:right var(--transition);
+      }
+      .nav-links.open{right:0;}
+      .hamburger{display:flex;}
+    }
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://picsum.photos/1600/900?random=2') center/cover no-repeat;
+      background-attachment:fixed;
+      opacity:0;
+      animation:fadeInImg 1.2s ease-out forwards;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.15);
+    }
+    .hero-content{
+      position:relative;
+      max-width:800px;
+      animation:slideUp 0.8s ease-out forwards;
+      opacity:0;
+    }
+    .hero-title{
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-weight:700;
+      font-size:56px;
+      text-transform:uppercase;
+      letter-spacing:0.05em;
+      line-height:1.2;
+      margin-bottom:16px;
+    }
+    .hero-sub{
+      font-size:1.125rem;
+      margin-bottom:24px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-weight:700;
+      font-size:1rem;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      transition:transform 0.12s cubic-bezier(0.4,0,0.2,1),background var(--transition),box-shadow var(--transition);
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:var(--color-primary);
+      color:#fff;
+    }
+    .btn-primary:hover{background:#447135;}
+    .btn-primary:active{transform:scale(0.97);}
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-secondary);
+      border:2px solid var(--color-secondary);
+    }
+    .btn-secondary:hover{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    @keyframes fadeInImg{to{opacity:1;}}
+    @keyframes slideUp{to{opacity:1;transform:translateY(0);}}
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    .reveal.visible{opacity:1;transform:none;}
+    /* Image Gallery */
+    .image-gallery{
+      max-width:var(--max-width);
+      margin:auto;
+      padding:calc(var(--gap)*4) var(--gap);
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:calc(var(--gap)*2);
+    }
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+    }
+    .gallery-item img{
+      transition:transform 0.3s ease;
+    }
+    .gallery-item:hover img{transform:scale(1.05);}
+    .gallery-caption{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.4);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-caption{opacity:1;}
+    /* Mission */
+    .mission{
+      max-width:var(--max-width);
+      margin:auto;
+      padding:calc(var(--gap)*6) var(--gap);
+      text-align:center;
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    .mission h2{
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-weight:700;
+      font-size:2rem;
+      margin-bottom:16px;
+    }
+    .mission p{
+      font-size:1rem;
+      line-height:1.6;
+    }
+    /* Sustainability */
+    .sustainability{
+      max-width:var(--max-width);
+      margin:auto;
+      padding:calc(var(--gap)*4) var(--gap);
+      display:grid;
+      gap:calc(var(--gap)*4);
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    }
+    .sustainability-card{
+      background:#fff;
+      padding:calc(var(--gap)*2);
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      text-align:center;
+    }
+    .sustainability-card h3{
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-weight:700;
+      font-size:1.25rem;
+      margin-bottom:8px;
+    }
+    .sustainability-card p{
+      font-size:0.95rem;
+    }
+    /* Artisan Profiles */
+    .artisan-grid{
+      max-width:var(--max-width);
+      margin:auto;
+      padding:calc(var(--gap)*4) var(--gap);
+      display:grid;
+      gap:calc(var(--gap)*4);
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    }
+    .artisan-card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      overflow:hidden;
+      text-align:center;
+      transition:transform var(--transition),box-shadow var(--transition);
+    }
+    .artisan-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    }
+    .artisan-card img{
+      height:200px;
+      object-fit:cover;
+    }
+    .artisan-card-content{
+      padding:calc(var(--gap)*2);
+    }
+    .artisan-card-content h3{
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-weight:700;
+      font-size:1.125rem;
+      margin-bottom:8px;
+    }
+    .artisan-card-content p{
+      font-size:0.95rem;
+      color:var(--color-muted);
+    }
+    /* CTA */
+    .cta-section{
+      text-align:center;
+      padding:calc(var(--gap)*6) var(--gap);
+    }
+    /* Header & Nav (same as home) */
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      background:transparent;
+      transition:background var(--transition);
+      z-index:100;
+    }
+    header.scrolled{
+      background:var(--color-secondary);
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    nav{
+      max-width:var(--max-width);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:var(--gap) var(--gap);
+    }
+    .nav-links{
+      display:flex;
+      gap:calc(var(--gap)*2);
+    }
+    .nav-link{
+      color:var(--color-bg2);
+      font-weight:700;
+      font-size:1rem;
+      position:relative;
+    }
+    .nav-link.active,
+    .nav-link:hover{
+      color:var(--color-primary);
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-2px;
+      height:2px;
+      width:0;
+      background:var(--color-primary);
+      transition:width var(--transition);
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      width:100%;
+    }
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:4px;
+    }
+    .hamburger span{
+      width:24px;
+      height:2px;
+      background:#fff;
+    }
+    @media (max-width:768px){
+      .nav-links{
+        position:fixed;
+        top:0;
+        right:-100%;
+        height:100vh;
+        width:250px;
+        background:var(--color-secondary);
+        flex-direction:column;
+        padding-top:80px;
+        transition:right var(--transition);
+      }
+      .nav-links.open{right:0;}
+      .hamburger{display:flex;}
+    }
+    /* Footer (same as home) */
+    footer{
+      background:var(--color-secondary);
+      color:#fff;
+      padding:calc(var(--gap)*6) var(--gap);
+    }
+    .footer-inner{
+      max-width:var(--max-width);
+      margin:auto;
+      display:grid;
+      gap:calc(var(--gap)*4);
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    }
+    .footer-col h4{
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+    .footer-col ul{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .footer-col a{color:#fff;}
+    .footer-col a:hover{color:var(--color-primary);}
+    .newsletter input{
+      padding:8px;
+      border:none;
+      border-radius:var(--radius);
+      margin-right:4px;
+    }
+    .newsletter button{
+      background:var(--color-primary);
+      color:#fff;
+      border:none;
+      border-radius:var(--radius);
+    }
+    .back-to-top{
+      position:fixed;
+      bottom:24px;
+      right:24px;
+      width:48px;
+      height:48px;
+      background:var(--color-primary);
+      color:#fff;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header & Navigation -->
+  <header id="site-header">
+    <nav>
+      <a href="index.html" class="logo"><strong>Artisan Crafts</strong></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero reveal" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Our Story</h1>
+      <p class="hero-sub">From a humble workshop to a global brand, our journey is rooted in craftsmanship, nature, and community.</p>
+      <a href="#mission" class="btn btn-primary">Learn More</a>
+    </div>
+  </section>
+
+  <!-- Image Gallery -->
+  <section class="image-gallery reveal" id="image_gallery">
+    <div class="image-gallery">
+      <div class="gallery-item"><img src="https://picsum.photos/400/300?random=10" alt="Artisan selecting reclaimed wood"></div>
+      <div class="gallery-item"><img src="https://picsum.photos/400/310?random=11" alt="Close‑up of hand‑carved detailing"></div>
+      <div class="gallery-item"><img src="https://picsum.photos/400/320?random=12" alt="Founders discussing design concepts"></div>
+      <div class="gallery-item"><img src="https://picsum.photos/400/330?random=13" alt="Sustainable material sourcing in forest"></div>
+      <div class="gallery-item"><img src="https://picsum.photos/400/340?random=14" alt="Artisan polishing a finished piece"></div>
+      <div class="gallery-item"><img src="https://picsum.photos/400/350?random=15" alt="Workshop tools and workbench"></div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission reveal" id="mission_statement">
+    <div class="mission">
+      <h2>Our Mission</h2>
+      <p>We create timeless furniture that tells a story—crafted with care, designed for lasting beauty, and rooted in responsible stewardship of the planet.</p>
+    </div>
+  </section>
+
+  <!-- Sustainability Commitment -->
+  <section class="sustainability reveal" id="sustainability_commitment">
+    <div class="highlights">
+      <div class="highlight-card">
+        <h3>Eco‑Friendly Materials</h3>
+        <p>All wood is FSC‑certified, reclaimed, or sourced from responsibly managed forests.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Zero Waste Production</h3>
+        <p>We maximize material usage and recycle scraps, minimizing landfill impact.</p>
+      </div>
+      <div class="highlight-card">
+        <h3>Carbon‑Neutral Shipping</h3>
+        <p>Our logistics partner offsets emissions, ensuring deliveries arrive carbon‑neutral.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Artisan Profiles -->
+  <section class="artisan-profiles reveal" id="artisan_profiles">
+    <div class="artisan-grid">
+      <div class="artisan-card">
+        <img src="https://picsum.photos/400/300?random=21" alt="Portrait of Maya Rivera, master woodcarver">
+        <div class="artisan-card-content">
+          <h3>Maya Rivera</h3>
+          <p>Master woodcarver with 15 years of experience, Maya brings intricate botanical motifs to every piece.</p>
+        </div>
+      </div>
+      <div class="artisan-card">
+        <img src="https://picsum.photos/400/300?random=22" alt="Portrait of Luca Bianchi, design lead">
+        <div class="artisan-card-content">
+          <h3>Luca Bianchi</h3>
+          <p>Design lead and co‑founder, Luca fuses modern aesthetics with traditional craftsmanship.</p>
+        </div>
+      </div>
+      <div class="artisan-card">
+        <img src="https://picsum.photos/400/300?random=23" alt="Portrait of Aisha Khan, finish specialist">
+        <div class="artisan-card-content">
+          <h3>Aisha Khan</h3>
+          <p>Finish specialist, Aisha ensures every surface feels as good as it looks, using natural oils.</p>
+        </div>
+      </div>
+      <div class="artisan-card">
+        <img src="https://picsum.photos/400/300?random=24" alt="Portrait of Tomasz Nowak, sustainability coordinator">
+        <div class="artisan-card-content">
+          <h3>Tomasz Nowak</h3>
+          <p>Our sustainability coordinator, Tomasz oversees responsible sourcing and carbon‑offset initiatives.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call‑to‑Action -->
+  <section class="cta-section">
+    <a href="shop.html" class="btn btn-primary">Explore Our Collection</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <ul>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="#mission">Mission</a></li>
+          <li><a href="#sustainability">Sustainability</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">All Products</a></li>
+          <li><a href="shop.html#new-arrivals">New Arrivals</a></li>
+          <li><a href="shop.html#sale">Sale</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="contact.html">Contact Form</a></li>
+          <li><a href="mailto:info@artisancrafts.com">Email Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col newsletter">
+        <h4>Stay Updated</h4>
+        <form action="#" method="post">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+
+  <div class="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'});">↑</div>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('open');
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('site-header');
+    const hero = document.getElementById('hero');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > hero.offsetHeight - 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+      // Reveal animations
+      document.querySelectorAll('.reveal').forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          section.classList.add('visible');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
