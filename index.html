@@ -1,75 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>ModernSite – Build Your Digital Presence with Confidence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --primary:#006d77;
+  --accent:#2a9d8f;
+  --dark:#264653;
+  --light:#e9ecef;
+  --bg:#f1faee;
+  --max-w:1200px;
+  --spacing:1rem;
+  --radius:8px;
+}
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  font-family:var(--font-sans);
+  line-height:1.6;
+  color:#333;
+  background:var(--bg);
+}
+a{
+  color:var(--primary);
+  text-decoration:none;
+}
+a:hover,
+a:focus{
+  text-decoration:underline;
+}
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+.container{
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:0 var(--spacing);
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:var(--spacing);
+  background:#fff;
+  box-shadow:0 2px 4px rgba(0,0,0,0.05);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+.logo{
+  font-size:1.25rem;
+  font-weight:700;
+  color:var(--dark);
+}
+nav{
+  display:none;
+}
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:var(--spacing);
+}
+nav a{
+  font-weight:600;
+  padding:0.5rem 0;
+}
+nav a:hover,
+nav a:focus-visible{
+  color:var(--accent);
+}
+.hamburger{
+  background:none;
+  border:none;
+  color:var(--dark);
+}
+.hamburger svg{
+  width:24px;
+  height:24px;
+}
+@media (min-width:768px){
+  .hamburger{display:none;}
+  nav{
+    display:block;
+  }
+}
+@media (max-width:767px){
+  nav.show{
+    display:block;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(4px);
+    animation:fadeIn 0.3s ease;
+    z-index:999;
+  }
+  nav .nav-inner{
+    background:#fff;
+    width:80%;
+    max-width:300px;
+    height:100%;
+    padding:var(--spacing);
+    overflow-y:auto;
+    animation:slideIn 0.3s ease;
+    position:relative;
+  }
+  .nav-close{
+    background:none;
+    border:none;
+    position:absolute;
+    top:var(--spacing);
+    right:var(--spacing);
+  }
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideIn{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+section{
+  padding:calc(var(--spacing)*3) 0;
+}
+.hero{
+  position:relative;
+  min-height:80vh;
+  background:url('https://picsum.photos/seed/hero/1600/900') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.3));
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  z-index:1;
+}
+.hero h1{
+  font-size:2.5rem;
+  margin-bottom:0.5rem;
+}
+.hero h2{
+  font-size:1.5rem;
+  margin-bottom:1.5rem;
+}
+.btn{
+  display:inline-block;
+  padding:0.75rem 1.5rem;
+  border:none;
+  border-radius:var(--radius);
+  font-size:1rem;
+  font-weight:600;
+  transition:background 0.3s, transform 0.2s;
+}
+.btn-primary{
+  background:var(--primary);
+  color:#fff;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible{
+  background:var(--accent);
+  transform:translateY(-2px);
+}
+.btn-secondary{
+  background:transparent;
+  color:#fff;
+  border:2px solid #fff;
+}
+.btn-secondary:hover,
+.btn-secondary:focus-visible{
+  background:rgba(255,255,255,0.2);
+}
+.btn-group{
+  margin-top:1rem;
+  display:flex;
+  gap:var(--spacing);
+  justify-content:center;
+}
+.about,
+.services,
+.testimonials,
+.contact{
+  background:#fff;
+}
+h2{
+  font-size:2rem;
+  margin-bottom:1.5rem;
+  text-align:center;
+}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:var(--spacing);
+}
+@media (min-width:768px){
+  .about-grid{
+    grid-template-columns:2fr 1fr;
+    align-items:start;
+  }
+}
+.card{
+  background:var(--light);
+  padding:var(--spacing);
+  border-radius:var(--radius);
+}
+.check-list{
+  list-style:none;
+  margin-top:var(--spacing);
+}
+.check-list li{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  margin-bottom:0.5rem;
+}
+.service-card{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:var(--radius);
+  padding:var(--spacing);
+  display:flex;
+  flex-direction:column;
+  gap:0.75rem;
+}
+.service-card h3{
+  font-size:1.25rem;
+}
+.service-card ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:0.25rem;
+}
+.service-card button{
+  margin-top:auto;
+}
+.services-grid{
+  display:grid;
+  gap:var(--spacing);
+}
+@media (min-width:768px){
+  .services-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+.testimonial-carousel{
+  position:relative;
+  overflow:hidden;
+  max-width:800px;
+  margin:0 auto;
+}
+.testimonial-slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 0.5s ease;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+.testimonial-slide.active{
+  position:relative;
+  opacity:1;
+}
+.testimonial-slide img{
+  border-radius:50%;
+  margin-top:1rem;
+}
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:0.5rem;
+  margin-top:1rem;
+}
+.dots button{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ccc;
+  border:none;
+}
+.dots button.active{
+  background:var(--primary);
+}
+.contact{
+  background:var(--primary);
+  color:#fff;
+  text-align:center;
+}
+.contact-form{
+  max-width:500px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:var(--spacing);
+}
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:0.75rem;
+  border:none;
+  border-radius:var(--radius);
+  font-size:1rem;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{
+  outline:2px solid var(--accent);
+}
+.contact-form button{
+  align-self:center;
+  min-width:150px;
+}
+.alt-contact{
+  margin-top:2rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.5rem;
+}
+.social-icons{
+  display:flex;
+  gap:1rem;
+  margin-top:0.75rem;
+}
+.social-icons a svg{
+  width:24px;
+  height:24px;
+  stroke:#fff;
+  fill:#fff;
+}
+.social-icons a:hover svg{
+  stroke:var(--accent);
+  fill:var(--accent);
+}
+footer{
+  background:#222;
+  color:#ddd;
+  text-align:center;
+  padding:1rem;
+  font-size:0.875rem;
+}
+.skip-link{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus-visible{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  background:#fff;
+  color:#000;
+  padding:0.5rem 1rem;
+  z-index:10000;
+}
+:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+.fade-up{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity 0.5s cubic-bezier(0.25,0.8,0.25,1), transform 0.5s cubic-bezier(0.25,0.8,0.25,1);
+}
+.fade-up.visible{
+  opacity:1;
+  transform:none;
+}
+</style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main" class="skip-link">Skip to main content</a>
+<header role="banner" class="header">
+  <div class="logo">ModernSite</div>
+  <button class="hamburger" aria-label="Open navigation" aria-controls="nav" aria-expanded="false">
+    <svg aria-hidden="true"><use href="#menu"/></svg>
+  </button>
+  <nav id="nav" aria-label="Main navigation" aria-hidden="true">
+    <div class="nav-inner">
+      <button class="nav-close" aria-label="Close navigation">
+        <svg aria-hidden="true"><use href="#x"/></svg>
+      </button>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<main id="main">
+  <section id="hero" class="hero fade-up">
+    <div class="hero-content">
+      <h1>Build Your Digital Presence with Confidence</h1>
+      <h2>Expert‑crafted websites that grow with you.</h2>
+      <button class="btn btn-primary" id="hero-cta">Start Your Personalized Plan</button>
+      <div class="btn-group">
+        <button class="btn btn-secondary">Start Free Trial</button>
+        <button class="btn btn-secondary">Book a Consultation</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
-
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
+  <section id="about" class="about fade-up">
+    <div class="container">
+      <h2>Our Story – From Vision to Reality</h2>
+      <div class="about-grid">
+        <p>Founded in 2015, our team of designers, developers, and strategists share a single mission: to empower businesses of all sizes with websites that not only look stunning but also perform flawlessly. We blend creative storytelling with data‑driven insights, ensuring every pixel serves a purpose.</p>
+        <div class="card">
+          <h3>Why Choose Us?</h3>
+          <ul class="check-list">
+            <li><svg width="16" height="16"><use href="#check"/></svg>Custom‑tailored designs that reflect your brand identity.</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>SEO‑optimized code for higher search rankings.</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Lightning‑fast loading times—under 2 seconds on average.</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Ongoing support & quarterly performance reviews.</li>
+          </ul>
         </div>
-    </footer>
-    <script src="script.js"></script>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="services fade-up">
+    <div class="container">
+      <h2>Our Services – Built for Impact</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24"><use href="#monitor"/></svg>
+          <h3>Responsive Web Design</h3>
+          <p>Your site will look flawless on any device, from smartphones to 4K monitors, delivering a seamless user experience that boosts engagement.</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Mobile‑first layouts</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Pixel‑perfect graphics</li>
+          </ul>
+          <button class="btn btn-primary">Learn More</button>
+        </div>
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24"><use href="#shopping-cart"/></svg>
+          <h3>E‑Commerce Solutions</h3>
+          <p>Robust, secure shopping carts and checkout flows that convert visitors into loyal customers, with integrated payment gateways and inventory management.</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Secure transactions</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Scalable product catalogs</li>
+          </ul>
+          <button class="btn btn-primary">Learn More</button>
+        </div>
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24"><use href="#search"/></svg>
+          <h3>SEO & Content Strategy</h3>
+          <p>Data‑backed keyword research and content planning that elevates your visibility on Google, driving qualified traffic straight to your landing pages.</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Keyword optimization</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Content calendars</li>
+          </ul>
+          <button class="btn btn-primary">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials fade-up">
+    <div class="container">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial-carousel" aria-roledescription="carousel">
+        <div class="testimonial-slide active" role="group" aria-roledescription="slide">
+          <blockquote>“The team transformed our outdated site into a vibrant, conversion‑focused platform. Our traffic increased by 45% within the first month.”</blockquote>
+          <p>— Maya L., Founder, GreenLeaf Co.</p>
+          <img src="https://picsum.photos/seed/maya/80/80" alt="Photo of Maya L., Founder, GreenLeaf Co.">
+        </div>
+        <div class="testimonial-slide" role="group" aria-roledescription="slide">
+          <blockquote>“From concept to launch, the process was seamless. The performance improvements alone were worth the investment.”</blockquote>
+          <p>— Alex R., Marketing Director, TechNova</p>
+          <img src="https://picsum.photos/seed/alex/80/80" alt="Photo of Alex R., Marketing Director, TechNova">
+        </div>
+        <div class="testimonial-slide" role="group" aria-roledescription="slide">
+          <blockquote>“Our e‑commerce store now loads instantly and handles high traffic spikes without a hitch. Sales have doubled!”</blockquote>
+          <p>— Sam K., CEO, RetailBoost</p>
+          <img src="https://picsum.photos/seed/sam/80/80" alt="Photo of Sam K., CEO, RetailBoost">
+        </div>
+      </div>
+      <div class="dots" role="tablist">
+        <button class="active" aria-label="Slide 1"></button>
+        <button aria-label="Slide 2"></button>
+        <button aria-label="Slide 3"></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact fade-up">
+    <div class="container">
+      <h2>Get In Touch</h2>
+      <form class="contact-form" novalidate>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <textarea rows="4" placeholder="Your Message" required></textarea>
+        <button class="btn btn-primary" type="submit">Send Message</button>
+      </form>
+      <div class="alt-contact">
+        <p>Phone: <a href="tel:+1234567890">+1 (234) 567‑890</a></p>
+        <p>Email: <a href="mailto:info@modernsite.com">info@modernsite.com</a></p>
+        <div class="social-icons">
+          <a href="#" aria-label="Twitter"><svg aria-hidden="true"><use href="#twitter"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#linkedin"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg aria-hidden="true"><use href="#instagram"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2024 ModernSite. All rights reserved.
+</footer>
+
+<svg style="display:none;">
+  <symbol id="menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></symbol>
+  <symbol id="shopping-cart" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13L4 6z" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></symbol>
+  <symbol id="monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="2" fill="none"/><line x1="14" y1="14" x2="20" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('nav');
+  const hamburger = document.querySelector('.hamburger');
+  const closeBtn = document.querySelector('.nav-close');
+
+  const openNav = () => {
+    nav.setAttribute('aria-hidden', 'false');
+    nav.classList.add('show');
+    hamburger.setAttribute('aria-expanded', 'true');
+  };
+  const closeNav = () => {
+    nav.setAttribute('aria-hidden', 'true');
+    nav.classList.remove('show');
+    hamburger.setAttribute('aria-expanded', 'false');
+  };
+  hamburger.addEventListener('click', openNav);
+  closeBtn.addEventListener('click', closeNav);
+  nav.addEventListener('click', e => {
+    if(e.target === nav) closeNav();
+  });
+
+  // Fade‑up on scroll using IntersectionObserver
+  const faders = document.querySelectorAll('.fade-up');
+  const appearOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  };
+  const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      appearOnScroll.unobserve(entry.target);
+    });
+  }, appearOptions);
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+
+  // Testimonial carousel
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dots = document.querySelectorAll('.dots button');
+  let current = 0;
+  const showSlide = index => {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  };
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => showSlide(i));
+  });
+});
+</script>
 </body>
 </html>
