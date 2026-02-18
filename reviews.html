@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Reviews – Amanda Rodriguez’s Skincare</title>
+  <style>
+:root{
+  --color-primary:#8B5E34;
+  --color-primary-dark:#7A4F2B;
+  --color-secondary:#6B8E23;
+  --color-accent:#D4A76A;
+  --color-text:#3E3E3E;
+  --color-white:#FFFFFF;
+  --gradient-bg:linear-gradient(135deg,#F5F1EA 0%,#E8E2D9 100%);
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --base-gap:24px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --transition-fast:.2s ease-out;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:var(--color-primary);text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{max-width:100%;display:block;}
+h1,h2,h3{
+  font-family:var(--font-heading);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  line-height:1.2;
+}
+h1{font-size:clamp(36px,8vw,72px);}
+h2{font-size:clamp(24px,5vw,36px);}
+h3{font-size:clamp(20px,4vw,28px);}
+button{
+  font-family:var(--font-body);
+  cursor:pointer;
+  border:none;
+  outline:none;
+}
+button:focus-visible{outline:2px solid var(--color-primary);}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:100;
+}
+.skip-link:focus{
+  top:0;
+}
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid #e0e0e0;
+  z-index:1000;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base-gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--base-gap);
+}
+.nav-links a{
+  font-weight:600;
+  padding:8px;
+}
+.nav-links a.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+}
+.hamburger span{
+  width:25px;height:3px;background:#333;
+}
+@media (max-width:640px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+  .nav-links.open{display:flex;}
+  .hamburger{display:flex;}
+}
+section{padding:calc(var(--base-gap)*2) var(--base-gap);}
+.visible{opacity:1;transform:none;transition:opacity .6s ease-out,transform .6s ease-out;}
+[data-fade]{opacity:0;transform:translateY(20px);}
+.hero{
+  position:relative;
+  min-height:60vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--color-text);
+  text-align:center;
+  background:url('https://picsum.photos/1920/1080?grayscale') center/cover fixed;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('https://picsum.photos/1920/1080?grayscale') repeat;
+  opacity:.07;
+  mix-blend-mode:overlay;
+}
+.hero-content{
+  position:relative;
+  max-width:800px;
+  z-index:1;
+}
+.cta-primary{
+  background:var(--color-primary);
+  color:var(--color-white);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background var(--transition-fast);
+}
+.cta-primary:hover,.cta-primary:focus-visible{background:var(--color-primary-dark);}
+.cta-secondary{
+  color:var(--color-secondary);
+  font-weight:600;
+  transition:transform var(--transition-fast);
+}
+.cta-secondary:hover,.cta-secondary:focus-visible{transform:translateY(-2px);}
+.reviews-overview{
+  background:var(--color-white);
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  max-width:800px;
+  margin:auto;
+  text-align:center;
+  padding:var(--base-gap);
+}
+.rating-summary{
+  text-align:center;
+  margin-top:var(--base-gap);
+}
+.rating-summary .stars{
+  font-size:48px;
+  color:#c0c0c0;
+}
+.rating-summary .stars .filled{
+  color:#ffb400;
+}
+.bar-chart{
+  max-width:600px;
+  margin:var(--base-gap) auto;
+}
+.bar{
+  display:flex;
+  align-items:center;
+  margin-bottom:8px;
+}
+.bar span{
+  width:80px;
+  font-size:14px;
+}
+.bar .progress{
+  flex:1;
+  height:12px;
+  background:#e0e0e0;
+  border-radius:6px;
+  overflow:hidden;
+  margin-left:8px;
+}
+.bar .progress div{
+  height:100%;
+  background:var(--color-primary);
+  width:0;
+  transition:width var(--transition-fast);
+}
+.review-list{
+  column-gap:var(--base-gap);
+  row-gap:var(--base-gap);
+  column-count:3;
+  column-gap:var(--base-gap);
+}
+.review-card{
+  background:var(--color-white);
+  padding:24px;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  margin-bottom:var(--base-gap);
+  break-inside:avoid;
+}
+.review-card p{margin-bottom:12px;}
+.review-card .review-name{
+  font-weight:600;
+  color:var(--color-primary);
+}
+.review-card .review-stars{
+  color:#ffb400;
+  margin-top:4px;
+}
+.review-form{
+  background:var(--color-white);
+  max-width:600px;
+  margin:auto;
+  padding:var(--base-gap);
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+}
+.review-form h2{
+  margin-bottom:var(--base-gap);
+}
+.review-form label{
+  display:block;
+  margin-bottom:4px;
+  font-weight:600;
+}
+.review-form input,
+.review-form textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--color-accent);
+  border-radius:4px;
+  margin-bottom:var(--base-gap);
+  transition:border-color .15s linear;
+}
+.review-form input:focus-visible,
+.review-form textarea:focus-visible{
+  border-color:var(--color-primary);
+}
+.star-rating{
+  direction:ltr;
+  unicode-bidi: bidi-override;
+  font-size:24px;
+  margin-bottom:var(--base-gap);
+}
+.star-rating input{
+  display:none;
+}
+.star-rating label{
+  color:#c0c0c0;
+  cursor:pointer;
+}
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label{
+  color:#ffb400;
+}
+.toast{
+  position:fixed;
+  bottom:-80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#4caf50;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:4px;
+  opacity:0;
+  transition:bottom .4s ease-out,opacity .4s ease-out;
+}
+.toast.show{bottom:20px;opacity:1;}
+footer{
+  background:var(--color-primary);
+  color:var(--color-white);
+  font-size:14px;
+}
+footer .footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--base-gap);
+}
+footer a{color:var(--color-white);}
+footer .logo{font-weight:700;}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <header>
+    <nav aria-label="Main navigation">
+      <div class="logo"><a href="index.html">Amanda Rodriguez’s Skincare</a></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="reviews.html" class="active">Reviews</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Review Overview -->
+    <section class="hero" id="review_overview" data-fade>
+      <div class="hero-content">
+        <h1>What Our Customers Say</h1>
+        <p>Real experiences from people who love our eco‑luxury skincare.</p>
+        <div class="review-subscription" style="margin-top:var(--base-gap);">
+          <button class="cta-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Star Rating Summary -->
+    <section id="star_rating_summary" data-fade>
+      <h2>Overall Rating</h2>
+      <div class="rating-summary">
+        <div class="average-stars" aria-label="Average rating 4.5 out of 5">
+          <span class="stars">★★★★★</span>
+          <span class="average-score" style="font-size:48px; color:var(--color-primary); margin-left:12px;">4.5</span>
+        </div>
+        <p style="margin-top:12px;">Based on 128 reviews</p>
+      </div>
+
+      <div class="bar-chart">
+        <div class="bar">
+          <span>5 ★</span>
+          <div class="progress"><div style="width:70%;"></div></div>
+        </div>
+        <div class="bar">
+          <span>4 ★</span>
+          <div class="progress"><div style="width:20%;"></div></div>
+        </div>
+        <div class="bar">
+          <span>3 ★</span>
+          <div class="progress"><div style="width:5%;"></div></div>
+        </div>
+        <div class="bar">
+          <span>2 ★</span>
+          <div class="progress"><div style="width:3%;"></div></div>
+        </div>
+        <div class="bar">
+          <span>1 ★</span>
+          <div class="progress"><div style="width:2%;"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Review List -->
+    <section id="review_list" data-fade>
+      <h2>Customer Reviews</h2>
+      <div class="review-list">
+        <div class="review-card">
+          <p>"The texture of my skin feels completely transformed. I love the sustainable packaging!"</p>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-name">Emily R.</p>
+        </div>
+        <div class="review-card">
+          <p>"Gentle yet effective. The scent is subtle and calming."</p>
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-name">James K.</p>
+        </div>
+        <div class="review-card">
+          <p>"Finally a skincare line that aligns with my values. The results speak for themselves."</p>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-name">Sofia L.</p>
+        </div>
+        <div class="review-card">
+          <p>"My skin has never looked better. Highly recommend to anyone looking for clean beauty."</p>
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-name">Mia T.</p>
+        </div>
+        <div class="review-card">
+          <p>"The products arrived quickly and were beautifully packaged. Love the brand!"</p>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-name">Liam D.</p>
+        </div>
+        <div class="review-card">
+          <p>"Effective, cruelty‑free, and the fragrance is perfect. Will definitely repurchase."</p>
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-name">Olivia H.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Review Submission Form -->
+    <section id="review_submission_form" data-fade>
+      <h2>Leave a Review</h2>
+      <form class="review-form" id="reviewForm" novalidate>
+        <label for="review-name">Name</label>
+        <input type="text" id="review-name" name="name" required aria-required="true">
+
+        <label for="review-email">Email</label>
+        <input type="email" id="review-email" name="email" required aria-required="true">
+
+        <fieldset>
+          <legend>Rating</legend>
+          <div class="star-rating" role="radiogroup" aria-label="Star rating">
+            <input type="radio" id="star5" name="rating" value="5" required>
+            <label for="star5" aria-label="5 stars">★</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" aria-label="4 stars">★</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" aria-label="3 stars">★</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" aria-label="2 stars">★</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" aria-label="1 star">★</label>
+          </div>
+        </fieldset>
+
+        <label for="review-text">Your Review</label>
+        <textarea id="review-text" name="review" rows="5" required aria-required="true"></textarea>
+
+        <button type="submit" class="cta-primary">[VERBATIM]cta_shop_now: Shop Now[/VERBATIM]</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid" style="padding:calc(var(--base-gap)*2) var(--base-gap);">
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <ul>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+          <li><a href="https://pinterest.com" target="_blank">Pinterest</a></li>
+          <li><a href="https://tiktok.com" target="_blank">TikTok</a></li>
+        </ul>
+      </div>
+      <div class="logo"><a href="index.html">Amanda Rodriguez’s Skincare</a></div>
+    </div>
+    <p style="text-align:center; padding:var(--base-gap); margin:0;">&copy; 2024 Amanda Rodriguez’s Skincare. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Simple toast for form submission (demo purpose)
+    const form = document.getElementById('reviewForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const toast = document.createElement('div');
+      toast.className = 'toast show';
+      toast.textContent = 'Thank you for your review!';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        document.body.removeChild(toast);
+        form.reset();
+      }, 3000);
+    });
+
+    // Hamburger menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+      hamburger.setAttribute('aria-expanded', !expanded);
+      navLinks.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

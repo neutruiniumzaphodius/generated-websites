@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavender Calm Serum – Amanda Rodriguez’s Skincare</title>
+  <style>
+:root{
+  --color-primary:#8B5E34;
+  --color-primary-dark:#7A4F2B;
+  --color-secondary:#6B8E23;
+  --color-accent:#D4A76A;
+  --color-text:#3E3E3E;
+  --color-white:#FFFFFF;
+  --gradient-bg:linear-gradient(135deg,#F5F1EA 0%,#E8E2D9 100%);
+  --font-heading:"Playfair Display",serif;
+  --font-body:"Open Sans",sans-serif;
+  --base-gap:24px;
+  --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+  --transition-fast:.2s ease-out;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--color-text);
+  background:var(--gradient-bg);
+  line-height:1.6;
+}
+a{color:var(--color-primary);text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{max-width:100%;display:block;}
+h1,h2,h3{
+  font-family:var(--font-heading);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  line-height:1.2;
+}
+h1{font-size:clamp(36px,8vw,72px);}
+h2{font-size:clamp(24px,5vw,36px);}
+h3{font-size:clamp(20px,4vw,28px);}
+button{
+  font-family:var(--font-body);
+  cursor:pointer;
+  border:none;
+  outline:none;
+}
+button:focus-visible{outline:2px solid var(--color-primary);}
+.skip-link{
+  position:absolute;
+  top:-40px;
+  left:0;
+  background:#fff;
+  color:#000;
+  padding:8px;
+  z-index:100;
+}
+.skip-link:focus{
+  top:0;
+}
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid #e0e0e0;
+  z-index:1000;
+}
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--base-gap);
+}
+.nav-links{
+  display:flex;
+  gap:var(--base-gap);
+}
+.nav-links a{
+  font-weight:600;
+  padding:8px;
+}
+.nav-links a.active{color:var(--color-primary);}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+}
+.hamburger span{
+  width:25px;height:3px;background:#333;
+}
+@media (max-width:640px){
+  .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+  .nav-links.open{display:flex;}
+  .hamburger{display:flex;}
+}
+section{padding:calc(var(--base-gap)*2) var(--base-gap);}
+.visible{opacity:1;transform:none;transition:opacity .6s ease-out,transform .6s ease-out;}
+[data-fade]{opacity:0;transform:translateY(20px);}
+.cta-primary{
+  background:var(--color-primary);
+  color:var(--color-white);
+  padding:12px 24px;
+  border-radius:4px;
+  font-weight:600;
+  transition:background var(--transition-fast);
+}
+.cta-primary:hover,.cta-primary:focus-visible{background:var(--color-primary-dark);}
+.cta-secondary{
+  color:var(--color-secondary);
+  font-weight:600;
+  transition:transform var(--transition-fast);
+}
+.cta-secondary:hover,.cta-secondary:focus-visible{transform:translateY(-2px);}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:var(--base-gap);
+}
+.product-card{
+  background:var(--color-white);
+  padding:24px;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  transition:transform .25s ease-out,box-shadow .25s ease-out;
+}
+.product-card:hover{
+  transform:scale(1.02);
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+.product-card img{
+  width:100%;
+  border-radius:4px;
+  transition:transform .25s ease-out;
+}
+.product-card:hover img{transform:scale(1.08);}
+.product-name{
+  font-family:var(--font-heading);
+  font-size:18px;
+  margin-top:12px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.product-price{
+  color:var(--color-primary);
+  font-weight:600;
+  margin-top:8px;
+}
+.carousel{
+  position:relative;
+  overflow:hidden;
+  max-width:1200px;
+  margin:auto;
+}
+.carousel-track{
+  display:flex;
+  transition:transform .5s cubic-bezier(0.25,0.8,0.25,1);
+}
+.carousel-slide{
+  min-width:100%;
+  padding:var(--base-gap);
+  background:#fff;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  text-align:center;
+}
+.carousel-nav{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+}
+.carousel-nav button{
+  pointer-events:auto;
+  background:rgba(255,255,255,.7);
+  border-radius:50%;
+  width:40px;height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background var(--transition-fast);
+}
+.carousel-nav button:hover{background:#fff;}
+.tab-list{
+  display:flex;
+  gap:var(--base-gap);
+  margin-bottom:var(--base-gap);
+}
+.tab-list button{
+  background:transparent;
+  padding:12px 24px;
+  font-weight:600;
+  border-bottom:2px solid transparent;
+  transition:border-color var(--transition-fast);
+}
+.tab-list button[aria-selected="true"]{
+  border-color:var(--color-primary);
+}
+.tab-panel{
+  display:none;
+}
+.tab-panel[aria-hidden="false"]{
+  display:block;
+}
+.review-card{
+  background:var(--color-white);
+  padding:24px;
+  border-radius:6px;
+  box-shadow:var(--shadow-card);
+  margin-bottom:var(--base-gap);
+}
+footer{
+  background:var(--color-primary);
+  color:var(--color-white);
+  font-size:14px;
+}
+footer .footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:var(--base-gap);
+}
+footer a{color:var(--color-white);}
+footer .logo{font-weight:700;}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header>
+  <nav>
+    <a href="/" class="logo">Amanda Rodriguez’s Skincare</a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="hamburger" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<main id="main-content" style="margin-top:80px;">
+  <!-- Image Gallery -->
+  <section class="image-gallery" data-fade>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--base-gap);align-items:center;">
+      <div style="flex:1 1 60%;">
+        <picture>
+          <source srcset="https://picsum.photos/800/800?image=1062" type="image/webp">
+          <img src="https://picsum.photos/800/800?image=1062" alt="Lavender Calm Serum – Main view" id="main-image" style="border-radius:6px;box-shadow:var(--shadow-card);">
+        </picture>
+      </div>
+      <div style="flex:1 1 35%;display:grid;gap:12px;">
+        <img src="https://picsum.photos/150/150?image=1062" alt="Thumbnail 1" class="thumb" data-large="https://picsum.photos/800/800?image=1062">
+        <img src="https://picsum.photos/150/150?image=1059" alt="Thumbnail 2" class="thumb" data-large="https://picsum.photos/800/800?image=1059">
+        <img src="https://picsum.photos/150/150?image=1055" alt="Thumbnail 3" class="thumb" data-large="https://picsum.photos/800/800?image=1055">
+        <img src="https://picsum.photos/150/150?image=1044" alt="Thumbnail 4" class="thumb" data-large="https://picsum.photos/800/800?image=1044">
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Title, Price & Add to Cart -->
+  <section class="product-info" data-fade>
+    <h1 class="product-title">Lavender Calm Serum</h1>
+    <p class="product-price" style="font-size:2rem;">$34.99</p>
+    <div style="margin-top:var(--base-gap);">
+      <button class="cta-primary">
+        [VERBATIM]cta_shop_now: Shop Now[/VERBATIM]
+      </button>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <section class="product-details" data-fade>
+    <ul class="tab-list" role="tablist" style="display:flex;gap:var(--base-gap);">
+      <li role="presentation"><button role="tab" id="tab-ingredients" aria-controls="panel-ingredients" aria-selected="true" tabindex="0">Ingredients</button></li>
+      <li role="presentation"><button role="tab" id="tab-benefits" aria-controls="panel-benefits" aria-selected="false" tabindex="-1">Benefits</button></li>
+      <li role="presentation"><button role="tab" id="tab-faq" aria-controls="panel-faq" aria-selected="false" tabindex="-1">FAQ</button></li>
+      <li role="presentation"><button role="tab" id="tab-reviews" aria-controls="panel-reviews" aria-selected="false" tabindex="-1">Reviews</button></li>
+    </ul>
+
+    <div class="tab-panel" id="panel-ingredients" role="tabpanel" aria-labelledby="tab-ingredients" aria-hidden="false">
+      <h2>Ingredients</h2>
+      <ul>
+        <li>Lavender Essential Oil</li>
+        <li>Organic Aloe Vera</li>
+        <li>Vitamin E</li>
+        <li>Organic Jojoba Oil</li>
+        <li>Natural Preservative (Leuconostoc/Radish Root Ferment Filtrate)</li>
+      </ul>
+    </div>
+
+    <div class="tab-panel" id="panel-benefits" role="tabpanel" aria-labelledby="tab-benefits" aria-hidden="true">
+      <h2>Benefits</h2>
+      <ul>
+        <li>Calms redness and irritation</li>
+        <li>Provides long‑lasting hydration</li>
+        <li>Soothes sensitive skin</li>
+        <li>Leaves a subtle, relaxing lavender scent</li>
+        <li>Non‑comedogenic and cruelty‑free</li>
+      </ul>
+    </div>
+
+    <div class="tab-panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" aria-hidden="true">
+      <h2>Frequently Asked Questions</h2>
+      <dl>
+        <dt>Is this serum suitable for oily skin?</dt>
+        <dd>Yes, the lightweight formula absorbs quickly without leaving a greasy residue.</dd>
+        <dt>Can I use it with other active ingredients?</dt>
+        <dd>Absolutely – it pairs well with Vitamin C serums and hyaluronic acid.</dd>
+        <dt>How often should I apply?</dt>
+        <dd>Use twice daily, morning and night, after cleansing.</dd>
+      </dl>
+    </div>
+
+    <div class="tab-panel" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" aria-hidden="true">
+      <h2>Customer Reviews</h2>
+      <div style="margin-bottom:var(--base-gap);">
+        <strong>Average rating:</strong>
+        <span aria-label="4.5 out of 5 stars">★★★★✰</span> (4.5)
+      </div>
+      <div class="review-card">
+        <p><strong>Emma L.</strong> – ★★★★★</p>
+        <p>"My skin feels instantly calmer. The scent is divine!"</p>
+      </div>
+      <div class="review-card">
+        <p><strong>James K.</strong> – ★★★★✰</p>
+        <p>"Great product, but I wish the bottle was a bit larger."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products Carousel -->
+  <section class="related-products" data-fade>
+    <h2>Related Products</h2>
+    <div class="carousel-container" style="position:relative;">
+      <div class="carousel-track" id="related-track">
+        <div class="product-card">
+          <img src="https://picsum.photos/300/300?image=1050" alt="Rose Radiance Oil">
+          <p class="product-name">Rose Radiance Oil</p>
+          <p class="product-price">$29.99</p>
+        </div>
+        <div class="product-card">
+          <img src="https://picsum.photos/300/300?image=1047" alt="Chamomile Night Cream">
+          <p class="product-name">Chamomile Night Cream</p>
+          <p class="product-price">$39.99</p>
+        </div>
+        <div class="product-card">
+          <img src="https://picsum.photos/300/300?image=1035" alt="Green Tea Cleanser">
+          <p class="product-name">Green Tea Cleanser</p>
+          <p class="product-price">$24.99</p>
+        </div>
+      </div>
+      <button class="carousel-arrow left" aria-label="Previous slide" id="rel-prev">&#9664;</button>
+      <button class="carousel-arrow right" aria-label="Next slide" id="rel-next">&#9654;</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid" style="padding:var(--base-gap);">
+    <div>
+      <h3 class="logo">Amanda Rodriguez’s Skincare</h3>
+      <p>Eco‑luxury skincare crafted with love and sustainability.</p>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul style="list-style:none;">
+        <li><a href="shop.html">All Products</a></li>
+        <li><a href="shop.html?category=serums">Serums</a></li>
+        <li><a href="shop.html?category=moisturizers">Moisturizers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Company</h3>
+      <ul style="list-style:none;">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Follow Us</h3>
+      <a href="#" aria-label="Instagram">Instagram</a> |
+      <a href="#" aria-label="Pinterest">Pinterest</a> |
+      <a href="#" aria-label="TikTok">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Hamburger menu */
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  const expanded = hamburger.getAttribute('aria-expanded') === 'true' || false;
+  hamburger.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('open');
+});
+
+/* Tab functionality */
+const tabButtons = document.querySelectorAll('[role="tab"]');
+const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+
+tabButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const selected = button.getAttribute('aria-selected') === 'true';
+    if (selected) return;
+
+    // Deselect all tabs
+    tabButtons.forEach(btn => {
+      btn.setAttribute('aria-selected', 'false');
+      btn.setAttribute('tabindex', '-1');
+    });
+    // Hide all panels
+    tabPanels.forEach(panel => panel.setAttribute('aria-hidden', 'true'));
+
+    // Select clicked tab
+    button.setAttribute('aria-selected', 'true');
+    button.setAttribute('tabindex', '0');
+
+    // Show associated panel
+    const panelId = button.getAttribute('aria-controls');
+    document.getElementById(panelId).setAttribute('aria-hidden', 'false');
+  });
+});
+
+/* Simple related products carousel */
+let relIndex = 0;
+const relTrack = document.getElementById('related-track');
+const relSlides = relTrack.children.length;
+document.getElementById('rel-prev').addEventListener('click', () => {
+  relIndex = (relIndex > 0) ? relIndex - 1 : relSlides - 1;
+  relTrack.style.transform = `translateX(-${relIndex * 100}%)`;
+});
+document.getElementById('rel-next').addEventListener('click', () => {
+  relIndex = (relIndex + 1) % relSlides;
+  relTrack.style.transform = `translateX(-${relIndex * 100}%)`;
+});
+
+/* Image thumbnail click */
+document.querySelectorAll('.thumb').forEach(thumb => {
+  thumb.addEventListener('click', () => {
+    const large = thumb.getAttribute('data-large');
+    document.getElementById('main-image').src = large;
+  });
+});
+</script>
+</body>
+</html>

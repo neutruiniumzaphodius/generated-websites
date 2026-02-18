@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Summary – Amanda Rodriguez’s Skincare</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#8B5E34;
+      --color-primary-dark:#7A4F2B;
+      --color-secondary:#6B8E23;
+      --color-accent:#D4A76A;
+      --color-text:#3E3E3E;
+      --color-white:#FFFFFF;
+      --gradient-bg:linear-gradient(135deg,#F5F1EA 0%,#E8E2D9 100%);
+      --font-heading:"Playfair Display",serif;
+      --font-body:"Open Sans",sans-serif;
+      --base-gap:24px;
+      --shadow-card:0 4px 12px rgba(0,0,0,0.08);
+      --transition-fast:.2s ease-out;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-body);
+      color:var(--color-text);
+      background:var(--gradient-bg);
+      line-height:1.6;
+    }
+    a{color:var(--color-primary);text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    img{max-width:100%;display:block;}
+    h1,h2,h3{
+      font-family:var(--font-heading);
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      line-height:1.2;
+    }
+    h1{font-size:clamp(36px,8vw,72px);}
+    h2{font-size:clamp(24px,5vw,36px);}
+    h3{font-size:clamp(20px,4vw,28px);}
+    button{
+      font-family:var(--font-body);
+      cursor:pointer;
+      border:none;
+      outline:none;
+    }
+    button:focus-visible{outline:2px solid var(--color-primary);}
+    .skip-link{
+      position:absolute;
+      top:-40px;
+      left:0;
+      background:#fff;
+      color:#000;
+      padding:8px;
+      z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      background:rgba(255,255,255,.9);
+      backdrop-filter:blur(6px);
+      border-bottom:1px solid #e0e0e0;
+      z-index:1000;
+    }
+    nav{
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:var(--base-gap);
+    }
+    .nav-links{
+      display:flex;
+      gap:var(--base-gap);
+    }
+    .nav-links a{
+      font-weight:600;
+      padding:8px;
+    }
+    .nav-links a.active{color:var(--color-primary);}
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:5px;
+    }
+    .hamburger span{
+      width:25px;height:3px;background:#333;
+    }
+    @media (max-width:640px){
+      .nav-links{display:none;flex-direction:column;background:#fff;position:absolute;top:100%;left:0;right:0;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+      .nav-links.open{display:flex;}
+      .hamburger{display:flex;}
+    }
+    section{padding:calc(var(--base-gap)*2) var(--base-gap);}
+    .cta-primary{
+      background:var(--color-primary);
+      color:var(--color-white);
+      padding:12px 24px;
+      border-radius:4px;
+      font-weight:600;
+      transition:background var(--transition-fast);
+    }
+    .cta-primary:hover,.cta-primary:focus-visible{background:var(--color-primary-dark);}
+    .cta-secondary{
+      color:var(--color-secondary);
+      font-weight:600;
+      transition:transform var(--transition-fast);
+    }
+    .cta-secondary:hover,.cta-secondary:focus-visible{transform:translateY(-2px);}
+    table{width:100%;border-collapse:collapse;margin-top:var(--base-gap);}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid var(--color-accent);}
+    th{color:var(--color-primary);font-family:var(--font-heading);font-size:14px;}
+    td{color:var(--color-text);}
+    .order-table tbody tr:hover{background:#fafafa;}
+    .progress-indicator{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin: var(--base-gap) 0;
+      position:relative;
+    }
+    .progress-indicator::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      height:4px;
+      background:#e0e0e0;
+      z-index:0;
+    }
+    .step{
+      background:var(--color-white);
+      color:var(--color-text);
+      padding:8px 16px;
+      border-radius:20px;
+      font-weight:600;
+      position:relative;
+      z-index:1;
+      border:2px solid var(--color-secondary);
+      transition:background var(--transition-fast),color var(--transition-fast);
+    }
+    .step.active{
+      border-color:var(--color-primary);
+      background:var(--color-primary);
+      color:var(--color-white);
+    }
+    .step.completed{
+      border-color:var(--color-secondary);
+      background:var(--color-secondary);
+      color:var(--color-white);
+    }
+    .summary-box{
+      background:var(--color-white);
+      padding:var(--base-gap);
+      border-radius:6px;
+      box-shadow:var(--shadow-card);
+      max-width:400px;
+      margin-top:var(--base-gap);
+    }
+    .summary-box .total{
+      font-size:1.5rem;
+      font-weight:600;
+      color:var(--color-primary);
+    }
+    .confirmation-message{
+      text-align:center;
+      padding:var(--base-gap);
+      background:var(--color-white);
+      border-radius:6px;
+      box-shadow:var(--shadow-card);
+      max-width:600px;
+      margin:auto;
+    }
+    .hidden{display:none;}
+    .payment-icons img{height:32px;margin-right:8px;filter:grayscale(100%);transition:filter .2s;}
+    .payment-icons img:hover{filter:none;}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <nav>
+      <a href="index.html" class="logo"><strong>Amanda Rodriguez’s Skincare</strong></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="reviews.html">Reviews</a>
+      </div>
+      <div class="hamburger" aria-label="Menu" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" style="margin-top:80px;">
+    <!-- Progress Indicator -->
+    <section aria-label="Checkout progress">
+      <div class="progress-indicator" role="list">
+        <span class="step completed" aria-current="step">Cart</span>
+        <span class="step active" aria-current="step">Shipping</span>
+        <span class="step" aria-current="step">Payment</span>
+      </div>
+    </section>
+
+    <!-- Order Table -->
+    <section id="order_table" class="order-table">
+      <h2>Order Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pure Rosehip Face Oil</td>
+            <td>2</td>
+            <td>$34.00</td>
+            <td>$68.00</td>
+          </tr>
+          <tr>
+            <td>Lavender Body Butter</td>
+            <td>1</td>
+            <td>$45.00</td>
+            <td>$45.00</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" style="text-align:right;font-weight:600;">Subtotal</td>
+            <td style="font-weight:600;">$113.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <!-- Shipping Estimator -->
+    <section id="shipping_estimator" class="shipping-estimator">
+      <h2>Shipping Estimator</h2>
+      <form id="shipping-form" autocomplete="off">
+        <label for="postal-code">Enter Postal Code:</label>
+        <input type="text" id="postal-code" name="postal-code" placeholder="e.g., 10001" required
+               style="width:100%;padding:12px;border:1px solid var(--color-accent);border-radius:4px;margin-top:8px;">
+        <button type="button" class="cta-secondary" style="margin-top:12px;">Calculate</button>
+      </form>
+    </section>
+
+    <!-- Payment Gateway Section -->
+    <section id="payment_gateway_section" class="payment-gateway">
+      <h2>Payment Options</h2>
+      <div class="payment-icons" style="display:flex;align-items:center;gap:12px;margin-top:12px;">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg" alt="Stripe" title="Stripe">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/paypal.svg" alt="PayPal" title="PayPal">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/applepay.svg" alt="Apple Pay" title="Apple Pay">
+      </div>
+      <p style="margin-top:12px;font-size:0.9rem;color:var(--color-secondary);">All transactions are secured and PCI‑DSS certified.</p>
+    </section>
+
+    <!-- Order Review -->
+    <section id="order_review" class="order-review">
+      <h2>Order Review</h2>
+      <div class="summary-box">
+        <p>Items Total: <span class="price">$113.00</span></p>
+        <p>Shipping: <span class="price">$12.00</span></p>
+        <hr style="margin:12px 0;border-color:var(--color-accent);">
+        <p class="total">Order Total: <span class="price">$125.00</span></p>
+        <button class="cta-primary" style="margin-top:var(--base-gap);width:100%;">
+          <!-- verbatim content -->
+          <span data-verbatim>Shop Now</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Confirmation Message (initially hidden) -->
+    <section id="confirmation_message" class="confirmation-message hidden" aria-live="polite">
+      <h2>Thank You for Your Order!</h2>
+      <p>Your eco‑luxury products are on their way. A confirmation email has been sent to you.</p>
+      <a href="index.html" class="cta-primary" style="margin-top:var(--base-gap);display:inline-block;">Continue Shopping</a>
+    </section>
+  </main>
+
+  <!-- Footer (same as home page) -->
+  <footer>
+    <div class="footer-grid" style="max-width:1200px;margin:auto;padding:var(--base-gap);">
+      <div>
+        <h3 class="logo">Amanda Rodriguez’s Skincare</h3>
+        <p>Pure, sustainable, eco‑luxury cosmetics.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <nav class="nav-links" style="flex-direction:column;gap:8px;">
+          <a href="index.html">Home</a>
+          <a href="shop.html">Shop</a>
+          <a href="about.html">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <div>
+        <h3>Customer Service</h3>
+        <p>Shipping & Returns</p>
+        <p>FAQ</p>
+        <p>Privacy Policy</p>
+      </div>
+      <div>
+        <h3>Stay Connected</h3>
+        <a href="#" class="cta-secondary">Instagram</a> |
+        <a href="#" class="cta-secondary">Pinterest</a> |
+        <a href="#" class="cta-secondary">TikTok</a>
+      </div>
+    </div>
+    <p style="text-align:center;padding:var(--base-gap);margin-top:var(--base-gap);">
+      © 2024 Amanda Rodriguez’s Skincare. All rights reserved.
+    </p>
+  </footer>
+
+  <!-- Simple script to show confirmation after clicking the primary button -->
+  <script>
+    document.querySelectorAll('.cta-primary').forEach(btn=>{
+      btn.addEventListener('click',e=>{
+        e.preventDefault();
+        document.getElementById('order_table').classList.add('hidden');
+        document.getElementById('shipping_estimator').classList.add('hidden');
+        document.getElementById('payment_gateway_section').classList.add('hidden');
+        document.getElementById('order_review').classList.add('hidden');
+        document.getElementById('confirmation_message').classList.remove('hidden');
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
+    });
+  </script>
+</body>
+</html>
