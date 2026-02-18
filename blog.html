@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Seed to Skin Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --color-primary: #8FA998;
+      --color-secondary: #D9826F;
+      --color-accent: #F28C6F;
+      --color-bg: #F9F6F0;
+      --color-text: #332E2C;
+      --radius: 4px;
+      --transition: cubic-bezier(0.25,0.8,0.25,1);
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; font-size:100%; }
+    body{
+      font-family:'Montserrat',sans-serif;
+      background:var(--color-bg);
+      color:var(--color-text);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    h1,h2,h3{font-family:'Playfair Display',serif;margin:0 0 .5em;}
+    h1{font-size:clamp(2.5rem,5vw,3rem);}
+    h2{font-size:clamp(2rem,4vw,2.25rem);}
+    h3{font-size:clamp(1.75rem,3.5vw,2rem);}
+    a{color:inherit;text-decoration:none;}
+    .skip-link{
+      position:absolute;top:-40px;left:0;background:#000;color:#fff;padding:8px 16px;z-index:100;
+    }
+    .skip-link:focus{top:0;}
+    /* Header */
+    .site-header{background:#fff;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:10;}
+    .nav-container{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:16px;}
+    .nav-brand{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--color-primary);}
+    .nav-links{display:flex;gap:24px;}
+    .nav-link{font-weight:500;position:relative;}
+    .nav-link.active::after{
+      content:"";
+      position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--color-accent);
+    }
+    .nav-toggle{display:none;background:none;border:none;cursor:pointer;}
+    .nav-toggle svg{width:24px;height:24px;}
+    @media (max-width:768px){
+      .nav-links{position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;gap:0;display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px;border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    button{cursor:pointer;border:none;font-family:inherit;}
+    .btn{
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:500;
+      transition:transform 180ms var(--transition),box-shadow 180ms var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary{background:var(--color-accent);color:#fff;}
+    .btn-primary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-primary);
+    }
+    .btn-secondary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-tertiary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-tertiary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .ripple{
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.4);
+      transform:scale(0);
+      animation:ripple 600ms ease-out;
+    }
+    @keyframes ripple{to{transform:scale(4);opacity:0;}}
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:60vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:url('https://picsum.photos/1600/900?blur=2') center/cover no-repeat;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(255,255,255,.4);
+    }
+    .hero-content{
+      position:relative;
+      max-width:800px;
+      z-index:1;
+    }
+    .hero h1{color:var(--color-text);margin-bottom:1rem;}
+    /* Search Bar */
+    .search-bar{
+      max-width:600px;
+      margin:2rem auto;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .search-bar input{
+      flex:1;
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+      font-size:1rem;
+    }
+    .search-bar button{
+      padding:12px;
+      background:var(--color-primary);
+      color:#fff;
+      border-radius:var(--radius);
+    }
+    .search-bar button:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    /* Category Tags */
+    .category-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      justify-content:center;
+      margin-bottom:2rem;
+    }
+    .tag{
+      padding:8px 16px;
+      border:1px solid var(--color-primary);
+      border-radius:24px;
+      background:transparent;
+      color:var(--color-primary);
+      font-size:.9rem;
+      cursor:pointer;
+      transition:background .2s var(--transition),color .2s var(--transition);
+    }
+    .tag.active{
+      background:var(--color-primary);
+      color:#fff;
+    }
+    .tag:hover{background:var(--color-primary);color:#fff;}
+    /* Post List */
+    .blog-main{
+      display:grid;
+      gap:24px;
+      padding:48px 24px;
+    }
+    @media(min-width:1024px){
+      .blog-main{grid-template-columns:3fr 1fr;}
+    }
+    .post-list{
+      display:grid;
+      gap:24px;
+    }
+    @media(min-width:768px){
+      .post-list{grid-template-columns:repeat(2,1fr);}
+    }
+    .post-card{
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      overflow:hidden;
+      transition:transform .2s var(--transition);
+    }
+    .post-card:hover{transform:translateY(-4px);}
+    .post-img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+    }
+    .post-content{padding:16px;}
+    .post-content h3{margin-bottom:.5rem;}
+    .post-content p{margin-bottom:1rem;font-size:.95rem;color:#555;}
+    .post-content .read-more{color:var(--color-primary);font-weight:500;}
+    /* Ebook Sidebar */
+    .ebook-sidebar{
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      padding:24px;
+    }
+    .ebook-card{
+      margin-bottom:24px;
+    }
+    .ebook-card h4{margin-bottom:.5rem;font-size:1.125rem;}
+    .ebook-card .btn-tertiary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .ebook-card .btn-tertiary:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    /* Comment Section */
+    .comment-section{
+      background:#fff;
+      padding:24px;
+      margin-top:48px;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    .comment-section h2{margin-bottom:1rem;}
+    .comment-form{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .comment-form input,
+    .comment-form textarea{
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+      font-family:inherit;
+      font-size:1rem;
+    }
+    .comment-form .error{border-color:var(--color-accent);}
+    .comment-list{margin-top:2rem;}
+    .comment-item{border-bottom:1px solid #e0e0e0;padding:12px 0;}
+    .comment-item:last-child{border-bottom:none;}
+    .comment-item h4{margin:0 0 .25rem;color:var(--color-primary);}
+    .comment-item p{margin:0;}
+    /* Footer */
+    .site-footer{
+      background:#fff;
+      padding:24px;
+      text-align:center;
+      font-size:.85rem;
+    }
+    .animate{opacity:0;transform:translateY(30px);transition:opacity .4s ease-in,transform .4s ease-in;}
+    .animate.visible{opacity:1;transform:none;}
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition:none !important;animation:none !important;}
+    }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">Seed to Skin</a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav-links" id="primary-navigation">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="blog.html" class="nav-link active">Blog</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Blog Header -->
+  <section class="hero blog-header animate" aria-label="Blog hero">
+    <div class="hero-content">
+      <h1>Seed to Skin Blog</h1>
+    </div>
+  </section>
+
+  <!-- Search Bar -->
+  <section class="section search-bar animate">
+    <div class="search-bar" style="max-width:600px;margin:auto;">
+      <input type="text" id="search-input" placeholder="Search articles..." aria-label="Search blog posts" autocomplete="off">
+      <button type="button" aria-label="Search"><i data-lucide="search"></i></button>
+    </div>
+  </section>
+
+  <!-- Category Tags -->
+  <section class="section category-tags animate">
+    <div class="category-tags" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+      <button class="tag active" aria-pressed="true">All</button>
+      <button class="tag" aria-pressed="false">Skincare</button>
+      <button class="tag" aria-pressed="false">Wellness</button>
+      <button class="tag" aria-pressed="false">Tips</button>
+    </div>
+  </section>
+
+  <!-- Main Blog Content -->
+  <section class="section blog-main animate">
+    <div class="post-list">
+      <!-- Post Card 1 -->
+      <article class="post-card product-card">
+        <img src="https://picsum.photos/seed/p1/600/400" loading="lazy" alt="Rose garden in morning light" class="product-img">
+        <div class="post-content">
+          <h3 class="post-title">The Benefits of Morning Skincare Routines</h3>
+          <p>Discover why starting your day with a gentle routine can transform your skin’s health.</p>
+          <a href="#" class="read-more btn btn-secondary">Read More</a>
+        </div>
+      </article>
+      <!-- Post Card 2 -->
+      <article class="post-card product-card">
+        <img src="https://picsum.photos/seed/p2/600/400" loading="lazy" alt="Cozy indoor space with plants" class="product-img">
+        <div class="post-content">
+          <h3 class="post-title">How to Choose the Right Serum for Your Skin Type</h3>
+          <p>A quick guide to picking serums that actually work for you.</p>
+          <a href="#" class="read-more btn btn-secondary">Read More</a>
+        </div>
+      </article>
+      <!-- Post Card 3 -->
+      <article class="post-card product-card">
+        <img src="https://picsum.photos/seed/p3/600/400" loading="lazy" alt="A collection of herbal teas" class="product-img">
+        <div class="post-content">
+          <h3 class="post-title">Herbal Teas That Support Glowing Skin</h3>
+          <p>Explore the best teas to sip for a natural radiance from within.</p>
+          <a href="#" class="read-more btn btn-secondary">Read More</a>
+        </div>
+      </article>
+      <!-- Post Card 4 -->
+      <article class="post-card product-card">
+        <img src="https://picsum.photos/seed/p4/600/400" loading="lazy" alt="Minimalist bathroom shelf with skincare products" class="product-img">
+        <div class="post-content">
+          <h3 class="post-title">Minimalist Skincare: Less is More</h3>
+          <p>Learn how to simplify your routine without compromising results.</p>
+          <a href="#" class="read-more btn btn-secondary">Read More</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Ebook Downloads Sidebar -->
+    <aside class="ebook-sidebar">
+      <h2 class="section-title">Free eBooks</h2>
+      <div class="ebook-card">
+        <h4>The Ultimate Guide to Natural Skincare</h4>
+        <button class="btn btn-tertiary">Get PDF</button>
+      </div>
+      <div class="ebook-card">
+        <h4>10 DIY Recipes for Glowing Skin</h4>
+        <button class="btn btn-tertiary">Get PDF</button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Comment Section -->
+  <section class="section comment-section animate">
+    <h2 class="section-title">Leave a Comment</h2>
+    <form id="comment-form" class="comment-form" novalidate>
+      <input type="text" id="comment-name" placeholder="Your name" aria-label="Name" required>
+      <input type="email" id="comment-email" placeholder="Your email" aria-label="Email" required>
+      <textarea id="comment-text" rows="4" placeholder="Your comment" aria-label="Comment" required></textarea>
+      <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+    <div class="comment-list">
+      <div class="comment-item">
+        <h4>Emma L.</h4>
+        <p>Love the article on morning routines! My skin feels so refreshed.</p>
+      </div>
+      <div class="comment-item">
+        <h4>James K.</h4>
+        <p>Great tips on serums. I finally found one that works for me.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2024 Seed to Skin. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.262.0/dist/lucide.min.js"></script>
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+    navToggle.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('open');
+  });
+
+  // Ripple effect for buttons
+  document.addEventListener('click', e => {
+    const target = e.target.closest('.btn');
+    if (!target) return;
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const rect = target.getBoundingClientRect();
+    ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+    ripple.style.left = e.clientX - rect.left - (ripple.offsetWidth / 2) + 'px';
+    ripple.style.top = e.clientY - rect.top - (ripple.offsetHeight / 2) + 'px';
+    target.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+  // Simple comment form validation
+  const commentForm = document.getElementById('comment-form');
+  commentForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    ['comment-name','comment-email','comment-text'].forEach(id=>{
+      const field = document.getElementById(id);
+      field.classList.remove('error');
+      if (!field.value.trim()){
+        field.classList.add('error');
+        valid = false;
+      } else if (id==='comment-email' && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(field.value)){
+        field.classList.add('error');
+        valid = false;
+      }
+    });
+    if (valid){
+      // In a real site you would send the comment to the server here.
+      commentForm.reset();
+      alert('Thank you! Your comment has been posted.');
+    }
+  });
+</script>
+</body>
+</html>
+</assistant<|channel|>final_output"]}

@@ -1,75 +1,468 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seed to Skin – Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --color-primary: #8FA998;
+      --color-secondary: #D9826F;
+      --color-accent: #F28C6F;
+      --color-bg: #F9F6F0;
+      --color-text: #332E2C;
+      --radius: 4px;
+      --transition: cubic-bezier(0.25,0.8,0.25,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; margin: 0 0 .5em; }
+    h1{font-size: clamp(2.5rem,5vw,3rem);}
+    h2{font-size: clamp(2rem,4vw,2.25rem);}
+    h3{font-size: clamp(1.75rem,3.5vw,2rem);}
+    a { color: inherit; text-decoration: none; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background:#000;
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    /* Header */
+    .site-header {
+      background:#fff;
+      border-bottom:1px solid #e0e0e0;
+      position:sticky; top:0; z-index:10;
+    }
+    .nav-container {
+      max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px;
+    }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links {
+      display:flex; gap:24px;
+    }
+    .nav-link {
+      font-weight:500;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent);
+    }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    button { cursor:pointer; border:none; font-family:inherit; }
+    .btn {
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:500;
+      transition: transform 180ms var(--transition), box-shadow 180ms var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:#fff;
+    }
+    .btn-primary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-primary);
+    }
+    .btn-secondary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-tertiary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-tertiary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .ripple{
+      position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation: ripple 600ms ease-out;
+    }
+    @keyframes ripple{
+      to{transform:scale(4); opacity:0;}
+    }
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      background:url('https://picsum.photos/1600/900') center/cover no-repeat;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0; background:rgba(255,255,255,.4);
+    }
+    .hero-content{
+      position:relative; max-width:800px; z-index:1;
+    }
+    .hero h1{color:var(--color-text); margin-bottom:1rem;}
+    .hero .button-group{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:1rem;}
+    .hero .button-group .btn{min-width:200px;}
+    /* Featured Products */
+    .section{padding:48px 24px;}
+    .section-title{text-align:center; margin-bottom:2rem; color:var(--color-text);}
+    .carousel{
+      display:grid;
+      grid-auto-flow:column;
+      gap:24px;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      padding-bottom:16px;
+    }
+    .carousel::-webkit-scrollbar{display:none;}
+    .product-card{
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      padding:16px;
+      min-width:260px;
+      scroll-snap-align:start;
+      position:relative;
+      transition:transform .2s var(--transition);
+    }
+    .product-card:hover{transform:translateY(-4px);}
+    .product-img{
+      width:100%; height:200px; object-fit:cover; border-radius:8px; transition:transform .2s var(--transition);
+    }
+    .product-card:hover .product-img{transform:scale(1.08);}
+    .wishlist{
+      position:absolute; top:12px; right:12px; background:rgba(255,255,255,.8); border-radius:50%; padding:6px; cursor:pointer;
+    }
+    .wishlist svg{stroke:var(--color-primary); width:20px; height:20px;}
+    .product-name{margin:12px 0 4px; font-size:1.125rem; color:var(--color-text);}
+    .product-price{margin-bottom:8px; color:var(--color-primary);}
+    .product-card .btn-primary{width:100%;}
+    /* Brand Story */
+    .brand-story{
+      background:#fff;
+      display:grid;
+      gap:24px;
+      align-items:center;
+    }
+    @media(min-width:768px){
+      .brand-story{grid-template-columns:1fr 1fr;}
+    }
+    .brand-illustration{
+      width:100%; max-width:400px; margin:auto;
+    }
+    .brand-copy{font-size:1.125rem; line-height:1.8;}
+    /* Benefits */
+    .key-benefits{
+      background:#fff;
+      display:grid;
+      gap:24px;
+    }
+    @media(min-width:768px){
+      .key-benefits{grid-template-columns:repeat(4,1fr);}
+    }
+    .benefit-item{
+      text-align:center; padding:16px;
+    }
+    .benefit-item svg{stroke:var(--color-primary); width:48px; height:48px; margin-bottom:8px;}
+    .benefit-item h3{margin-bottom:8px; font-size:1.125rem;}
+    .benefit-item p{font-size:.95rem; color:#555;}
+    /* Testimonials */
+    .testimonials{
+      background:#fff;
+      position:relative;
+    }
+    .testimonial-carousel{
+      display:flex; overflow:hidden; position:relative;
+    }
+    .testimonial-slide{
+      min-width:100%; flex-shrink:0; padding:24px; text-align:center; opacity:0; transition:opacity .5s;
+    }
+    .testimonial-slide.active{opacity:1;}
+    .testimonial-slide img{
+      width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;
+    }
+    .testimonial-slide blockquote{
+      font-family:'Playfair Display',serif; font-size:1.125rem; margin:0 0 .5rem;
+    }
+    .testimonial-slide cite{
+      font-style:normal; color:var(--color-primary);
+    }
+    /* Newsletter Hero */
+    .newsletter-hero{
+      background:linear-gradient(135deg, #F28C6F, #D9826F);
+      color:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .newsletter-hero h2{margin-bottom:.5rem;}
+    .newsletter-form{
+      display:flex; flex-direction:column; gap:12px; max-width:500px; margin:24px auto 0;
+    }
+    .newsletter-hero input{
+      padding:12px; border:none; border-radius:var(--radius); font-size:1rem;
+    }
+    .newsletter-hero .btn-primary{background:#fff;color:var(--color-secondary);}
+    .newsletter-hero .btn-primary:hover{box-shadow:0 4px 12px rgba(0,0,0,.2);}
+    .error{border:2px solid var(--color-accent);}
+    /* Footer CTA */
+    .footer-cta{
+      background:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .footer-cta .btn-primary{background:var(--color-accent); color:#fff;}
+    /* Footer */
+    .site-footer{
+      background:#fff;
+      padding:24px;
+      text-align:center;
+      font-size:.85rem;
+    }
+    /* Animations */
+    .animate{opacity:0; transform:translateY(30px); transition:opacity .4s ease-in, transform .4s ease-in;}
+    .animate.visible{opacity:1; transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after { transition:none !important; animation:none !important; }
+    }
+  </style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
-            </ul>
-        </nav>
-    </header>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
+<header class="site-header">
+  <div class="nav-container">
+    <div class="nav-brand">Seed to Skin</div>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <svg data-lucide="menu"></svg>
+    </button>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>
 
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
-        </section>
+<main id="main-content">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Pure, Hand‑crafted Skincare for Every Moment</h1>
+      <p>Discover the gentle power of nature blended with modern science. From soothing moisturizers to rejuvenating serums, every product is crafted with love.</p>
+      <div class="button-group">
+        <button class="btn btn-primary" data-ripple="primary">hero_cta_shop_now: Shop Now</button>
+        <button class="btn btn-secondary" data-ripple="secondary">hero_cta_learn_more: Learn More</button>
+        <button class="btn btn-tertiary" data-ripple="tertiary">hero_cta_subscribe: Subscribe to Newsletter</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
-        </section>
+  <!-- Featured Products -->
+  <section class="section featured-products animate">
+    <h2 class="section-title">Featured Products</h2>
+    <div class="carousel">
+      <div class="product-card">
+        <img src="https://picsum.photos/300/200?random=1" alt="Radiant Glow Serum" class="product-img">
+        <div class="wishlist"><svg data-lucide="heart"></svg></div>
+        <h3 class="product-name">Radiant Glow Serum</h3>
+        <p class="product-price">$34.99</p>
+        <button class="btn btn-primary">hero_cta_shop_now: Shop Now</button>
+      </div>
+      <div class="product-card">
+        <img src="https://picsum.photos/300/200?random=2" alt="Calming Night Cream" class="product-img">
+        <div class="wishlist"><svg data-lucide="heart"></svg></div>
+        <h3 class="product-name">Calming Night Cream</h3>
+        <p class="product-price">$42.00</p>
+        <button class="btn btn-primary">hero_cta_shop_now: Shop Now</button>
+      </div>
+      <div class="product-card">
+        <img src="https://picsum.photos/300/200?random=3" alt="Pure Vitamin C Cleanser" class="product-img">
+        <div class="wishlist"><svg data-lucide="heart"></svg></div>
+        <h3 class="product-name">Pure Vitamin C Cleanser</h3>
+        <p class="product-price">$28.50</p>
+        <button class="btn btn-primary">hero_cta_shop_now: Shop Now</button>
+      </div>
+      <div class="product-card">
+        <img src="https://picsum.photos/300/200?random=4" alt="Herbal Hydration Mist" class="product-img">
+        <div class="wishlist"><svg data-lucide="heart"></svg></div>
+        <h3 class="product-name">Herbal Hydration Mist</h3>
+        <p class="product-price">$19.99</p>
+        <button class="btn btn-primary">hero_cta_shop_now: Shop Now</button>
+      </div>
+    </div>
+  </section>
 
-        <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
-        </section>
-    </main>
+  <!-- Brand Story -->
+  <section class="section brand-story animate">
+    <img src="https://picsum.photos/400/400?grayscale" alt="Seed to Skin illustration" class="brand-illustration">
+    <div class="brand-copy">
+      <p>Founded in 2022, Seed to Skin began with a simple mission: to bring clean, effective skincare to everyone. Each product is formulated with sustainably sourced botanicals, cruelty‑free testing, and a dedication to transparency. From the moment you unbox our products, you’ll feel the care that goes into every step— from sourcing the seed‑derived actives to the final packaging, designed to be recyclable and beautiful.</p>
+      <p>Our community of skin‑lovers inspires us daily. We share recipes, rituals, and the science behind each ingredient, turning everyday skincare into an empowering ritual.</p>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
-            </div>
-        </div>
-    </footer>
-    <script src="script.js"></script>
-</body>
+  <!-- Key Benefits -->
+  <section class="section key-benefits animate">
+    <div class="benefit-item">
+      <svg data-lucide="leaf"></svg>
+      <h3>All‑Natural</h3>
+      <p>Formulated with 100% botanical extracts.</p>
+    </div>
+    <div class="benefit-item">
+      <svg data-lucide="shield"></svg>
+      <h3>Cruelty‑Free</h3>
+      <p>No animal testing, ever.</p>
+    </div>
+    <div class="benefit-item">
+      <svg data-lucide="droplet"></svg>
+      <h3>Hydrating</h3>
+      <p>Deep moisture without greasiness.</p>
+    </div>
+    <div class="benefit-item">
+      <svg data-lucide="sunrise"></svg>
+      <h3>Eco‑Friendly</h3>
+      <p>Recyclable packaging, carbon‑neutral shipping.</p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section testimonials animate">
+    <h2 class="section-title">What Our Community Says</h2>
+    <div class="testimonial-carousel" aria-live="polite">
+      <div class="testimonial-slide active">
+        <img src="https://picsum.photos/80?random=11" alt="Portrait of Maya L.">
+        <blockquote>“My skin has never felt this balanced. The serum is a game‑changer!”</blockquote>
+        <cite>Maya L., Blogger</cite>
+      </div>
+      <div class="testimonial-slide">
+        <img src="https://picsum.photos/80?random=12" alt="Portrait of Daniel K.">
+        <blockquote>“I love that everything is cruelty‑free and still works miracles.”</blockquote>
+        <cite>Daniel K., Influencer</cite>
+      </div>
+      <div class="testimonial-slide">
+        <img src="https://picsum.photos/80?random=13" alt="Portrait of Sofia R.">
+        <blockquote>“The packaging is gorgeous and the scent is so calming.”</blockquote>
+        <cite>Sofia R., Customer</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Hero -->
+  <section class="newsletter-hero animate">
+    <h2>Stay Fresh, Stay Informed</h2>
+    <p>Join our community for exclusive product launches, skincare tips, and 10% off your first order.</p>
+    <form class="newsletter-form" novalidate>
+      <input type="email" id="newsletter-email" placeholder="Enter your email" required aria-label="Email address">
+      <button type="submit" class="btn btn-primary">hero_cta_subscribe: Subscribe to Newsletter</button>
+    </form>
+    <p class="form-message" aria-live="polite"></p>
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="footer-cta animate">
+    <h2 class="section-title">Ready to Transform Your Skin?</h2>
+    <button class="btn btn-primary">hero_cta_shop_now: Shop Now</button>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="nav-container">
+    <p>&copy; 2024 Seed to Skin. All rights reserved.</p>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Mobile navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  }
+
+  // Button ripple effect
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+      ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+      ripple.classList.add('ripple');
+      this.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    });
+  });
+
+  // Testimonial carousel
+  const slides = document.querySelectorAll('.testimonial-slide');
+  let currentSlide = 0;
+  function showSlide(index) {
+    slides.forEach((s,i)=>s.classList.toggle('active', i===index));
+  }
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }, 5000);
+  showSlide(0);
+
+  // Scroll‑triggered animations
+  const observer = new IntersectionObserver((entries)=> {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.animate').forEach(section => observer.observe(section));
+
+  // Newsletter form validation
+  const newsletterForm = document.querySelector('.newsletter-form');
+  const emailInput = document.getElementById('newsletter-email');
+  const formMessage = document.querySelector('.form-message');
+  newsletterForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      emailInput.classList.add('error');
+      formMessage.textContent = 'Please enter a valid email address.';
+      formMessage.style.color = 'var(--color-accent)';
+    } else {
+      emailInput.classList.remove('error');
+      formMessage.textContent = 'Thank you for joining our community!';
+      formMessage.style.color = '#fff';
+      emailInput.value = '';
+    }
+  });
+</script>
 </html>

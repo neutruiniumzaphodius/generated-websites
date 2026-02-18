@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About – Seed to Skin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #8FA998;
+      --color-secondary: #D9826F;
+      --color-accent: #F28C6F;
+      --color-bg: #F9F6F0;
+      --color-text: #332E2C;
+      --radius: 4px;
+      --transition: cubic-bezier(0.25,0.8,0.25,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; margin: 0 0 .5em; }
+    h1{font-size: clamp(2.5rem,5vw,3rem);}
+    h2{font-size: clamp(2rem,4vw,2.25rem);}
+    h3{font-size: clamp(1.75rem,3.5vw,2rem);}
+    a { color: inherit; text-decoration: none; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background:#000;
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    .site-header {
+      background:#fff;
+      border-bottom:1px solid #e0e0e0;
+      position:sticky; top:0; z-index:10;
+    }
+    .nav-container {
+      max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px;
+    }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links {
+      display:flex; gap:24px;
+    }
+    .nav-link {
+      font-weight:500;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent);
+    }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    button { cursor:pointer; border:none; font-family:inherit; }
+    .btn {
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:500;
+      transition: transform 180ms var(--transition), box-shadow 180ms var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:#fff;
+    }
+    .btn-primary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .ripple{
+      position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation: ripple 600ms ease-out;
+    }
+    @keyframes ripple{
+      to{transform:scale(4); opacity:0;}
+    }
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      background:url('https://picsum.photos/1600/900?blur=2') center/cover no-repeat;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0; background:rgba(255,255,255,.4);
+    }
+    .hero-content{
+      position:relative; max-width:800px; z-index:1;
+    }
+    .hero h1{color:var(--color-text); margin-bottom:1rem;}
+    .button-group{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:1rem;}
+    .button-group .btn{min-width:200px;}
+    .section{padding:48px 24px;}
+    .section-title{text-align:center; margin-bottom:2rem; color:var(--color-text);}
+    .brand-story{
+      background:#fff;
+      display:grid;
+      gap:24px;
+      align-items:center;
+    }
+    @media(min-width:768px){
+      .brand-story{grid-template-columns:1fr 1f;}
+    }
+    .benefit-item{
+      text-align:center; padding:16px;
+    }
+    .benefit-item svg{stroke:var(--color-primary); width:48px; height:48px; margin-bottom:8px;}
+    .benefit-item h3{margin-bottom:8px; font-size:1.125rem;}
+    .benefit-item p{font-size:.95rem; color:#555;}
+    .footer-cta{
+      background:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .footer-cta .btn-primary{background:var(--color-accent); color:#fff;}
+    .site-footer{
+      background:#fff;
+      padding:24px;
+      text-align:center;
+      font-size:.85rem;
+    }
+    .animate{opacity:0; transform:translateY(30px); transition:opacity .4s ease-in, transform .4s ease-in;}
+    .animate.visible{opacity:1; transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after { transition:none !important; animation:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">Seed to Skin</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <svg viewBox="0 0 100 80" width="40" height="40">
+          <rect width="100" height="20"></rect>
+          <rect y="30" width="100" height="20"></rect>
+          <rect y="60" width="100" height="20"></rect>
+        </svg>
+      </button>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="about.html" class="nav-link active" aria-current="page">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Banner -->
+    <section class="hero hero_banner animate" id="hero">
+      <div class="hero-content">
+        <h1>Our Story, Our Soil, Our Soul</h1>
+        <p style="font-size:1.125rem; margin-top:0.5rem;">From the misty valleys of California to your home, we nurture skin the way nature intended.</p>
+        <div class="button-group">
+          <button class="btn btn-primary ripple">Shop Now</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="section mission_statement animate">
+      <h2 class="section-title">Our Mission</h2>
+      <p style="max-width:800px; margin:auto; font-size:1.125rem; line-height:1.8;">
+        At Seed to Skin we believe that true beauty starts with responsibly sourced ingredients, sustainable practices, and a transparent story. Our mission is to empower women to feel confident in their skin while protecting the planet that nurtures us.
+      </p>
+    </section>
+
+    <!-- Founder Profile -->
+    <section class="section founder_profile animate">
+      <div class="brand-story">
+        <img src="https://picsum.photos/400/500?grayscale" alt="Maya Collins, Founder of Seed to Skin" class="brand-illustration">
+        <div class="brand-copy">
+          <h2 class="section-title">Meet Maya Collins</h2>
+          <p style="margin-top:1rem;">
+            Maya grew up watching her grandmother hand‑craft herbal balms in a small coastal town. After studying biochemistry and traveling the world’s most biodiverse regions, she returned to California with a vision: to combine scientific rigor with nature’s wisdom. Maya personally oversees every step of the sourcing process, ensuring that each seed, herb, and oil meets the highest purity standards.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ingredient Sourcing Map -->
+    <section class="section ingredient_sourcing_map animate">
+      <h2 class="section-title">Ingredient Sourcing Map</h2>
+      <p style="text-align:center; max-width:800px; margin:auto; font-size:1.125rem;">
+        Our ingredients are cultivated across the sun‑kissed valleys of California. Hover over each point to learn more.
+      </p>
+      <div style="max-width:800px; margin:32px auto;">
+        <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;">
+          <rect width="600" height="400" fill="#e2e8e5"></rect>
+          <!-- Mock farms -->
+          <circle cx="150" cy="200" r="12" fill="var(--color-primary)">
+            <title>Sunrise Farm – Organic Lavender</title>
+          </circle>
+          <circle cx="300" cy="120" r="12" fill="var(--color-primary)">
+            <title>Coastal Herb Gardens – Wild Rose Oil</title>
+          </circle>
+          <circle cx="450" cy="260" r="12" fill="var(--color-primary)">
+            <title>Golden Valley – Avocado Seed Extract</title>
+          </circle>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Sustainability Commitment -->
+    <section class="section sustainability_commitment animate">
+      <h2 class="section-title">Our Sustainability Commitment</h2>
+      <div class="key-benefits">
+        <div class="benefit-item">
+          <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-leaf"><path d="M5 12c0-5 5-9 7-9s7 4 7 9-5 9-7 9-7-4-7-9Z"/></svg>
+          <h3>Regenerative Farming</h3>
+          <p>Partnering with farms that restore soil health.</p>
+        </div>
+        <div class="benefit-item">
+          <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-package"><path d="M3 7h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="M3 7l9-4 9 4"/><path d="M12 12v5"/></svg>
+          <h3>Eco‑Friendly Packaging</h3>
+          <p>100% recyclable, compostable, and reusable.</p>
+        </div>
+        <div class="benefit-item">
+          <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-truck"><path d="M1 3h15l3 6v6H1z"/><circle cx="5.5" cy="16.5" r="2.5"/><circle cx="18.5" cy="16.5" r="2.5"/></svg>
+          <h3>Carbon‑Neutral Shipping</h3>
+          <p>Carbon offsets on every order.</p>
+        </div>
+        <div class="benefit-item">
+          <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-heart"><path d="M12 21C12 21 5 13.5 5 8.5a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5-7 12.5-7 12.5Z"/></svg>
+          <h3>Community Support</h5>
+          <p>Investing in local growers and education programs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="footer-cta call_to_action animate">
+      <h2>Ready to Experience Pure, Purpose‑Driven Skincare?</h2>
+      <button class="btn btn-primary ripple">Shop Now</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2024 Seed to Skin. All rights reserved.</p>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Mobile navigation toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // Ripple effect for buttons
+    document.addEventListener('click', function (e) {
+      const target = e.target.closest('.btn');
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+      ripple.style.left = e.clientX - rect.left - (ripple.offsetWidth / 2) + 'px';
+      ripple.style.top = e.clientY - rect.top - (ripple.offsetHeight / 2) + 'px';
+      target.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    });
+
+    // IntersectionObserver for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

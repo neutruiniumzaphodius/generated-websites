@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact • Seed to Skin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+    :root {
+      --color-primary: #8FA998;
+      --color-secondary: #D9826F;
+      --color-accent: #F28C6F;
+      --color-bg: #F9F6F0;
+      --color-text: #332E2C;
+      --radius: 4px;
+      --transition: cubic-bezier(0.25,0.8,0.25,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; margin: 0 0 .5em; }
+    h1{font-size: clamp(2.5rem,5vw,3rem);}
+    h2{font-size: clamp(2rem,4vw,2.25rem);}
+    h3{font-size: clamp(1.75rem,3.5vw,2rem);}
+    a { color: inherit; text-decoration: none; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background:#000;
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    /* Header */
+    .site-header {
+      background:#fff;
+      border-bottom:1px solid #e0e0e0;
+      position:sticky; top:0; z-index:10;
+    }
+    .nav-container {
+      max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px;
+    }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links {
+      display:flex; gap:24px;
+    }
+    .nav-link {
+      font-weight:500;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent);
+    }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    button { cursor:pointer; border:none; font-family:inherit; }
+    .btn {
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:500;
+      transition: transform 180ms var(--transition), box-shadow 180ms var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:#fff;
+    }
+    .btn-primary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-primary);
+    }
+    .btn-secondary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-tertiary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-tertiary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .ripple{
+      position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation: ripple 600ms ease-out;
+    }
+    @keyframes ripple{
+      to{transform:scale(4); opacity:0;}
+    }
+    .section{padding:48px 24px;}
+    .section-title{text-align:center; margin-bottom:2rem; color:var(--color-text);}
+    .contact-form{max-width:600px;margin:auto;background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:24px;}
+    .contact-form .field{display:flex;flex-direction:column;gap:4px;margin-bottom:16px;}
+    .contact-form label{font-weight:500;}
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea{
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+      font-size:1rem;
+      font-family:inherit;
+    }
+    .contact-form input.error,
+    .contact-form select.error,
+    .contact-form textarea.error{border:2px solid var(--color-accent);}
+    .faq-accordion .accordion-item{border-bottom:1px solid #e0e0e0;padding:12px 0;}
+    .faq-accordion button{background:none;width:100%;text-align:left;padding:0;font-size:1rem;color:inherit;}
+    .faq-accordion .answer{max-height:0;overflow:hidden;opacity:0;transition:opacity .3s var(--transition),max-height .3s var(--transition);}
+    .faq-accordion .answer.open{opacity:1;max-height:200px;}
+    .social-links{display:flex;gap:24px;justify-content:center;margin-top:24px;}
+    .social-links a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+    .social-links a svg{stroke:var(--color-primary);width:24px;height:24px;}
+    .map-container{margin:48px 0;}
+    .map-container iframe{width:100%;height:400px;border:0;filter:grayscale(80%) contrast(90%);}
+    .site-footer{
+      background:#fff;
+      padding:24px;
+      text-align:center;
+      font-size:.85rem;
+    }
+    .animate{opacity:0; transform:translateY(30px); transition:opacity .4s ease-in, transform .4s ease-in;}
+    .animate.visible{opacity:1; transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after { transition:none !important; animation:none !important; }
+    }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">Seed to Skin</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <section class="section animate" id="contact_form">
+    <h2 class="section-title">Get in Touch</h2>
+    <form class="contact-form" novalidate aria-labelledby="contact_form_title">
+      <div class="field">
+        <label for="name">Name<span aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" required aria-required="true">
+        <span class="error-message" role="alert" aria-live="assertive"></span>
+      </div>
+      <div class="field">
+        <label for="email">Email<span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" required aria-required="true">
+        <span class="error-message" role="alert" aria-live="assertive"></span>
+      </div>
+      <div class="field">
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject">
+          <option value="General Inquiry">General Inquiry</option>
+          <option value="Order Support">Order Support</option>
+          <option value="Product Question">Product Question</option>
+          <option value="Feedback">Feedback</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Message<span aria-hidden="true">*</span></label>
+        <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+        <span class="error-message" role="alert" aria-live="assertive"></span>
+      </div>
+      <button type="submit" class="btn btn-tertiary btn-primary">Send Message</button>
+    </form>
+  </section>
+
+  <section class="section animate" id="faq_accordion">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-accordion">
+      <div class="accordion-item">
+        <button class="accordion-question" aria-expanded="false" aria-controls="faq1">How can I track my order?</button>
+        <div id="faq1" class="answer" role="region" aria-hidden="true">
+          <p>You can track your order through the link sent in your confirmation email or by logging into your account.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-question" aria-expanded="false" aria-controls="faq2">What is your return policy?</button>
+        <div id="faq2" class="answer" role="region" aria-hidden="true">
+          <p>We accept returns within 30 days of purchase. Items must be unused and in original packaging.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-question" aria-expanded="false" aria-controls="faq3">Can I schedule a consultation?</button>
+        <div id="faq3" class="answer" role="region" aria-hidden="true">
+          <p>Yes! Use the Calendly embed below to book a time that works for you.</p>
+          <div id="calendly-embed" style="margin-top:12px;">
+            <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+            <div class="calendly-inline-widget" data-url="https://calendly.com/seedtoskin/consultation" style="min-width:320px;height:630px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section animate" id="live_chat_widget">
+    <h2 class="section-title">Live Chat</h2>
+    <p style="text-align:center;">Our support team is ready to help you in real time.</p>
+    <div id="live-chat-container"></div>
+    <script async src="https://example.com/livechat.js"></script>
+  </section>
+
+  <section class="section animate" id="social_links">
+    <h2 class="section-title">Follow Us</h2>
+    <div class="social-links">
+      <a href="https://instagram.com" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+      <a href="https://facebook.com" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+      <a href="https://pinterest.com" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+    </div>
+  </section>
+
+  <section class="section animate" id="map_placeholder">
+    <h2 class="section-title">Our Location</h2>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019918774699!2d-122.41941528468186!3d37.77492977975985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c5bb7c5b1%3A0x9e2d5a2c5b5c6d1e!2sSan%20Francisco%2C%20CA%2094103%2C%20USA!5e0!3m2!1sen!2sus!4v1690000000000!5m2!1sen!2sus"
+        width="100%" height="400" style="border:0;filter: grayscale(80%) contrast(90%);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <section class="footer-cta">
+    <h2>Need More Help?</h2>
+    <a href="contact.html" class="btn btn-primary">Contact Us</a>
+  </section>
+
+  <footer class="site-footer">
+    © 2024 Seed to Skin. All rights reserved.
+  </footer>
+</main>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Initialize lucide icons
+  lucide.createIcons();
+
+  // Mobile navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // Ripple effect for buttons
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('btn')) {
+      const btn = e.target;
+      const ripple = document.createElement('span');
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+      ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+      ripple.classList.add('ripple');
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+  });
+
+  // Form validation
+  const form = document.querySelector('.contact-form');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    const name = form.querySelector('#name');
+    const email = form.querySelector('#email');
+    const message = form.querySelector('#message');
+
+    // Reset previous errors
+    form.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    [name, email, message].forEach(el => el.classList.remove('error'));
+
+    if (name.value.trim() === '') {
+      valid = false;
+      name.classList.add('error');
+      name.nextElementSibling.textContent = 'Please enter your name.';
+    }
+    if (email.value.trim() === '' || !email.checkValidity()) {
+      valid = false;
+      email.classList.add('error');
+      email.nextElementSibling.textContent = 'Please enter a valid email.';
+    }
+    if (message.value.trim() === '') {
+      valid = false;
+      message.classList.add('error');
+      message.nextElementSibling.textContent = 'Please enter a message.';
+    }
+
+    if (valid) {
+      // Simulate successful submission
+      alert('Thank you! Your message has been sent.');
+      form.reset();
+    }
+  });
+
+  // FAQ Accordion
+  const accordionButtons = document.querySelectorAll('.accordion-question');
+  accordionButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      const answer = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!expanded) {
+        answer.classList.add('open');
+        answer.setAttribute('aria-hidden', 'false');
+      } else {
+        answer.classList.remove('open');
+        answer.setAttribute('aria-hidden', 'true');
+      }
+    });
+  });
+
+  // Scroll-triggered animations
+  const animateElems = document.querySelectorAll('.animate');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {threshold: 0.1});
+  animateElems.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

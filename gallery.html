@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gallery – Seed to Skin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --color-primary: #8FA998;
+      --color-secondary: #D9826F;
+      --color-accent: #F28C6F;
+      --color-bg: #F9F6F0;
+      --color-text: #332E2C;
+      --radius: 4px;
+      --transition: cubic-bezier(0.25,0.8,0.25,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; margin: 0 0 .5em; }
+    h1{font-size: clamp(2.5rem,5vw,3rem);}
+    h2{font-size: clamp(2rem,4vw,2.25rem);}
+    h3{font-size: clamp(1.75rem,3.5vw,2rem);}
+    a { color: inherit; text-decoration: none; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background:#000;
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    /* Header */
+    .site-header {
+      background:#fff;
+      border-bottom:1px solid #e0e0e0;
+      position:sticky; top:0; z-index:10;
+    }
+    .nav-container {
+      max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px;
+    }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links {
+      display:flex; gap:24px;
+    }
+    .nav-link {
+      font-weight:500;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent);
+    }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    button { cursor:pointer; border:none; font-family:inherit; }
+    .btn {
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:500;
+      transition: transform 180ms var(--transition), box-shadow 180ms var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:#fff;
+    }
+    .btn-primary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .ripple{
+      position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation: ripple 600ms ease-out;
+    }
+    @keyframes ripple{
+      to{transform:scale(4); opacity:0;}
+    }
+    .skip-link { position:absolute; left:-9999px; }
+    .skip-link:focus { left:0; top:0; }
+    /* Header */
+    .site-header { background:#fff; border-bottom:1px solid #e0e0e0; position:sticky; top:0; z-index:10; }
+    .nav-container { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px; }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links { display:flex; gap:24px; }
+    .nav-link { font-weight:500; position:relative; }
+    .nav-link.active::after{ content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent); }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    /* Footer */
+    .site-footer{
+      background:#fff;
+      padding:24px;
+      text-align:center;
+      font-size:.85rem;
+    }
+    .site-footer a{color:var(--color-primary);}
+    .site-footer a:hover{text-decoration:underline;}
+    /* Gallery */
+    .section {padding:48px 24px;}
+    .section-title {text-align:center; margin-bottom:2rem; color:var(--color-text);}
+    .filter-group {display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:2rem;}
+    .filter-btn {background:transparent; color:var(--color-primary); border:2px solid var(--color-primary); padding:8px 16px; border-radius:var(--radius); transition:transform 180ms var(--transition), box-shadow 180ms var(--transition);}
+    .filter-btn.active, .filter-btn:hover {background:var(--color-primary); color:#fff; transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    /* Masonry */
+    .masonry {
+      column-gap:24px;
+    }
+    @media (min-width:480px){ .masonry { column-count:2; } }
+    @media (min-width:768px){ .masonry { column-count:3; } }
+    @media (min-width:1024px){ .masonry { column-count:4; } }
+    .masonry-item {
+      break-inside:avoid;
+      margin-bottom:24px;
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      overflow:hidden;
+      position:relative;
+      transition:transform .2s var(--transition);
+    }
+    .masonry-item:hover {transform:translateY(-4px);}
+    .masonry-img {
+      width:100%;
+      display:block;
+      object-fit:cover;
+    }
+    .wishlist {
+      position:absolute; top:8px; right:8px; background:rgba(255,255,255,.8); border-radius:50%; padding:6px; cursor:pointer;
+    }
+    .wishlist svg{stroke:var(--color-primary); width:20px; height:20px;}
+    .caption {
+      position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.4); color:#fff; padding:8px; font-size:.9rem;
+    }
+    /* Lightbox */
+    .lightbox {
+      position:fixed; inset:0; background:rgba(0,0,0,.8); display:none; align-items:center; justify-content:center; z-index:1000;
+    }
+    .lightbox.open {display:flex;}
+    .lightbox-content {max-width:90%; max-height:90%; position:relative;}
+    .lightbox-content img {width:100%; height:auto; border-radius:8px;}
+    .lightbox-caption {
+      margin-top:12px; color:#fff; text-align:center; font-family:'Playfair Display',serif;
+    }
+    .lightbox-close {
+      position:absolute; top:12px; right:12px; background:#fff; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+    }
+    .lightbox-close svg {stroke:var(--color-text); width:20px; height:20px;}
+    /* Instagram carousel */
+    .instagram-section {background:#fff; padding:48px 24px;}
+    .insta-carousel {
+      display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:16px;
+    }
+    .insta-carousel::-webkit-scrollbar{display:none;}
+    .insta-card {
+      flex:0 0 auto; scroll-snap-align:start; width:200px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    .insta-card img {width:100%; height:200px; object-fit:cover;}
+    /* Animations */
+    .animate{opacity:0; transform:translateY(30px); transition:opacity .4s ease-in, transform .4s ease-in;}
+    .animate.visible{opacity:1; transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after { transition:none !important; animation:none !important; }
+    }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header" role="banner">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">Seed to Skin</a>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="Toggle menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+      <ul class="nav-links" id="primary-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="gallery.html" class="nav-link active" aria-current="page">Gallery</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Filter -->
+  <section class="section animate" id="filter-by-theme">
+    <h2 class="section-title">Explore by Theme</h2>
+    <div class="filter-group">
+      <button class="filter-btn btn btn-primary" data-filter="morning">Morning Routine</button>
+      <button class="filter-btn btn btn-primary" data-filter="sustainable">Sustainable Home</button>
+      <button class="filter-btn btn btn-primary" data-filter="family">Family Skincare</button>
+      <button class="filter-btn btn btn-secondary" data-filter="all">Show All</button>
+    </div>
+  </section>
+
+  <!-- Masonry Grid -->
+  <section class="section animate" id="masonry-grid">
+    <h2 class="section-title">Mood Boards & Lifestyle</h2>
+    <div class="masonry">
+      <!-- Sample Items -->
+      <article class="masonry-item" data-theme="morning">
+        <img src="https://picsum.photos/seed/1/400/600" alt="Morning Routine – Soft sunrise light over a cozy kitchen" class="masonry-img" loading="lazy">
+        <div class="caption">Morning Routine – Soft sunrise light over a cozy kitchen</div>
+      </article>
+      <article class="masonry-item" data-theme="sustainable">
+        <img src="https://picsum.photos/seed/2/500/400" alt="Sustainable Home – Recycled décor in a living room" class="masonry-img" loading="lazy">
+        <div class="caption">Sustainable Home – Recycled décor in a living room</div>
+      </article>
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/3/350/500" alt="Family Skincare – Mother and child sharing a natural face mask" class="masonry-img" loading="lazy">
+        <div class="caption">Family Skincare – Mother and child sharing a natural face mask</div>
+      </article>
+      <article class="masonry-item" data-theme="morning family">
+        <img src="https://picsum.photos/seed/4/450/300" alt="Morning Routine – Family gathering around a breakfast table" class="masonry-img" loading="lazy">
+        <div class="caption">Morning Routine – Family gathering around a breakfast table</div>
+      </article>
+      <article class="masonry-item" data-theme="sustainable">
+        <img src="https://picsum.photos/seed/5/400/500" alt="Sustainable Home – Green plants filling a bright window sill" class="masonry-img" loading="lazy">
+        <div class="caption">Sustainable Home – Green plants filling a bright window sill</div>
+      </article>
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/6/380/600" alt="Family Skincare – Children playing with natural soap bubbles" class="masonry-img" loading="lazy">
+        <div class="caption">Family Skincare – Children playing with natural soap bubbles</div>
+      </article>
+      <article class="masonry-item" data-theme="morning">
+        <img src="https://picsum.photos/seed/7/420/300" alt="Morning Routine – Light coffee and a journal on a wooden desk" class="masonry-img" loading="lazy">
+        <div class="caption">Morning Routine – Light coffee and a journal on a wooden desk</div>
+      </article>
+      <article class="masonry-item" data-theme="sustainable family">
+        <img src="https://picsum.photos/seed/8/500/400" alt="Sustainable Home – Family arranging recycled storage boxes" class="masonry-img" loading="lazy">
+        <div class="caption">Sustainable Home – Family arranging recycled storage boxes</div>
+      </article>
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/9/450/550" alt="Family Skincare – Parents applying sunscreen to kids at the park" class="masonry-img" loading="lazy">
+        <div class="caption">Family Skincare – Parents applying sunscreen to kids at the park</div>
+      </article>
+      <article class="masonry-item" data-theme="morning">
+        <img src="https://picsum.photos/seed/10/380/500" alt="Morning Routine – Fresh fruit and herbal tea on a tray" class="masonry-img" loading="lazy">
+        <div class="caption">Morning Routine – Fresh fruit and herbal tea on a tray</div>
+      </article>
+      <article class="masonry-item" data-theme="sustainable">
+        <img src="https://picsum.photos/seed/11/420/600" alt="Sustainable Home – Eco‑friendly cleaning supplies displayed on a shelf" class="masonry-img" loading="lazy">
+        <div class="caption">Sustainable Home – Eco‑friendly cleaning supplies displayed on a shelf</div>
+      </article>
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/12/500/400" alt="Family Skincare – Kids enjoying a homemade scrub session" class="masonry-img" loading="lazy">
+        <div class="caption">Family Skincare – Kids enjoying a homemade scrub session</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" tabindex="-1">
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close lightbox">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <img src="" alt="" id="lightbox-img">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- Instagram Feed -->
+  <section class="section instagram-section animate" id="instagram-feed">
+    <h2 class="section-title">Share the Inspiration</h2>
+    <div class="insta-carousel">
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta1/300/300" alt="Instagram post 1" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta2/300/300" alt="Instagram post 2" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta3/300/300" alt="Instagram post 3" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta4/300/300" alt="Instagram post 4" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta5/300/300" alt="Instagram post 5" loading="lazy"></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2024 Seed to Skin. All rights reserved.</p>
+  <p><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></p>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.263.1/dist/lucide.min.js"></script>
+<script>
+  // Navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle?.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+    navToggle.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('open');
+  });
+
+  // Ripple effect for buttons
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn');
+    if (!btn) return;
+    const ripple = document.createElement('span');
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+    ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+    ripple.classList.add('ripple');
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+
+  // Filter functionality
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const masonryItems = document.querySelectorAll('.masonry-item');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      masonryItems.forEach(item => {
+        const themes = item.dataset.theme.split(' ');
+        if (filter === 'all' || themes.includes(filter)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+
+  document.querySelectorAll('.masonry-item').forEach(item => {
+    item.addEventListener('click', e => {
+      const img = item.querySelector('img');
+      lightboxImg.src = img.src.replace(/\/\d+\/\d+/, '/800/800');
+      lightboxImg.alt = img.alt;
+      lightboxCaption.textContent = img.alt;
+      lightbox.classList.add('open');
+      lightbox.focus();
+    });
+  });
+
+  document.querySelector('.lightbox-close').addEventListener('click', () => {
+    lightbox.classList.remove('open');
+  });
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+  });
+
+  // IntersectionObserver for animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, {threshold: 0.1});
+
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+</assistant<|channel|>analysis<|message|>We need to ensure the page matches the described features: filter and show all, masonry, lightbox, Instagram feed. Also the header navigation and footer with same style as other pages. Provide final HTML page.
+
+Potential missing: add `class="nav-links"` missing in HTML; need to ensure the navigation toggle works.
+
+Also need to add proper ARIA attributes for lightbox: set focus.
+
+Make sure that filter group uses `data-filter="all"` button and default show all.
+
+Make sure that filter works with multiple themes like "morning family". We'll handle by splitting item themes.
+
+Better to have filter function that hides non-matching items.
+
+Also ensure that filter group has accessible role: maybe it's a group of buttons.
+
+Also ensure the `filter-group` container is class of `filter-group` not defined; but it's fine.
+
+Also ensure `section` with id `filter-by-theme` is a section with heading.
+
+Add `animate` class to sections except filter maybe; but okay.
+
+Make sure the `lightbox` is hidden initially with style.
+
+Add CSS for lightbox overlay: center.
+
+Make sure `lightbox` has `tabindex="-1"` for focus.
+
+Now produce final answer as HTML page.**gallery.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gallery – Seed to Skin</title>
+<link rel="stylesheet" href="styles.css"><!-- If you have a global stylesheet -->
+<style>
+/* --------------------------------------------------------------
+   Base layout – same as on the other pages
+   -------------------------------------------------------------- */
+.skip-link{
+  position:absolute;
+  left:-9999px;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+}
+.site-header{
+  background:#fff;
+  border-bottom:1px solid #e0e0e0;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.nav-container{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+}
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  color:var(--color-primary);
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+.nav-link{
+  font-weight:500;
+  position:relative;
+}
+.nav-link.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:2px;
+  background:var(--color-accent);
+}
+.nav-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+.nav-toggle svg{
+  width:24px;
+  height:24px;
+}
+@media (max-width:768px){
+  .nav-links{
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    background:#fff;
+    flex-direction:column;
+    gap:0;
+    display:none;
+  }
+  .nav-links.open{display:flex}
+  .nav-toggle{display:block}
+  .nav-link{
+    padding:12px 16px;
+    border-bottom:1px solid #e0e0e0;
+  }
+}
+
+/* --------------------------------------------------------------
+   Footer – same as on the other pages
+   -------------------------------------------------------------- */
+.site-footer{
+  background:#fff;
+  padding:24px;
+  text-align:center;
+  font-size:.85rem;
+}
+.site-footer a{
+  color:var(--color-primary);
+}
+.site-footer a:hover{
+  text-decoration:underline;
+}
+
+/* --------------------------------------------------------------
+   Gallery specific styles
+   -------------------------------------------------------------- */
+.section{
+  padding:48px 24px;
+}
+.section-title{
+  text-align:center;
+  margin-bottom:2rem;
+  color:var(--color-text);
+}
+.filter-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  margin-bottom:2rem;
+}
+.filter-btn{
+  background:transparent;
+  color:var(--color-primary);
+  border:2px solid var(--color-primary);
+  padding:8px 16px;
+  border-radius:var(--radius);
+  transition:transform 180ms var(--transition),box-shadow 180ms var(--transition);
+}
+.filter-btn.active,
+.filter-btn:hover{
+  background:var(--color-primary);
+  color:#fff;
+  transform:scale(1.05);
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+/* Masonry layout */
+.masonry{
+  column-gap:24px;
+}
+@media (min-width:480px){ .masonry{column-count:2} }
+@media (min-width:768px){ .masonry{column-count:3} }
+@media (min-width:1024px){ .masonry{column-count:4} }
+.masonry-item{
+  break-inside:avoid;
+  margin-bottom:24px;
+  background:#fff;
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  overflow:hidden;
+  position:relative;
+  transition:transform .2s var(--transition);
+}
+.masonry-item:hover{transform:translateY(-4px)}
+.masonry-img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+
+/* Lightbox */
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+.lightbox.open{display:flex}
+.lightbox-content{
+  max-width:90%;
+  max-height:90%;
+  position:relative;
+}
+.lightbox-content img{
+  width:100%;
+  height:auto;
+  border-radius:8px;
+}
+.lightbox-caption{
+  margin-top:12px;
+  color:#fff;
+  text-align:center;
+  font-family:'Playfair Display',serif;
+}
+.lightbox-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:#fff;
+  border-radius:50%;
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.lightbox-close svg{
+  stroke:var(--color-text);
+  width:20px;
+  height:20px;
+}
+
+/* Instagram carousel */
+.instagram-section{
+  background:#fff;
+  padding:48px 24px;
+}
+.insta-carousel{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  gap:16px;
+}
+.insta-carousel::-webkit-scrollbar{display:none}
+.insta-card{
+  flex:0 0 auto;
+  scroll-snap-align:start;
+  width:200px;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.insta-card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+/* Animations */
+.animate{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .4s ease-in,transform .4s ease-in;
+}
+.animate.visible{
+  opacity:1;
+  transform:none;
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition:none !important;
+    animation:none !important;
+  }
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header" role="banner">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">Seed to Skin</a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-toggle"
+              aria-controls="primary-menu"
+              aria-expanded="false"
+              aria-label="Toggle menu">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <ul class="nav-links" id="primary-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="gallery.html" class="nav-link active" aria-current="page">Gallery</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ----------------------------------------------------------
+       Theme filter
+       ---------------------------------------------------------- -->
+  <section class="section animate" id="filter-by-theme">
+    <h2 class="section-title">Explore by Theme</h2>
+    <div class="filter-group">
+      <button class="filter-btn btn btn-primary" data-filter="morning">Morning Routine</button>
+      <button class="filter-btn btn btn-primary" data-filter="sustainable">Sustainable Home</button>
+      <button class="filter-btn btn btn-primary" data-filter="family">Family Skincare</button>
+      <button class="filter-btn btn btn-secondary" data-filter="all">Show All</button>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------
+       Masonry grid
+       ---------------------------------------------------------- -->
+  <section class="section animate" id="masonry-grid">
+    <h2 class="section-title">Mood Boards &amp; Lifestyle</h2>
+    <div class="masonry">
+      <!-- Each article carries a data‑theme attribute for filtering -->
+      <article class="masonry-item" data-theme="morning">
+        <img src="https://picsum.photos/seed/1/400/600"
+             alt="Morning Routine – Soft sunrise light over a cozy kitchen"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Morning Routine – Soft sunrise light over a cozy kitchen</div>
+      </article>
+
+      <article class="masonry-item" data-theme="sustainable">
+        <img src="https://picsum.photos/seed/2/500/400"
+             alt="Sustainable Home – Recycled décor in a living room"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Sustainable Home – Recycled décor in a living room</div>
+      </article>
+
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/3/350/500"
+             alt="Family Skincare – Mother and child sharing a natural face mask"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Family Skincare – Mother and child sharing a natural face mask</div>
+      </article>
+
+      <article class="masonry-item" data-theme="morning family">
+        <img src="https://picsum.photos/seed/4/450/300"
+             alt="Morning Routine – Family gathering around a breakfast table"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Morning Routine – Family gathering around a breakfast table</div>
+      </article>
+
+      <article class="masonry-item" data-theme="sustainable">
+        <img src="https://picsum.photos/seed/5/400/500"
+             alt="Sustainable Home – Green plants filling a bright window sill"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Sustainable Home – Green plants filling a bright window sill</div>
+      </article>
+
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/6/380/600"
+             alt="Family Skincare – Children playing with natural soap bubbles"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Family Skincare – Children playing with natural soap bubbles</div>
+      </article>
+
+      <article class="masonry-item" data-theme="morning">
+        <img src="https://picsum.photos/seed/7/420/300"
+             alt="Morning Routine – Light coffee and a journal on a wooden desk"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Morning Routine – Light coffee and a journal on a wooden desk</div>
+      </article>
+
+      <article class="masonry-item" data-theme="sustainable family">
+        <img src="https://picsum.photos/seed/8/500/400"
+             alt="Sustainable Home – Family arranging recycled storage boxes"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Sustainable Home – Family arranging recycled storage boxes</div>
+      </article>
+
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/9/450/550"
+             alt="Family Skincare – Parents applying sunscreen to kids at the park"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Family Skincare – Parents applying sunscreen to kids at the park</div>
+      </article>
+
+      <article class="masonry-item" data-theme="morning">
+        <img src="https://picsum.photos/seed/10/380/500"
+             alt="Morning Routine – Fresh fruit and herbal tea on a tray"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Morning Routine – Fresh fruit and herbal tea on a tray</div>
+      </article>
+
+      <article class="masonry-item" data-theme="sustainable">
+        <img src="https://picsum.photos/seed/11/420/600"
+             alt="Sustainable Home – Eco‑friendly cleaning supplies displayed on a shelf"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Sustainable Home – Eco‑friendly cleaning supplies displayed on a shelf</div>
+      </article>
+
+      <article class="masonry-item" data-theme="family">
+        <img src="https://picsum.photos/seed/12/500/400"
+             alt="Family Skincare – Kids enjoying a homemade scrub session"
+             class="masonry-img"
+             loading="lazy">
+        <div class="caption">Family Skincare – Kids enjoying a homemade scrub session</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------
+       Lightbox (hidden by default)
+       ---------------------------------------------------------- -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" tabindex="-1">
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close lightbox">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <img src="" alt="" id="lightbox-img">
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- ----------------------------------------------------------
+       Instagram feed – social sharing
+       ---------------------------------------------------------- -->
+  <section class="section instagram-section animate" id="instagram-feed">
+    <h2 class="section-title">Share the Inspiration</h2>
+    <div class="insta-carousel">
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta1/300/300" alt="Instagram post 1" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta2/300/300" alt="Instagram post 2" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta3/300/300" alt="Instagram post 3" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta4/300/300" alt="Instagram post 4" loading="lazy"></a>
+      <a href="#" class="insta-card"><img src="https://picsum.photos/seed/insta5/300/300" alt="Instagram post 5" loading="lazy"></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2024 Seed to Skin. All rights reserved.</p>
+  <nav aria-label="Footer navigation">
+    <a href="index.html">Home</a> |
+    <a href="shop.html">Shop</a> |
+    <a href="blog.html">Blog</a> |
+    <a href="gallery.html">Gallery</a> |
+    <a href="about.html">About</a> |
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script>
+/* --------------------------------------------------------------
+   Navigation toggle (same script as on other pages)
+   -------------------------------------------------------------- */
+const toggleBtn = document.querySelector('.nav-toggle');
+const navLinks   = document.querySelector('.nav-links');
+
+toggleBtn.addEventListener('click', () => {
+  const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+  toggleBtn.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('open');
+});
+
+/* --------------------------------------------------------------
+   Filter logic – show/hide based on data‑theme attribute
+   -------------------------------------------------------------- */
+const filterButtons = document.querySelectorAll('.filter-btn');
+const items         = document.querySelectorAll('.masonry-item');
+
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    filterButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    items.forEach(item => {
+      const themes = item.dataset.theme.split(' ');
+      if (filter === 'all' || themes.includes(filter)) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+/* --------------------------------------------------------------
+   Lightbox – click any image to enlarge
+   -------------------------------------------------------------- */
+const lightbox       = document.getElementById('lightbox');
+const lightboxImg    = document.getElementById('lightbox-img');
+const lightboxCap    = document.getElementById('lightbox-caption');
+const closeBtn       = document.querySelector('.lightbox-close');
+
+document.querySelectorAll('.masonry-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    lightboxImg.src   = img.src.replace(/\/\d+\/\d+/, '/800/800');
+    lightboxImg.alt   = img.alt;
+    lightboxCap.textContent = img.alt;
+    lightbox.classList.add('open');
+    lightbox.focus();
+  });
+});
+
+closeBtn.addEventListener('click', () => {
+  lightbox.classList.remove('open');
+});
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) lightbox.classList.remove('open');
+});
+
+/* --------------------------------------------------------------
+   Simple scroll‑into‑view animations
+   -------------------------------------------------------------- */
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  },
+  {threshold: 0.1}
+);
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shop – Seed to Skin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+    :root {
+      --color-primary: #8FA998;
+      --color-secondary: #D9826F;
+      --color-accent: #F28C6F;
+      --color-bg: #F9F6F0;
+      --color-text: #332E2C;
+      --radius: 4px;
+      --transition: cubic-bezier(0.25,0.8,0.25,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; font-size: 100%; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; margin: 0 0 .5em; }
+    h1{font-size: clamp(2.5rem,5vw,3rem);}
+    h2{font-size: clamp(2rem,4vw,2.25rem);}
+    h3{font-size: clamp(1.75rem,3.5vw,2rem);}
+    a { color: inherit; text-decoration: none; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background:#000;
+      color:#fff;
+      padding:8px 16px;
+      z-index:100;
+    }
+    .skip-link:focus { top:0; }
+    /* Header */
+    .site-header {
+      background:#fff;
+      border-bottom:1px solid #e0e0e0;
+      position:sticky; top:0; z-index:10;
+    }
+    .nav-container {
+      max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px;
+    }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links {
+      display:flex; gap:24px;
+    }
+    .nav-link {
+      font-weight:500;
+      position:relative;
+    }
+    .nav-link.active::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent);
+    }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    button { cursor:pointer; border:none; font-family:inherit; }
+    .btn {
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:500;
+      transition: transform 180ms var(--transition), box-shadow 180ms var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:#fff;
+    }
+    .btn-primary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-secondary{
+      background:transparent;
+      color:var(--color-primary);
+      border:2px solid var(--color-primary);
+    }
+    .btn-secondary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .btn-tertiary{
+      background:var(--color-secondary);
+      color:#fff;
+    }
+    .btn-tertiary:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
+    .ripple{
+      position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation:ripple 600ms ease-out;
+    }
+    @keyframes ripple{
+      to{transform:scale(4); opacity:0;}
+    }
+    /* Header specific */
+    .site-header { background:#fff; border-bottom:1px solid #e0e0e0; position:sticky; top:0; z-index:10; }
+    .nav-container { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:16px; }
+    .nav-brand { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--color-primary); }
+    .nav-links { display:flex; gap:24px; }
+    .nav-link { font-weight:500; position:relative; }
+    .nav-link.active::after{ content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px; background:var(--color-accent); }
+    .nav-toggle { display:none; background:none; border:none; cursor:pointer; }
+    .nav-toggle svg { width:24px; height:24px; }
+    @media (max-width:768px){
+      .nav-links{position:absolute; top:100%; left:0; right:0; background:#fff; flex-direction:column; gap:0; display:none;}
+      .nav-links.open{display:flex;}
+      .nav-link{padding:12px 16px; border-bottom:1px solid #e0e0e0;}
+      .nav-toggle{display:block;}
+    }
+    /* Filter Sidebar */
+    .filter-sidebar {
+        background:#fff;
+        border-radius:8px;
+        box-shadow:0 2px 8px rgba(0,0,0,.08);
+        padding:16px;
+        width:260px;
+        max-height:80vh;
+        overflow-y:auto;
+        position:sticky;
+        top:80px;
+    }
+    .filter-toggle { display:none; background:none; border:none; font-size:1rem; margin:12px; cursor:pointer; }
+    .filter-drawer { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:20; align-items:flex-start; justify-content:flex-start; }
+    .filter-drawer.open { display:flex; }
+    .filter-panel { background:#fff; width:260px; height:100%; padding:16px; overflow-y:auto; }
+    .filter-close { background:none; border:none; cursor:pointer; position:absolute; top:12px; right:12px; }
+    @media (max-width:768px){
+        .filter-toggle{display:inline-block;}
+        .desktop-filter{display:none;}
+    }
+    @media (min-width:769px){
+        .mobile-filter{display:none;}
+    }
+    /* Category Nav (sticky) */
+    .category-nav {
+        position:sticky; top:64px; background:#fff; border-bottom:1px solid #e0e0e0; z-index:5;
+        display:flex; overflow-x:auto; gap:12px; padding:12px 24px;
+    }
+    .category-nav a { padding:6px 12px; border-radius:var(--radius); white-space:nowrap; }
+    .category-nav a.active { background:var(--color-primary); color:#fff; }
+    /* Sort dropdown */
+    .sort-wrapper { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+    .sort-select { padding:8px; border:none; border-radius:var(--radius); font-size:1rem; }
+    /* Product Grid */
+    .product-grid {
+        display:grid;
+        gap:24px;
+        grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+        padding:24px;
+    }
+    .product-card{
+      background:#fff;
+      border-radius:8px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      padding:16px;
+      position:relative;
+      transition:transform .2s var(--transition);
+    }
+    .product-card:hover{transform:translateY(-4px);}
+    .product-img{
+      width:100%; height:200px; object-fit:cover; border-radius:8px; transition:transform .2s var(--transition);
+    }
+    .product-card:hover .product-img{transform:scale(1.08);}
+    .wishlist{
+      position:absolute; top:12px; right:12px; background:rgba(255,255,255,.8); border-radius:50%; padding:6px; cursor:pointer;
+    }
+    .wishlist svg{stroke:var(--color-primary); width:20px; height:20px;}
+    .product-name{margin:12px 0 4px; font-size:1.125rem; color:var(--color-text);}
+    .product-price{margin-bottom:8px; color:var(--color-primary);}
+    .product-card .btn-primary{width:100%;}
+    /* Pagination */
+    .pagination { display:flex; gap:8px; justify-content:center; margin:32px 0; }
+    .pagination button{ padding:8px 12px; background:#fff; border:1px solid #e0e0e0; border-radius:var(--radius); }
+    .pagination button.active{ background:var(--color-primary); color:#fff; }
+    .pagination button:hover{ transform:scale(1.05); box-shadow:0 2px 6px rgba(0,0,0,.1); }
+    /* Newsletter */
+    .newsletter-hero{
+      background:linear-gradient(135deg, #F28C6F, #D9826F);
+      color:#fff;
+      text-align:center;
+      padding:48px 24px;
+    }
+    .newsletter-hero h2{margin-bottom:.5rem;}
+    .newsletter-form{
+      display:flex; flex-direction:column; gap:12px; max-width:500px; margin:24px auto 0;
+    }
+    .newsletter-hero input{
+      padding:12px; border:none; border-radius:var(--radius); font-size:1rem;
+    }
+    .newsletter-hero .btn-primary{background:#fff;color:var(--color-secondary);}
+    .newsletter-hero .btn-primary:hover{box-shadow:0 4px 12px rgba(0,0,0,.2);}
+    .error{border:2px solid var(--color-accent);}
+    /* Footer */
+    .site-footer{
+      background:#fff;
+      padding:24px;
+      text-align:center;
+      font-size:.85rem;
+    }
+    .animate{opacity:0; transform:translateY(30px); transition:opacity .4s ease-in, transform .4s ease-in;}
+    .animate.visible{opacity:1; transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after { transition:none !important; animation:none !important; }
+    }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">Seed to Skin</a>
+    <button class="nav-toggle" aria-label="Toggle navigation"><i data-lucide="menu"></i></button>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="shop.html" class="nav-link active">Shop</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="gallery.html" class="nav-link">Gallery</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+  <!-- Category Navigation (Sticky) -->
+  <section class="category-nav" aria-label="Product categories">
+    <a href="#" class="nav-link active">All</a>
+    <a href="#" class="nav-link">Serums</a>
+    <a href="#" class="nav-link">Moisturizers</a>
+    <a href="#" class="nav-link">Cleansers</a>
+    <a href="#" class="nav-link">Masks</a>
+  </section>
+
+  <div class="section" style="display:flex; flex-wrap:wrap; gap:24px;">
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar desktop-filter" aria-label="Filter products">
+      <h3 class="section-title">Filters</h3>
+      <div>
+        <h4>Category</h4>
+        <label><input type="checkbox" name="category" value="Serums"> Serums</label><br>
+        <label><input type="checkbox" name="category" value="Moisturizers"> Moisturizers</label><br>
+        <label><input type="checkbox" name="category" value="Cleansers"> Cleansers</label><br>
+      </div>
+      <div style="margin-top:16px;">
+        <h4>Price</h4>
+        <label><input type="checkbox" name="price" value="0-30"> $0 – $30</label><br>
+        <label><input type="checkbox" name="price" value="31-60"> $31 – $60</label><br>
+        <label><input type="checkbox" name="price" value="61-100"> $61 – $100</label><br>
+      </div>
+      <button class="btn btn-primary" id="apply-filters">Apply Filters</button>
+    </aside>
+
+    <!-- Mobile Filter Drawer -->
+    <div class="filter-drawer mobile-filter" aria-hidden="true">
+      <div class="filter-panel">
+        <button class="filter-close" aria-label="Close filters"><i data-lucide="x"></i></button>
+        <h3 class="section-title">Filters</h3>
+        <div>
+          <h4>Category</h4>
+          <label><input type="checkbox" name="category" value="Serums"> Serums</label><br>
+          <label><input type="checkbox" name="category" value="Moisturizers"> Moisturizers</label><br>
+          <label><input type="checkbox" name="category" value="Cleansers"> Cleansers</label><br>
+        </div>
+        <div style="margin-top:16px;">
+          <h4>Price</h4>
+          <label><input type="checkbox" name="price" value="0-30"> $0 – $30</label><br>
+          <label><input type="checkbox" name="price" value="31-60"> $31 – $60</label><br>
+          <label><input type="checkbox" name="price" value="61-100"> $61 – $100</label><br>
+        </div>
+        <button class="btn btn-primary" id="apply-filters-mobile">Apply Filters</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="product-section" style="flex:1;">
+      <div class="sort-dropdown" style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+        <label for="sort-select" class="sr-only">Sort by</label>
+        <select id="sort-select" class="sort-select">
+          <option value="default">Sort: Default</option>
+          <option value="price-asc">Price – Low to High</option>
+          <option value="price-desc">Price – High to Low</option>
+          <option value="name-asc">Name A‑Z</option>
+          <option value="name-desc">Name Z‑A</option>
+        </select>
+      </div>
+
+      <div class="product-grid">
+        <!-- Sample Product Card -->
+        <div class="product-card animate">
+          <img src="https://picsum.photos/seed/1/400/300" alt="Rosehip Serum – product image" class="product-img">
+          <button class="wishlist" aria-label="Add to wishlist"><i data-lucide="heart"></i></button>
+          <h3 class="product-name">Rosehip Serum</h3>
+          <p class="product-price">$45.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <div class="product-card animate">
+          <img src="https://picsum.photos/seed/2/400/300" alt="Lavender Moisturizer – product image" class="product-img">
+          <button class="wishlist" aria-label="Add to wishlist"><i data-lucide="heart"></i></button>
+          <h3 class="product-name">Lavender Moisturizer</h3>
+          <p class="product-price">$58.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <div class="product-card animate">
+          <img src="https://picsum.photos/seed/3/400/300" alt="Green Tea Cleanser – product image" class="product-img">
+          <button class="wishlist" aria-label="Add to wishlist"><i data-lucide="heart"></i></button>
+          <h3 class="product-name">Green Tea Cleanser</h3>
+          <p class="product-price">$32.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <div class="product-card animate">
+          <img src="https://picsum.photos/seed/4/400/300" alt="Charcoal Mask – product image" class="product-img">
+          <button class="wishlist" aria-label="Add to wishlist"><i data-lucide="heart"></i></button>
+          <h3 class="product-name">Charcoal Mask</h3>
+          <p class="product-price">$27.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+        <div class="product-card animate">
+          <img src="https://picsum.photos/seed/5/400/300" alt="Vitamin C Serum – product image" class="product-img">
+          <button class="wishlist" aria-label="Add to wishlist"><i data-lucide="heart"></i></button>
+          <h3 class="product-name">Vitamin C Serum</h3>
+          <p class="product-price">$70.00</p>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" aria-label="Pagination navigation">
+        <button class="btn btn-secondary">Prev</button>
+        <button class="btn btn-secondary active">1</button>
+        <button class="btn btn-secondary">2</button>
+        <button class="btn btn-secondary">3</button>
+        <button class="btn btn-secondary">Next</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Newsletter Signup (reuse from home) -->
+  <section class="newsletter-hero">
+    <h2>Stay Fresh with Our Updates</h2>
+    <p>Join our community for exclusive offers and product news.</p>
+    <form class="newsletter-form" novalidate>
+      <input type="email" placeholder="Your email address" aria-label="Email address" required>
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2024 Seed to Skin. All rights reserved.</p>
+</footer>
+
+<script>
+  // Initialize icons
+  lucide.createIcons();
+
+  // Navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // Filter drawer toggle (mobile)
+  const filterDrawer = document.querySelector('.filter-drawer');
+  const filterCloseBtn = document.querySelector('.filter-close');
+  const filterToggleBtn = document.createElement('button');
+  filterToggleBtn.className = 'filter-toggle btn btn-primary';
+  filterToggleBtn.innerHTML = '<i data-lucide="filter"></i> Filters';
+  filterToggleBtn.setAttribute('aria-label', 'Open filters');
+  document.querySelector('.product-section').prepend(filterToggleBtn);
+  filterToggleBtn.addEventListener('click', () => {
+    filterDrawer.classList.add('open');
+    filterDrawer.setAttribute('aria-hidden','false');
+  });
+  filterCloseBtn.addEventListener('click', () => {
+    filterDrawer.classList.remove('open');
+    filterDrawer.setAttribute('aria-hidden','true');
+  });
+
+  // Simple ripple effect for buttons
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('btn')) {
+      const btn = e.target;
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = btn.getBoundingClientRect();
+      ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+      ripple.style.left = e.clientX - rect.left - ripple.offsetWidth / 2 + 'px';
+      ripple.style.top = e.clientY - rect.top - ripple.offsetHeight / 2 + 'px';
+      btn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+  });
+
+  // Animate on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {threshold:0.1});
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+</assistant<|channel|>analysis<|message|>We have to review the HTML code for validity, accessibility, SEO, and best practices. Provide feedback and suggestions, not rewrite entire page. Should be concise but thorough, referencing specific lines/sections. Also need to note any issues with accessibility etc.
+
+Let's examine: The page includes a skip link, header with navigation toggle, categories sticky, filter sidebar and mobile drawer, product grid with sample product cards, pagination, newsletter signup, footer.
+
+Potential issues:
+
+- Duplicate IDs? No. "nav-link" used for both category nav and main nav, but no IDs conflict.
+
+- ARIA attributes: nav role is "banner". Good. nav-links have aria-label. Category nav uses <section class="category-nav" aria-label="Product categories"> but uses <a> with class nav-link. Could use <nav> element for navigation.
+
+- The category nav links have same class nav-link as main navigation, but also "active". Might cause confusion.
+
+- For filter sidebar, there is no <form> element. Should group inputs inside a form for accessibility and easier submission.
+
+- The filter toggles and drawer: the drawer is hidden via aria-hidden but not focus trap.
+
+- The "Apply Filters" button lacks type attribute (defaults to submit if inside a form). Not inside a form, fine.
+
+- Wishlist button: uses <button class="wishlist" aria-label="Add to wishlist"><i data-lucide="heart"></i></button>. That's fine but missing type="button". Without type, defaults to submit if inside a form; not inside a form.
+
+- The product cards: using <div class="product-card animate">. Should be <article> for product. Use <h3> inside but better use <h2> maybe. Provide proper semantics.
+
+- For price formatting, use <p>. Could use <span> with aria-label for currency.
+
+- The "Add to Cart" button could have aria-label specifying product name for screen readers.
+
+- The pagination: using <button class="btn btn-secondary active">1</button>. Should use <nav aria-label="Pagination"> with list <ul> <li> <a>. Buttons may be okay but need to indicate disabled state for Prev/Next at first page.
+
+- The newsletter form: missing proper validation handling, missing success/error message, also missing label for email input; placeholder used but not label. It uses aria-label, okay but placeholder not accessible.
+
+- The "sr-only" class used for sort label but not defined in CSS. Should include a .sr-only style.
+
+- The .filter-close button includes <i data-lucide="x"></i> but missing class for icon. Should use <i data-lucide="x"></i>.
+
+- The filter drawer uses aria-hidden but no role; need role="dialog" and aria-modal.
+
+- The "filter-toggle" button appears only on mobile but not placed in markup within a visible container; the button is created via script, but may cause FOUC.
+
+- The script includes lucide icon initialization but may need to load lucide library.
+
+- The nav-toggle button has <i data-lucide="menu"></i> but not within proper markup; lucide expects <i data-lucide="menu"></i> which is fine.
+
+- The .category-nav sticky top: 64px accounts for header height; but header height is 64? Might be 64 (16 padding + 32?). Could compute.
+
+- Use of inline style for layout: can be moved to CSS.
+
+- Use of .animate class for IntersectionObserver adds visible; fine.
+
+- Use of <section class="product-section"> but not needed.
+
+- The form "newsletter-form" uses novalidate; but validation not implemented.
+
+- The page does not have a <title> tag; there is no <title>. Actually missing. Should have <title>.
+
+- The page missing meta description and viewport.
+
+- The page missing language attribute on <html>.
+
+- Use of <i> for icons not recommended; use <svg> as per lucide.
+
+- The <h4> headings inside filter sidebar not styled; may need proper heading hierarchy (h3, h4). Since filter sidebar inside aside, h3 is section title, then h4 for subheadings is okay.
+
+- The page missing breadcrumb navigation for SEO.
+
+- Use of "All" link in category nav with class "nav-link active" but not using <a href="#">; better use <button> for interactive element that changes displayed products without navigation.
+
+- The product cards have no alt text for images; they are provided.
+
+- The page lacks structured data (JSON-LD) for product.
+
+- The page missing language attribute and proper DOCTYPE? It has <!DOCTYPE html>.
+
+- The page uses "site-footer" but not "footer" role; but it's fine.
+
+- The page missing "lang" attribute on html tag.
+
+- The page uses duplicate IDs: there is only sort-select, fine.
+
+- The script includes IntersectionObserver but no polyfill for older browsers.
+
+- The script for ripple effect but not attached.
+
+- The code uses "btn btn-secondary active" for pagination active but no CSS for .active on btn-secondary; but there is .pagination button.active style.
+
+- The page may need skip link to target main content ID; done.
+
+- Use of <section class="newsletter-hero"> with .newsletter-hero defined in CSS but not .section; okay.
+
+- Use of .sr-only class not defined; need to add CSS.
+
+- Use of <h3 class="product-name"> but product name should be heading level appropriate for product card; using <h2> maybe.
+
+- Use of <p class="product-price">$45.00</p> but could use <data> element.
+
+- Use of <button class="btn btn-primary">Add to Cart</button> but lacking type="button" causing form submit if inside a form.
+
+- The page does not have a <meta charset="UTF-8">.
+
+- The page includes <script> for lucide but not loading the library; need <script src="https://unpkg.com/lucide"></script>.
+
+Ok summarizing suggestions.
+
+Now produce feedback in bullet points with line numbers references maybe approximate. Provide categories: HTML structure, Accessibility, SEO, Performance, Best Practices.
+
+Let's craft response.
