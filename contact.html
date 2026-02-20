@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – Naturally Scents</title>
+  <meta name="description" content="Get in touch with Naturally Scents. Fill out the contact form or read our FAQs about shipping, returns, and international orders.">
+  <meta property="og:title" content="Contact – Naturally Scents">
+  <meta property="og:description" content="We’d love to hear from you. Fill out the form or check our FAQs about shipping, returns and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.naturallyscents.com/contact.html">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1594754756984-0c6bd6bfae2b?auto=format&fit=crop&w=1200&q=80">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Colours */
+      --c-stone:#F5F5DC;
+      --c-charcoal:#36454F;
+      --c-forest:#228B22;
+      --c-deep-forest:#1B5E20;
+      --c-rust:#D9534F;
+      --c-leaf:#5CB85C;
+      --c-white:#FFFFFF;
+      /* Spacing */
+      --sp-1:8px;
+      --sp-2:16px;
+      --sp-3:24px;
+      --sp-4:32px;
+      --sp-5:48px;
+      --sp-6:64px;
+      /* Radii */
+      --radius:4px;
+      /* Shadows */
+      --shadow-card:0 2px 8px rgba(0,0,0,.1);
+      --shadow-elevated:0 4px 12px rgba(0,0,0,.15);
+      /* Typography */
+      --font-heading:"Montserrat",sans-serif;
+      --font-body:"Open Sans",sans-serif;
+      --font-quote:"Playfair Display",serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:var(--font-body);
+      font-size:clamp(1rem,2.5vw,1.125rem);
+      line-height:1.5;
+      color:var(--c-charcoal);
+      background-color:var(--c-stone);
+    }
+    img{max-width:100%;display:block;}
+    a{color:inherit;text-decoration:none;}
+    a:focus-visible{outline:2px solid var(--c-deep-forest);outline-offset:2px;}
+    header{
+      background:var(--c-white);
+      box-shadow:0 2px 4px rgba(0,0,0,.05);
+      position:sticky;top:0;z-index:10;
+    }
+    nav{
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:var(--sp-2);
+    }
+    nav .logo{
+      font-family:var(--font-heading);
+      font-weight:700;
+      font-size:1.25rem;
+      color:var(--c-forest);
+    }
+    nav ul{list-style:none;display:flex;gap:var(--sp-3);}
+    nav a{font-weight:600;padding:var(--sp-1);}
+    nav a:hover,nav a:focus-visible{color:var(--c-deep-forest);}
+    main{overflow:hidden;}
+    section{padding:var(--sp-6) var(--sp-2);}
+    @media (min-width:768px){section{padding:var(--sp-6) var(--sp-4);}}
+    h1,h2,h3,h4{
+      font-family:var(--font-heading);
+      margin:0 0 var(--sp-2);
+      line-height:1.2;
+    }
+    h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:700;}
+    h2{font-size:clamp(2rem,4vw,3rem);font-weight:600;}
+    h3{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;}
+    p{margin:0 0 var(--sp-3);}
+    button{
+      font-family:var(--font-heading);
+      cursor:pointer;
+      border:none;
+      border-radius:var(--radius);
+      transition:background .2s ease,transform .2s ease,box-shadow .2s ease;
+    }
+    button:focus-visible{outline:2px solid var(--c-deep-forest);outline-offset:2px;}
+    .primary-btn{
+      background:var(--c-deep-forest);
+      color:var(--c-white);
+      padding:var(--sp-2) var(--sp-3);
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+    .primary-btn:hover,.primary-btn:focus-visible{
+      background:var(--c-deep-forest);
+      transform:translateY(-2px);
+      box-shadow:var(--shadow-elevated);
+    }
+    .secondary-btn{
+      background:transparent;
+      color:var(--c-forest);
+      border:2px solid var(--c-forest);
+      padding:var(--sp-2) var(--sp-3);
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+    .secondary-btn:hover,.secondary-btn:focus-visible{
+      background:var(--c-forest);
+      color:var(--c-white);
+    }
+    .grid{display:grid;gap:var(--sp-4);}
+    @media (min-width:768px){
+      .grid-2{grid-template-columns:repeat(2,1fr);}
+      .grid-3{grid-template-columns:repeat(3,1fr);}
+      .grid-7-5{grid-template-columns:7fr 5fr;align-items:center;}
+    }
+    .hero{
+      background:#000 url('https://images.unsplash.com/photo-1594754756984-0c6bd6bfae2b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color:var(--c-white);
+      position:relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.4);
+    }
+    .hero-content{
+      position:relative;
+      max-width:1200px;
+      margin:0 auto;
+      padding:var(--sp-6) var(--sp-2);
+    }
+    form{
+      background:var(--c-white);
+      padding:var(--sp-4);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-card);
+    }
+    form input,
+    form textarea{
+      width:100%;
+      padding:var(--sp-1);
+      margin-bottom:var(--sp-2);
+      border:1px solid #ccc;
+      border-radius:var(--radius);
+      font-family:inherit;
+    }
+    .faq-item{margin-top:var(--sp-4);}
+    .faq-question{
+      background:var(--c-forest);
+      color:var(--c-white);
+      padding:var(--sp-2);
+      border-radius:var(--radius);
+      cursor:pointer;
+    }
+    .faq-answer{display:none;padding:var(--sp-2);background:var(--c-white);border-radius:var(--radius);margin-top:var(--sp-1);}
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important;}
+    }
+    @media (prefers-color-scheme: dark){
+      body{background-color:#111;color:#ddd;}
+    }
+    @media (prefers-reduced-motion: reduce){*{transition:none!important;}}
+    @media (prefers-reduced-motion: no-preference){/* default */ }
+    @media (prefers-reduced-motion: reduce){/* already handled */ }
+    @media (prefers-reduced-motion: no-preference){/* already handled */ }
+    @media (prefers-reduced-motion: reduce){/* already handled */ }
+    @media (prefers-reduced-motion: no-preference){/* already handled */ }
+    @media (prefers-color-scheme: dark){
+      header,nav,section{background:#111;color:#ddd;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important;}
+    }
+    .fade-in{
+      opacity:0;
+      transition:opacity .5s ease-in-out;
+    }
+    .fade-in.visible{opacity:1;}
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{transition:none;}
+    }
+    @media (prefers-reduced-motion: no-preference){
+      .fade-in{transition:opacity .5s ease-in-out;}
+    }
+    .fade-in{opacity:0;transition:opacity .5s ease-in-out;}
+    .fade-in.visible{opacity:1;}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    .fade-in{opacity:0;transition:opacity .5s ease-in-out;}
+    .fade-in.visible{opacity:1;}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    @media (prefers-reduced-motion: reduce){.fade-in{transition:none;}}
+    @media (prefers-reduced-motion: no-preference){.fade-in{transition:opacity .5s ease-in-out;}}
+    .faq-question{
+      background:var(--c-forest);
+      color:var(--c-white);
+      padding:var(--sp-2);
+      border-radius:var(--radius);
+      cursor:pointer;
+    }
+    .faq-answer{display:none;padding:var(--sp-2);background:var(--c-white);border-radius:var(--radius);}
+    @media (prefers-reduced-motion: reduce){*{transition:none!important;}}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Naturally Scents",
+    "url": "https://www.naturallyscents.com",
+    "logo": "https://www.naturallyscents.com/logo.png",
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "telephone": "+1-555-123-4567",
+      "contactType": "Customer Service",
+      "areaServed": "US",
+      "availableLanguage": ["English"]
+    }],
+    "sameAs": [
+      "https://www.facebook.com/naturallyscents",
+      "https://www.instagram.com/naturallyscents"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the shipping time for orders?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard shipping takes 3‑5 business days within the United States."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I return a product if I’m not satisfied?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we accept returns within 30 days of purchase. The product must be unused and in its original packaging."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you ship internationally?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We ship to most countries worldwide. International shipping rates and delivery times vary by destination."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav aria-label="Main navigation">
+      <a href="#main-content" class="skip-link">Skip to main content</a>
+      <a href="/" class="logo">Naturally Scents</a>
+      <ul>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/products.html">Products</a></li>
+        <li><a href="/contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-label="Hero image of natural ingredients">
+      <div class="hero-content fade-in">
+        <h1>Contact Us</h1>
+        <p>We’d love to hear from you. Fill out the form below or read our FAQs.</p>
+      </div>
+    </section>
+
+    <section class="fade-in">
+      <h2>Send us a Message</h2>
+      <form action="#" method="post" novalidate>
+        <label for="name">Name<span aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" required aria-required="true">
+
+        <label for="email">Email<span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" required aria-required="true">
+
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject">
+
+        <label for="message">Message<span aria-hidden="true">*</span></label>
+        <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+
+        <button type="submit" class="primary-btn">Send Message</button>
+      </form>
+    </section>
+
+    <section class="fade-in">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq1">What is the shipping time for orders?</button>
+        <div id="faq1" class="faq-answer" role="region" aria-labelledby="faq1-question">
+          <p>Standard shipping takes 3‑5 business days within the United States.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq2">Can I return a product if I’m not satisfied?</button>
+        <div id="faq2" class="faq-answer" role="region" aria-labelledby="faq2-question">
+          <p>Yes, we accept returns within 30 days of purchase. The product must be unused and in its original packaging.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq3">Do you ship internationally?</button>
+        <div id="faq3" class="faq-answer" role="region" aria-labelledby="faq3-question">
+          <p>We ship to most countries worldwide. International shipping rates and delivery times vary by destination.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="grid">
+      <div>
+        <h3>Contact</h3>
+        <p>Phone: <a href="tel:+15551234567">+1 (555) 123‑4567</a></p>
+        <p>Email: <a href="mailto:info@naturallyscents.com">info@naturallyscents.com</a></p>
+        <p>Address: 123 Green Way, Eco City, CA 90210</p>
+      </div>
+      <div>
+        <h3>Follow Us</h3>
+        <a href="https://www.facebook.com/naturallyscents" aria-label="Facebook"><svg aria-hidden="true" focusable="false" width="24" height="24"><use xlink:href="#icon-facebook"></use></svg></a>
+        <a href="https://www.instagram.com/naturallyscents" aria-label="Instagram"><svg aria-hidden="true" focusable="false" width="24" height="24"><use xlink:href="#icon-instagram"></use></svg></a>
+      </div>
+    </div>
+    <p>&copy; 2024 Naturally Scents. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Fade‑in animation for sections
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.1});
+    fadeElements.forEach(el => observer.observe(el));
+
+    // Simple accordion for FAQ
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        const answer = document.getElementById(btn.getAttribute('aria-controls'));
+        answer.style.display = expanded ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>
