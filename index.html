@@ -3,73 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore and purchase premium Mandelbrot prints. Interactive zoom previews, custom dimensions, and museum‑quality materials for math enthusiasts and art collectors.">
-    <title>Infinite Fractals – High‑Resolution Mandelbrot Prints | Neutriunium</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Handmade Haven – Sustainable Handcrafted Furniture</title>
+    <meta name="description" content="Premium sustainable e‑commerce destination for handcrafted furniture. Authentic, eco‑friendly, and expertly made.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --color-primary: #A0522D;      /* Brown */
+            --color-secondary: #808080;    /* Grey */
+            --color-bg: #F5F5DC;           /* Beige */
+            --color-accent-bg: #F0E68C;    /* Sand Yellow */
+            --color-cta: #228B22;          /* Forest Green */
+            --color-cta-hover: #1A6B1A;
+            --color-link: #008080;         /* Teal */
+            --color-white: #ffffff;
+            --color-black: #333333;
+
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Playfair Display', serif;
+            --font-ui: 'Montserrat', sans-serif;
+
+            /* Spacing & Rhythm */
+            --space-base: 24px;
+            --space-xs: 8px;
+            --space-sm: 12px;
+            --space-md: 24px;
+            --space-lg: 36px;
+            --space-xl: 48px;
+
+            /* Radii & Shadows */
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.15);
+            --shadow-focus: 0 0 0 2px var(--color-link);
+
+            /* Transitions */
+            --transition-fast: 200ms ease-out;
+            --transition-medium: 300ms ease-out;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--color-black);
+            background: var(--color-bg);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-family: var(--font-heading);
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.5rem; /* 40px approx on mobile, will scale */
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 0 0 var(--space-base) 0;
+        }
+
+        a {
+            color: var(--color-link);
+            text-decoration: none;
+        }
+
+        a:hover, a:focus {
+            text-decoration: underline;
+        }
+
+        button, .btn {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            border: none;
+            border-radius: var(--radius-md);
+            transition: background var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .btn-primary {
+            background: var(--color-cta);
+            color: var(--color-white);
+            padding: var(--space-sm) var(--space-md);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--color-cta-hover);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        header {
+            background: var(--color-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) 0;
+        }
+
+        .nav__logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .nav__list {
+            list-style: none;
+            display: flex;
+            gap: var(--space-md);
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav__link {
+            font-family: var(--font-ui);
+            font-weight: 500;
+            color: var(--color-secondary);
+            padding: var(--space-xs) var(--space-sm);
+        }
+
+        .nav__link:hover,
+        .nav__link:focus {
+            color: var(--color-primary);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            color: var(--color-white);
+            text-align: left;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: url('https://images.unsplash.com/photo-1582719478250-1c0a6c8e6a0a?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .hero__content {
+            position: relative;
+            max-width: 600px;
+            margin-left: var(--space-md);
+        }
+
+        .hero h1 {
+            font-size: clamp(1.75rem, 5vw, 3rem);
+            margin-bottom: var(--space-sm);
+        }
+
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: var(--space-md);
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            gap: var(--space-lg);
+            padding: var(--space-xl) var(--space-sm);
+        }
+
+        .feature {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--transition-medium), transform var(--transition-medium);
+        }
+
+        .feature__icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: var(--space-sm);
+            fill: var(--color-cta);
+        }
+
+        .feature h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--color-accent-bg);
+            text-align: center;
+            padding: var(--space-xl) var(--space-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+
+        .cta h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: var(--space-sm);
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto var(--space-md);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: var(--space-xl) var(--space-sm);
+        }
+
+        .footer__grid {
+            display: grid;
+            gap: var(--space-lg);
+        }
+
+        .footer a {
+            color: var(--color-white);
+        }
+
+        .footer a:hover,
+        .footer a:focus {
+            text-decoration: underline;
+        }
+
+        .footer__logo {
+            font-size: 1.5rem;
+            font-family: var(--font-heading);
+        }
+
+        /* Responsive Grid */
+        @media (min-width: 600px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .features {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer__grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Reveal Animation */
+        .reveal-visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
 </head>
 <body>
-    <header class="container flex">
-        <div class="logo">Neutriunium</div>
-        <nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
-            <ul class="flex">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#account">Account</a></li>
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+    <header>
+        <nav class="nav container" aria-label="Primary navigation">
+            <a href="index.html" class="nav__logo">Handmade Haven</a>
+            <ul class="nav__list">
+                <li><a href="index.html" class="nav__link">Home</a></li>
+                <li><a href="about.html" class="nav__link">About</a></li>
+                <li><a href="contact.html" class="nav__link">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <!-- Hero Section -->
-        <section id="hero" class="hero container">
-            <h1>Enter the Infinite</h1>
-            <p>Our interactive background renders thousands of iterations on the fly, showcasing the boundless beauty of fractal geometry.</p>
-            <a href="#gallery" class="cta-btn btn">Explore the Gallery</a>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about container grid">
-            <h2>The Mathematics Behind the Art</h2>
-            <p>Discovered by Benoît Mandelbrot in the 1970s, the set visualizes the behavior of complex numbers under iteration.</p>
-            <p>Each point represents a unique coordinate (c) where the sequence either escapes to infinity or remains bounded, creating endlessly intricate boundaries.</p>
-            <p>Our prints translate these equations into tangible, high‑resolution artworks that celebrate both precision and aesthetic wonder.</p>
+        <section class="hero" aria-label="Hero">
+            <div class="hero__content">
+                <h1>Handcrafted Furniture for Sustainable Living</h1>
+                <p>Premium, trustworthy sustainable e‑commerce offering custom, handcrafted pieces that honor the planet.</p>
+                <button class="btn-primary">Get Your Custom Plan</button>
+            </div>
         </section>
 
         <!-- Features Section -->
-        <section id="features" class="features container grid">
-            <h2>Materials Engineered for Display</h2>
-            <p>Acrylic Glass – Crystal‑clear, UV‑protected, and ideal for modern interiors.</p>
-            <p>Brushed Aluminum – Metallic sheen with a matte feel, perfect for industrial décor.</p>
-            <p>Museum‑Quality Canvas – Hand‑stretched, archival‑grade, with a subtle texture that enhances depth.</p>
-            <a href="#" class="btn">View All Mediums</a>
+        <section class="features container" aria-label="Key Features">
+            <div class="feature" data-reveal>
+                <svg class="feature__icon" viewBox="0 0 64 64" aria-hidden="true">
+                    <path d="M32 2C15.4 2 2 15.4 2 32s13.4 30 30 30 30-13.4 30-30S48.6 2 32 2zm0 56C18.8 58 8 47.2 8 34S18.8 10 32 10s24 10.8 24 24-10.8 24-24 24z"/>
+                    <path d="M32 16a2 2 0 0 0-2 2v12h-8a2 2 0 0 0 0 4h10a2 2 0 0 0 2-2V18a2 2 0 0 0-2-2z"/>
+                </svg>
+                <h3>Eco‑Friendly Materials</h3>
+                <p>Crafted from reclaimed wood and sustainable resources.</p>
+            </div>
+            <div class="feature" data-reveal>
+                <svg class="feature__icon" viewBox="0 0 64 64" aria-hidden="true">
+                    <path d="M12 12h40v40H12z" fill="none" stroke="currentColor" stroke-width="4"/>
+                    <path d="M22 22h20v20H22z" fill="currentColor"/>
+                </svg>
+                <h3>Artisan Crafted</h3>
+                <p>Each piece is hand‑shaped by skilled artisans.</p>
+            </div>
+            <div class="feature" data-reveal>
+                <svg class="feature__icon" viewBox="0 0 64 64" aria-hidden="true">
+                    <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="4"/>
+                    <path d="M32 12v20l12 6" fill="none" stroke="currentColor" stroke-width="4"/>
+                </svg>
+                <h3>Lifetime Guarantee</h3>
+                <p>Built to last with a 10‑year warranty.</p>
+            </div>
         </section>
 
         <!-- Call to Action Section -->
-        <section id="cta" class="cta container">
-            <h2>Ready to Own a Piece of Infinity?</h2>
-            <p>Customize dimensions, select material, and preview every detail before you buy.</p>
-            <p>Every print is produced on demand from our proprietary rendering engine, guaranteeing fidelity at any magnification.</p>
-            <a href="#" class="btn">Start Your Custom Order</a>
+        <section class="cta" aria-label="Join Our Community">
+            <h2>Ready to Transform Your Space?</h2>
+            <p>Join the Handmade Haven community and discover furniture that tells a story while caring for the planet.</p>
+            <button class="btn-primary">Shop Our Collections</button>
         </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>© 2026 Neutriunium</p>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter">🐦</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="LinkedIn">💼</a>
-                <a href="#" aria-label="GitHub">🐙</a>
+        <div class="container footer__grid">
+            <div>
+                <div class="footer__logo">Handmade Haven</div>
+                <p>© 2026 Handmade Haven. All rights reserved.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">Our Story</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                    <li><a href="#" aria-label="Pinterest">Pinterest</a></li>
+                    <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>Email: <a href="mailto:info@handmadehaven.com">info@handmadehaven.com</a></p>
+                <p>Phone: <a href="tel:+1234567890">+1 (234) 567‑890</a></p>
             </div>
         </div>
     </footer>
-    <script src="script.js"></script>
+
+    <script>
+        // Reduce motion preference
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        // Intersection Observer for reveal animations
+        if (!prefersReduced.matches) {
+            const revealElements = document.querySelectorAll('[data-reveal]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => observer.observe(el));
+        } else {
+            // If reduced motion, make elements visible immediately
+            document.querySelectorAll('[data-reveal]').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        }
+
+        // Simple focus outline handling (already via CSS)
+    </script>
 </body>
 </html>

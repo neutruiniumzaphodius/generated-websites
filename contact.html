@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact – Handmade Haven</title>
+    <meta name="description" content="Get in touch with Handmade Haven. We’re here to answer your questions about sustainable handcrafted furniture, orders, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors */
+            --color-primary: #A0522D;      /* Brown */
+            --color-secondary: #808080;    /* Grey */
+            --color-bg: #F5F5DC;           /* Beige */
+            --color-accent-bg: #F0E68C;    /* Sand Yellow */
+            --color-cta: #228B22;          /* Forest Green */
+            --color-cta-hover: #1A6B1A;
+            --color-link: #008080;         /* Teal */
+            --color-white: #ffffff;
+            --color-black: #333333;
+
+            /* Typography */
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Playfair Display', serif;
+            --font-ui: 'Montserrat', sans-serif;
+
+            /* Spacing & Rhythm */
+            --space-base: 24px;
+            --space-xs: 8px;
+            --space-sm: 12px;
+            --space-md: 24px;
+            --space-lg: 36px;
+            --space-xl: 48px;
+
+            /* Radii & Shadows */
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.15);
+            --shadow-focus: 0 0 0 2px var(--color-link);
+
+            /* Transitions */
+            --transition-fast: 200ms ease-out;
+            --transition-medium: 300ms ease-out;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--color-black);
+            background: var(--color-bg);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-family: var(--font-heading);
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        p { margin: 0 0 var(--space-base) 0; }
+
+        a {
+            color: var(--color-link);
+            text-decoration: none;
+        }
+        a:hover, a:focus { text-decoration: underline; }
+
+        button, .btn {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            border: none;
+            border-radius: var(--radius-md);
+            transition: background var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .btn-primary {
+            background: var(--color-cta);
+            color: var(--color-white);
+            padding: var(--space-sm) var(--space-md);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--color-cta-hover);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        header {
+            background: var(--color-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) 0;
+        }
+        .nav__logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+        .nav__list {
+            list-style: none;
+            display: flex;
+            gap: var(--space-md);
+            margin: 0;
+            padding: 0;
+        }
+        .nav__link {
+            font-family: var(--font-ui);
+            font-weight: 500;
+            color: var(--color-secondary);
+            padding: var(--space-xs) var(--space-sm);
+        }
+        .nav__link:hover,
+        .nav__link:focus {
+            color: var(--color-primary);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+            padding: var(--space-xl) 0;
+        }
+
+        /* Hero */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1505692794405-6f0c5e57c7e5?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            color: var(--color-white);
+            text-align: left;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .hero::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            background:rgba(0,0,0,0.3);
+        }
+        .hero__content {
+            position:relative;
+            max-width:600px;
+            margin-left:var(--space-md);
+        }
+        .hero h1 {
+            font-size: clamp(1.75rem,5vw,3rem);
+            margin-bottom: var(--space-sm);
+        }
+        .hero p {
+            font-size:1rem;
+            margin-bottom: var(--space-md);
+        }
+
+        /* Contact Form */
+        .contact-section {
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .contact-section h2 {
+            margin-bottom: var(--space-md);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--space-sm);
+            border: 1px solid #CCCCCC;
+            border-radius: var(--radius-md);
+            font-family: var(--font-ui);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: 2px solid var(--color-link);
+            outline-offset: 2px;
+        }
+        .error {
+            color: #B00020;
+            font-size: 0.875rem;
+            margin-top: var(--space-xs);
+            display: none;
+        }
+        .error.active { display: block; }
+
+        /* FAQ Accordion */
+        .faq-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--space-lg);
+        }
+        .faq-section h2 { text-align: center; margin-bottom: var(--space-lg); }
+        .faq-item {
+            border-bottom: 1px solid #DDD;
+        }
+        .faq-question {
+            background: var(--color-accent-bg);
+            padding: var(--space-sm) var(--space-md);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question:hover,
+        .faq-question:focus {
+            background: #e6e0b8;
+        }
+        .faq-question h3 {
+            margin:0;
+            font-size:1.125rem;
+        }
+        .faq-answer {
+            max-height:0;
+            overflow:hidden;
+            transition: max-height var(--transition-medium);
+            background: var(--color-white);
+            padding: 0 var(--space-md);
+        }
+        .faq-answer p {
+            margin: var(--space-sm) 0;
+        }
+        .faq-item[open] .faq-answer {
+            max-height: 500px; /* enough for content */
+            padding: var(--space-sm) var(--space-md);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: var(--space-lg) 0;
+        }
+        .footer__grid {
+            display: grid;
+            gap: var(--space-lg);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        .footer__col a { color: var(--color-white); }
+        .footer__col h4 { margin-bottom: var(--space-sm); }
+
+        /* Scroll to top */
+        .to-top {
+            position: fixed;
+            bottom: var(--space-lg);
+            right: var(--space-md);
+            background: var(--color-cta);
+            color: var(--color-white);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity:0;
+            visibility:hidden;
+            transition: opacity var(--transition-fast);
+        }
+        .to-top.show {
+            opacity:1;
+            visibility:visible;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .nav__list { display:none; }
+            .nav__toggle {
+                background:none;
+                border:none;
+                font-size:1.5rem;
+                color:var(--color-secondary);
+            }
+            .nav__list--open { 
+                position:absolute;
+                top:100%;
+                right:0;
+                background:var(--color-white);
+                flex-direction:column;
+                padding: var(--space-sm);
+                box-shadow: var(--shadow-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="index.html" class="nav__logo">Handmade Haven</a>
+                <button class="nav__toggle sr-only" aria-controls="primary-menu" aria-expanded="false">Menu</button>
+                <ul class="nav__list" id="primary-menu">
+                    <li><a href="index.html" class="nav__link">Home</a></li>
+                    <li><a href="about.html" class="nav__link">About</a></li>
+                    <li><a href="contact.html" class="nav__link" aria-current="page">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero__content">
+                <h1>We’d love to hear from you</h1>
+                <p>Whether you have a question about a product, an order, or our sustainability practices, our team is ready to help.</p>
+            </div>
+        </section>
+
+        <section class="contact-section" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contact Us</h2>
+            <form id="contactForm" novalidate>
+                <div class="form-group">
+                    <label for="name">Full Name <span aria-hidden="true">*</span></label>
+                    <input type="text" id="name" name="name" required aria-required="true" aria-describedby="error-name">
+                    <div id="error-name" class="error" role="alert">Please enter your name.</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address <span aria-hidden="true">*</span></label>
+                    <input type="email" id="email" name="email" required aria-required="true" aria-describedby="error-email">
+                    <div id="error-email" class="error" role="alert">Please enter a valid email.</div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone (optional)</label>
+                    <input type="tel" id="phone" name="phone" aria-describedby="error-phone">
+                    <div id="error-phone" class="error" role="alert">Please enter a valid phone number.</div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message <span aria-hidden="true">*</span></label>
+                    <textarea id="message" name="message" rows="5" required aria-required="true" aria-describedby="error-message"></textarea>
+                    <div id="error-message" class="error" role="alert">Please write a message.</div>
+                </div>
+                <button type="submit" class="btn-primary">Send Message</button>
+                <div id="form-success" class="sr-only" role="status">Your message has been sent.</div>
+            </form>
+        </section>
+
+        <section class="faq-section" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <div class="faq-item" id="faq1">
+                <button class="faq-question" aria-expanded="false" aria-controls="answer1">
+                    <h3>How long does shipping take?</h3>
+                    <span aria-hidden="true">▾</span>
+                </button>
+                <div class="faq-answer" id="answer1" role="region" aria-labelledby="faq1">
+                    <p>Standard shipping within the continental U.S. typically takes 5‑7 business days. Expedited options are available at checkout.</p>
+                </div>
+            </div>
+            <div class="faq-item" id="faq2">
+                <button class="faq-question" aria-expanded="false" aria-controls="answer2">
+                    <h3>Can I request a custom finish?</h3>
+                    <span aria-hidden="true">▾</span>
+                </button>
+                <div class="faq-answer" id="answer2" role="region" aria-labelledby="faq2">
+                    <p>Absolutely! Our artisans can work with you to select stains, paints, or natural oils that match your interior design. Contact us with your specifications.</p>
+                </div>
+            </div>
+            <div class="faq-item" id="faq3">
+                <button class="faq-question" aria-expanded="false" aria-controls="answer3">
+                    <h3>What is your return policy?</h3>
+                    <span aria-hidden="true">▾</span>
+                </button>
+                <div class="faq-answer" id="answer3" role="region" aria-labelledby="faq3">
+                    <p>We offer a 30‑day return window for unused items in their original condition. Custom pieces are non‑refundable but we’ll work with you on any issues.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer__grid">
+            <div class="footer__col">
+                <h4 class="nav__logo">Handmade Haven</h4>
+                <p>Premium sustainable furniture crafted with love and respect for the planet.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Quick Links</h4>
+                <ul style="list-style:none; padding:0;">
+                    <li><a href="index.html" class="nav__link">Home</a></li>
+                    <li><a href="about.html" class="nav__link">About</a></li>
+                    <li><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Contact</h4>
+                <p>email: <a href="mailto:info@handmadehaven.com">info@handmadehaven.com</a></p>
+                <p>phone: <a href="tel:+15551234567">+1 (555) 123‑4567</a></p>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:var(--space-md); font-size:0.875rem;">© 2024 Handmade Haven. All rights reserved.</p>
+    </footer>
+
+    <button class="to-top" aria-label="Scroll to top" id="toTopBtn">↑</button>
+
+    <!-- Tidio Live Chat (placeholder) -->
+    <script src="//code.tidio.co/your_tidio_key.js" async></script>
+
+    <script>
+        // Form validation
+        const form = document.getElementById('contactForm');
+        const nameInput = form.elements['name'];
+        const emailInput = form.elements['email'];
+        const phoneInput = form.elements['phone'];
+        const messageInput = form.elements['message'];
+        const errors = {
+            name: document.getElementById('error-name'),
+            email: document.getElementById('error-email'),
+            phone: document.getElementById('error-phone'),
+            message: document.getElementById('error-message')
+        };
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        function validatePhone(phone) {
+            if (!phone) return true;
+            const re = /^\+?[0-9\s\-().]{7,}$/;
+            return re.test(phone);
+        }
+
+        form.addEventListener('submit', function(e) {
+            let valid = true;
+
+            if (nameInput.value.trim() === '') {
+                errors.name.classList.add('active');
+                valid = false;
+            } else {
+                errors.name.classList.remove('active');
+            }
+
+            if (!validateEmail(emailInput.value.trim())) {
+                errors.email.classList.add('active');
+                valid = false;
+            } else {
+                errors.email.classList.remove('active');
+            }
+
+            if (!validatePhone(phoneInput.value.trim())) {
+                errors.phone.classList.add('active');
+                valid = false;
+            } else {
+                errors.phone.classList.remove('active');
+            }
+
+            if (messageInput.value.trim() === '') {
+                errors.message.classList.add('active');
+                valid = false;
+            } else {
+                errors.message.classList.remove('active');
+            }
+
+            if (!valid) {
+                e.preventDefault();
+                return;
+            }
+
+            // Simulated success (replace with real submission logic)
+            e.preventDefault();
+            document.getElementById('form-success').classList.remove('sr-only');
+            form.reset();
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isOpen = item.getAttribute('open') === 'true';
+                if (isOpen) {
+                    item.removeAttribute('open');
+                    button.setAttribute('aria-expanded', 'false');
+                } else {
+                    item.setAttribute('open', 'true');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+            button.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                }
+            });
+        });
+
+        // Scroll to top button
+        const toTopBtn = document.getElementById('toTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                toTopBtn.classList.add('show');
+            } else {
+                toTopBtn.classList.remove('show');
+            }
+        });
+        toTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Simple reveal on scroll for sections
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.contact-section, .faq-section').forEach(el => observer.observe(el));
+        } else {
+            document.querySelectorAll('.contact-section, .faq-section').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
