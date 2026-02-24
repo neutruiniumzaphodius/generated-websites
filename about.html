@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Us – Sudd’s Paradise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#90EE90;
+      --color-secondary:#F0F8FF;
+      --color-accent:#FFD700;
+      --color-bg-gradient:linear-gradient(135deg,#F0F8FF 0%,#FFFFFF 100%);
+      --color-text:#2F2F2F;
+      --color-earth:#A58F7B;
+      --color-ivory:#F9F7F3;
+      --radius:4px;
+      --transition:0.3s ease-out;
+      --max-width:1440px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Montserrat',sans-serif;
+      color:var(--color-text);
+      background:var(--color-bg-gradient);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    h1,h2,h3{font-family:'Playfair Display',serif;margin-bottom:0.5em;}
+    h1{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+    h2{font-size:clamp(28px,5vw,36px);font-weight:600;letter-spacing:0.4px;line-height:1.3;}
+    h3{font-size:clamp(22px,4vw,28px);font-weight:500;letter-spacing:0.3px;line-height:1.4;}
+    p{margin-bottom:1rem;}
+    .container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:-1000;}
+    .skip-link:focus{left:0;top:0;width:auto;height:auto;padding:8px;background:#fff;color:#000;z-index:1000;}
+    header{position:sticky;top:0;z-index:100;background:transparent;transition:var(--transition);}
+    header.scrolled{background:#fff;border-bottom:2px solid var(--color-accent);}
+    nav{display:flex;justify-content:center;gap:24px;padding:16px 0;}
+    nav a{font-weight:600;padding:8px 12px;border-radius:var(--radius);}
+    nav a.active,nav a:hover{color:var(--color-accent);}
+    nav a:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+    @media(min-width:1024px){nav{justify-content:flex-end;padding:0 24px;}}
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:70vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--color-text);
+      overflow:hidden;
+    }
+    .hero img{
+      position:absolute;
+      inset:0;
+      object-fit:cover;
+      z-index:-2;
+    }
+    .hero .content{
+      position:relative;
+      max-width:800px;
+      padding:24px;
+      background:rgba(255,255,255,0.85);
+      border-radius:var(--radius);
+    }
+    .btn-primary{
+      display:inline-block;
+      background:var(--color-accent);
+      color:#2F2F2F;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:transform 0.2s,var(--transition);
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+    }
+    .btn-primary:hover{transform:scale(1.04);box-shadow:0 0 8px rgba(255,215,0,0.6);}
+    .btn-primary:active{transform:scale(0.97);box-shadow:inset 0 0 8px rgba(0,0,0,0.2);}
+    /* Sections */
+    section{padding:80px 0;opacity:0;transform:translateY(30px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+    section.visible{opacity:1;transform:none;}
+    .mission{background:#fff;}
+    .mission .leaf{
+      width:80px;height:80px;float:right;margin-left:24px;
+      animation:float 4s infinite ease-in-out;
+    }
+    @keyframes float{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-10px);}
+    }
+    .two-col{display:flex;flex-direction:column;gap:24px;}
+    @media(min-width:768px){.two-col{flex-direction:row;}}
+    .two-col .text,.two-col .image{flex:1;}
+    .handcraft{
+      position:relative;
+      background:#fff;
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .handcraft video,.handcraft iframe{
+      width:100%;
+      height:auto;
+      aspect-ratio:16/9;
+      border-radius:var(--radius);
+    }
+    .handcraft .caption{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,0.85);
+      border-radius:var(--radius);
+      font-weight:600;
+      color:var(--color-accent);
+    }
+    .team-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:24px;
+    }
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      overflow:hidden;
+      transition:transform .2s,var(--transition);
+    }
+    .card img{width:100%;height:200px;object-fit:cover;}
+    .card .info{padding:16px;}
+    .card .info h3{margin:0 0 .5rem;}
+    .card .info p{margin:0;color:var(--color-accent);}
+    .card:hover{transform:translateY(-4px);}
+    .carousel{
+      display:flex;
+      overflow-x:auto;
+      gap:24px;
+      scroll-snap-type:x mandatory;
+      padding-bottom:12px;
+    }
+    .carousel::-webkit-scrollbar{display:none;}
+    .carousel .card{
+      flex:0 0 calc(33.333% - 16px);
+      scroll-snap-align:start;
+    }
+    .cta-banner{
+      background:var(--color-primary);
+      color:#2F2F2F;
+      padding:48px 0;
+      text-align:center;
+    }
+    .cta-banner h2{margin-bottom:1rem;}
+    footer{background:#fff;padding:24px 0;text-align:center;font-size:14px;}
+    @media(min-width:768px){
+      .hero .content{padding:48px;}
+      .carousel .card{flex:0 0 calc(33.333% - 16px);}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header id="site-header">
+    <nav aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="brand_story">
+    <img src="https://picsum.photos/seed/workshop/1600/900" alt="Sudd’s Paradise workshop interior with wooden worktables and natural light">
+    <div class="content container">
+      <h1>Our Story</h1>
+      <p>From a modest kitchen experiment to a thriving sustainable brand, Sudd’s Paradise has always been driven by a love for clean, ethical suds.</p>
+    </div>
+  </section>
+
+  <!-- Brand Story -->
+  <section class="mission" id="brand_story_section">
+    <div class="container">
+      <h2>From a Kitchen Table to a Global Community</h2>
+      <p>In 2015, founder <strong>Elena Marquez</strong> began experimenting with plant‑based oils in her tiny kitchen. Guided by the belief that luxury can be kind, she crafted small batches of vegan, cruelty‑free soaps that quickly won the hearts of friends and family.</p>
+      <p>When demand grew, Elena moved the process to a dedicated workshop, where she could embrace traditional techniques while innovating with modern, sustainable ingredients. Today, Sudd’s Paradise blends centuries‑old craftsmanship with cutting‑edge eco‑science, delivering a premium experience that never compromises the planet.</p>
+      <img src="https://picsum.photos/seed/leaficon/80/80" alt="Hand‑drawn leaf illustration" class="leaf" aria-hidden="true">
+    </div>
+  </section>
+
+  <!-- Sourcing Practices -->
+  <section class="sourcing" id="sourcing_practices">
+    <div class="container">
+      <h2>Sourcing Practices</h2>
+      <div class="two-col">
+        <div class="image">
+          <img src="https://picsum.photos/seed/ingredients/800/500" alt="Organic raw ingredients laid out on a wooden table">
+        </div>
+        <div class="text">
+          <p>All of our raw materials are harvested from regenerative farms that prioritize soil health, biodiversity, and fair‑trade wages. We work directly with growers in the Pacific Northwest, the Mediterranean, and South America, ensuring traceability from seed to suds.</p>
+          <ul>
+            <li>🍃 <strong>Organic Coconut Oil</strong> – sourced from small‑holder co‑ops in the Philippines.</li>
+            <li>🌾 <strong>Shea Butter</strong> – ethically procured from women‑owned cooperatives in Ghana.</li>
+            <li>🌿 <strong>Essential Oils</strong> – distilled from sustainably farmed lavender, rosemary, and citrus.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Handcraft Process -->
+  <section class="handcraft" id="handcraft_process">
+    <div class="container">
+      <h2>Handcraft Process</h2>
+      <div class="handcraft">
+        <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" title="Sudd’s Paradise Hand‑Made Soap Process" allowfullscreen></iframe>
+        <div class="caption">Every bar is poured, cut, and cured by hand – a true artisanal ritual.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Bios -->
+  <section class="team" id="team_bios">
+    <div class="container">
+      <h2>Meet the Team</h2>
+      <div class="team-grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/team1/400/300" alt="Elena Marquez – Founder & Creative Director">
+          <div class="info">
+            <h3>Elena Marquez</h3>
+            <p>Founder & Creative Director – Visionary behind every scent and sustainability pledge.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/team2/400/300" alt="Marco Alvarez – Head of Formulations">
+          <div class="info">
+            <h3>Marco Alvarez</h3>
+            <p>Head of Formulations – Crafts vegan, plant‑based formulas that pamper skin and conscience.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/team3/400/300" alt="Leah Kim – Sustainability Lead">
+          <div class="info">
+            <h3>Leah Kim</h3>
+            <p>Sustainability Lead – Ensures every step of production honors our planet.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/team4/400/300" alt="Ravi Patel – Production Manager">
+          <div class="info">
+            <h3>Ravi Patel</h3>
+            <p>Production Manager – Oversees daily operations and quality control.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facility Gallery -->
+  <section class="facility" id="facility_gallery">
+    <div class="container">
+      <h2>Our Facility</h2>
+      <div class="carousel" aria-label="Facility image carousel">
+        <div class="card"><img src="https://picsum.photos/seed/fac1/600/400" alt="Open‑air drying racks filled with fresh soap bars"></div>
+        <div class="card"><img src="https://picsum.photos/seed/fac2/600/400" alt="Mixing station with stainless‑steel vats"></div>
+        <div class="card"><img src="https://picsum.photos/seed/fac3/600/400" alt="Eco‑friendly packaging area"></div>
+        <div class="card"><img src="https://picsum.photos/seed/fac4/600/400" alt="Team members measuring raw ingredients"></div>
+        <div class="card"><img src="https://picsum.photos/seed/fac5/600/400" alt="Solar panels on the workshop roof"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Statement -->
+  <section class="cta-banner" id="values_statement">
+    <div class="container">
+      <h2>Our Core Values</h2>
+      <p>We believe luxury should be gentle on the skin, kind to the Earth, and crafted with integrity. Every bar of Sudd’s Paradise reflects this promise.</p>
+      <a href="index.html#contact" class="btn-primary">Join Our Journey</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Sudd’s Paradise – All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scroll‑reveal script -->
+  <script>
+    const sections = document.querySelectorAll('section');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < triggerBottom) {
+          section.classList.add('visible');
+        }
+      });
+    };
+    document.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', () => {
+      // make header change on scroll
+      const header = document.querySelector('header');
+      const onHeaderScroll = () => {
+        if (window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      };
+      document.addEventListener('scroll', onHeaderScroll);
+      // initial check
+      revealOnScroll();
+      onHeaderScroll();
+      // footer year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>

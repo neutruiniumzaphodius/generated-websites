@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us – Sudd’s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#90EE90;
+  --color-secondary:#F0F8FF;
+  --color-accent:#FFD700;
+  --color-bg-gradient:linear-gradient(135deg,#F0F8FF 0%,#FFFFFF 100%);
+  --color-text:#2F2F2F;
+  --color-earth:#A58F7B;
+  --color-ivory:#F9F7F3;
+  --radius:4px;
+  --transition:0.3s ease-out;
+  --max-width:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-gradient);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:'Playfair Display',serif;margin-bottom:0.5em;}
+h1{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+h2{font-size:clamp(28px,5vw,36px);font-weight:600;letter-spacing:0.4px;line-height:1.3;}
+h3{font-size:clamp(22px,4vw,28px);font-weight:500;letter-spacing:0.3px;line-height:1.4;}
+p{margin-bottom:1rem;}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+
+/* Skip link */
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:-1000;}
+.skip-link:focus{left:0;top:0;width:auto;height:auto;padding:8px;background:#fff;color:#000;z-index:1000;}
+
+/* Header / Navigation */
+header{position:sticky;top:0;z-index:100;background:transparent;transition:var(--transition);}
+header.scrolled{background:#fff;border-bottom:2px solid var(--color-accent);}
+nav{display:flex;justify-content:center;gap:24px;padding:16px 0;}
+nav a{font-weight:600;padding:8px 12px;border-radius:var(--radius);}
+nav a.active,nav a:hover{color:var(--color-accent);}
+nav a:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+
+/* Buttons */
+.btn-primary{
+  display:inline-block;
+  background:var(--color-accent);
+  color:#2F2F2F;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 0.2s,var(--transition);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 8px rgba(255,215,0,0.6);}
+.btn-primary:active{transform:scale(0.97);box-shadow:inset 0 0 8px rgba(0,0,0,0.2);}
+
+/* Sections */
+section{padding:80px 0;opacity:0;transform:translateY(30px);transition:opacity .6s var(--transition),transform .6s var(--transition);}
+section.visible{opacity:1;transform:none;}
+
+/* Contact Form */
+.contact-form{background:#fff;padding:48px;border-radius:var(--radius);box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:12px;
+  border:2px solid var(--color-earth);
+  border-radius:var(--radius);
+  margin-bottom:16px;
+  transition:border-color .2s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{
+  outline:none;
+  border-color:var(--color-accent);
+}
+.contact-form .shake{
+  animation:shake 0.4s ease-in-out;
+}
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  50%{transform:translateX(5px);}
+  75%{transform:translateX(-5px);}
+  100%{transform:translateX(0);}
+}
+
+/* Address & Email */
+.info-block{background:#fff;padding:32px;border-radius:var(--radius);box-shadow:0 2px 6px rgba(0,0,0,0.05);margin-bottom:48px;}
+.info-block svg{width:40px;height:40px;stroke:var(--color-primary);stroke-width:2;margin-bottom:12px;}
+
+/* Social Icons */
+.social-icons{display:flex;gap:16px;justify-content:center;margin-bottom:48px;}
+.social-icons a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;height:48px;
+  border:2px solid var(--color-accent);
+  border-radius:50%;
+  transition:background var(--transition),color var(--transition);
+}
+.social-icons a:hover{background:var(--color-accent);color:#2F2F2F;}
+
+/* Calendly */
+.calendly-wrapper{position:relative;padding-top:56.25%;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+.calendly-wrapper iframe{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  border:0;
+}
+
+/* Footer */
+footer{background:#fff;padding:24px 0;text-align:center;font-size:14px;}
+
+/* Media Queries */
+@media(min-width:768px){
+  .container{padding:0 24px;}
+}
+@media(min-width:1024px){
+  nav{justify-content:flex-end;padding:0 24px;}
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="site-header">
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="shop.html">Shop</a>
+    <a href="blog.html">Blog</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html" class="active" aria-current="page">Contact</a>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- Contact Form Section -->
+  <section class="contact_form visible">
+    <div class="container">
+      <h2>Get in Touch</h2>
+      <form class="contact-form" id="contactForm" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required aria-required="true" placeholder="Your name">
+        
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required aria-required="true" placeholder="you@example.com">
+        
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required aria-required="true" placeholder="Subject">
+        
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Your message"></textarea>
+        
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Address Block -->
+  <section class="address_block visible">
+    <div class="container">
+      <h2>Our Studio</h2>
+      <div class="info-block">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 4C20 4 12 12 12 24c0 12 20 36 20 36s20-24 20-36c0-12-8-20-20-20z"/>
+        </svg>
+        <p>123 Greenway Lane<br>Portland, OR 97201<br>USA</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Email Link -->
+  <section class="email_link visible">
+    <div class="container">
+      <h2>Write to Us</h2>
+      <p><a href="mailto:hello@suddsparadise.com" class="btn-primary">hello@suddsparadise.com</a></p>
+    </div>
+  </section>
+
+  <!-- Social Media Icons -->
+  <section class="social_media_icons visible">
+    <div class="container">
+      <h2>Follow Us</h2>
+      <div class="social-icons">
+        <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43 1s-1.7.86-2.84 1.14A4.49 4.49 0 0 0 16.5 0c-2.5 0-4.5 2.24-4.5 5 0 .39.04.77.12 1.14C8 5.91 4.24 4.13 1.67.93a5.04 5.04 0 0 0-.61 2.5c0 1.73.86 3.26 2.17 4.16a4.48 4.48 0 0 1-2-.55v.06c0 2.44 1.71 4.48 3.97 4.94a4.52 4.52 0 0 1-2 .08c.56 1.78 2.19 3.07 4.13 3.11A9.03 9.03 0 0 1 0 19.54a12.74 12.74 0 0 0 6.92 2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendly Widget -->
+  <section class="calendly_widget visible">
+    <div class="container">
+      <h2>Schedule a Consultation</h2>
+      <div class="calendly-wrapper">
+        <iframe src="https://calendly.com/suddsparadise/consultation?background_color=F0F8FF&primary_color=90EE90"
+                title="Calendly scheduling widget"
+                allowtransparency="true"
+                scrolling="no"></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; <span id="year"></span> Sudd’s Paradise. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+/* Header scroll effect */
+document.addEventListener('scroll', function () {
+  const header = document.querySelector('header');
+  if (window.scrollY > 50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+/* Section reveal on scroll */
+const sections = document.querySelectorAll('section');
+const reveal = () => {
+  sections.forEach(s => {
+    const top = s.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) s.classList.add('visible');
+  });
+};
+window.addEventListener('load', reveal);
+window.addEventListener('scroll', reveal);
+
+/* Form validation with shake */
+const form = document.getElementById('contactForm');
+form.addEventListener('submit', function (e) {
+  let valid = true;
+  [...form.elements].forEach(el => {
+    if (el.required && !el.value.trim()) {
+      valid = false;
+      el.classList.add('shake');
+      el.setAttribute('aria-invalid','true');
+    } else {
+      el.classList.remove('shake');
+      el.removeAttribute('aria-invalid');
+    }
+  });
+  if (!valid) {
+    e.preventDefault();
+  }
+});
+</script>
+</body>
+</html>

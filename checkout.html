@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Checkout – Sudd’s Paradise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-primary:#90EE90;
+  --color-secondary:#F0F8FF;
+  --color-accent:#FFD700;
+  --color-bg-gradient:linear-gradient(135deg,#F0F8FF 0%,#FFFFFF 100%);
+  --color-text:#2F2F2F;
+  --color-earth:#A58F7B;
+  --color-ivory:#F9F7F3;
+  --radius:4px;
+  --transition:0.3s ease-out;
+  --max-width:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-gradient);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:'Playfair Display',serif;margin-bottom:0.5em;}
+h1{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+h2{font-size:clamp(28px,5vw,36px);font-weight:600;letter-spacing:0.4px;line-height:1.3;}
+h3{font-size:clamp(22px,4vw,28px);font-weight:500;letter-spacing:0.3px;line-height:1.4;}
+p{margin-bottom:1rem;}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+/* Skip link */
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:-1000;}
+.skip-link:focus{left:0;top:0;width:auto;height:auto;padding:8px;background:#fff;color:#000;z-index:1000;}
+/* Navigation */
+header{position:sticky;top:0;z-index:100;background:transparent;transition:var(--transition);}
+header.scrolled{background:#fff;border-bottom:2px solid var(--color-accent);}
+nav{display:flex;justify-content:center;gap:24px;padding:16px 0;}
+nav a{font-weight:600;padding:8px 12px;border-radius:var(--radius);}
+nav a.active,nav a:hover{color:var(--color-accent);}
+nav a:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+/* Buttons */
+.btn-primary{
+  display:inline-block;
+  background:var(--color-accent);
+  color:#2F2F2F;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 0.2s,var(--transition);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 8px rgba(255,215,0,0.6);}
+.btn-primary:active{transform:scale(0.97);box-shadow:inset 0 0 8px rgba(0,0,0,0.2);}
+.btn-primary.full{width:100%;text-align:center;}
+/* Sections */
+section{padding:80px 0;opacity:0;transform:translateY(30px);transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);}
+section.visible{opacity:1;transform:none;}
+form{background:#fff;padding:24px;border-radius:var(--radius);box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+form .field{margin-bottom:1rem;}
+form label{
+  display:block;
+  margin-bottom:4px;
+  font-weight:600;
+}
+form input,
+form select{
+  width:100%;
+  padding:10px;
+  border:2px solid var(--color-earth);
+  border-radius:var(--radius);
+  transition:border-color .2s;
+}
+form input:focus,
+form select:focus{
+  outline:none;
+  border-color:var(--color-accent);
+}
+form input:invalid{
+  border-color:var(--color-accent);
+}
+.summary{
+  background:#fff;
+  padding:24px;
+  border-radius:var(--radius);
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+.summary h3{margin-bottom:.5rem;}
+.summary ul{list-style:none;padding:0;margin:0 0 1rem;}
+.summary li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eaeaea;}
+.summary .total{font-weight:600;color:var(--color-accent);}
+.payment-icons{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin:1rem 0;
+}
+.payment-icons img{
+  width:48px;
+  height:auto;
+}
+.trust-badges{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:1rem 0;
+}
+.trust-badges img{
+  width:48px;
+  height:auto;
+}
+footer{background:#fff;padding:24px 0;text-align:center;font-size:14px;}
+/* Media Queries */
+@media(min-width:768px){
+  nav{justify-content:flex-end;padding:0 24px;}
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="site-header">
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="shop.html">Shop</a>
+    <a href="blog.html">Blog</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <a href="checkout.html" class="active">Checkout</a>
+  </nav>
+</header>
+
+<main id="main-content" class="container">
+  <!-- Billing Information -->
+  <section id="billing_information" class="section visible">
+    <h2>Billing Information</h2>
+    <form id="billing-form" novalidate>
+      <div class="field">
+        <label for="billing-name">Full Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="billing-name" name="billing_name" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="billing-email">Email Address <span aria-hidden="true">*</span></label>
+        <input type="email" id="billing-email" name="billing_email" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="billing-phone">Phone Number</label>
+        <input type="tel" id="billing-phone" name="billing_phone">
+      </div>
+      <div class="field">
+        <label for="billing-address1">Address Line 1 <span aria-hidden="true">*</span></label>
+        <input type="text" id="billing-address1" name="billing_address1" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="billing-address2">Address Line 2</label>
+        <input type="text" id="billing-address2" name="billing_address2">
+      </div>
+      <div class="field">
+        <label for="billing-city">City <span aria-hidden="true">*</span></label>
+        <input type="text" id="billing-city" name="billing_city" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="billing-zip">ZIP / Postal Code <span aria-hidden="true">*</span></label>
+        <input type="text" id="billing-zip" name="billing_zip" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="billing-country">Country <span aria-hidden="true">*</span></label>
+        <select id="billing-country" name="billing_country" required aria-required="true">
+          <option value="">Select country</option>
+          <option>United States</option>
+          <option>Canada</option>
+          <option>United Kingdom</option>
+          <option>Australia</option>
+        </select>
+      </div>
+    </form>
+  </section>
+
+  <!-- Shipping Information -->
+  <section id="shipping_information" class="section visible">
+    <h2>Shipping Information</h2>
+    <form id="shipping-form" novalidate>
+      <div class="field">
+        <label for="shipping-name">Full Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="shipping-name" name="shipping_name" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="shipping-address1">Address Line 1 <span aria-hidden="true">*</span></label>
+        <input type="text" id="shipping-address1" name="shipping_address1" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="shipping-address2">Address Line 2</label>
+        <input type="text" id="shipping-address2" name="shipping_address2">
+      </div>
+      <div class="field">
+        <label for="shipping-city">City <span aria-hidden="true">*</span></label>
+        <input type="text" id="shipping-city" name="shipping_city" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="shipping-zip">ZIP / Postal Code <span aria-hidden="true">*</span></label>
+        <input type="text" id="shipping-zip" name="shipping_zip" required aria-required="true">
+      </div>
+      <div class="field">
+        <label for="shipping-country">Country <span aria-hidden="true">*</span></label>
+        <select id="shipping-country" name="shipping_country" required aria-required="true">
+          <option value="">Select country</option>
+          <option>United States</option>
+          <option>Canada</option>
+          <option>United Kingdom</option>
+          <option>Australia</option>
+        </select>
+      </div>
+    </form>
+  </section>
+
+  <!-- Order Summary -->
+  <section id="order_summary" class="section visible">
+    <h2>Order Summary</h2>
+    <div class="summary">
+      <h3>Items in your cart</h3>
+      <ul>
+        <li>
+          <span>Lavender Serenity Soap – Qty: 2</span>
+          <span>$24.00</span>
+        </li>
+        <li>
+          <span>Mint Refresh Body Wash – Qty: 1</span>
+          <span>$15.00</span>
+        </li>
+      </ul>
+      <div class="total">
+        <span>Subtotal</span>
+        <span>$39.00</span>
+      </div>
+      <div class="total">
+        <span>Shipping</span>
+        <span>$5.00</span>
+      </div>
+      <div class="total">
+        <span>Tax</span>
+        <span>$3.45</span>
+      </div>
+      <hr>
+      <div class="total">
+        <span>Total</span>
+        <span>$47.45</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment Gateways -->
+  <section id="payment_gateways" class="section visible">
+    <h2>Payment &amp; Security</h2>
+    <div class="payment-icons">
+      <img src="https://picsum.photos/seed/visa/80/50" alt="Visa">
+      <img src="https://picsum.photos/seed/mastercard/80/50" alt="Mastercard">
+      <img src="https://picsum.photos/seed/amex/80/50" alt="American Express">
+      <img src="https://picsum.photos/seed/paypal/80/50" alt="PayPal">
+    </div>
+    <div class="trust-badges">
+      <img src="https://picsum.photos/seed/secure/48/48" alt="Secure Checkout">
+      <img src="https://picsum.photos/seed/ssl/48/48" alt="SSL Encrypted">
+    </div>
+    <button id="purchase-btn" class="btn-primary">Complete Purchase</button>
+  </section>
+
+  <!-- Order Confirmation (hidden, shown after click) -->
+  <section id="order_confirmation" class="section" aria-live="polite" hidden>
+    <h2>Thank you for your order!</h2>
+    <p>Your order has been placed successfully. A confirmation email has been sent to you.</p>
+    <p><strong>Order Number:</strong> #123456</p>
+    <a href="shop.html" class="btn-primary">Continue Shopping</a>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Sudd’s Paradise. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Add visible class to sections on load (fallback for scroll‑trigger)
+  document.querySelectorAll('section').forEach(s=>s.classList.add('visible'));
+
+  // Simple mock submit handler to show confirmation
+  const purchaseBtn = document.getElementById('purchase-btn');
+  purchaseBtn.addEventListener('click', e => {
+    e.preventDefault();
+    purchaseBtn.disabled = true;
+    purchaseBtn.textContent = 'Processing...';
+    setTimeout(() => {
+      document.getElementById('order_confirmation').removeAttribute('hidden');
+      document.getElementById('order_confirmation').classList.add('visible');
+      purchaseBtn.style.display = 'none';
+    }, 1200);
+  });
+
+  // Header scroll effect (optional)
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudd’s Paradise – Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --color-primary:#90EE90;
+      --color-secondary:#F0F8FF;
+      --color-accent:#FFD700;
+      --color-bg-gradient:linear-gradient(135deg,#F0F8FF 0%,#FFFFFF 100%);
+      --color-text:#2F2F2F;
+      --color-earth:#A58F7B;
+      --color-ivory:#F9F7F3;
+      --radius:4px;
+      --transition:0.3s ease-out;
+      --max-width:1440px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Montserrat',sans-serif;
+      color:var(--color-text);
+      background:var(--color-bg-gradient);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    h1,h2,h3{font-family:'Playfair Display',serif;margin-bottom:0.5em;}
+    h1{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+    h2{font-size:clamp(28px,5vw,36px);font-weight:600;letter-spacing:0.4px;line-height:1.3;}
+    h3{font-size:clamp(22px,4vw,28px);font-weight:500;letter-spacing:0.3px;line-height:1.4;}
+    p{margin-bottom:1rem;}
+    .container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:-1000;}
+    .skip-link:focus{left:0;top:0;width:auto;height:auto;padding:8px;background:#fff;color:#000;z-index:1000;}
+    header{position:sticky;top:0;z-index:100;background:transparent;transition:var(--transition);}
+    header.scrolled{background:#fff;border-bottom:2px solid var(--color-accent);}
+    nav{display:flex;justify-content:center;gap:24px;padding:16px 0;}
+    nav a{font-weight:600;padding:8px 12px;border-radius:var(--radius);}
+    nav a.active,nav a:hover{color:var(--color-accent);}
+    nav a:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+    .btn-primary{
+      display:inline-block;
+      background:var(--color-accent);
+      color:#2F2F2F;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:600;
+      transition:transform 0.2s,var(--transition);
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+    }
+    .btn-primary:hover{transform:scale(1.04);box-shadow:0 0 8px rgba(255,215,0,0.6);}
+    .btn-primary:active{transform:scale(0.97);box-shadow:inset 0 0 8px rgba(0,0,0,0.2);}
+    /* Layout */
+    .shop-main{display:flex;gap:24px;margin-top:80px;}
+    .filters{
+      flex:0 0 260px;
+      background:#fff;
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      max-height:calc(100vh - 120px);
+      overflow-y:auto;
+    }
+    .filters h3{margin-bottom:1rem;}
+    .filters fieldset{border:none;margin-bottom:1.5rem;}
+    .filters label{display:flex;align-items:center;gap:8px;cursor:pointer;}
+    .filters input[type=checkbox]{width:16px;height:16px;}
+    .search-bar{margin-bottom:32px;}
+    .search-bar input{
+      width:100%;
+      padding:12px;
+      border:2px solid var(--color-earth);
+      border-radius:var(--radius);
+      transition:border-color .2s;
+    }
+    .search-bar input:focus{outline:none;border-color:var(--color-accent);}
+    .search-bar button{
+      background:var(--color-accent);
+      color:#2F2F2F;
+      padding:12px 24px;
+      border:none;
+      border-radius:var(--radius);
+      font-weight:600;
+      cursor:pointer;
+      transition:transform .2s;
+      margin-top:8px;
+    }
+    .search-bar button:hover{transform:scale(1.04);}
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:24px;
+      flex:1;
+    }
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      overflow:hidden;
+      position:relative;
+      transition:transform 0.2s,var(--transition);
+    }
+    .card img{width:100%;height:250px;object-fit:cover;}
+    .card .info{padding:16px;}
+    .card .info h3{margin:0 0 .5rem;font-size:1.1rem;}
+    .card .info p.price{margin:0;color:var(--color-accent);font-weight:600;}
+    .card .quick-view{
+      position:absolute;
+      inset:0;
+      background:rgba(255,255,255,0.6);
+      opacity:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:opacity var(--transition);
+    }
+    .card:hover{transform:translateY(-4px);}
+    .card:hover .quick-view{opacity:1;}
+    .card .quick-view button{
+      background:var(--color-accent);
+      color:#2F2F2F;
+      border:none;
+      padding:8px 16px;
+      border-radius:var(--radius);
+      font-weight:600;
+      cursor:pointer;
+      transition:transform var(--transition);
+    }
+    .card .quick-view button:hover{transform:scale(1.04);}
+    /* Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:200;
+    }
+    .modal.active{display:flex;}
+    .modal .modal-content{
+      background:#fff;
+      border-radius:var(--radius);
+      max-width:600px;
+      width:90%;
+      max-height:90vh;
+      overflow:auto;
+      padding:24px;
+      position:relative;
+      animation:slideUp 0.3s var(--transition);
+    }
+    @keyframes slideUp{
+      from{transform:translateY(30px);opacity:0;}
+      to{transform:none;opacity:1;}
+    }
+    .modal .close{
+      position:absolute;
+      top:12px;
+      right:12px;
+      background:var(--color-accent);
+      color:#2F2F2F;
+      border:none;
+      border-radius:50%;
+      width:32px;
+      height:32px;
+      font-size:1.2rem;
+      cursor:pointer;
+    }
+    .modal .close:focus{outline:2px solid var(--color-accent);}
+    /* Footer */
+    footer{background:#fff;padding:24px 0;text-align:center;font-size:14px;}
+    /* Navigation */
+    header{transition:var(--transition);}
+    header.scrolled{background:#fff;border-bottom:2px solid var(--color-accent);}
+    nav{display:flex;justify-content:center;gap:24px;padding:16px 0;}
+    nav a{font-weight:600;padding:8px 12px;border-radius:var(--radius);}
+    nav a.active,nav a:hover{color:var(--color-accent);}
+    nav a:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+    @media(min-width:768px){
+      .shop-main{align-items:flex-start;}
+    }
+    @media(min-width:1024px){
+      nav{justify-content:flex-end;padding:0 24px;}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header id="site-header">
+    <nav aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="container">
+    <!-- Search Bar -->
+    <section id="search_bar" class="visible">
+      <h2>Find Your Perfect Suds</h2>
+      <div class="search-bar">
+        <label for="shop-search" class="visually-hidden">Search products</label>
+        <input type="search" id="shop-search" placeholder="Search products…" aria-label="Search products">
+        <button type="button" id="search-btn" class="btn-primary">Search</button>
+      </div>
+    </section>
+
+    <!-- Shop Content -->
+    <section id="shop_section" class="visible" style="padding-top:0;">
+      <div class="shop-main">
+        <!-- Category Filters -->
+        <aside class="filters" aria-labelledby="filter-heading">
+          <h3 id="filter-heading">Filter By</h3>
+
+          <fieldset>
+            <legend class="visually-hidden">Botanical</legend>
+            <h4>Botanical</h4>
+            <label><input type="checkbox" name="botanical" value="lavender"> Lavender</label>
+            <label><input type="checkbox" name="botanical" value="rosemary"> Rosemary</label>
+            <label><input type="checkbox" name="botanical" value="citrus"> Citrus</label>
+          </fieldset>
+
+          <fieldset>
+            <legend class="visually-hidden">Fragrance</legend>
+            <h4>Fragrance</h4>
+            <label><input type="checkbox" name="fragrance" value="floral"> Floral</label>
+            <label><input type="checkbox" name="fragrance" value="herbal"> Herbal</label>
+            <label><input type="checkbox" name="fragrance" value="spicy"> Spicy</label>
+          </fieldset>
+
+          <fieldset>
+            <legend class="visually-hidden">Size</legend>
+            <h4>Size</h4>
+            <label><input type="checkbox" name="size" value="small"> Small (50 ml)</label>
+            <label><input type="checkbox" name="size" value="medium"> Medium (100 ml)</label>
+            <label><input type="checkbox" name="size" value="large"> Large (200 ml)</label>
+          </fieldset>
+
+          <fieldset>
+            <legend class="visually-hidden">Vegan</legend>
+            <h4>Vegan</h4>
+            <label><input type="checkbox" name="vegan" value="yes"> Vegan Only</label>
+          </fieldset>
+        </aside>
+
+        <!-- Product Grid -->
+        <section class="product-grid" aria-label="Product results">
+          <div class="card">
+            <img src="https://picsum.photos/seed/p1/400/400" alt="Lavender Botanical Soap" loading="lazy">
+            <div class="info">
+              <h3>Lavender Bliss</h3>
+              <p class="price">$12.00</p>
+              <button class="quick-view-btn" data-modal="modal1" aria-label="Quick view Lavender Bliss">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p2/400/400" alt="Rosemary Herbal Soap" loading="lazy">
+            <div class="info">
+              <h3>Rosemary Refresh</h3>
+              <p class="price">$14.00</p>
+              <button class="quick-view-btn" data-modal="modal2" aria-label="Quick view Rosemary Refresh">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p3/400/400" alt="Citrus Burst Soap" loading="lazy">
+            <div class="info">
+              <h3>Citrus Burst</h3>
+              <p class="price">$13.00</p>
+              <button class="quick-view-btn" data-modal="modal3" aria-label="Quick view Citrus Burst">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p4/400/400" alt="Spicy Ginger Soap" loading="lazy">
+            <div class="info">
+              <h3>Spicy Ginger</h3>
+              <p class="price">$15.00</p>
+              <button class="quick-view-btn" data-modal="modal4" aria-label="Quick view Spicy Ginger">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p5/400/400" alt="Floral Peony Soap" loading="lazy">
+            <div class="info">
+              <h3>Floral Peony</h3>
+              <p class="price">$12.50</p>
+              <button class="quick-view-btn" data-modal="modal5" aria-label="Quick view Floral Peony">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p6/400/400" alt="Herbal Sage Soap" loading="lazy">
+            <div class="info">
+              <h3>Herbal Sage</h3>
+              <p class="price">$13.50</p>
+              <button class="quick-view-btn" data-modal="modal6" aria-label="Quick view Herbal Sage">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p7/400/400" alt="Vanilla Cream Soap" loading="lazy">
+            <div class="info">
+              <h3>Vanilla Cream</h3>
+              <p class="price">$14.50</p>
+              <button class="quick-view-btn" data-modal="modal7" aria-label="Quick view Vanilla Cream">Quick View</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="https://picsum.photos/seed/p8/400/400" alt="Ocean Breeze Soap" loading="lazy">
+            <div class="info">
+              <h3>Ocean Breeze</h3>
+              <p class="price">$13.00</p>
+              <button class="quick-view-btn" data-modal="modal8" aria-label="Quick view Ocean Breeze">Quick View</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Quick View Modals -->
+    <div id="modal1" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal1-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal1-title">Lavender Bliss</h2>
+        <img src="https://picsum.photos/seed/p1/800/600" alt="Lavender Bliss">
+        <p>Elegant lavender‑scented vegan soap, perfect for a calming cleanse.</p>
+        <p class="price">$12.00</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <div id="modal2" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal2-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal2-title">Rosemary Refresh</h2>
+        <img src="https://picsum.photos/seed/p2/800/600" alt="Rosemary Refresh">
+        <p>Invigorating rosemary infused soap, 100 % vegan.</p>
+        <p class="price">$14.00</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <!-- Additional modals (modal3‑modal8) follow the same structure -->
+    <div id="modal3" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal3-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal3-title">Citrus Burst</h2>
+        <img src="https://picsum.photos/seed/p3/800/600" alt="Citrus Burst">
+        <p>Bright citrus notes awaken your senses.</p>
+        <p class="price">$13.00</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <div id="modal4" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal4-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal4-title">Spicy Ginger</h2>
+        <img src="https://picsum.photos/seed/p4/800/600" alt="Spicy Ginger">
+        <p>Warm ginger spice for an energising cleanse.</p>
+        <p class="price">$15.00</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <div id="modal5" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal5-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal5-title">Floral Peony</h2>
+        <img src="https://picsum.photos/seed/p5/800/600" alt="Floral Peony">
+        <p>Delicate peony fragrance for a soft touch.</p>
+        <p class="price">$12.50</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <div id="modal6" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal6-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal6-title">Herbal Sage</h2>
+        <img src="https://picsum.photos/seed/p6/800/600" alt="Herbal Sage">
+        <p>Earthy sage notes for a grounding experience.</p>
+        <p class="price">$13.50</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <div id="modal7" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal7-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal7-title">Vanilla Cream</h2>
+        <img src="https://picsum.photos/seed/p7/800/600" alt="Vanilla Cream">
+        <p>Creamy vanilla aroma, 100 % plant‑based.</p>
+        <p class="price">$14.50</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+    <div id="modal8" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal8-title">
+      <div class="modal-content">
+        <button class="close" aria-label="Close modal">&times;</button>
+        <h2 id="modal8-title">Ocean Breeze</h2>
+        <img src="https://picsum.photos/seed/p8/800/600" alt="Ocean Breeze">
+        <p>Fresh marine scent for a revitalising wash.</p>
+        <p class="price">$13.00</p>
+        <a href="#" class="btn-primary">Add to Cart</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 SudsyCo. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+    // Quick view modal handling
+    const modalTriggers = document.querySelectorAll('.quick-view-btn');
+    const modals = document.querySelectorAll('.modal');
+    const closeButtons = document.querySelectorAll('.modal .close');
+
+    modalTriggers.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-modal');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.target.closest('.modal').classList.remove('active');
+      });
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        modals.forEach(m => m.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>

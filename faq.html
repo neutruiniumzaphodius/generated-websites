@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ – Sudd’s Paradise</title>
+  <meta name="description" content="Frequently asked questions about Sudd’s Paradise handcrafted soaps, shipping, returns and sustainability.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --color-primary:#90EE90;
+  --color-secondary:#F0F8FF;
+  --color-accent:#FFD700;
+  --color-bg-gradient:linear-gradient(135deg,#F0F8FF 0%,#FFFFFF 100%);
+  --color-text:#2F2F2F;
+  --color-earth:#A58F7B;
+  --color-ivory:#F9F7F3;
+  --radius:4px;
+  --transition:0.3s ease-out;
+  --max-width:1440px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  color:var(--color-text);
+  background:var(--color-bg-gradient);
+  line-height:1.6;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+h1,h2,h3{font-family:'Playfair Display',serif;margin-bottom:0.5em;}
+h1{font-size:clamp(32px,6vw,48px);font-weight:700;letter-spacing:0.5px;line-height:1.2;}
+h2{font-size:clamp(28px,5vw,36px);font-weight:600;letter-spacing:0.4px;line-height:1.3;}
+h3{font-size:clamp(22px,4vw,28px);font-weight:500;letter-spacing:0.3px;line-height:1.4;}
+p{margin-bottom:1rem;}
+.container{max-width:var(--max-width);margin:auto;padding:0 16px;}
+/* Skip link */
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:-1000;}
+.skip-link:focus{left:0;top:0;width:auto;height:auto;padding:8px;background:#fff;color:#000;z-index:1000;}
+/* Navigation */
+header{position:sticky;top:0;z-index:100;background:transparent;transition:var(--transition);}
+header.scrolled{background:#fff;border-bottom:2px solid var(--color-accent);}
+nav{display:flex;justify-content:center;gap:24px;padding:16px 0;}
+nav a{font-weight:600;padding:8px 12px;border-radius:var(--radius);}
+nav a.active,nav a:hover{color:var(--color-accent);}
+nav a:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+/* Buttons */
+.btn-primary{
+  display:inline-block;
+  background:var(--color-accent);
+  color:#2F2F2F;
+  padding:12px 24px;
+  border-radius:var(--radius);
+  font-weight:600;
+  transition:transform 0.2s,var(--transition);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 8px rgba(255,215,0,0.6);}
+.btn-primary:active{transform:scale(0.97);box-shadow:inset 0 0 8px rgba(0,0,0,0.2);}
+section{padding:80px 0;opacity:0;transform:translateY(30px);transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);}
+section.visible{opacity:1;transform:none;}
+/* Accordion */
+.accordion{border-top:1px solid #e0e0e0;}
+.accordion-item{border-bottom:1px solid #e0e0e0;}
+.accordion-button{
+  width:100%;
+  text-align:left;
+  background:none;
+  border:none;
+  padding:16px;
+  font-size:1rem;
+  font-family:inherit;
+  color:var(--color-text);
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:background var(--transition);
+}
+.accordion-button:hover{background:rgba(255,255,255,0.4);}
+.accordion-button:focus{outline:2px solid var(--color-accent);outline-offset:2px;}
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s var(--transition),padding .3s var(--transition);
+  padding:0 16px;
+}
+.accordion-content.open{
+  max-height:500px;
+  padding:16px;
+}
+.chevron{
+  width:16px;height:16px;
+  transition:transform .3s var(--transition);
+  fill:var(--color-accent);
+}
+.accordion-button[aria-expanded="true"] .chevron{
+  transform:rotate(180deg);
+}
+/* Footer */
+footer{background:#fff;padding:24px 0;text-align:center;font-size:14px;}
+/* Media Queries */
+@media(min-width:768px){
+  .hero .content{padding:48px;}
+}
+@media(min-width:1024px){
+  nav{justify-content:flex-end;padding:0 24px;}
+}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header id="site-header">
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html" class="active">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="faq-section">
+      <div class="container">
+        <h1>Frequently Asked Questions</h1>
+
+        <h2>Product Care</h2>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer1" id="question1">
+              How should I store my soaps?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer1" role="region" aria-labelledby="question1">
+              <p>Keep soaps in a dry, well‑ventilated area away from direct sunlight. A soap dish with drainage is ideal.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer2" id="question2">
+              Are the soaps safe for sensitive skin?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer2" role="region" aria-labelledby="question2">
+              <p>Yes! All of our formulas are vegan, fragrance‑free or lightly scented with natural essential oils, and dermatologist‑tested for sensitive skin.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Shipping & Returns</h2>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer3" id="question3">
+              How long does shipping take?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer3" role="region" aria-labelledby="question3">
+              <p>Standard shipping within the U.S. typically arrives in 3‑5 business days. International orders may take 7‑14 days depending on customs.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer4" id="question4">
+              What is your return policy?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer4" role="region" aria-labelledby="question4">
+              <p>We accept returns on unopened, undamaged items within 30 days of delivery. Please contact us for a prepaid return label.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer5" id="question5">
+              Do you ship to my country?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer5" role="region" aria-labelledby="question5">
+              <p>We ship worldwide. Some remote locations may experience longer delivery times or additional customs fees.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Sustainability</h2>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer6" id="question6">
+              Are your soaps cruelty‑free?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer6" role="region" aria-labelledby="question6">
+              <p>Absolutely. All Sudd’s Paradise products are 100% vegan and never tested on animals.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer7" id="question7">
+              What packaging materials do you use?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer7" role="region" aria-labelledby="question7">
+              <p>Our packaging is recyclable and made from post‑consumer recycled paper. We aim to keep plastic out of the supply chain.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button" aria-expanded="false" aria-controls="answer8" id="question8">
+              How do you source your ingredients?<span class="chevron"><svg class="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="accordion-content" id="answer8" role="region" aria-labelledby="question8">
+              <p>We partner with certified organic farms and fair‑trade suppliers. All oils and butters are sustainably harvested.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <script>document.write(new Date().getFullYear());</script> Sudd’s Paradise. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion functionality
+    document.querySelectorAll('.accordion-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        const content = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!expanded) {
+          content.classList.add('open');
+        } else {
+          content.classList.remove('open');
+        }
+      });
+    });
+
+    // Scroll‑triggered visibility for sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, {threshold: 0.2});
+    document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+    // Header scroll effect
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+  </script>
+</body>
+</html>
