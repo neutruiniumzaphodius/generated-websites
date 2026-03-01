@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Privacy Policy | Pawsitive Reads</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --color-primary:#2A6F9F;
+      --color-secondary:#3A9D57;
+      --color-accent:#F7A500;
+      --color-bg-top:#F5F9FC;
+      --color-bg-bottom:#E8F2FA;
+      --color-text:#212B36;
+      --color-muted:#555;
+      --max-width:1440px;
+      --gap-desktop:24px;
+      --gap-tablet:20px;
+      --gap-mobile:16px;
+      --radius:8px;
+      --transition:0.25s ease-out;
+      --shadow:0 4px 8px rgba(0,0,0,0.08);
+    }
+    *, *::before, *::after {box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    h1,h2,h3{margin:0;font-family:'Montserrat',sans-serif;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:0;
+      background:#fff;
+      color:#000;
+      padding:8px 16px;
+      z-index:1000;
+    }
+    .skip-link:focus{left:0;}
+    .container{
+      width:90%;
+      max-width:var(--max-width);
+      margin:auto;
+      padding:0 var(--gap-mobile);
+    }
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,0.95);
+      border-bottom:1px solid #E0E6ED;
+      height:80px;
+      display:flex;
+      align-items:center;
+      padding:0 var(--gap-mobile);
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:900;
+      color:var(--color-primary);
+      margin-right:auto;
+      font-family:'Montserrat',sans-serif;
+    }
+    nav{
+      display:flex;
+      gap:var(--gap-mobile);
+    }
+    .nav-link{
+      font-family:'Montserrat',sans-serif;
+      font-weight:600;
+      color:var(--color-text);
+      padding:8px 12px;
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      height:2px;
+      width:0;
+      left:0;
+      bottom:0;
+      background:var(--color-primary);
+      transition:width .3s;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{width:100%;}
+    .menu-toggle{
+      display:none;
+      background:none;
+      align-items:center;
+    }
+    .menu-toggle svg{width:24px;height:24px;}
+    @media (max-width:768px){
+      nav{
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#fff;
+        flex-direction:column;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height .3s ease;
+      }
+      nav.open{max-height:300px;}
+      .menu-toggle{display:flex;}
+    }
+    .hero{
+      position:relative;
+      height:100vh;
+      min-height:600px;
+      display:flex;
+      align-items:center;
+      color:var(--color-text);
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+      z-index:1;
+    }
+    .hero .bg{
+      position:absolute;
+      inset:0;
+      object-fit:cover;
+      z-index:0;
+      transform:translateY(0);
+      transition:transform .5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:800px;
+      margin:auto;
+      text-align:center;
+    }
+    .hero h1{
+      font-family:'Montserrat',sans-serif;
+      font-weight:900;
+      font-size:clamp(36px,6vw,64px);
+      letter-spacing:-0.5px;
+      margin-bottom:24px;
+    }
+    .hero p{
+      font-size:22px;
+      margin-bottom:48px;
+    }
+    .hero-small{
+      min-height:auto;
+      height:auto;
+      padding:120px 0;
+    }
+    .btn-primary{
+      background:var(--color-accent);
+      color:#fff;
+      padding:12px 24px;
+      border-radius:var(--radius);
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+      position:relative;
+      overflow:hidden;
+      transition:background var(--transition);
+    }
+    .btn-primary::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:#fff;
+      opacity:0;
+      transform:scale(0);
+      transition:transform .4s cubic-bezier(0.4,0,0.2,1),opacity .4s;
+    }
+    .btn-primary:hover{
+      background:#E69500;
+    }
+    .btn-primary:hover::after{
+      opacity:.2;
+      transform:scale(1.5);
+    }
+    .link-secondary{
+      font-family:'Montserrat',sans-serif;
+      font-weight:600;
+      font-size:18px;
+      color:var(--color-secondary);
+      position:relative;
+    }
+    .link-secondary::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-2px;
+      width:100%;
+      height:2px;
+      background:var(--color-secondary);
+      transform:scaleX(0);
+      transition:transform .3s;
+    }
+    .link-secondary:hover::after{transform:scaleX(1);}
+    .policy-section{
+      margin-bottom:48px;
+    }
+    .policy-section h2{
+      font-weight:600;
+      font-size:24px;
+      margin:24px 0 12px;
+    }
+    .policy-section p{
+      margin:0 0 12px;
+    }
+    footer{
+      background:#fff;
+      color:var(--color-text);
+      padding:40px 0;
+      text-align:center;
+      font-size:14px;
+    }
+    footer a{color:var(--color-primary);}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="container" style="display:flex;align-items:center;">
+    <a href="/" class="logo">Pawsitive Reads</a>
+    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+      <svg viewBox="0 0 100 80" fill="none" stroke="currentColor">
+        <rect width="100" height="20"></rect>
+        <rect y="30" width="100" height="20"></rect>
+        <rect y="60" width="100" height="20"></rect>
+      </svg>
+    </button>
+    <nav id="primary-menu">
+      <a href="/" class="nav-link active">Home</a>
+      <a href="/about.html" class="nav-link">About Us</a>
+      <a href="/books.html" class="nav-link">Books</a>
+      <a href="/plans.html" class="nav-link">Plans</a>
+      <a href="/blog.html" class="nav-link">Blog</a>
+      <a href="/faq.html" class="nav-link">FAQ</a>
+      <a href="/contact.html" class="nav-link">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero Small -->
+  <section class="hero hero-small">
+    <div class="hero-content">
+      <h1>Privacy Policy</h1>
+    </div>
+  </section>
+
+  <!-- Policy Text -->
+  <section class="policy-text">
+    <div class="container">
+      <div class="policy-section">
+        <h2>1. Data Collection</h2>
+        <p>We collect personal data that you voluntarily provide when you create an account, subscribe to our newsletter, place an order, or contact us. This may include your name, email address, phone number, shipping address, payment information, and browsing behaviour on the site.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>2. Use of Collected Data</h2>
+        <p>Your data is used to process orders, provide customer support, send transactional and marketing communications, improve our services, and comply with legal obligations.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>3. Cookies & Tracking Technologies</h2>
+        <p>We use cookies and similar technologies to enhance your browsing experience, analyse site usage, and deliver personalised content. You can manage your preferences via our <a href="/cookie-consent" class="link-secondary">Cookie Consent Manager</a>.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>4. Data Sharing & Third‑Party Services</h2>
+        <p>We share your information with trusted third‑party service providers (e.g., Stripe, PayPal, Mailchimp, HubSpot, Google Analytics) solely for the purpose of delivering services you request. All partners are contractually obligated to protect your data.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>5. Your Rights (GDPR)</h2>
+        <p>If you are located in the European Economic Area, you have the right to access, rectify, erase, restrict processing, data portability, and object to the processing of your personal data. To exercise any of these rights, please contact us at <a href="mailto:privacy@pawsitivereads.com" class="link-secondary">privacy@pawsitivereads.com</a>.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>6. Data Retention</h2>
+        <p>We retain personal data only for as long as necessary to fulfil the purposes outlined in this policy or as required by law.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>7. Security Measures</h2>
+        <p>We implement industry‑standard technical and organisational measures (SSL/TLS encryption, firewalls, regular backups, access controls) to protect your data against unauthorised access, loss, or alteration.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>8. International Transfers</h2>
+        <p>Personal data may be transferred to and processed in countries outside the EEA that may not provide the same level of data protection. We ensure appropriate safeguards (Standard Contractual Clauses) are in place.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>9. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. The revised version will be posted on this page with an updated "last modified" date. Continued use of the site after changes constitutes acceptance of the new terms.</p>
+      </div>
+
+      <div class="policy-section">
+        <h2>10. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy or wish to exercise your data‑subject rights, please contact us at <a href="mailto:privacy@pawsitivereads.com" class="link-secondary">privacy@pawsitivereads.com</a>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2024 Pawsitive Reads. All rights reserved.</p>
+    <p>
+      <a href="/terms.html" class="link-secondary">Terms &amp; Conditions</a> |
+      <a href="/privacy.html" class="link-secondary">Privacy Policy</a> |
+      <a href="/cookie-consent" class="link-secondary">Cookie Consent Manager</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Simple menu toggle for mobile
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+  toggle && toggle.addEventListener('click', () => nav.classList.toggle('open'));
+</script>
+</body>
+</html>

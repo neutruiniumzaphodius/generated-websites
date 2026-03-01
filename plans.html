@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subscription Plans | Pawsitive Reads</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary:#2A6F9F;
+      --color-secondary:#3A9D57;
+      --color-accent:#F7A500;
+      --color-bg-top:#F5F9FC;
+      --color-bg-bottom:#E8F2FA;
+      --color-text:#212B36;
+      --color-muted:#555;
+      --max-width:1440px;
+      --gap-desktop:24px;
+      --gap-tablet:20px;
+      --gap-mobile:16px;
+      --radius:8px;
+      --transition:0.25s ease-out;
+      --shadow:0 4px 8px rgba(0,0,0,0.08);
+    }
+    *, *::before, *::after {box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    h1,h2,h3{margin:0;font-family:'Montserrat',sans-serif;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:0;
+      background:#fff;
+      color:#000;
+      padding:8px 16px;
+      z-index:1000;
+    }
+    .skip-link:focus{left:0;}
+    .container{
+      width:90%;
+      max-width:var(--max-width);
+      margin:auto;
+      padding:0 var(--gap-mobile);
+    }
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,0.95);
+      border-bottom:1px solid #E0E6ED;
+      height:80px;
+      display:flex;
+      align-items:center;
+      padding:0 var(--gap-mobile);
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:900;
+      color:var(--color-primary);
+      margin-right:auto;
+    }
+    nav{
+      display:flex;
+      gap:var(--gap-mobile);
+    }
+    .nav-link{
+      font-family:'Montserrat',sans-serif;
+      font-weight:600;
+      color:var(--color-text);
+      padding:8px 12px;
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      height:2px;
+      width:0;
+      left:0;
+      bottom:0;
+      background:var(--color-primary);
+      transition:width .3s;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{width:100%;}
+    .menu-toggle{
+      display:none;
+      background:none;
+      align-items:center;
+    }
+    .menu-toggle svg{width:24px;height:24px;}
+    @media (max-width:768px){
+      nav{
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#fff;
+        flex-direction:column;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height .3s ease;
+      }
+      nav.open{max-height:300px;}
+      .menu-toggle{display:flex;}
+    }
+
+    /* Hero Small */
+    .hero-small{
+      position:relative;
+      padding:120px 0;
+      text-align:center;
+      color:var(--color-text);
+    }
+    .hero-small::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+      z-index:-1;
+    }
+    .hero-small h1{
+      font-family:'Montserrat',sans-serif;
+      font-weight:900;
+      font-size:clamp(32px,5vw,48px);
+      letter-spacing:-0.5px;
+      margin-bottom:24px;
+    }
+    .hero-small p{
+      font-size:22px;
+      margin-bottom:32px;
+    }
+
+    /* Plan Comparison Table */
+    .plan-table{
+      width:100%;
+      border-collapse:collapse;
+      margin:48px 0;
+      background:#fff;
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .plan-table th,
+    .plan-table td{
+      padding:16px;
+      text-align:center;
+      border-bottom:1px solid #eaeaea;
+    }
+    .plan-table th{
+      background:var(--color-primary);
+      color:#fff;
+      font-family:'Montserrat',sans-serif;
+      font-weight:600;
+    }
+    .plan-table td{
+      background:#fff;
+    }
+    .plan-table .plan-name{
+      font-weight:600;
+      font-size:22px;
+      margin-bottom:12px;
+    }
+    .plan-table .btn-primary{
+      margin-top:16px;
+      background:var(--color-accent);
+      color:#fff;
+    }
+    .plan-table .btn-primary:hover{background:#E69500;}
+
+    /* Benefits List */
+    .benefits-list{
+      list-style:none;
+      display:grid;
+      gap:var(--gap-mobile);
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      margin:48px 0;
+      padding:0;
+    }
+    .benefits-list li{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:18px;
+    }
+    .benefits-list svg{
+      width:24px;
+      height:24px;
+      flex-shrink:0;
+      fill:none;
+      stroke:var(--color-accent);
+      stroke-width:2;
+    }
+
+    /* FAQ Link */
+    .faq-link{
+      display:inline-block;
+      margin-top:32px;
+      font-family:'Montserrat',sans-serif;
+      font-weight:600;
+      font-size:18px;
+      color:var(--color-secondary);
+      position:relative;
+    }
+    .faq-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-2px;
+      width:100%;
+      height:2px;
+      background:var(--color-secondary);
+      transform:scaleX(0);
+      transition:transform .3s;
+    }
+    .faq-link:hover::after{transform:scaleX(1);}
+
+    /* Primary CTA */
+    .primary-cta{
+      text-align:center;
+      margin:64px 0;
+    }
+
+    /* Sticky CTA */
+    .sticky-cta{
+      position:fixed;
+      inset:auto 0 0;
+      background:var(--color-accent);
+      color:#fff;
+      padding:12px 0;
+      text-align:center;
+      transform:translateY(100%);
+      transition:transform .35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .sticky-cta.show{transform:translateY(0);}
+    .sticky-cta .btn-primary{
+      background:#fff;
+      color:var(--color-accent);
+    }
+    .sticky-cta .btn-primary:hover{background:#fff;}
+
+    /* Footer */
+    footer{
+      background:#fff;
+      padding:40px 0;
+      text-align:center;
+      font-size:14px;
+      border-top:1px solid #E0E6ED;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container" style="display:flex;align-items:center;">
+      <div class="logo">Pawsitive Reads</div>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 100 80" fill="none" stroke="var(--color-text)" stroke-width="10">
+          <rect width="100" height="10"></rect>
+          <rect y="30" width="100" height="10"></rect>
+          <rect y="60" width="100" height="10"></rect>
+        </svg>
+      </button>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="plans.html" class="nav-link active">Plans</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Small -->
+  <section class="hero-small" id="main-content">
+    <div class="container">
+      <h1>Choose the Perfect Plan</h1>
+      <p>Flexible pricing tiers designed for every family and reading habit.</p>
+    </div>
+  </section>
+
+  <!-- Plan Comparison Table -->
+  <section class="container">
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Price</th>
+          <th>Books per Month</th>
+          <th>Benefits</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="plan-name">Monthly</td>
+          <td>$19.99</td>
+          <td>2</td>
+          <td>Flexible month‑to‑month subscription</td>
+          <td><button class="btn-primary">Start Subscription Today!</button></td>
+        </tr>
+        <tr>
+          <td class="plan-name">Quarterly</td>
+          <td>$49.99</td>
+          <td>6</td>
+          <td>Save 17% vs. monthly</td>
+          <td><button class="btn-primary">Start Subscription Today!</button></td>
+        </tr>
+        <tr>
+          <td class="plan-name">Annual</td>
+          <td>$179.99</td>
+          <td>24</td>
+          <td>Best value – 25% off</td>
+          <td><button class="btn-primary">Start Subscription Today!</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Benefits List -->
+  <section class="container">
+    <h2 style="font-weight:600;font-size:24px;margin:48px 0 24px;text-align:center;">Why Choose Pawsitive Reads?</h2>
+    <ul class="benefits-list">
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        Curated books hand‑picked by child‑development experts
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        Free shipping on all plans
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        No‑risk 30‑day return policy
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        Exclusive member‑only storytime events
+      </li>
+    </ul>
+    <div class="primary-cta">
+      <a href="contact.html" class="link-secondary">Need more help? Contact us</a>
+    </div>
+  </section>
+
+  <!-- FAQ Link -->
+  <section class="container" style="text-align:center;">
+    <a href="faq.html" class="link-secondary">Read our Frequently Asked Questions</a>
+  </section>
+
+  <!-- Sticky Primary CTA (global) -->
+  <div class="sticky-cta" id="sticky-cta">
+    <button class="btn-primary">Start Subscription Today!</button>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="display:flex;flex-direction:column;gap:var(--gap-mobile);align-items:center;">
+      <nav style="display:flex;gap:var(--gap-mobile);flex-wrap:wrap;justify-content:center;">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="plans.html" class="nav-link active">Plans</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <p style="margin:0;font-size:14px;">&copy; 2024 Pawsitive Reads. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    if (toggle) {
+      toggle.addEventListener('click', () => nav.classList.toggle('open'));
+    }
+
+    // Sticky CTA reveal on scroll
+    const stickyCTA = document.getElementById('sticky-cta');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          stickyCTA.classList.add('show');
+        }
+      });
+    }, {threshold: 0});
+    observer.observe(document.body);
+  </script>
+</body>
+</html>

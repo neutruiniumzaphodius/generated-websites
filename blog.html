@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Blog | Pawsitive Reads</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --color-primary:#2A6F9F;
+        --color-secondary:#3A9D57;
+        --color-accent:#F7A500;
+        --color-bg-top:#F5F9FC;
+        --color-bg-bottom:#E8F2FA;
+        --color-text:#212B36;
+        --color-muted:#555;
+        --max-width:1440px;
+        --gap-desktop:24px;
+        --gap-tablet:20px;
+        --gap-mobile:16px;
+        --radius:8px;
+        --transition:0.25s ease-out;
+        --shadow:0 4px 8px rgba(0,0,0,0.08);
+    }
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+        margin:0;
+        font-family:'Open Sans',sans-serif;
+        color:var(--color-text);
+        background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+        line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    h1,h2,h3{margin:0;font-family:'Montserrat',sans-serif;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+        position:absolute;
+        left:-999px;
+        top:0;
+        background:#fff;
+        color:#000;
+        padding:8px 16px;
+        z-index:1000;
+    }
+    .skip-link:focus{left:0;}
+    .container{
+        width:90%;
+        max-width:var(--max-width);
+        margin:auto;
+        padding:0 var(--gap-mobile);
+    }
+    header{
+        position:sticky;
+        top:0;
+        z-index:100;
+        background:rgba(255,255,255,0.95);
+        border-bottom:1px solid #E0E6ED;
+        height:80px;
+        display:flex;
+        align-items:center;
+        transition:background var(--transition);
+    }
+    .logo{
+        font-size:1.5rem;
+        font-weight:900;
+        color:var(--color-primary);
+        margin-right:auto;
+    }
+    nav{
+        display:flex;
+        gap:var(--gap-mobile);
+    }
+    .nav-link{
+        font-family:'Montserrat',sans-serif;
+        font-weight:600;
+        color:var(--color-text);
+        padding:8px 12px;
+        position:relative;
+    }
+    .nav-link::after{
+        content:"";
+        position:absolute;
+        height:2px;
+        width:0;
+        left:0;
+        bottom:0;
+        background:var(--color-primary);
+        transition:width .3s;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{width:100%;}
+    .menu-toggle{
+        display:none;
+        background:none;
+        align-items:center;
+    }
+    .menu-toggle svg{width:24px;height:24px;}
+    @media (max-width:768px){
+        nav{
+            position:absolute;
+            top:80px;
+            left:0;
+            width:100%;
+            background:#fff;
+            flex-direction:column;
+            max-height:0;
+            overflow:hidden;
+            transition:max-height .3s ease;
+        }
+        nav.open{max-height:300px;}
+        .menu-toggle{display:flex;}
+    }
+    /* Hero small */
+    .hero-small{
+        padding:120px 0 80px;
+        text-align:center;
+    }
+    .hero-small h1{
+        font-weight:900;
+        font-size:clamp(36px,6vw,64px);
+        letter-spacing:-0.5px;
+        margin-bottom:16px;
+    }
+    .hero-small p{
+        font-size:22px;
+        color:var(--color-muted);
+    }
+    /* Search bar */
+    .search-bar{
+        display:flex;
+        gap:8px;
+        margin-bottom:40px;
+    }
+    .search-bar input{
+        flex:1;
+        padding:12px;
+        border:1px solid #ccc;
+        border-radius:var(--radius);
+        transition:border-color .3s;
+    }
+    .search-bar button{
+        background:var(--color-accent);
+        color:#fff;
+        padding:12px 20px;
+        border-radius:var(--radius);
+        font-weight:600;
+        font-family:'Montserrat',sans-serif;
+        position:relative;
+        overflow:hidden;
+    }
+    .search-bar button::after{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:#fff;
+        opacity:0;
+        transform:scale(0);
+        transition:transform .4s cubic-bezier(0.4,0,0.2,1),opacity .4s;
+    }
+    .search-bar button:hover::after{
+        opacity:.2;
+        transform:scale(1.5);
+    }
+    .search-bar button:hover{background:#E69500;}
+    /* Layout */
+    .blog-main{
+        display:grid;
+        gap:var(--gap-desktop);
+        grid-template-columns:1fr;
+    }
+    @media (min-width:1024px){
+        .blog-main{
+            grid-template-columns:250px 1fr;
+        }
+    }
+    /* Category sidebar */
+    .category-sidebar{
+        position:sticky;
+        top:120px;
+        align-self:start;
+        padding:0 var(--gap-mobile);
+    }
+    .category-sidebar ul{
+        list-style:none;
+        padding:0;
+        margin:0;
+    }
+    .category-sidebar li{
+        margin-bottom:12px;
+    }
+    .category-sidebar a{
+        font-family:'Montserrat',sans-serif;
+        font-weight:600;
+        color:var(--color-primary);
+        position:relative;
+    }
+    .category-sidebar a::after{
+        content:"";
+        position:absolute;
+        left:0;
+        bottom:-2px;
+        width:100%;
+        height:2px;
+        background:var(--color-accent);
+        transform:scaleX(0);
+        transition:transform .3s;
+    }
+    .category-sidebar a:hover::after{transform:scaleX(1);}
+    /* Post grid (masonry) */
+    .post-grid{
+        column-gap:var(--gap-desktop);
+        column-count:1;
+    }
+    @media (min-width:600px){.post-grid{column-count:2;}}
+    @media (min-width:1024px){.post-grid{column-count:3;}}
+    .post-card{
+        break-inside:avoid;
+        background:#fff;
+        border-radius:var(--radius);
+        box-shadow:var(--shadow);
+        margin-bottom:var(--gap-desktop);
+        overflow:hidden;
+        transition:transform var(--transition),box-shadow var(--transition);
+    }
+    .post-card:hover{
+        transform:scale(1.04);
+        box-shadow:0 8px 16px rgba(0,0,0,0.12);
+    }
+    .post-card img{
+        width:100%;
+        height:auto;
+        display:block;
+    }
+    .post-card .content{
+        padding:16px;
+    }
+    .post-card h3{
+        font-family:'Montserrat',sans-serif;
+        font-weight:600;
+        font-size:22px;
+        margin:0 0 8px;
+    }
+    .post-card .excerpt{
+        color:var(--color-muted);
+        font-size:15px;
+        margin:0 0 12px;
+    }
+    .post-card .read-more{
+        font-weight:600;
+        color:var(--color-accent);
+        text-decoration:underline;
+    }
+    /* Footer */
+    footer{
+        background:#fff;
+        padding:40px 0;
+        border-top:1px solid #E0E6ED;
+        text-align:center;
+        font-size:14px;
+    }
+    .social-icons{
+        display:flex;
+        justify-content:center;
+        gap:12px;
+        margin-top:12px;
+    }
+    .social-icons a svg{
+        width:24px;
+        height:24px;
+        fill:var(--color-primary);
+        transition:fill var(--transition);
+    }
+    .social-icons a:hover svg{fill:var(--color-accent);}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+    <div class="container">
+        <a href="index.html" class="logo">Pawsitive Reads</a>
+        <button class="menu-toggle" aria-label="Toggle navigation" aria-controls="primary-menu" aria-expanded="false">
+            <svg viewBox="0 0 100 80" fill="none" stroke="currentColor">
+                <rect width="100" height="15"></rect>
+                <rect y="30" width="100" height="15"></rect>
+                <rect y="60" width="100" height="15"></rect>
+            </svg>
+        </button>
+        <nav id="primary-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="books.html" class="nav-link">Books</a>
+            <a href="plans.html" class="nav-link">Plans</a>
+            <a href="blog.html" class="nav-link active">Blog</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<main id="main">
+    <!-- Hero Small -->
+    <section class="hero-small">
+        <div class="container">
+            <h1>Pawsitive Reads Blog</h1>
+            <p>Insights, tips, and stories to nurture early literacy.</p>
+        </div>
+    </section>
+
+    <div class="container" style="display:grid;gap:var(--gap-desktop);grid-template-columns:1fr;">
+        <!-- Category Sidebar -->
+        <aside class="category-sidebar">
+            <ul>
+                <li><a href="#" class="link-secondary">Early Literacy</a></li>
+                <li><a href="#" class="link-secondary">Reading Tips</a></li>
+                <li><a href="#" class="link-secondary">Parenting</a></li>
+                <li><a href="#" class="link-secondary">Education</a></li>
+                <li><a href="#" class="link-secondary">Community Stories</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="blog-content">
+            <!-- Search Bar -->
+            <div class="search-bar" style="margin-bottom:var(--gap-desktop);">
+                <form action="#" method="GET" style="display:flex;gap:8px;">
+                    <input type="search" name="s" placeholder="Search posts…" aria-label="Search blog posts" style="flex:1;padding:12px;border:1px solid #ccc;border-radius:var(--radius);transition:border-color .3s;">
+                    <button type="submit" class="btn-primary" style="padding:12px 20px;">Search</button>
+                </form>
+            </div>
+
+            <!-- Post Grid -->
+            <div class="post-grid">
+                <article class="post-card">
+                    <img src="assets/blog1.webp" alt="Children reading together">
+                    <div class="content">
+                        <h3>5 Simple Ways to Make Reading Fun at Home</h3>
+                        <p class="excerpt">Turn storytime into an adventure with these easy, engaging activities that foster a love of books.</p>
+                        <a href="#" class="read-more">Read more →</a>
+                    </div>
+                </article>
+                <article class="post-card">
+                    <img src="assets/blog2.webp" alt="Illustrated children's book">
+                    <div class="content">
+                        <h3>Choosing the Right Books for Your Child’s Age</h3>
+                        <p class="excerpt">A guide to selecting age‑appropriate titles that develop vocabulary and imagination.</p>
+                        <a href="#" class="read-more">Read more →</a>
+                    </div>
+                </article>
+                <article class="post-card">
+                    <img src="assets/blog3.webp" alt="Parent reading with child">
+                    <div class="content">
+                        <h3>How to Build a Daily Reading Routine</h3>
+                        <p class="excerpt">Tips for establishing consistent reading habits that fit busy family schedules.</p>
+                        <a href="#" class="read-more">Read more →</a>
+                    </div>
+                </article>
+                <article class="post-card">
+                    <img src="assets/blog4.webp" alt="Kids playing with alphabet blocks">
+                    <div class="content">
+                        <h3>Play‑Based Learning: Connecting Games to Literacy</h3>
+                        <p class="excerpt">Explore games and toys that naturally boost early reading skills.</p>
+                        <a href="#" class="read-more">Read more →</a>
+                    </div>
+                </article>
+                <article class="post-card">
+                    <img src="assets/blog5.webp" alt="Storytelling circle">
+                    <div class="content">
+                        <h3>The Power of Storytelling in Child Development</h5>
+                        <p class="excerpt">Why sharing stories matters and how to make storytelling a family tradition.</p>
+                        <a href="#" class="read-more">Read more →</a>
+                    </div>
+                </article>
+                <!-- Add more post‑cards as needed -->
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="container" style="display:flex;flex-direction:column;align-items:center;gap:var(--gap-mobile);padding:40px 0;">
+        <a href="index.html" class="logo">Pawsitive Reads</a>
+        <nav style="display:flex;gap:var(--gap-mobile);flex-wrap:wrap;justify-content:center;">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="books.html" class="nav-link">Books</a>
+            <a href="plans.html" class="nav-link">Plans</a>
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="social-icons">
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M9 8H7v4h2v12h5V12h3.642L18 8h-4V6c0-1.084.916-2 2-2h2V0h-3c-3.314 0-6 2.686-6 6v2z"/></svg></a>
+            <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M24 4.557a9.83 9.83 0 0 1-2.828.775 4.932 4.932 0 0 0 2.165-2.724c-.951.555-2.005.959-3.127 1.184a4.916 4.916 0 0 0-8.384 4.482C7.691 8.094 4.066 6.13 1.64 3.161a4.822 4.822 0 0 0-.666 2.475c0 1.708.869 3.213 2.188 4.096a4.904 4.904 0 0 1-2.228-.616c-.054 2.385 1.669 4.623 4.104 5.107a4.935 4.935 0 0 1-2.224.084c.626 1.956 2.444 3.377 4.6 3.418A9.867 9.867 0 0 1 0 19.54a13.94 13.94 0 0 0 7.548 2.212c9.058 0 14.01-7.496 14.01-13.986 0-.213-.005-.425-.014-.637A10.025 10.025 0 0 0 24 4.557z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.337 3.608 1.312.975.975 1.25 2.242 1.312 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.337 2.633-1.312 3.608-.975.975-2.242 1.25-3.608 1.312-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.337-3.608-1.312-.975-.975-1.25-2.242-1.312-3.608C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.85c.062-1.366.337-2.633 1.312-3.608.975-.975 2.242-1.25 3.608-1.312C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.012 7.052.07 5.771.128 4.633.393 3.68 1.345c-.953.953-1.218 2.09-1.276 3.371C2.012 5.999 2 6.408 2 9.667v4.666c0 3.259.012 3.668.07 4.948.058 1.281.323 2.418 1.276 3.371.953.953 2.09 1.218 3.371 1.276 1.28.058 1.689.07 4.948.07s3.668-.012 4.948-.07c1.281-.058 2.418-.323 3.371-1.276.953-.953 1.218-2.09 1.276-3.371.058-1.28.07-1.689.07-4.948V9.667c0-3.259-.012-3.668-.07-4.948-.058-1.281-.323-2.418-1.276-3.371-.953-.953-2.09-1.218-3.371-1.276C15.668.012 15.259 0 12 0zM12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 1-2.881 0 1.44 1.44 0 0 1 2.881 0z"/></svg></a>
+        </div>
+        <p>&copy; 2024 Pawsitive Reads. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+        toggle.setAttribute('aria-expanded', !expanded);
+        nav.classList.toggle('open');
+    });
+</script>
+</body>
+</html>
+</analysis>

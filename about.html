@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Story | Pawsitive Reads</title>
+  <meta name="description" content="Learn about the story behind Pawsitive Reads, our mission, team and press coverage.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary:#2A6F9F;
+      --color-secondary:#3A9D57;
+      --color-accent:#F7A500;
+      --color-bg-top:#F5F9FC;
+      --color-bg-bottom:#E8F2FA;
+      --color-text:#212B36;
+      --color-muted:#555;
+      --max-width:1440px;
+      --gap-desktop:24px;
+      --gap-tablet:20px;
+      --gap-mobile:16px;
+      --radius:8px;
+      --transition:0.25s ease-out;
+      --shadow:0 4px 8px rgba(0,0,0,0.08);
+    }
+    *, *::before, *::after {box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0;
+      font-family:'Open Sans',sans-serif;
+      color:var(--color-text);
+      background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none;}
+    h1,h2,h3{margin:0;font-family:'Montserrat',sans-serif;}
+    button{font-family:inherit;cursor:pointer;border:none;background:none;}
+    img{max-width:100%;display:block;}
+    .skip-link{
+      position:absolute;
+      left:-999px;
+      top:0;
+      background:#fff;
+      color:#000;
+      padding:8px 16px;
+      z-index:1000;
+    }
+    .skip-link:focus{left:0;}
+    .container{
+      width:90%;
+      max-width:var(--max-width);
+      margin:auto;
+      padding:0 var(--gap-mobile);
+    }
+    header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(255,255,255,0.95);
+      border-bottom:1px solid #E0E6ED;
+      height:80px;display:flex;align-items:center;
+      transition:background var(--transition);
+    }
+    .logo{
+      font-size:1.5rem;
+      font-weight:900;
+      color:var(--color-primary);
+      margin-right:auto;
+    }
+    nav{
+      display:flex;
+      gap:var(--gap-mobile);
+    }
+    .nav-link{
+      font-family:'Montserrat',sans-serif;
+      font-weight:600;
+      color:var(--color-text);
+      padding:8px 12px;
+      position:relative;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      height:2px;
+      width:0;
+      left:0;
+      bottom:0;
+      background:var(--color-primary);
+      transition:width .3s;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      width:100%;
+    }
+    .menu-toggle{
+      display:none;
+      background:none;
+      align-items:center;
+    }
+    .menu-toggle svg{width:24px;height:24px;}
+    @media (max-width:768px){
+      nav{
+        position:absolute;
+        top:80px;
+        left:0;
+        width:100%;
+        background:#fff;
+        flex-direction:column;
+        max-height:0;
+        overflow:hidden;
+        transition:max-height .3s ease;
+      }
+      nav.open{max-height:300px;}
+      .menu-toggle{display:flex;}
+    }
+    /* Hero Small */
+    .hero-small{
+      position:relative;
+      padding:120px 0;
+      text-align:center;
+      background:linear-gradient(to bottom,var(--color-bg-top),var(--color-bg-bottom));
+      overflow:hidden;
+    }
+    .hero-small::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:url('data:image/svg+xml;utf8,<svg width=\"200\" height=\"200\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 10 L190 10 L190 190 L10 190 Z\" fill=\"none\" stroke=\"%233A9D57\" stroke-width=\"1\" opacity=\"0.05\"/></svg>');
+      opacity:0.1;
+      z-index:1;
+    }
+    .hero-small .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:800px;
+      margin:auto;
+    }
+    .hero-small h1{
+      font-weight:600;
+      font-size:clamp(32px,5vw,48px);
+      letter-spacing:-0.5px;
+      margin-bottom:16px;
+    }
+    .hero-small p{
+      font-size:22px;
+      color:var(--color-muted);
+    }
+    /* Timeline */
+    .timeline{
+      position:relative;
+      padding:80px 0;
+    }
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      bottom:0;
+      width:4px;
+      background:var(--color-primary);
+      transform:translateX(-50%);
+    }
+    .timeline-item{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+      gap:var(--gap-desktop);
+      margin-bottom:60px;
+      align-items:center;
+    }
+    .timeline-item:nth-child(even) .timeline-img{
+      order:2;
+    }
+    .timeline-img img{
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .timeline-content{
+      background:#fff;
+      padding:24px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .timeline-content h3{
+      font-weight:600;
+      font-size:22px;
+      margin-bottom:12px;
+    }
+    .timeline-content p{
+      margin:0;
+    }
+    /* Mission & Vision */
+    .mission-vision{
+      padding:80px 0;
+      background:#fff;
+    }
+    .mission-vision .grid{
+      display:grid;
+      gap:var(--gap-desktop);
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    }
+    .mission{
+      font-weight:600;
+      font-size:24px;
+    }
+    .vision{
+      font-size:16px;
+      color:var(--color-muted);
+    }
+    .vision img{
+      width:100%;
+      max-width:400px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    /* Team Grid */
+    .team-grid{
+      padding:80px 0;
+      background:#f9f9f9;
+    }
+    .team-grid .grid{
+      display:grid;
+      gap:var(--gap-desktop);
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    }
+    .team-card{
+      background:#fff;
+      padding:24px;
+      border-radius:var(--radius);
+      text-align:center;
+      box-shadow:var(--shadow);
+    }
+    .team-card img{
+      width:120px;
+      height:120px;
+      object-fit:cover;
+      border-radius:50%;
+      margin-bottom:12px;
+    }
+    .team-card h3{
+      font-weight:600;
+      font-size:20px;
+      margin-bottom:4px;
+    }
+    .team-card p{
+      margin:0;
+      font-size:14px;
+      color:var(--color-muted);
+    }
+    /* Press Carousel */
+    .press-carousel{
+      position:relative;
+      padding:80px 0;
+      background:#fff;
+    }
+    .press-track{
+      display:flex;
+      gap:var(--gap-desktop);
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+    }
+    .press-item{
+      flex:0 0 30%;
+      max-width:200px;
+      scroll-snap-align:center;
+      background:#fff;
+      padding:16px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      transition:transform var(--transition);
+    }
+    .press-item:hover{
+      transform:scale(1.04);
+    }
+    .press-item img{
+      max-height:80px;
+      margin:auto;
+      display:block;
+    }
+    /* Footer */
+    footer{
+      background:#fff;
+      padding:40px 0;
+      text-align:center;
+      font-size:14px;
+      color:var(--color-muted);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">Pawsitive Reads</a>
+      <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+        <svg viewBox="0 0 100 80" fill="none" stroke="currentColor">
+          <rect width="100" height="15"></rect>
+          <rect y="30" width="100" height="15"></rect>
+          <rect y="60" width="100" height="15"></rect>
+        </svg>
+      </button>
+      <nav id="primary-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link active">About Us</a>
+        <a href="books.html" class="nav-link">Books</a>
+        <a href="plans.html" class="nav-link">Plans</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Small -->
+    <section class="hero-small">
+      <div class="container hero-content">
+        <h1>Our Story</h1>
+        <p>At Pawsitive Reads we believe every child deserves a story that sparks imagination and a learning journey that fuels curiosity.</p>
+      </div>
+    </section>
+
+    <!-- Brand History (Timeline) -->
+    <section class="brand-history">
+      <div class="container">
+        <h2 class="section-title">Our Journey</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-img">
+              <img src="https://via.placeholder.com/600x400?text=2015" alt="2015 - Founding">
+            </div>
+            <div class="timeline-content">
+              <h3>2015 – The Beginning</h3>
+              <p>Founded in a small Seattle apartment, our co‑founders set out to create a subscription service that brings hand‑picked books to families every month.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-img">
+              <img src="https://via.placeholder.com/600x400?text=2017" alt="2017 - First Milestone">
+            </div>
+            <div class="timeline-content">
+              <h3>2017 – First 1,000 Subscribers</h3>
+              <p>Word spread quickly and we celebrated our first thousand families enjoying curated reading experiences.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-img">
+              <img src="https://via.placeholder.com/600x400?text=2020" alt="2020 - Expansion">
+            </div>
+            <div class="timeline-content">
+              <h3>2020 – Nationwide Expansion</h3>
+              <p>We partnered with major logistics providers to ship across the United States, reaching more young readers than ever before.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-img">
+              <img src="https://via.placeholder.com/600x400?text=2023" alt="2023 - Community Impact">
+            </div>
+            <div class="timeline-content">
+              <h3>2023 – Community Impact</h3>
+              <p>Our “Books for All” program donated over 10,000 books to schools and libraries in under‑served neighborhoods.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-vision">
+      <div class="container">
+        <div class="grid">
+          <div class="mission">
+            <h2>Our Mission</h2>
+            <p class="mission-text" style="font-weight:600;font-size:24px;">To nurture a lifelong love of reading by delivering age‑appropriate, diverse, and educational books to families across America.</p>
+          </div>
+          <div class="vision">
+            <h2>Our Vision</h2>
+            <p>We envision a world where every child has access to stories that reflect their experiences, broaden their horizons, and inspire curiosity.</p>
+            <img src="https://via.placeholder.com/400x300?text=Illustrated+Tree" alt="Illustrated Tree representing growth and learning">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Grid -->
+    <section class="team-grid">
+      <div class="container">
+        <h2 class="section-title">Meet the Team</h2>
+        <div class="grid">
+          <div class="team-card">
+            <img src="https://via.placeholder.com/200?text=Emma+Lee" alt="Portrait of Emma Lee" style="border-radius:50%;width:150px;height:150px;object-fit:cover;">
+            <h3>Emma Lee</h3>
+            <p>Founder & CEO</p>
+            <p>Fun fact: She once read 100 books in a single summer.</p>
+          </div>
+          <div class="team-card">
+            <img src="https://via.placeholder.com/200?text=Daniel+Park" alt="Portrait of Daniel Park" style="border-radius:50%;width:150px;height:150px;object-fit:cover;">
+            <h3>Daniel Park</h3>
+            <p>Chief Curator</p>
+            <p>Fun fact: He collects vintage storybooks from the 1950s.</p>
+          </div>
+          <div class="team-card">
+            <img src="https://via.placeholder.com/200?text=Sofia+Martinez" alt="Portrait of Sofia Martinez" style="border-radius:50%;width:150px;height:150px;object-fit:cover;">
+            <h3>Sofia Martinez</h3>
+            <p>Head of Education</p>
+            <p>Fun fact: She designs interactive reading guides for kids.</p>
+          </div>
+          <div class="team-card">
+            <img src="https://via.placeholder.com/200?text=Lucas+Nguyen" alt="Portrait of Lucas Nguyen" style="border-radius:50%;width:150px;height:150px;object-fit:cover;">
+            <h3>Lucas Nguyen</h3>
+            <p>Marketing Director</p>
+            <p>Fun fact: He can recite every line from "The Cat in the Hat".</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Press Mentions Carousel -->
+    <section class="press-mentions">
+      <div class="container">
+        <h2 class="section-title">In the Press</h2>
+        <div class="press-carousel">
+          <div class="press-track">
+            <div class="press-item"><img src="https://via.placeholder.com/200x80?text=Forbes" alt="Forbes logo"></div>
+            <div class="press-item"><img src="https://via.placeholder.com/200x80?text=TechCrunch" alt="TechCrunch logo"></div>
+            <div class="press-item"><img src="https://via.placeholder.com/200x80?text=NYTimes" alt="NY Times logo"></div>
+            <div class="press-item"><img src="https://via.placeholder.com/200x80?text=FastCompany" alt="Fast Company logo"></div>
+            <div class="press-item"><img src="https://via.placeholder.com/200x80?text=BBC" alt="BBC logo"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Pawsitive Reads. All rights reserved.</p>
+      <nav class="footer-nav" style="display:flex;gap:var(--gap-mobile);justify-content:center;margin-top:12px;">
+        <a href="privacy.html" class="link-secondary">Privacy Policy</a>
+        <a href="terms.html" class="link-secondary">Terms & Conditions</a>
+        <a href="contact.html" class="link-secondary">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Simple carousel script (optional) -->
+  <script>
+    // Basic horizontal scroll for press carousel
+    const pressTrack = document.querySelector('.press-track');
+    if (pressTrack) {
+      pressTrack.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        pressTrack.scrollBy({ left: e.deltaY < 0 ? -200 : 200, behavior: 'smooth' });
+      });
+    }
+  </script>
+</body>
+</html>
